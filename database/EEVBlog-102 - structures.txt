@@ -1,0 +1,78 @@
+00000000 ; Ins/Del : create/delete structure
+00000000 ; D/A/*   : create structure member (data/ascii/array)
+00000000 ; N       : rename structure or structure member
+00000000 ; U       : delete structure member
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 ADC_REGS        struc ; (sizeof=0x34)   ; XREF: ADC:ADC1_BASEr
+00000000 ADC_SR          DCD ?
+00000004 ADC_CR1         DCD ?
+00000008 ADC_CR2         DCD ?
+0000000C field_C         DCD ?
+00000010 field_10        DCD ?
+00000014 field_14        DCD ?
+00000018 field_18        DCD ?
+0000001C field_1C        DCD ?
+00000020 field_20        DCD ?
+00000024 field_24        DCD ?
+00000028 field_28        DCD ?
+0000002C field_2C        DCD ?
+00000030 ADC_SQR1        DCD ?
+00000034 ADC_REGS        ends
+00000034
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 GPIO_REGS       struc ; (sizeof=0x2C)   ; XREF: GPIO:GPIOAr
+00000000                                         ; GPIO:GPIOBr ...
+00000000 MODER           DCD ?
+00000004 OTYPER          DCD ?
+00000008 OSPEEDR         DCD ?
+0000000C PUPDR           DCD ?
+00000010 IDR             DCD ?                   ; XREF: prob_recv_rtc_data+2Cr
+00000010                                         ; ROM:off_8010454o ...
+00000014 ODR             DCD ?
+00000018 BSRR            DCD ?                   ; XREF: beep_amount_of_time+14w
+00000018                                         ; ROM:off_800FC18o ...
+0000001C LCKR            DCD ?
+00000020 AFRL            DCD ?
+00000024 AFRH            DCD ?
+00000028 BRR             DCD ?
+0000002C GPIO_REGS       ends
+0000002C
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 GPIO_CONFIG     struc ; (sizeof=0x8)    ; XREF: init_lcd_gpio_modesr
+00000000                                         ; some_manner_of_gpio_configr ...
+00000000 pins            DCD ?
+00000004 mode            DCB ?
+00000005 speed           DCB ?
+00000006 out_type        DCB ?
+00000007 pull            DCB ?
+00000008 GPIO_CONFIG     ends
+00000008
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 SDIO_CMD_ST     struc ; (sizeof=0x14)   ; XREF: RAM:sd_cmd_tempr
+00000000 CMDARG          DCD ?                   ; XREF: sd_card_send_init_cmds+5Aw
+00000000                                         ; sd_card_send_init_cmds+A4w ...
+00000004 CMDINDEX        DCD ?                   ; XREF: sd_card_send_init_cmds+62w
+00000004                                         ; sd_card_send_init_cmds+ACw ...
+00000008 WAITRESP        DCD ?                   ; XREF: sd_card_send_init_cmds+6Aw
+00000008                                         ; sd_card_send_init_cmds+B4w ...
+0000000C field_C         DCD ?                   ; XREF: sd_card_send_init_cmds+72w
+0000000C                                         ; sd_card_send_init_cmds+BCw ...
+00000010 CPSMEN          DCD ?                   ; XREF: sd_card_send_init_cmds+7Cw
+00000010                                         ; sd_card_send_init_cmds+C6w ...
+00000014 SDIO_CMD_ST     ends
+00000014
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 USART_REGS      struc ; (sizeof=0x1C)   ; XREF: USART2_:USART2_1r
+00000000 SR              DCD ?
+00000004 DR              DCD ?
+00000008 BRR             DCD ?
+0000000C CR1             DCD ?
+00000010 CR2             DCD ?
+00000014 CR3             DCD ?
+00000018 GTPR            DCD ?
+0000001C USART_REGS      ends
