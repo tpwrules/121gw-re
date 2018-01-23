@@ -5,7 +5,7 @@ Reverse engineering the EEVBlog 121GW
 * The `binaries` directory contains the firmware and bootloader release binaries.
 * The `database` directory contains the IDA database for the firmware. Please read the [DATABASE readme](database/DATABASE.md) before doing anything with it.
 
-If you're just here to learn about the meter, start with the [[wiki|Home]].
+If you're just here to learn about the meter, start with the wiki up top.
 
 ## Contributing
 There are several ways to contribute to the project.
