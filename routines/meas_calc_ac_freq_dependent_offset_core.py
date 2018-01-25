@@ -60,23 +60,23 @@ def func(digits, dr_fact, fr_fact, dr_fact_lf, fr_fact_lf, rang, in_freq):
         return 0
 
     if digits <= 5000:
-        in_gt_5000 = True
-    else:
         in_gt_5000 = False
+    else:
+        in_gt_5000 = True
 
     # first, find location in appropriate table
     if rang in [0, 1]:
-        loctbl = macfdoc_infreq_tbl_100khz
+        intbl = macfdoc_infreq_tbl_100khz
     else:
-        loctbl = mcafdoc_infreq_tbl_10khz
+        intbl = mcafdoc_infreq_tbl_10khz
 
-    for ti in range(len(loctbl)):
-        if loctbl[ti] >= in_freq:
+    for ti in range(len(intbl)):
+        if intbl[ti] >= in_freq:
             break
 
     # determine how far into that range the input is
-    size_of_range = loctbl[ti] - loctbl[ti-1]
-    dist_into_range = in_freq - loctbl[ti-1]
+    size_of_range = intbl[ti] - intbl[ti-1]
+    dist_into_range = in_freq - intbl[ti-1]
     frac_into_range = dist_into_range/size_of_range
 
     # now get the appropriate output table depending on the meas range
@@ -118,7 +118,7 @@ def func(digits, dr_fact, fr_fact, dr_fact_lf, fr_fact_lf, rang, in_freq):
         corr_in_range = x * fr_lo
     else:
         fr_hi = 0
-        corr_in_range = (digits / digits_decirange) * corr_val_decirange
+        corr_in_range = (digits / corr_digits_decirange) * corr_val_decirange
 
     return int(corr_in_range) + fr_hi
 
@@ -131,7 +131,7 @@ def calculate(factor):
         out[int(digit/10)] = 10 - func(10, factor,
             fullrange_factor, decirange_factor_lf,
             fullrange_factor_lf, 5, digit)
-    print(out)
+    print(out[1000])
     return out
 
 import numpy as np
@@ -141,14 +141,14 @@ from matplotlib.widgets import Slider
 fig, ax = plt.subplots()
 plt.subplots_adjust(left=0.15, bottom=0.25)
 xdigits = np.array(range(0, 389000, 10))
-l, = plt.loglog(xdigits, calculate(0)/10)
-plt.axis([50, 389000, 0.5, 200])
+l, = plt.loglog(xdigits, calculate(decirange_factor)/10)
+plt.axis([50, 389000, 0.5, 500])
 plt.xlabel("Input Frequency/Hz")
 plt.ylabel("Displayed Voltage/V")
 plt.title("Decirange Factor effect on 1V input vs. Frequency")
 
 sax = plt.axes([0.15, 0.1, 0.75, 0.03])
-sfactor = Slider(sax, 'Factor', -3000, 3000, valinit=0)
+sfactor = Slider(sax, 'Factor', -3000, 3000, valinit=decirange_factor)
 
 def update(val):
     l.set_ydata(calculate(int(val))/10)
