@@ -28,10 +28,10 @@
 00000004 OTYPER          DCD ?
 00000008 OSPEEDR         DCD ?
 0000000C PUPDR           DCD ?
-00000010 IDR             DCD ?                   ; XREF: prob_recv_rtc_data+2Cr
+00000010 IDR             DCD ?                   ; XREF: rtc_recv_data+2Cr
 00000010                                         ; ROM:off_8010454o ...
 00000014 ODR             DCD ?
-00000018 BSRR            DCD ?                   ; XREF: beep_amount_of_time+14w
+00000018 BSRR            DCD ?                   ; XREF: beep_ms+14w
 00000018                                         ; ROM:off_800FC18o ...
 0000001C LCKR            DCD ?
 00000020 AFRL            DCD ?
@@ -41,8 +41,8 @@
 0000002C
 00000000 ; ---------------------------------------------------------------------------
 00000000
-00000000 GPIO_CONFIG     struc ; (sizeof=0x8)    ; XREF: init_lcd_gpio_modesr
-00000000                                         ; some_manner_of_gpio_configr ...
+00000000 GPIO_CONFIG     struc ; (sizeof=0x8)    ; XREF: gpio_config_lcd_pinsr
+00000000                                         ; gpio_config_meter_hardwarer ...
 00000000 pins            DCD ?
 00000004 mode            DCB ?
 00000005 speed           DCB ?
@@ -53,16 +53,16 @@
 00000000 ; ---------------------------------------------------------------------------
 00000000
 00000000 SDIO_CMD_ST     struc ; (sizeof=0x14)   ; XREF: RAM:sd_cmd_tempr
-00000000 CMDARG          DCD ?                   ; XREF: sd_card_send_init_cmds+5Aw
-00000000                                         ; sd_card_send_init_cmds+A4w ...
-00000004 CMDINDEX        DCD ?                   ; XREF: sd_card_send_init_cmds+62w
-00000004                                         ; sd_card_send_init_cmds+ACw ...
-00000008 WAITRESP        DCD ?                   ; XREF: sd_card_send_init_cmds+6Aw
-00000008                                         ; sd_card_send_init_cmds+B4w ...
-0000000C field_C         DCD ?                   ; XREF: sd_card_send_init_cmds+72w
-0000000C                                         ; sd_card_send_init_cmds+BCw ...
-00000010 CPSMEN          DCD ?                   ; XREF: sd_card_send_init_cmds+7Cw
-00000010                                         ; sd_card_send_init_cmds+C6w ...
+00000000 CMDARG          DCD ?                   ; XREF: SD_PowerON+5Aw
+00000000                                         ; SD_PowerON+A4w ...
+00000004 CMDINDEX        DCD ?                   ; XREF: SD_PowerON+62w
+00000004                                         ; SD_PowerON+ACw ...
+00000008 WAITRESP        DCD ?                   ; XREF: SD_PowerON+6Aw
+00000008                                         ; SD_PowerON+B4w ...
+0000000C field_C         DCD ?                   ; XREF: SD_PowerON+72w
+0000000C                                         ; SD_PowerON+BCw ...
+00000010 CPSMEN          DCD ?                   ; XREF: SD_PowerON+7Cw
+00000010                                         ; SD_PowerON+C6w ...
 00000014 SDIO_CMD_ST     ends
 00000014
 00000000 ; ---------------------------------------------------------------------------
@@ -76,3 +76,4 @@
 00000014 CR3             DCD ?
 00000018 GTPR            DCD ?
 0000001C USART_REGS      ends
+0000001C

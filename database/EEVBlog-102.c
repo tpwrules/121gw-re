@@ -12,33 +12,33 @@
 
 void __fastcall update_display();
 void __fastcall scr_update_with_new_meas();
-void __fastcall log_playback_show_pos(unsigned __int16 a1);
-void __fastcall put_a_num_on_screen(meter_meas_mode mode, unsigned __int8 a2, unsigned int scr_digits);
-void __fastcall scr_set_decimal_point(unsigned int result);
-void scr_update_decimal_point();
+void __fastcall log_playback_show_sample(unsigned __int16 sample); // idb
+void __fastcall scr_show_num(meter_meas_mode mode, unsigned __int8 point, int num);
+void __fastcall scr_set_decimal_point(unsigned __int8 decimals);
+void __fastcall scr_update_decimal_point();
 void scr_refresh_meas_units_and_icons(void);
-void scr_update_status_icons(void);
-void __fastcall scr_update_meas_units(meter_meas_mode a1, unsigned __int8 range, int f_lowz_ac, int f_lowz_active);
-void __fastcall segment_party_20(meter_meas_mode mode, unsigned __int8 range);
+void __fastcall scr_update_status_icons();
+void __fastcall scr_update_units(meter_meas_mode mode, unsigned __int8 range, char f_lowz_ac, unsigned __int8 f_lowz_active);
+void __fastcall scr_update_milli_for_VA(meter_meas_mode mode, unsigned __int8 range);
 void scr_update_for_playback();
 void scr_update_units_in_certain_modes(void);
-void __fastcall scr_update_cap_units(int result);
-void __fastcall scr_update_ohm_units(int result);
-void __fastcall scr_update_hz_units(int result);
+void __fastcall scr_update_cap_units(unsigned __int8 range);
+void __fastcall scr_update_ohm_units(unsigned __int8 range);
+void __fastcall scr_update_hz_units(unsigned __int8 range);
 void __fastcall update_subscr();
-void __fastcall put_a_num_on_sub_screen(int num, unsigned __int8 point, char update_now);
-void subscr_show_ac_hz(void);
-void __fastcall subscr_set_decimal_point(unsigned __int8 result);
+void __fastcall subscr_show_num(int num, unsigned __int8 point, char update_now);
+void subscr_show_ac_input_hz(void);
+void __fastcall subscr_set_decimal_point(unsigned __int8 decimals);
 void subscr_calc_power_amp_point();
-void set_point_for_ac_hz(void);
-int __fastcall calc_point_for_ac_hz(unsigned __int8 a1);
+void set_point_for_ac_input_hz(void);
+unsigned __int8 __fastcall calc_point_for_ac_hz(unsigned __int8 a1);
 void erase_part_of_screen_in_order_to_blink_value_being_edited(void);
-void __fastcall subscr_show_num(unsigned int a1);
+void __fastcall subscr_show_digits(int digits);
 void __fastcall subscr_disp_burden_voltage(signed int meas, char a2);
-void show_burden_msg(void);
+void __fastcall show_burden_msg();
 void __fastcall show_batt_charge(signed __int16 percent);
 void __fastcall show_contrast(char contrast);
-void __fastcall show_apo_status(char off);
+void __fastcall show_apo_status(char is_off);
 void __fastcall show_logging_interval(unsigned __int16 interval);
 void __fastcall subscr_show_dBm();
 void __fastcall show_burden_display_status(char on);
@@ -52,63 +52,63 @@ void __fastcall show_meter_serial(char update_now); // idb
 void __fastcall show_temperature(__int16 measurement);
 __int16 __fastcall convert_temp_and_round(signed __int16 a1);
 void update_bargraph_if_in_appropriate_range(void);
-void update_bargraph(void);
+void __fastcall scr_update_bargraph();
 void calc_bargraph_pos_for_mode(void);
 void __fastcall calc_bargraph_pos(char range);
-void __fastcall segment_party_21(char a1);
-void __fastcall maybe_scr_update_bargraph_range(unsigned int bargraph_range);
-void scr_update_bargraph_disp();
+void __fastcall scr_update_bargraph_range(char a1);
+void __fastcall scr_update_bargraph_range_5s(unsigned __int8 bargraph_range_in);
+void scr_reset_bargraph();
 void scr_turn_off_bargraph(void);
-void __fastcall scr_set_bargraph(unsigned int max, char val);
+void __fastcall scr_clear_bargraph_bars(unsigned __int8 end, char start);
 void __fastcall show_cal_msg_countdown(unsigned __int8 a1);
 void __fastcall show_cal_msg_end(unsigned __int8 a1);
-void show_sdcal_msg(void);
-void show_sdsav_msg(void);
-void show_sdset_msg(void);
+void __fastcall show_sdcal_msg();
+void __fastcall show_sdsav_msg();
+void __fastcall show_sdset_msg();
 void __fastcall show_sd_cal_success();
-void show_sd_cal_err(void);
-void show_cal_mode_msg(void);
-void show_cal_mode_sub_msg();
-void display_low_batt(void);
-void show_msg_logging_ended(void);
-void __fastcall display_sd_error(char a1);
-int __fastcall show_overload(char screen); // idb
-void __fastcall show_temp_error(char sub_screen);
-int __fastcall show_lead_err(char screen); // idb
-void erase_scr(char subscreen);
-int __fastcall put_msg_on_scr(char on_subscr, char *msg);
+void __fastcall show_sd_cal_err();
+void __fastcall show_cal_mode_msg();
+void show_cal_mode_msg_on_subscr();
+void __fastcall show_low_batt();
+void __fastcall show_msg_logging_ended();
+void __fastcall show_sd_error(unsigned __int8 error);
+void __fastcall show_overload(char on_subscr); // idb
+void __fastcall show_temp_error(char on_subscr);
+void __fastcall show_lead_err(char on_subscr);
+void scr_erase(char subscr);
+void __fastcall put_msg_on_scr(char on_subscr, char *msg);
 void __fastcall put_chr_on_scr_at_offset(unsigned __int8 where, unsigned __int8 *chr);
 void __fastcall put_2_chrs_on_scr_at_offset(unsigned __int8 offset, unsigned __int8 *a2);
-void __fastcall scr_maybe_turn_off_all_units();
+void __fastcall scr_turn_off_units();
 void __fastcall scr_update_apo_status(char update_now); // idb
-void __fastcall scr_update_low_batt(char update_now); // idb
+void __fastcall scr_update_low_batt_icon(char update_now); // idb
 void __fastcall scr_update_bt_icon(char update_now); // idb
 void __fastcall scr_update_autorange_icon(char update_now); // idb
 char determine_if_autoranging(void);
-void __fastcall scr_update_min_max_segs(char update_now); // idb
+void __fastcall scr_update_min_max_icons(char update_now); // idb
 void __fastcall scr_update_rel_meas_icon(char update_now);
-void __fastcall scr_update_hold_icons(int update_now);
-char maybe_get_hold_status();
+void __fastcall scr_update_hold_icons(char update_now);
+char hold_get_status();
 void __fastcall scr_update_1ms_peak_icon(char update_now); // idb
-void scr_update_lpf_icon();
-void segment_party_5();
+void __fastcall scr_update_lpf_icon();
+void scr_update_main_acdc_icons();
 void __fastcall scr_update_mem_icon(char update_now); // idb
-void scr_update_overflow_icon();
+void scr_update_danger_icon();
 void scr_update_temp_unit();
-void subscr_update_units(void);
-void segment_party_3(void);
-void scr_turn_off_many_segments();
-void turn_off_all_lcd_segments();
+void __fastcall subscr_update_units();
+void subscr_set_power_amp_units(void);
+void subscr_turn_off_units();
+void lcd_turn_off_all_segments();
 void __cdecl show_firmware_version();
-void __cdecl turn_on_all_segments();
+void __cdecl lcd_turn_on_all_segments();
 void __fastcall set_7seg(unsigned __int8 chr, unsigned __int8 where);
 unsigned __int8 __fastcall ascii_to_segs(unsigned __int8 chr);
-void __fastcall conv_int_to_bcd_tmp(unsigned int num);
-void __fastcall conv_bcd_to_scr(unsigned __int8 decimal_place);
+void __fastcall conv_uint_to_bcd_tmp(unsigned int num);
+void __fastcall conv_bcd_tmp_to_scr(unsigned __int8 decimal_place);
 void update_lcd_if_appropriate();
-void __fastcall init_the_lcd(unsigned __int8 contrast, char blank); // idb
-GPIO_CONFIG init_lcd_gpio_modes();
-void __fastcall set_lcd_contrast(unsigned __int8 contrast); // idb
+void __fastcall lcd_init(unsigned __int8 contrast, char blank); // idb
+void __fastcall gpio_config_lcd_pins();
+void __fastcall lcd_set_contrast(unsigned __int8 contrast); // idb
 void maybe_refresh_lcd_contrast_register();
 unsigned __int8 __fastcall read_eeprom_byte_also(int loc); // idb
 void __fastcall try_to_write_byte_10_times_also_also(int loc, unsigned __int8 data);
@@ -120,7 +120,7 @@ void __fastcall log_save_sample();
 void save_eeprom_sample_count();
 void load_eeprom_sample_count();
 void log_calc_playback_window();
-int __fastcall log_get_eeprom_idx_for_sample(unsigned __int16 a1);
+unsigned __int16 __fastcall log_get_eeprom_idx_for_sample(unsigned __int16 sample);
 void __fastcall write_logged_meas_mode_and_range_to_eeprom();
 void read_logged_meas_mode_range_from_eeprom(void);
 void __fastcall set_log_start_time_and_write_to_eeprom_badly();
@@ -156,9 +156,9 @@ void load_curr_cont_threshold();
 void __fastcall save_curr_continuity_threshold(unsigned __int8 threshold);
 void load_burden_display_enabled();
 void __fastcall save_burden_enabled_for_power_ranges(unsigned __int8 a1);
-void __fastcall load_amp_rel(meter_meas_mode mode, char range);
-void __fastcall save_amp_rel(meter_meas_mode mode, char range, int rel);
-void __fastcall erase_some_amp_parameters();
+void __fastcall cal_load_amp_rel(meter_meas_mode mode, char range);
+void __fastcall cal_save_amp_rel(meter_meas_mode mode, char range, int rel);
+void __fastcall cal_erase_amp_rel_data();
 int __fastcall calc_amp_rel_eeprom_addr(int mode);
 int *__fastcall get_cal_factor_addr();
 unsigned __int16 *__fastcall get_ac_cal_data_addr(meter_meas_mode mode, char range);
@@ -171,7 +171,7 @@ void __fastcall cal_write_factor(char factor, signed int val);
 void __fastcall cal_save_va_factors(char cal_gain);
 void __fastcall cal_save_ac_factor(meter_meas_mode mode, char range, char which);
 void cal_erase_ac_factors(void);
-unsigned int __fastcall read_eeprom_4byte(int a1);
+unsigned int __fastcall read_eeprom_4byte(int loc);
 int __fastcall read_eeprom_2byte_signed(int loc); // idb
 unsigned __int16 __fastcall read_eeprom_2byte(int loc);
 unsigned __int8 __fastcall read_eeprom_byte(int loc);
@@ -184,7 +184,7 @@ void __fastcall try_to_write_byte_10_times(int loc, unsigned __int8 data);
 void __fastcall bt_echo_rx_msg();
 void __fastcall bt_process_received_msg();
 unsigned __int8 __fastcall read_hex_digit_from_bt_rx_msg(unsigned __int8 pos);
-void update_usart2_power();
+void update_bt_power();
 void write_time_and_serial_to_bt_buf(void);
 void build_and_write_bt_packet_also(void);
 void build_and_write_bt_packet();
@@ -208,14 +208,14 @@ void __fastcall write_hex_2bytes_to_bt_buf(unsigned __int8 loc, int val);
 void __fastcall write_hex_byte_to_bt_buf(unsigned __int8 pos, unsigned __int8 num);
 unsigned __int8 __fastcall hex_digit_to_ascii(char digit);
 void __fastcall usart_write_byte(USART_REGS *USART, unsigned __int8 data);
-void end_setup_without_saving_after_timeout(void);
+void end_setup_without_saving_after_2min_timeout(void);
 void __fastcall meter_process_range_mode_changed(char should_stop_logging);
 void __cdecl update_max_digits_in_range();
 void __cdecl subscr_periodically_switch_between_amps_and_volts_for_power();
 void __cdecl subscr_update_power_amps_or_volts_display();
 void meter_set_default_subscr_mode();
-void __fastcall config_hy_load_cal_factors_then_do_cap_something(unsigned __int8 a1);
-void __fastcall config_hy_then_load_cal_factors(char should_load_factors);
+void __fastcall meas_prepare_for_new_mode_range(unsigned __int8 should_load_cal_factors);
+void __fastcall meas_config_hy_and_load_cal_factors(char should_load_factors);
 void __fastcall update_stuff_based_on_new_power_range();
 signed int __fastcall calc_decimal_place_for_mode_range(meter_meas_mode mode, unsigned int range);
 void __fastcall meter_set_mode_range_change_delay();
@@ -223,11 +223,11 @@ void meter_process_new_meas(void);
 void meter_process_autorange();
 void __fastcall meter_process_hold();
 void __fastcall meter_process_rel_meas();
-void __fastcall meter_update_min_max();
+void __fastcall meter_process_min_max();
 void meter_process_overload();
-bool __fastcall is_abs_out_of_range(int num, int range);
+bool __fastcall is_abs_out_of_range(bool num, int range);
 void __cdecl finish_sys_init_and_handle_boot_buttons();
-void update_cap_something_based_on_range();
+void meas_cap_reset_no_reading_timeout_timer();
 void __fastcall spinloop(unsigned int amount);
 void __fastcall SysTick_Handler_real();
 void reset_apo_timeout();
@@ -235,8 +235,8 @@ void __fastcall hy_change_CTA_val_for_ac_freq();
 void __cdecl beep_contentedly();
 void beep_excitedly();
 void __fastcall beep_angrily();
-void __fastcall beep_and_reset_apo_timeout_if_asked(char should_reset_apo_timeout, char num, __int16 time); // idb
-void __fastcall beep_amount_of_time(int time);
+void __fastcall beep_and_reset_apo_timeout_if_asked(char should_reset_apo_timeout, char num, __int16 ms); // idb
+void __fastcall beep_ms(unsigned __int16 ms);
 int __fastcall meas_apply_offset_adj(int a1);
 int __fastcall cal_update_curr_offset_accu(int a1);
 int __fastcall cal_update_cap_offset_accu(unsigned int a1);
@@ -252,35 +252,35 @@ void __fastcall cal_update_cap_gain_accu(unsigned int gain, int last_offset); //
 void __fastcall cal_update_ac_gain_accu(int num, int offset);
 void __fastcall cal_ac_factor_update_and_save(char a1, int a2);
 void __fastcall cal_calc_gain_from_gain_accu();
-void __fastcall div_gain_by(float a1, float num);
-void __fastcall div_gain_by_50000();
-void __fastcall div_gain_by_30000();
-void __fastcall div_gain_by_10000();
-void __fastcall div_gain_by_6000();
-void div_gain_by_42426(void);
-void __fastcall disable_hv_diode_and_configure_various_gpios(meter_meas_mode mode, char range);
-void __fastcall gpio_party_mode_related(meter_meas_mode mode);
-void __fastcall set_gpio_based_on_hv_diode(meter_meas_mode mode);
-void __fastcall set_GPIOA11_based_on_mode(meter_meas_mode mode);
-void __fastcall set_GPIOH2_based_on_mode(meter_meas_mode mode);
-void __fastcall set_GPIOA12_based_on_mode(meter_meas_mode mode);
-void turn_on_GPIOD1();
-void __fastcall set_GPIOE12_based_on_mode(meter_meas_mode mode);
-void __fastcall set_GPIOE5_based_on_mode_and_range(meter_meas_mode mode, char range);
-void read_time_from_rtc();
+void __fastcall cal_set_curr_gain_div_by_n(float a1, float num);
+void __fastcall cal_set_curr_gain_div_by_50000();
+void __fastcall call_set_curr_gain_div_by_30000();
+void __fastcall cal_set_curr_gain_div_by_10000();
+void __fastcall cal_set_curr_gain_div_by_6000();
+void cal_set_curr_gain_div_by_42426(void);
+void __fastcall meas_setup_hw(meter_meas_mode mode, char range);
+void __fastcall meas_hw_set_ac_rms_filter_ctl(meter_meas_mode mode);
+void __fastcall meas_hw_set_hv_diode(meter_meas_mode mode);
+void __fastcall meas_hw_set_va_ctl_useless(meter_meas_mode mode);
+void __fastcall meas_hw_set_temp_ctl(meter_meas_mode mode);
+void __fastcall meas_hw_set_fre_ctl(meter_meas_mode mode);
+void meas_hw_turn_on_4V_supply();
+void __fastcall meas_hw_set_amp_amplifier_power(meter_meas_mode mode);
+void __fastcall meas_hw_set_amp_x10(meter_meas_mode mode, char range);
+void rtc_read_time();
 unsigned __int8 __fastcall bcd2_to_int(unsigned __int8 bcd);
 unsigned __int8 __fastcall int_to_bcd2(unsigned __int8 a1);
-void probably_write_time_to_rtc();
-void __fastcall prob_write_rtc_mem(char loc, unsigned __int8 data);
-_BYTE __fastcall prob_read_rtc_mem(int loc);
-void __fastcall prob_send_rtc_addr(unsigned __int8 loc);
-_BYTE prob_recv_rtc_data();
-void __fastcall prob_send_rtc_data(unsigned __int8 a1);
-void turn_off_GPIOB7_and_on_GPIOC13();
-void turn_off_GPIOB7_and_GPIOC13();
-void unconfig_GPIOB7();
-void config_GPIOB7();
-int __fastcall get_days_in_month_without_going_over(unsigned __int8 year, unsigned __int8 month, unsigned __int8 curr_day); // idb
+void rtc_write_time();
+void __fastcall rtc_write_reg(RTC_REGS loc, unsigned __int8 data);
+_BYTE __fastcall rtc_read_reg(RTC_REGS loc);
+void __fastcall rtc_send_reg_number(RTC_REGS loc);
+_BYTE rtc_recv_data();
+void __fastcall rtc_send_data(unsigned __int8 data); // idb
+void rtc_select_chip();
+void rtc_deselect_chip();
+void rtc_config_data_output();
+void rtc_config_data_input();
+unsigned __int8 __fastcall get_days_in_month_without_going_over(unsigned __int8 year, unsigned __int8 month, unsigned __int8 curr_day);
 unsigned __int8 __fastcall get_days_in_month(unsigned __int8 year, unsigned __int8 month);
 void __cdecl fp_compare_c_ge(float a, float b);
 void __fastcall fp_compare_c_le(float a, float b);
@@ -299,67 +299,67 @@ int __fastcall temp_conv_c_to_f(int a1);
 void __fastcall meas_calc_temp_from_dcmv(int dcmv);
 void __fastcall temp_load_offset(int temp_is_negative, signed int a2);
 void init_adc_and_stuff();
-int __fastcall sub_8010FCC(int a1);
-int __fastcall sub_8011012(int result);
-int sub_801101A();
-int __fastcall sub_8011036(int result);
-int __fastcall sub_801103E(int result);
-void __fastcall sub_8011056(int result);
-int __fastcall sub_801106E(int result, int a2);
-void __fastcall set_lcd_contrast_reg(int contrast);
+void __fastcall lcd_set_fcr_and_cr(int a1);
+void __fastcall lcd_set_enable(unsigned __int8 result);
+void __fastcall lcd_wait_for_FCR_sync();
+void __fastcall lcd_set_segment_multiplexing(unsigned __int8 result);
+void __fastcall lcd_set_pulse_on_duration(int result);
+void __fastcall lcd_set_dead_time(int result);
+void __fastcall lcd_set_blink(int result, int a2);
+void __fastcall lcd_set_contrast_reg(int contrast);
 void set_lcd_update_request();
 bool __fastcall read_lcd_sr(int mask); // idb
-void sub_80110DC();
+void apo_config_rcc();
 void __fastcall set_hse_bits(_BYTE bits);
 bool wait_for_hse_ready();
-void __fastcall set_clock_calibration(int mask);
-int __fastcall sub_80111A2(int result);
+void __fastcall set_MSI_range(int mask);
+void __fastcall set_HSI_ON(int result);
 void __fastcall set_lse_bits(char result);
-int __fastcall sub_80111BC(int result);
-void __fastcall set_system_clock_switch(int result);
-int sub_80111DE(void); // weak
+void __fastcall set_RCC_LSION(unsigned __int8 result);
+void __fastcall set_system_clock_source(int result);
+int read_RCC_curr_clock_source(void); // weak
 void __fastcall get_sys_clock_info(_DWORD *info);
-int __fastcall sub_80112F4(int result);
-void __fastcall set_RCC_CSR_RTCEN(int val);
-void __fastcall set_RCC_CSR_RTCRST(int val);
-void __fastcall en_ahb_periph(int mask, char enable);
-void __fastcall en_apb2_periph(int mask, char enable);
-void __fastcall set_apb1_periph(int mask, char enable);
+void __fastcall set_internal_rtc_and_lcd_clocksource(int result);
+void __fastcall set_RCC_CSR_RTCEN(unsigned __int8 val);
+void __fastcall set_RCC_CSR_RTCRST(unsigned __int8 val);
+void __fastcall set_AHB_periph_clk(int mask, char enable);
+void __fastcall set_APB2_periph_clock(int mask, char enable);
+void __fastcall set_APB1_periph_clock(int mask, char enable);
 void __fastcall reset_apb2_periph(int mask, char reset);
-bool __fastcall read_rcc_cr_or_csr_bit(unsigned __int8 a1);
+bool __fastcall read_clock_ready_bit(unsigned __int8 a1);
 void __fastcall sub_8011450(int result);
 void config_clock_interrupts_and_gpio();
 void __fastcall set_clocks_and_power_periphs(char use_hse);
-int more_internal_stuff();
+void __fastcall enable_internal_rtc_and_lcd_clk();
 void power_all_gpio_banks();
-int sub_80115C6();
+void __fastcall power_off_all_gpio_banks();
 void probably_something_with_interrupts();
-GPIO_CONFIG some_manner_of_gpio_config();
-GPIO_CONFIG __fastcall sub_80118AE(int a1, int a2, __int64 a3);
-GPIO_CONFIG sub_8011950();
-void __cdecl init_usart2();
-void config_gpioa_and_f();
-__int64 config_TIM2();
+void __fastcall gpio_config_meter_hardware();
+void __fastcall gpio_config_switch_button_inputs(unsigned __int8 except_this_range_switch_input);
+void __fastcall gpio_config_jack_detector_inputs();
+void __cdecl bt_powerup();
+void gpio_config_analog_inputs();
+void __fastcall config_TIM2();
 void __fastcall config_TIM3();
-void prepare_to_apo(void);
-int sub_8011B94(void); // weak
-int sub_8011C2C();
+void apo_prepare_to_turn_off(void);
+void apo_unset_gpios(void);
+void __fastcall apo_something_with_rangeswitch();
 __int64 __fastcall sub_8011D04(unsigned __int8 a1, int a2, int a3, int a4);
 int __fastcall sub_8011D66(int result);
 unsigned __int32 __fastcall one_hot_16bit(signed int result);
 unsigned __int8 __fastcall identity_if_lt_16(unsigned __int8 result);
-void __cdecl do_some_things_with_GPIOF();
-int sub_8011F18();
-void disable_timer_2_and_3();
-void __cdecl uninit_usart2();
+void __cdecl apo_sleep_HY();
+void __fastcall lcd_shutdown();
+void apo_disable_timers();
+void __cdecl bt_shutdown();
 void __cdecl powerdown_adc1();
-void sub_8011FB8();
-int sub_8011FC2();
-int sub_8011FEC();
-int sub_8012024();
-GPIO_CONFIG sub_801203A();
-void __fastcall config_pins(GPIO_REGS *GPIO, GPIO_CONFIG *cfg);
-int __fastcall sub_80121A4(int result);
+void disable_PWR_voltage_detector();
+void __fastcall apo_config_rcc_power_stuff();
+void __fastcall apo_something_with_power();
+void __fastcall apo_disable_oscillators();
+void __fastcall apo_power_off_gpio();
+void __fastcall gpio_config_pin(GPIO_REGS *GPIO, GPIO_CONFIG *cfg);
+void __fastcall gpio_clear_config(GPIO_CONFIG *cfg);
 void __fastcall set_gpio_pin_func(GPIO_REGS *GPIO, unsigned __int16 pin, unsigned __int8 func);
 _DWORD *__fastcall sub_8012216(_DWORD *a1);
 void cal_save_to_sd(void);
@@ -399,8 +399,8 @@ int log_file_reread_and_verify(void); // weak
 char *__fastcall uint_to_ascii(unsigned int num);
 char *__fastcall uint_to_ascii_with_point(unsigned int num, unsigned __int8 place); // idb
 int __fastcall f_mount_tries(unsigned __int8 a1);
-int sub_8014B6E(void); // weak
-bool sub_8014BAA();
+int sd_sub_8014B6E(void); // weak
+bool sd_sub_8014BAA();
 void read_amp_lead_pos_then_update();
 void __fastcall meter_set_amp_leads_incorrect();
 void update_mode_based_on_range_switch();
@@ -414,14 +414,14 @@ void read_range_switch_then_update(void);
 void update_mode_based_on_range_switch_if_necessary();
 void read_range_switch(void);
 void update_range_switch_inputs(void);
-void __fastcall bt_process_rx_button();
+void __fastcall bt_process_rxed_button();
 void __fastcall update_based_on_pressed_buttons(meter_buttons mask);
 void log_playback_mode_stop();
 void meter_incr_subscr_mode(void);
 bool __fastcall cal_can_be_done(char cal_gain);
 int __fastcall cal_start(char cal_gain); // idb
-int cal_calc_countdown_timer();
-void __fastcall meas_enable_manual_hold(char should_enable_holding, char was_called_when_logging_started);
+unsigned __int8 __fastcall cal_calc_countdown_timer();
+void __fastcall meas_enable_auto_hold(char should_enable_holding, char was_called_when_logging_started);
 void meter_incr_min_max_mode(void);
 void __fastcall meter_enable_min_max_mode();
 void __fastcall change_diode_voltage();
@@ -445,7 +445,7 @@ void __fastcall update_based_on_buttons();
 void read_buttons(void);
 void __fastcall button_auto_press_up_down(int activate);
 int __fastcall button_hold_is_being_held_with_mem(meter_buttons a1); // idb
-int __fastcall exactly_one_range_is_active(unsigned __int8 range_switch_bits); // idb
+bool __fastcall exactly_one_range_is_active(unsigned __int8 range_switch_bits);
 int __fastcall hold_and_mem_are_both_being_pressed(meter_buttons a1); // idb
 int read_button_inputs(void); // weak
 float __fastcall fp_from_int(int num);
@@ -485,7 +485,7 @@ void set_lowz_acdc_switch_counter();
 void __fastcall meas_process_ac_amps();
 void __fastcall prepare_reading_ac_amps(char measuring_burden_voltage);
 void __fastcall meas_process_ac_amps_core();
-void __fastcall sub_80182D6();
+void __fastcall meas_display_ac_amps();
 void __fastcall meas_process_acmv();
 void __fastcall meas_display_acv_acmv();
 void __fastcall meas_process_acv();
@@ -519,8 +519,8 @@ int __fastcall calc_va_subscr_digits(signed int a1, signed int a2);
 void __cdecl rms_int_in_lowz_does_nothing();
 void nullsub_1();
 void __fastcall meas_acv_dcv_calc_next_mode(char dc);
-void __fastcall meas_acv_dcv_switch_mode(char dc);
-int meas_acv_dcv_calc_distance_between_ac_and_dc_as_if_they_were_vectors_90_degrees_apart();
+void __fastcall meas_acv_dcv_switch_mode(char to_dc);
+void __fastcall meas_acv_dcv_calc_distance_between_ac_and_dc_as_if_they_were_vectors_90_degrees_apart();
 void __fastcall meas_calc_dBm();
 int nullsub_2(void); // weak
 int nullsub_3(void); // weak
@@ -533,14 +533,14 @@ int meas_process_msec();
 void __fastcall meas_set_msec_range_and_digits(int a1);
 void __fastcall meas_process_duty();
 void meas_process_cap();
-void __cdecl hy_update_cap_special();
+void __cdecl meas_process_cap_autorange();
 void __fastcall meas_calc_curr_freq();
 void __fastcall meas_calc_msec();
 void __cdecl meas_calc_duty();
 void __fastcall cal_update_sysclk();
 int __fastcall meas_add_rolling_average_buf2(int num, int max_delta, unsigned __int16 averages); // idb
 int __fastcall meas_process_burden_volts(int result);
-void __fastcall config_hy_based_on_mode(meter_meas_mode mode, unsigned __int8 range);
+void __fastcall config_hy_based_on_mode_range(meter_meas_mode mode, unsigned __int8 range);
 void __fastcall hy_set_regs_from_table(meter_meas_mode mode, unsigned __int8 range);
 void __fastcall config_hy_intregs(meter_meas_mode mode);
 void hy_reset_freq_counter();
@@ -573,22 +573,22 @@ int __fastcall sub_801CAB0(int result, __int16 a2);
 double __fastcall dp_mul(double a, double b);
 float __fastcall fp_add(float a, float b);
 float __fastcall fp_sub(float a, float b);
-int __fastcall sub_801CDD0(int result);
-void __fastcall sub_801CDD8(int result);
-int __fastcall sub_801CDE0(int result);
+void __fastcall set_rtc_rcc_csr_access(unsigned __int8 enabled);
+void __fastcall set_PWR_voltage_detector_enable(int result);
+void __fastcall set_PWR_Vrefint_off_in_low_power_mode(int result);
 void __fastcall set_most_pwr_cr_bits(int result);
 void __fastcall WFI_or_WFE(int result, char a2);
 bool __fastcall test_pwr_csr_bits(int mask); // idb
 void __fastcall set_pwr_cr_bits_offset(int mask);
-int __fastcall sub_801CE7C(int result, char a2);
+void __fastcall sub_801CE7C(int result, char a2);
 void __fastcall set_SCB_AIRCR(int result);
 int __fastcall sub_801CEAA(int result);
 void __fastcall set_vtor_offset(int base, int offset);
-void __fastcall TIM_configure(void *TIM, int *a2);
+void __fastcall TIM_Base_SetConfig(void *TIM, int *a2);
 void __fastcall set_timer_enable(void *TIM, char enable);
 int __fastcall sub_801CFBC(int result, __int16 a2, char a3);
 void __fastcall TIM_clear_status_bits(void *TIM, __int16 mask);
-void __fastcall sub_801CFDC(int result, char a2);
+void __fastcall apo_something_with_rtc(int result, char a2);
 int __fastcall sub_801D030(unsigned int a1);
 unsigned int __fastcall sub_801D07A(unsigned int result);
 int __fastcall sub_801D0A8(int result, unsigned __int8 a2);
@@ -605,7 +605,7 @@ int __fastcall sub_801D372(int a1, int a2);
 signed int __fastcall sub_801D38C(int a1, unsigned int a2);
 int __fastcall sub_801D48A(int a1, unsigned int a2, unsigned int a3);
 int __fastcall sub_801D5EE(int a1, unsigned int a2);
-signed int __fastcall sub_801D660(int a1, unsigned int a2);
+unsigned int __fastcall sub_801D660(int a1, unsigned int a2);
 signed int __fastcall sub_801D73C(int a1, unsigned __int16 a2);
 signed int __fastcall sub_801D7F2(int a1, int a2);
 int __fastcall sub_801D932(int a1);
@@ -626,17 +626,17 @@ int __fastcall f_close(int a1);
 signed int __fastcall f_seek(int a1, unsigned int a2);
 int __fastcall sub_801EADA(int a1, int a2);
 int __fastcall sub_801EB64(int a1, int a2);
-int sub_801EBD4();
+int HAL_SD_Init();
 signed int sub_801EC86();
 unsigned int sub_801ECA8();
 signed int sub_801ECD2();
-signed int sd_card_send_init_cmds();
+signed int SD_PowerON();
 void turn_off_sd_card();
-signed int sd_card_read_info();
-int __fastcall sub_801F0E0(int a1);
+signed int SD_Initialize_Cards();
+int __fastcall HAL_SD_GetCardInfo(int a1);
 signed int __fastcall sub_801F4B0(int a1);
-int __fastcall maybe_select_or_deselect_card(int a1);
-signed int __fastcall prob_read_sd_blocks(int a1, int a2, unsigned __int64 a3, signed __int16 a4);
+int __fastcall SD_Select_Deselect(int a1);
+signed int __fastcall HAL_SD_ReadBlocks(int a1, int a2, unsigned __int64 a3, signed __int16 a4);
 signed int __fastcall prob_write_sd_block(int a1, int a2, unsigned __int64 a3, signed __int16 a4, int a5);
 signed int sub_801F8C4();
 int sd_stop_transmission();
@@ -645,7 +645,7 @@ void __fastcall SDIO_interrupt_real();
 void __fastcall DMA2_CH4_interrupt_real();
 signed int sub_801FB3C();
 signed int sub_801FB88();
-signed int __fastcall sub_801FC00(unsigned __int8 a1);
+signed int __fastcall SD_CmdResp1Error(unsigned __int8 a1);
 signed int sub_801FD34();
 signed int wait_for_sd_cmd_resp();
 signed int __fastcall sub_801FDFC(unsigned __int8 a1, int a2);
@@ -653,9 +653,9 @@ signed int __fastcall sd_switch_some_kind_of_func(char a1);
 signed int __fastcall sub_8020068(int a1, int a2);
 int __fastcall strlen(int a1);
 void disable_sd_card_hw();
-void enable_sd_card_hw();
+void HAL_SD_MspInit();
 int __fastcall sub_80203C4(int a1, unsigned int a2);
-void __fastcall adc_something(int a1, unsigned int a2);
+void __fastcall sdio_something(int a1, unsigned int a2);
 double __fastcall dp_from_int(int num);
 double __fastcall dp_from_uint(unsigned int result);
 double __fastcall dp_from_uint_core(int num);
@@ -671,14 +671,14 @@ signed int sub_8020894();
 int __fastcall sub_802089C(int a1, unsigned int a2, int a3);
 void reset_sdio_periph();
 void __fastcall something_gnarly_with_sdio_clk(int result);
-void __fastcall set_sdio_clken(unsigned __int8 bypass);
+void __fastcall HAL_set_sdio_clken(unsigned __int8 clken);
 void __fastcall set_sdio_power_reg(int val);
 int sdio_power_enabled(void); // weak
-int __fastcall sub_8020932(int result);
-void __fastcall send_sd_cmd(SDIO_CMD_ST *cmd);
+void __fastcall sdio_sub_8020932(int result);
+void __fastcall SDIO_SendCommand(SDIO_CMD_ST *cmd);
 unsigned __int8 get_sdio_respcmd();
 _DWORD __fastcall read_resp_word(int which);
-void __fastcall sub_8020980(int result);
+void __fastcall SDIO_DataConfig(int result);
 int read_sdio_fifo();
 void __fastcall set_sdio_mask(int bits, char state);
 bool __fastcall get_sdio_sta(int mask); // idb
@@ -713,12 +713,12 @@ void __fastcall ADC1_interrupt();
 void __noreturn main_loop();
 void load_stuff_from_eeprom_and_init();
 void apo_do_poweroff_then_poweron(void);
-int setup_system(); // weak
-void setup_rcc_and_pwr_and_flash();
+void __fastcall SystemInit();
+void setup_system_from_reset_continued();
 int call_funcs_in_init_func_table(void); // weak
 signed int should_call_funcs_in_init_func_table();
-void __noreturn sub_8022836();
-void __noreturn sub_8022848();
+void __noreturn unused_sub_8022836();
+void __noreturn unused_sub_8022848();
 void reset_vector();
 
 //-------------------------------------------------------------------------
@@ -1795,13 +1795,13 @@ int hy_CTA_initial_val = 57344; // weak
 int fp_last_error = 0;
 char asc_20000214[2] = ","; // weak
 char asc_20000216[2] = "-"; // weak
-__int16 curr_logging_interval = 1; // weak
-__int16 sys_boot_button_delay_timer = 500; // weak
-__int16 apo_timeout = 1800; // weak
-char subscr_mode_for_last_units = '\xFF'; // weak
+unsigned __int16 curr_logging_interval = 1u;
+__int16 sys_boot_button_delay_timer_1ms_unit = 500; // weak
+__int16 apo_timeout_sec = 1800; // weak
+unsigned __int8 subscr_mode_for_last_units = 255u;
 char amp_lead_pos_debounce_timer = '\n'; // weak
 unsigned __int8 last_range_switch_bits = 255u;
-char byte_20000221 = '\xFF'; // weak
+unsigned __int8 rtc_last_read_seconds = 255u;
 char curr_lcd_contrast = '\x0E'; // weak
 char meter_mode_range_change_delay = '\x03'; // weak
 char lowz_acdc_switch_timer = '\x05'; // weak
@@ -1817,8 +1817,15 @@ _UNKNOWN unk_200034D0; // weak
 __int16 word_20003524; // weak
 int batt_level_avg_buf[20];
 int batt_level_avg_buf_sorted[20];
-int segment_buffer[16]; // weak
-char hy_regs_buf[52];
+LCD_SEGS_C0L segment_buffer_C0L;
+LCD_SEGS_C0H segment_buffer_C0H;
+LCD_SEGS_C1L segment_buffer_C1L;
+LCD_SEGS_C1H segment_buffer_C1H;
+LCD_SEGS_C2L segment_buffer_C2L;
+LCD_SEGS_C2H segment_buffer_C2H;
+LCD_SEGS_C3L segment_buffer_C3L;
+LCD_SEGS_C3H segment_buffer_C3H;
+unsigned __int8 hy_regs_buf[52];
 char bt_buf[56];
 _UNKNOWN unk_20003684; // weak
 _UNKNOWN unk_200036A0; // weak
@@ -1839,12 +1846,12 @@ int dword_200036C0; // weak
 int dword_200036C4; // weak
 int dword_200036C8; // weak
 char byte_200036CC; // weak
-int dword_200036D0; // weak
-int dword_200036D4; // weak
-int dword_200036D8; // weak
-int dword_200036DC; // weak
-int dword_200036E0; // weak
-int dword_200036E4; // weak
+int sdio_dword_200036D0; // weak
+int sdio_dword_200036D4; // weak
+int sdio_dword_200036D8; // weak
+int sdio_dword_200036DC; // weak
+int sdio_dword_200036E0; // weak
+int sdio_dword_200036E4; // weak
 char bt_rx_buf[20];
 char bt_rx_msg[20];
 __int16 curr_internal_temp_avg_buf[]; // idb
@@ -1976,16 +1983,16 @@ int meas_acv_dcv_ac_value_squared; // weak
 int meter_power_volts; // weak
 int meter_power_amps; // weak
 int meter_power_amps_uVA_precise; // weak
-int dword_20003998; // weak
+int sdio_dword_20003998; // weak
 int dword_2000399C; // weak
-int dword_200039A0; // weak
-int dword_200039A4; // weak
+int sdio_dword_200039A0; // weak
+int sdio_dword_200039A4; // weak
 int dword_200039A8; // weak
 int dword_200039AC; // weak
-int TIM2_prepare_sample_timer; // weak
-int tim2_timer_3; // weak
-int apo_timeout_counter; // weak
-int bt_packet_write_timer; // weak
+int TIM2_prepare_sample_timer_100ms; // weak
+int TIM2_500ms_timer; // weak
+int apo_timeout_subtimer_10ms; // weak
+int bt_packet_write_timer_250ms; // weak
 int mcafdoc_result_offset; // weak
 int mcafdoc_ac_input_hz; // weak
 int mcafdoc_corr_val; // weak
@@ -2022,29 +2029,29 @@ int mcafdoc_ac_result; // weak
 int mcafdoc_corr_val_diff; // weak
 float mcafdoc_ac_infreq_frac_into_range;
 __int16 curr_log_cache_pos; // weak
-__int16 batt_really_is_low_timer; // weak
+unsigned __int16 batt_really_is_low_timer;
 __int16 word_20003A50; // weak
 __int16 last_cal_year_month;
 __int16 log_playback_pos; // weak
-__int16 log_playback_window_end; // weak
-__int16 log_playback_window_start; // weak
+unsigned __int16 log_playback_window_end;
+unsigned __int16 log_playback_window_start;
 __int16 log_playback_window_len; // weak
 __int16 log_samples_in_eeprom; // weak
 __int16 edit_logging_interval; // weak
-__int16 logging_interval_timer; // weak
+unsigned __int16 logging_interval_timer_1s;
 __int16 log_playback_mode_timeout; // weak
 __int16 log_file_chain_idx; // weak
-__int16 TIM2_auto_hold_unhold_timer; // weak
-__int16 beep_timer; // weak
+__int16 TIM2_auto_hold_unhold_timer_1s; // weak
+__int16 beep_timer_1ms; // weak
 __int16 beep_time; // weak
 __int16 backlight_related_var_maybe_auto_timeout_unused; // weak
 __int16 curr_batt_charge; // weak
 __int16 batt_level_avg_count; // weak
 __int16 cal_internal_thermistor_factor; // weak
-__int16 TIM2_ac_input_freq_timed_out; // weak
-__int16 hy_change_CTA_val_timer; // weak
-__int16 meas_cap_maybe_recheck_timer; // weak
-__int16 meas_cap_some_other_timer_seems_unused; // weak
+__int16 freq_input_timeout_timer_10ms_unit; // weak
+unsigned __int16 hy_change_CTA_val_timer;
+__int16 mes_cap_no_reading_timeout_timer_10ms_unit; // weak
+__int16 meas_cap_some_other_timer_unused; // weak
 __int16 curr_burden_voltage; // weak
 __int16 curr_internal_temperature; // weak
 __int16 curr_internal_temp_adc; // weak
@@ -2052,7 +2059,7 @@ __int16 curr_internal_temp_avg; // weak
 __int16 curr_adc_val_for_batt_level_and_internal_temp; // weak
 __int16 curr_internal_temp_avg_count; // weak
 __int16 curr_internal_temp_invalid_timer; // weak
-__int16 subscr_power_v_a_switch_timer; // weak
+unsigned __int16 subscr_power_v_a_switch_timer;
 char amp_lead_pos_last; // weak
 char range_switch_unbounce_timer; // weak
 unsigned __int8 range_switch_bounce_timer;
@@ -2070,10 +2077,10 @@ char log_flush_samples_from_eeprom_try_counter; // weak
 char autorange_overflowed_last_time; // weak
 char bat_is_low; // weak
 char came_from_standby; // weak
-char logging_active; // weak
-char logging_interval_elapsed; // weak
+unsigned __int8 logging_active;
+unsigned __int8 logging_interval_elapsed;
 char maybe_logging_was_active_at_some_point; // weak
-char log_playback_mode; // weak
+unsigned __int8 log_playback_mode;
 char log_rdsamp_lowz_measuring_ac; // weak
 char log_rdsamp_lowz_active_cause_of_enough_volts; // weak
 char log_rdsamp_input_lpf_enabled; // weak
@@ -2082,7 +2089,7 @@ char log_rdsamp_in_ac_dc_mode; // weak
 char log_rdsamp_temp_in_c; // weak
 meter_meas_mode logged_meas_mode;
 char logged_meas_range; // weak
-char byte_20003AA9; // weak
+char logged_meas_decimal_place; // weak
 char log_prsamp_A_range_mode; // weak
 char log_prsamp_B_flags; // weak
 char log_prsamp_D_ex_volt_range_mode; // weak
@@ -2095,7 +2102,7 @@ char log_rdsamp_D_ex_volt_range_mode; // weak
 char log_rdsamp_E_ex_volt_flags; // weak
 char log_rdsamp_G_ex_amp_range_mode; // weak
 char log_rdsamp_H_ex_amp_flags; // weak
-char logging_interval_maybe_subtimer; // weak
+char logging_interval_maxspeed_timer_200ms; // weak
 char log_start_year; // weak
 char log_start_month; // weak
 char log_start_day; // weak
@@ -2108,7 +2115,7 @@ char log_end_day; // weak
 char log_end_hour; // weak
 char log_end_minute; // weak
 char log_end_second; // weak
-char curr_sys_error; // weak
+unsigned __int8 curr_sys_error;
 char log_need_to_flush_samples_from_eeprom; // weak
 char need_to_display_logging_ended; // weak
 meter_meas_mode log_rdsamp_mode;
@@ -2130,41 +2137,41 @@ char bt_rx_buf_max_pos; // weak
 char bt_rx_msg_len; // weak
 char bt_new_received_msg; // weak
 char bt_buf_cksum; // weak
-char maybe_new_time_from_bt; // weak
+char bt_set_the_time; // weak
 char bt_rx_checksum_valid; // weak
 meter_sub_mode curr_sub_mode;
 char apo_woke_up; // weak
-char curr_apo_off; // weak
+unsigned __int8 curr_apo_off;
 char apo_trigger_poweroff; // weak
 char batt_is_low_icon; // weak
 meter_meas_mode curr_meas_mode;
 unsigned __int8 curr_meas_range;
-char ac_input_freq_range; // weak
+unsigned __int8 ac_input_freq_range;
 char curr_scr_decimal_place; // weak
 unsigned __int8 curr_subscr_decimal_loc;
-char curr_bargraph_bars; // weak
+unsigned __int8 curr_bargraph_bars;
 char autoranging_disabled; // weak
 char meter_overflow_was_negative; // weak
-char curr_scr_overflow; // weak
+unsigned __int8 curr_scr_overflow;
 char ac_input_hz_overflow; // weak
 char scr_overload_displayed; // weak
 __int8 meter_mode_changed;
 char meter_range_changed; // weak
 char bargraph_range; // weak
-char meter_min_max_mode; // weak
-char auto_hold_is_enabled;
-char manual_hold_is_enabled;
-char auto_hold_need_to_unhold; // weak
+unsigned __int8 meter_min_max_mode;
+unsigned __int8 manual_hold_is_enabled;
+unsigned __int8 auto_hold_is_enabled;
+unsigned __int8 auto_hold_need_to_unhold;
 char auto_hold_holding; // weak
-char mode_range_just_got_changed_for_hold_purposes; // weak
-char lcd_update_from_auto_hold; // weak
+unsigned __int8 mode_range_just_got_changed_for_hold_purposes;
+unsigned __int8 lcd_update_from_auto_hold;
 char rel_meas_enabled; // weak
 char rel_meas_got_rel_val; // weak
 char lcd_needs_update; // weak
 char autorange_changed_range; // weak
-char meas_was_updated; // weak
+unsigned __int8 meas_was_updated;
 char need_to_update_bargraph; // weak
-char force_new_measurement_available_on_range_mode_change; // weak
+unsigned __int8 force_new_measurement_available_on_range_mode_change;
 char scr_need_to_refresh_meas_units_and_icons; // weak
 char scr_need_to_update_units_in_certain_modes; // weak
 char need_to_update_subscr; // weak
@@ -2174,23 +2181,23 @@ unsigned __int8 curr_range_switch_bits;
 unsigned __int8 range_switch_inputs;
 char new_buttons_pressed; // weak
 char new_buttons_held; // weak
-char bt_new_rx_button; // weak
+char bt_new_rxed_button; // weak
 char curr_button_input; // weak
 meter_buttons buttons_pressed;
 meter_buttons buttons_held;
-char bt_keycode_pressed; // weak
+unsigned __int8 bt_pressed_keycode;
 char setup_currently_editing; // weak
 char blink_value_being_edited; // weak
-char setup_edit_timeout; // weak
+char setup_edit_timeout_2min; // weak
 char setup_serial_selected_digit; // weak
 char button_hold_timer; // weak
 char button_check_timer; // weak
 char meter_curr_mode_is_timey_not_used; // weak
 char amp_lead_in_ma_jack_only; // weak
 char meter_amp_leads_incorrect; // weak
-char maybe_beep_error_rate_limited; // weak
+char beep_every_half_second; // weak
 char beep_currently_beeping; // weak
-char beep_num_beeps; // weak
+unsigned __int8 beep_num_beeps;
 char backlight_on; // weak
 char hy_cap_related_always_set_to_zero; // weak
 char curr_hy_R20; // weak
@@ -2229,23 +2236,23 @@ char cal_save_ac_factor_decirange_lf; // weak
 char cal_save_ac_factor_fullrange_lf; // weak
 char ac_input_freq_range_acv; // weak
 char ac_input_freq_range_lowz; // weak
-char meas_cap_maybe_recheck_timer_elapsed; // weak
+char meas_cap_no_reading_timeout_elapsed; // weak
 char burden_enabled_for_current_ranges; // weak
 char edit_burden_enabled_for_current_ranges; // weak
 char burden_overflow; // weak
 char burden_enabled_for_power_ranges; // weak
 char edit_burden_enabled_for_power_ranges; // weak
-char burden_active_msg_showing_timer; // weak
+char burden_active_msg_showing_timer_1s; // weak
 char temp_in_c; // weak
 char curr_internal_temp_invalid; // weak
 char temp_meas_sign; // weak
 char there_was_a_temp_error; // weak
 char curr_internal_temp_calc_invalid; // weak
 char curr_internal_temp_calc_invalid_timer; // weak
-char meter_overflow_icon; // weak
+char meter_danger_icon; // weak
 char meter_overload; // weak
 char high_voltage_diode; // weak
-char meas_diode_reprocess_timer; // weak
+char meas_diode_reprocess_timer_1s; // weak
 char continuity_beeping; // weak
 char curr_continuity_threshold; // weak
 char input_1ms_peak_enabled; // weak
@@ -2255,7 +2262,7 @@ char meter_mode_acv_dcv; // weak
 char meas_acv_dcv_ac_value_updated; // weak
 char meas_acv_dcv_dc_value_updated; // weak
 char acv_dcv_measuring_dc; // weak
-char meas_acv_dcv_mode_switch_timer; // weak
+unsigned __int8 meas_acv_dcv_mode_switch_timer;
 char subscr_showing_power_amps; // weak
 char meas_va_never_processed; // weak
 char measuring_amps_of_va_or_volts_of_burden; // weak
@@ -2266,20 +2273,20 @@ char curr_power_volts_overflow; // weak
 char curr_power_amps_overflow; // weak
 char cal_manual_state; // weak
 char cal_sd_state; // weak
-char TIM3_interrupt_did_fire_unused; // weak
-char TIM2_interrupt_did_fire; // weak
+char TIM3_1ms_interrupt_unused; // weak
+char TIM2_10ms_interrupt; // weak
 char TIM2_need_to_prepare_sample; // weak
 char need_to_write_bt_packet; // weak
-char decrement_setup_edit_timeout; // weak
-char need_to_read_rtc; // weak
+char setup_edit_timeout_subcounter_500ms; // weak
+char rtc_last_read_was_new_second; // weak
 char blink_dash_for_hour_minute; // weak
 char editing_rightside_time_val; // weak
-char curr_year; // weak
-char curr_month; // weak
-char curr_day; // weak
-char curr_hour; // weak
-char curr_minute; // weak
-char curr_second; // weak
+unsigned __int8 curr_year;
+unsigned __int8 curr_month;
+unsigned __int8 curr_day;
+unsigned __int8 curr_hour;
+unsigned __int8 curr_minute;
+unsigned __int8 curr_second;
 char edit_year; // weak
 char edit_month; // weak
 char edit_day; // weak
@@ -2288,7 +2295,7 @@ char edit_minute; // weak
 char byte_20003B74; // weak
 char byte_20003B75; // weak
 char byte_20003B76; // weak
-char sdio_maybe_interrupt_reason; // weak
+char sdio_err_state; // weak
 _UNKNOWN TIM2_0; // weak
 _UNKNOWN TIM3; // weak
 int LCD_CR; // weak
@@ -2302,10 +2309,10 @@ int LCD_RAM2L; // weak
 int LCD_RAM2H; // weak
 int LCD_RAM3L; // weak
 int LCD_RAM3H; // weak
-int dword_40002808; // weak
+int rtc_dword_40002808; // weak
 _DWORD dword_4000280C[6]; // idb
-int dword_40002824; // weak
-int dword_40002840; // weak
+int rtc_dword_40002824_unused; // weak
+int rtc_dword_40002840; // weak
 USART_REGS USART2_1;
 int PWR_CR; // weak
 int PWR_CSR; // weak
@@ -2344,7 +2351,7 @@ int RCC_APB2RSTR; // weak
 int RCC_AHBENR; // weak
 int RCC_APB2ENR; // weak
 int RCC_APB1ENR; // weak
-int dword_40023828; // weak
+int unused_dword_40023828; // weak
 int RCC_CSR; // weak
 int FLASH_ACR; // weak
 _DWORD FLASH_PECR;
@@ -2372,7 +2379,7 @@ void __fastcall update_display()
       scr_update_units_in_certain_modes();
     if ( need_to_update_subscr )
       update_subscr();
-    if ( subscr_mode_for_last_units != curr_sub_mode || subscr_need_to_update_units )
+    if ( subscr_mode_for_last_units != (unsigned __int8)curr_sub_mode || subscr_need_to_update_units )
     {
       subscr_mode_for_last_units = curr_sub_mode;
       subscr_need_to_update_units = 0;
@@ -2385,13 +2392,9 @@ void __fastcall update_display()
     }
   }
 }
-// 2000021E: using guessed type char subscr_mode_for_last_units;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AF7: using guessed type char lcd_needs_update;
 // 20003AF8: using guessed type char autorange_changed_range;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
-// 20003AFB: using guessed type char force_new_measurement_available_on_range_mode_change;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFD: using guessed type char scr_need_to_update_units_in_certain_modes;
 // 20003AFE: using guessed type char need_to_update_subscr;
@@ -2458,14 +2461,14 @@ void __fastcall scr_update_with_new_meas()
   }
   else if ( (meter_mode_range_change_delay || autorange_changed_range) && curr_meas_mode )
   {
-    if ( !manual_hold_is_enabled )
-      erase_scr(0);
+    if ( !auto_hold_is_enabled )
+      scr_erase(0);
     curr_scr_overflow = 0;
   }
-  else if ( auto_hold_is_enabled | (curr_scr_overflow ^ 1) )
+  else if ( manual_hold_is_enabled | (unsigned __int8)(curr_scr_overflow ^ 1) )
   {
     if ( curr_scr_digits < 100000 && curr_scr_digits >= -99999 )
-      put_a_num_on_screen(curr_meas_mode, curr_scr_decimal_place, curr_scr_digits);
+      scr_show_num(curr_meas_mode, curr_scr_decimal_place, curr_scr_digits);
   }
   else
   {
@@ -2476,11 +2479,7 @@ void __fastcall scr_update_with_new_meas()
 // 20000223: using guessed type char meter_mode_range_change_delay;
 // 20003858: using guessed type int curr_scr_digits;
 // 20003AE3: using guessed type char curr_scr_decimal_place;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF8: using guessed type char autorange_changed_range;
-// 20003AF9: using guessed type char meas_was_updated;
-// 20003AFB: using guessed type char force_new_measurement_available_on_range_mode_change;
 // 20003B12: using guessed type char meter_amp_leads_incorrect;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B27: using guessed type char calibrating_offset_finished;
@@ -2493,86 +2492,81 @@ void __fastcall scr_update_with_new_meas()
 // 20003B2E: using guessed type char calibrating_5k_end_unused;
 
 //----- (0800638E) --------------------------------------------------------
-void __fastcall log_playback_show_pos(unsigned __int16 a1)
+void __fastcall log_playback_show_sample(unsigned __int16 sample)
 {
-  unsigned __int16 v1; // r4@1
-  __int16 v2; // r0@1
+  unsigned __int16 v2; // r0@1
 
-  v1 = a1;
-  put_a_num_on_sub_screen(a1, 0, 0);
-  v2 = log_get_eeprom_idx_for_sample(v1);
+  subscr_show_num(sample, 0, 0);
+  v2 = log_get_eeprom_idx_for_sample(sample);
   log_read_sample_from_eeprom(v2 - 1);
   if ( log_rdsamp_C_main_measurement == 0x7FFFFFFF )
     show_overload(0);
   else
-    put_a_num_on_screen(logged_meas_mode, byte_20003AA9, log_rdsamp_C_main_measurement);
+    scr_show_num(logged_meas_mode, logged_meas_decimal_place, log_rdsamp_C_main_measurement);
   update_lcd_if_appropriate();
 }
 // 20003814: using guessed type int log_rdsamp_C_main_measurement;
-// 20003AA9: using guessed type char byte_20003AA9;
+// 20003AA9: using guessed type char logged_meas_decimal_place;
 
 //----- (080063E0) --------------------------------------------------------
-void __fastcall put_a_num_on_screen(meter_meas_mode mode, unsigned __int8 a2, unsigned int scr_digits)
+void __fastcall scr_show_num(meter_meas_mode mode, unsigned __int8 point, int num)
 {
-  unsigned __int8 v3; // r5@1
-  unsigned int v4; // r6@1
-  unsigned int v5; // r7@3
-
-  v3 = a2;
-  v4 = scr_digits;
-  if ( !auto_hold_is_enabled )
+  // show a decimal number on the main screen
+  // num is the digits, point is where the . goes
+  // point is 'number of digits to right of decimal point'
+  // when hold is active, screen changes are locked out
+  if ( !manual_hold_is_enabled )
   {
-    scr_set_decimal_point(a2);
-    if ( (v4 & 0x80000000) == 0 )
+    scr_set_decimal_point(point);
+    if ( num >= 0 )
     {
-      v5 = v4;
-      segment_buffer[3] &= 0xFFFFFF7F;
+      segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
     }
     else
     {
-      v5 = -v4;
-      segment_buffer[3] |= 0x80u;
+      num = -num;
+      segment_buffer_C1H |= S1H_MS_NEGATIVE;
     }
-    conv_int_to_bcd_tmp(v5);
-    conv_bcd_to_scr(v3);
+    conv_uint_to_bcd_tmp(num);
+    conv_bcd_tmp_to_scr(point);
     put_msg_on_scr(0, scr_msg_tmp);
     lcd_needs_update = 1;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (0800644A) --------------------------------------------------------
-void __fastcall scr_set_decimal_point(unsigned int result)
+void __fastcall scr_set_decimal_point(unsigned __int8 decimals)
 {
-  segment_buffer[0] &= ~0x4000u;
-  segment_buffer[1] = segment_buffer[1] & 0xFD5;
-  result = result;
-  if ( result == 1 )
+  // input is number of digits to the right of the decimal point
+  // e.g. decimals = 1 -> 0000.0
+  segment_buffer_C0L &= ~S0L_MS_POINT_d0;
+  segment_buffer_C0H &= 0xFD5u;                 // turn off all three C0H dec points
+  *(_DWORD *)&decimals = decimals;
+  if ( decimals == 1 )
   {
-    segment_buffer[0] |= 0x4000u;
+    segment_buffer_C0L |= S0L_MS_POINT_d0;
   }
-  else if ( result >= 1u )
+  else if ( decimals >= 1u )
   {
-    if ( result == 3 )
+    if ( decimals == 3 )
     {
-      segment_buffer[1] |= 8u;
+      segment_buffer_C0H |= S0H_MS_POINT_d000;
     }
-    else if ( result >= 3 )
+    else if ( decimals >= 3u )
     {
-      if ( result == 4 )
-        segment_buffer[1] |= 0x20u;
+      if ( decimals == 4 )
+        segment_buffer_C0H |= S0H_MS_POINT_d0000;
     }
     else
     {
-      segment_buffer[1] |= 2u;
+      segment_buffer_C0H |= S0H_MS_POINT_d00;
     }
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (080064C6) --------------------------------------------------------
-void scr_update_decimal_point()
+void __fastcall scr_update_decimal_point()
 {
   curr_scr_decimal_place = calc_decimal_place_for_mode_range(curr_meas_mode, curr_meas_range);
   scr_set_decimal_point(curr_scr_decimal_place);
@@ -2585,9 +2579,9 @@ void scr_refresh_meas_units_and_icons(void)
 {
   scr_need_to_refresh_meas_units_and_icons = 0;
   scr_update_status_icons();
-  scr_maybe_turn_off_all_units();
-  scr_update_meas_units(curr_meas_mode, curr_meas_range, lowz_measuring_ac, lowz_active_cause_of_enough_volts);
-  scr_update_bargraph_disp();
+  scr_turn_off_units();
+  scr_update_units(curr_meas_mode, curr_meas_range, lowz_measuring_ac, lowz_active_cause_of_enough_volts);
+  scr_reset_bargraph();
   lcd_needs_update = 1;
 }
 // 20003AF7: using guessed type char lcd_needs_update;
@@ -2596,175 +2590,173 @@ void scr_refresh_meas_units_and_icons(void)
 // 20003B33: using guessed type char lowz_active_cause_of_enough_volts;
 
 //----- (0800652A) --------------------------------------------------------
-void scr_update_status_icons(void)
+void __fastcall scr_update_status_icons()
 {
   scr_update_apo_status(0);
-  scr_update_low_batt(0);
+  scr_update_low_batt_icon(0);
   scr_update_bt_icon(0);
   scr_update_autorange_icon(0);
   scr_update_hold_icons(0);
-  scr_update_min_max_segs(0);
+  scr_update_min_max_icons(0);
   scr_update_rel_meas_icon(0);
   scr_update_1ms_peak_icon(0);
   scr_update_lpf_icon();
-  segment_party_5();
-  scr_update_overflow_icon();
+  scr_update_main_acdc_icons();
+  scr_update_danger_icon();
   scr_update_temp_unit();
   scr_update_mem_icon(0);
 }
 
 //----- (08006574) --------------------------------------------------------
-void __fastcall scr_update_meas_units(meter_meas_mode a1, unsigned __int8 range, int f_lowz_ac, int f_lowz_active)
+void __fastcall scr_update_units(meter_meas_mode mode, unsigned __int8 range, char f_lowz_ac, unsigned __int8 f_lowz_active)
 {
-  *&a1 = a1;
-  if ( a1 )
+  *(_DWORD *)&mode = mode;
+  if ( mode )
   {
-    switch ( a1 )
+    switch ( mode )
     {
       case MM_DCV:
-        segment_buffer[4] |= 0x400u;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
         break;
       case MM_ACV:
-        segment_buffer[4] |= 0x400u;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
         break;
       case MM_DCmV:
-        segment_buffer[2] |= 0x400u;
-        segment_buffer[4] |= 0x400u;
+        segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
         break;
       case MM_ACmV:
-        segment_buffer[2] |= 0x400u;
-        segment_buffer[4] |= 0x400u;
+        segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
         break;
       case MM_HZ:
         scr_update_hz_units(range);
         break;
       case MM_mSEC:
-        segment_buffer[6] |= 1u;
+        segment_buffer_C3L |= S3L_MS_mSEC;
         break;
       case MM_DUTY:
-        segment_buffer[0] |= 0x20000u;
+        segment_buffer_C0L |= S0L_MS_DUTY_PERCENT;
         break;
       case MM_OHMS:
         scr_update_ohm_units(range);
         break;
       case MM_CONTINUITY:
-        segment_buffer[4] |= 0x80000000;
-        segment_buffer[2] |= 0x100u;
+        segment_buffer_C2L |= S2L_ICON_CONTINUITY;
+        segment_buffer_C1L |= S1L_MS_OHMS;
         break;
       case MM_DIODE:
-        segment_buffer[6] |= 0x80000000;
-        segment_buffer[4] |= 0x400u;
+        segment_buffer_C3L |= S3L_ICON_DIODE;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
         break;
       case MM_CAP:
         scr_update_cap_units(range);
         break;
       case MM_ACuVA:
-        segment_buffer[0] |= 0x200u;
-        segment_buffer[4] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
-        segment_buffer[1] |= 1u;
+        segment_buffer_C0L |= S0L_MS_MICRO;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
+        segment_buffer_C3L |= S3L_MS_AMPS;
+        segment_buffer_C0H |= S0H_MS_AC;
         break;
       case MM_ACmVA:
-        segment_buffer[2] |= 0x400u;
-        segment_buffer[4] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
-        segment_buffer[1] |= 1u;
+        segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
+        segment_buffer_C3L |= S3L_MS_AMPS;
+        segment_buffer_C0H |= S0H_MS_AC;
         break;
       case MM_ACVA:
-        if ( range < 2 )
-          segment_buffer[2] |= 0x400u;
-        segment_buffer[4] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
-        segment_buffer[1] |= 1u;
+        if ( (signed int)range < 2 )
+          segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
+        segment_buffer_C3L |= S3L_MS_AMPS;
+        segment_buffer_C0H |= S0H_MS_AC;
         break;
       case MM_ACuA:
-        segment_buffer[0] |= 0x200u;
-        segment_buffer[6] |= 0x400u;
+        segment_buffer_C0L |= S0L_MS_MICRO;
+        segment_buffer_C3L |= S3L_MS_AMPS;
         break;
       case MM_DCuA:
-        segment_buffer[0] |= 0x200u;
-        segment_buffer[6] |= 0x400u;
+        segment_buffer_C0L |= S0L_MS_MICRO;
+        segment_buffer_C3L |= S3L_MS_AMPS;
         break;
       case MM_ACmA:
-        segment_buffer[2] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
+        segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C3L |= S3L_MS_AMPS;
         break;
       case MM_DCmA:
-        segment_buffer[2] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
+        segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C3L |= S3L_MS_AMPS;
         break;
       case MM_ACA:
         if ( !range )
-          segment_buffer[2] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
+          segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C3L |= S3L_MS_AMPS;
         break;
       case MM_DCA:
         if ( !range )
-          segment_buffer[2] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
+          segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C3L |= S3L_MS_AMPS;
         break;
       case MM_DCuVA:
-        segment_buffer[0] |= 0x200u;
-        segment_buffer[4] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
-        segment_buffer[5] |= 1u;
+        segment_buffer_C0L |= S0L_MS_MICRO;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
+        segment_buffer_C3L |= S3L_MS_AMPS;
+        segment_buffer_C2H |= S2H_MS_DC;
         break;
       case MM_DCmVA:
-        segment_buffer[2] |= 0x400u;
-        segment_buffer[4] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
-        segment_buffer[5] |= 1u;
+        segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
+        segment_buffer_C3L |= S3L_MS_AMPS;
+        segment_buffer_C2H |= S2H_MS_DC;
         break;
       case MM_DCVA:
-        if ( range < 2 )
-          segment_buffer[2] |= 0x400u;
-        segment_buffer[4] |= 0x400u;
-        segment_buffer[6] |= 0x400u;
-        segment_buffer[5] |= 1u;
+        if ( (signed int)range < 2 )
+          segment_buffer_C1L |= S1L_MS_MILLI;
+        segment_buffer_C2L |= S2L_MS_VOLTS;
+        segment_buffer_C3L |= S3L_MS_AMPS;
+        segment_buffer_C2H |= S2H_MS_DC;
         break;
     }
   }
   else                                          // MM_LOWZ
   {
-    segment_buffer[3] = 2 * (segment_buffer[3] >> 1);
+    segment_buffer_C1H = 2 * ((unsigned int)segment_buffer_C1H >> 1);// S1H_MS_PLUS_OF_AC_DC
     if ( f_lowz_active )
     {
       if ( f_lowz_ac )
-        segment_buffer[1] |= 1u;
+        segment_buffer_C0H |= S0H_MS_AC;
       else
-        segment_buffer[5] |= 1u;
+        segment_buffer_C2H |= S2H_MS_DC;
     }
     else
     {
-      segment_buffer[5] = 2 * (segment_buffer[5] >> 1);
-      segment_buffer[1] = 2 * (segment_buffer[1] >> 1);
+      segment_buffer_C2H = 2 * ((unsigned int)segment_buffer_C2H >> 1);// S2H_MS_DC
+      segment_buffer_C0H = 2 * ((unsigned int)segment_buffer_C0H >> 1);// S0H_MS_AC
     }
-    segment_buffer[0] |= 0x40000000u;
-    segment_buffer[4] |= 0x400u;
+    segment_buffer_C0L |= S0L_ICON_LOWZ;
+    segment_buffer_C2L |= S2L_MS_VOLTS;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (080069B8) --------------------------------------------------------
-void __fastcall segment_party_20(meter_meas_mode mode, unsigned __int8 range)
+void __fastcall scr_update_milli_for_VA(meter_meas_mode mode, unsigned __int8 range)
 {
   if ( mode == MM_DCVA || mode == MM_ACVA )
   {
-    if ( range < 2 )
-      segment_buffer[2] |= 0x400u;
+    if ( (signed int)range < 2 )
+      segment_buffer_C1L |= S1L_MS_MILLI;
     else
-      segment_buffer[2] &= 0xFFFFFBFF;
+      segment_buffer_C1L &= ~S1L_MS_MILLI;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (080069E6) --------------------------------------------------------
 void scr_update_for_playback()
 {
-  byte_20003AA9 = calc_decimal_place_for_mode_range(logged_meas_mode, logged_meas_range);
+  logged_meas_decimal_place = calc_decimal_place_for_mode_range(logged_meas_mode, (unsigned __int8)logged_meas_range);
   scr_update_status_icons();
-  scr_maybe_turn_off_all_units();
-  scr_update_meas_units(
+  scr_turn_off_units();
+  scr_update_units(
     logged_meas_mode,
     logged_meas_range,
     log_rdsamp_lowz_measuring_ac,
@@ -2775,7 +2767,7 @@ void scr_update_for_playback()
 // 20003AA1: using guessed type char log_rdsamp_lowz_measuring_ac;
 // 20003AA2: using guessed type char log_rdsamp_lowz_active_cause_of_enough_volts;
 // 20003AA8: using guessed type char logged_meas_range;
-// 20003AA9: using guessed type char byte_20003AA9;
+// 20003AA9: using guessed type char logged_meas_decimal_place;
 
 //----- (08006A26) --------------------------------------------------------
 void scr_update_units_in_certain_modes(void)
@@ -2799,71 +2791,68 @@ void scr_update_units_in_certain_modes(void)
 // 20003AFD: using guessed type char scr_need_to_update_units_in_certain_modes;
 
 //----- (08006A64) --------------------------------------------------------
-void __fastcall scr_update_cap_units(int result)
+void __fastcall scr_update_cap_units(unsigned __int8 range)
 {
-  if ( result >= 2 )
+  if ( (signed int)range >= 2 )
   {
-    segment_buffer[0] |= 0x200u;
-    segment_buffer[2] &= 0xFFFFFDFF;
+    segment_buffer_C0L |= S0L_MS_MICRO;
+    segment_buffer_C1L &= ~S1L_MS_NANO;
   }
   else
   {
-    segment_buffer[0] &= 0xFFFFFDFF;
-    segment_buffer[2] |= 0x200u;
+    segment_buffer_C0L &= ~S0L_MS_MICRO;
+    segment_buffer_C1L |= S1L_MS_NANO;
   }
-  segment_buffer[4] |= 0x200u;
+  segment_buffer_C2L |= S2L_MS_FARADS;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08006AAA) --------------------------------------------------------
-void __fastcall scr_update_ohm_units(int result)
+void __fastcall scr_update_ohm_units(unsigned __int8 range)
 {
-  if ( result < 5 )
+  if ( (signed int)range < 5 )
   {
-    if ( result < 2 )
+    if ( (signed int)range < 2 )
     {
-      segment_buffer[0] &= 0xFFFFFEFF;
-      segment_buffer[0] &= 0xFFFFF7FF;
+      segment_buffer_C0L &= ~S0L_MS_KILO;
+      segment_buffer_C0L &= ~S0L_MS_MEGA;
     }
     else
     {
-      segment_buffer[0] |= 0x100u;
-      segment_buffer[0] &= 0xFFFFF7FF;
+      segment_buffer_C0L |= S0L_MS_KILO;
+      segment_buffer_C0L &= ~S0L_MS_MEGA;
     }
   }
   else
   {
-    segment_buffer[0] &= 0xFFFFFEFF;
-    segment_buffer[0] |= 0x800u;
+    segment_buffer_C0L &= ~S0L_MS_KILO;
+    segment_buffer_C0L |= S0L_MS_MEGA;
   }
-  segment_buffer[2] |= 0x100u;
+  segment_buffer_C1L |= S1L_MS_OHMS;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08006B10) --------------------------------------------------------
-void __fastcall scr_update_hz_units(int result)
+void __fastcall scr_update_hz_units(unsigned __int8 range)
 {
-  if ( result < 5 )
+  if ( (signed int)range < 5 )
   {
-    if ( result < 2 )
+    if ( (signed int)range < 2 )
     {
-      segment_buffer[0] &= 0xFFFFFEFF;
-      segment_buffer[0] &= 0xFFFFF7FF;
+      segment_buffer_C0L &= ~S0L_MS_KILO;
+      segment_buffer_C0L &= ~S0L_MS_MEGA;
     }
     else
     {
-      segment_buffer[0] |= 0x100u;
-      segment_buffer[0] &= 0xFFFFF7FF;
+      segment_buffer_C0L |= S0L_MS_KILO;
+      segment_buffer_C0L &= ~S0L_MS_MEGA;
     }
   }
   else
   {
-    segment_buffer[0] &= 0xFFFFFEFF;
-    segment_buffer[0] |= 0x800u;
+    segment_buffer_C0L &= ~S0L_MS_KILO;
+    segment_buffer_C0L |= S0L_MS_MEGA;
   }
-  segment_buffer[4] |= 0x100u;
+  segment_buffer_C2L |= S2L_MS_HERTZ;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08006C10) --------------------------------------------------------
 void __fastcall update_subscr()
@@ -2880,34 +2869,34 @@ void __fastcall update_subscr()
   else if ( curr_sys_error )
   {
     if ( curr_sys_error == 20 )
-      display_low_batt();
+      show_low_batt();
     else
-      display_sd_error(curr_sys_error);
+      show_sd_error(curr_sys_error);
   }
   else if ( curr_sub_mode == SM_LOG_POS )
   {
     if ( logging_active )
     {
-      if ( log_total_samples >= 100000 )
+      if ( (unsigned int)log_total_samples >= 100000 )
       {
         v0 = 2;
         v1 = log_total_samples / 10u;
-        segment_buffer[4] |= 0x20000u;
+        segment_buffer_C2L |= S2L_SS_KILO;
       }
       else
       {
         v0 = 0;
         v1 = log_total_samples;
-        segment_buffer[4] &= 0xFFFDFFFF;
+        segment_buffer_C2L &= ~S2L_SS_KILO;
       }
-      put_a_num_on_sub_screen(v1, v0, 0);
+      subscr_show_num(v1, v0, 0);
     }
     else
     {
-      put_a_num_on_sub_screen(log_playback_pos, 0, 0);
+      subscr_show_num((unsigned __int16)log_playback_pos, 0, 0);
     }
   }
-  else if ( setup_currently_editing & (blink_value_being_edited ^ 1) )
+  else if ( (unsigned __int8)setup_currently_editing & (unsigned __int8)(blink_value_being_edited ^ 1) )
   {
     erase_part_of_screen_in_order_to_blink_value_being_edited();
   }
@@ -2938,7 +2927,7 @@ void __fastcall update_subscr()
         else if ( (curr_meas_mode == MM_ACuA || curr_meas_mode == MM_ACmA || curr_meas_mode == MM_ACA)
                && burden_enabled_for_current_ranges )
         {
-          subscr_show_ac_hz();
+          subscr_show_ac_input_hz();
         }
         break;
       case SM_SPL2:
@@ -2966,7 +2955,7 @@ void __fastcall update_subscr()
           else if ( (curr_meas_mode == MM_ACuA || curr_meas_mode == MM_ACmA || curr_meas_mode == MM_ACA)
                  && !burden_enabled_for_current_ranges )
           {
-            subscr_show_ac_hz();
+            subscr_show_ac_input_hz();
           }
         }
         else
@@ -3004,7 +2993,7 @@ void __fastcall update_subscr()
             }
             else
             {
-              subscr_show_ac_hz();
+              subscr_show_ac_input_hz();
             }
           }
           else
@@ -3018,7 +3007,7 @@ void __fastcall update_subscr()
           if ( curr_power_amps_overflow )
             show_overload(1);
           else
-            subscr_show_num(meter_power_amps);
+            subscr_show_digits(meter_power_amps);
         }
         else
         {
@@ -3029,7 +3018,7 @@ void __fastcall update_subscr()
           if ( curr_power_volts_overflow )
             show_overload(1);
           else
-            subscr_show_num(meter_power_volts);
+            subscr_show_digits(meter_power_volts);
         }
         break;
       case SM_CONTRAST:
@@ -3066,9 +3055,9 @@ void __fastcall update_subscr()
         show_apo_status(curr_apo_off);
         break;
       case SM_BATTERY:
-        segment_buffer[2] |= 0x20000u;
-        segment_buffer[4] &= 0xFFFFF7FF;
-        segment_buffer[6] &= 0xFFFFF7FF;
+        segment_buffer_C1L |= 0x20000u;
+        segment_buffer_C2L &= 0xFFFFF7FF;
+        segment_buffer_C3L &= 0xFFFFF7FF;
         show_batt_charge(curr_batt_charge);
         break;
       default:                                  // temperature
@@ -3079,12 +3068,10 @@ void __fastcall update_subscr()
   }
   else
   {
-    show_cal_mode_sub_msg();
+    show_cal_mode_msg_on_subscr();
   }
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 // 20000222: using guessed type char curr_lcd_contrast;
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003830: using guessed type int log_total_samples;
 // 2000394C: using guessed type int burden_last_volts;
 // 2000398C: using guessed type int meter_power_volts;
@@ -3093,10 +3080,7 @@ void __fastcall update_subscr()
 // 20003A5E: using guessed type __int16 edit_logging_interval;
 // 20003A6E: using guessed type __int16 curr_batt_charge;
 // 20003A7E: using guessed type __int16 curr_internal_temperature;
-// 20003A9D: using guessed type char logging_active;
-// 20003AC3: using guessed type char curr_sys_error;
 // 20003AC5: using guessed type char need_to_display_logging_ended;
-// 20003ADD: using guessed type char curr_apo_off;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B0A: using guessed type char setup_currently_editing;
 // 20003B0B: using guessed type char blink_value_being_edited;
@@ -3113,11 +3097,6 @@ void __fastcall update_subscr()
 // 20003B5C: using guessed type char curr_power_amps_range;
 // 20003B5D: using guessed type char curr_power_volts_overflow;
 // 20003B5E: using guessed type char curr_power_amps_overflow;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
 // 20003B6F: using guessed type char edit_year;
 // 20003B70: using guessed type char edit_month;
 // 20003B71: using guessed type char edit_day;
@@ -3125,71 +3104,67 @@ void __fastcall update_subscr()
 // 20003B73: using guessed type char edit_minute;
 
 //----- (080071A2) --------------------------------------------------------
-void __fastcall put_a_num_on_sub_screen(int num, unsigned __int8 point, char update_now)
+void __fastcall subscr_show_num(int num, unsigned __int8 point, char update_now)
 {
-  unsigned __int8 v3; // r5@1
-  char v4; // r6@1
-  int v5; // r7@2
-
-  v3 = point;
-  v4 = update_now;
+  // show a decimal number on the main screen
+  // num is the digits, point is where the . goes
+  // point is 'number of digits to right of decimal point'
   if ( num >= 0 )
   {
-    v5 = num;
-    segment_buffer[4] &= 0xDFFFFFFF;
+    segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   }
   else
   {
-    v5 = -num;
-    segment_buffer[4] |= 0x20000000u;
+    num = -num;
+    segment_buffer_C2L |= S2L_SS_NEGATIVE;
   }
   subscr_set_decimal_point(point);
-  conv_int_to_bcd_tmp(v5);
-  conv_bcd_to_scr(v3);
+  conv_uint_to_bcd_tmp(num);
+  conv_bcd_tmp_to_scr(point);
   put_msg_on_scr(1, scr_msg_tmp);
-  if ( v4 )
+  if ( update_now )
     update_lcd_if_appropriate();
   else
     lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (0800720E) --------------------------------------------------------
-void subscr_show_ac_hz(void)
+void subscr_show_ac_input_hz(void)
 {
-  set_point_for_ac_hz();
-  put_a_num_on_sub_screen(ac_input_freq / 10, curr_subscr_decimal_loc, 0);
+  set_point_for_ac_input_hz();
+  subscr_show_num(ac_input_freq / 10, curr_subscr_decimal_loc, 0);
 }
 // 20003870: using guessed type int ac_input_freq;
 
 //----- (0800722E) --------------------------------------------------------
-void __fastcall subscr_set_decimal_point(unsigned __int8 result)
+void __fastcall subscr_set_decimal_point(unsigned __int8 decimals)
 {
-  segment_buffer[0] &= 0xF55FFFFF;
-  *&result = result;
-  if ( result == 1 )
+  // input is number of places to the right of the dec point
+  // e.g. decimals = 1 -> 0000.0
+  segment_buffer_C0L &= ~(S0L_SS_POINT_d0000|S0L_SS_POINT_d000|S0L_SS_POINT_d00|S0L_SS_POINT_d0);
+  *(_DWORD *)&decimals = decimals;
+  if ( decimals == 1 )
   {
-    segment_buffer[0] |= 0x200000u;
+    segment_buffer_C0L |= S0L_SS_POINT_d0;
   }
-  else if ( result >= 1u )
+  else if ( decimals >= 1u )
   {
-    if ( result == 3 )
+    if ( decimals == 3 )
     {
-      segment_buffer[0] |= 0x2000000u;
+      segment_buffer_C0L |= S0L_SS_POINT_d000;
     }
-    else if ( result >= 3u )
+    else if ( decimals >= 3u )
     {
-      if ( result == 4 )
-        segment_buffer[0] |= 0x8000000u;
+      if ( decimals == 4 )
+        segment_buffer_C0L |= S0L_SS_POINT_d0000;
     }
     else
     {
-      segment_buffer[0] |= 0x800000u;
+      segment_buffer_C0L |= S0L_SS_POINT_d00;
     }
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08007298) --------------------------------------------------------
 void subscr_calc_power_amp_point()
@@ -3220,7 +3195,7 @@ void subscr_calc_power_amp_point()
 // 20003B5C: using guessed type char curr_power_amps_range;
 
 //----- (08007306) --------------------------------------------------------
-void set_point_for_ac_hz(void)
+void set_point_for_ac_input_hz(void)
 {
   curr_subscr_decimal_loc = 0;
   if ( curr_meas_mode == MM_ACuA
@@ -3231,41 +3206,40 @@ void set_point_for_ac_hz(void)
     curr_subscr_decimal_loc = calc_point_for_ac_hz(ac_input_freq_range);
   subscr_set_decimal_point(curr_subscr_decimal_loc);
 }
-// 20003AE2: using guessed type char ac_input_freq_range;
 
 //----- (0800735E) --------------------------------------------------------
-int __fastcall calc_point_for_ac_hz(unsigned __int8 a1)
+unsigned __int8 __fastcall calc_point_for_ac_hz(unsigned __int8 a1)
 {
   unsigned __int8 v1; // r1@1
-  int result; // r0@1
+  unsigned __int8 result; // r0@1
 
   v1 = a1;
-  LOBYTE(result) = 0;
+  result = 0;
   if ( v1 )
   {
     if ( v1 == 2 )
     {
-      LOBYTE(result) = 3;
+      result = 3;
     }
     else if ( v1 >= 2u )
     {
       if ( v1 == 4 )
       {
-        LOBYTE(result) = 1;
+        result = 1;
       }
       else if ( v1 < 4u )
       {
-        LOBYTE(result) = 2;
+        result = 2;
       }
     }
     else
     {
-      LOBYTE(result) = 1;
+      result = 1;
     }
   }
   else
   {
-    LOBYTE(result) = 2;
+    result = 2;
   }
   return result;
 }
@@ -3273,52 +3247,47 @@ int __fastcall calc_point_for_ac_hz(unsigned __int8 a1)
 //----- (08007396) --------------------------------------------------------
 void erase_part_of_screen_in_order_to_blink_value_being_edited(void)
 {
-  segment_buffer[4] &= 0xDFFFFFFF;
+  segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   subscr_set_decimal_point(0);
   if ( curr_sub_mode != SM_HOUR_MINUTE && curr_sub_mode != SM_MONTH_DAY )
   {
     if ( curr_sub_mode == SM_METER_SERIAL )
-      put_chr_on_scr_at_offset(4 - setup_serial_selected_digit, " ");
+      put_chr_on_scr_at_offset(4 - setup_serial_selected_digit, (unsigned __int8 *)" ");
     else
       put_msg_on_scr(1, "     ");
   }
   else if ( editing_rightside_time_val )
   {
-    put_2_chrs_on_scr_at_offset(3u, "  ");
+    put_2_chrs_on_scr_at_offset(3u, (unsigned __int8 *)"  ");
   }
   else
   {
-    put_2_chrs_on_scr_at_offset(0, "  ");
+    put_2_chrs_on_scr_at_offset(0, (unsigned __int8 *)"  ");
   }
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 // 20003B0D: using guessed type char setup_serial_selected_digit;
 // 20003B68: using guessed type char editing_rightside_time_val;
 
 //----- (08007410) --------------------------------------------------------
-void __fastcall subscr_show_num(unsigned int a1)
+void __fastcall subscr_show_digits(int digits)
 {
-  unsigned int v1; // r5@2
-
-  if ( (a1 & 0x80000000) == 0 )
+  if ( digits >= 0 )
   {
-    segment_buffer[4] &= 0xDFFFFFFF;
-    v1 = a1;
+    segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   }
   else
   {
-    segment_buffer[4] |= 0x20000000u;
-    v1 = -a1;
+    segment_buffer_C2L |= S2L_SS_NEGATIVE;
+    digits = -digits;
   }
   subscr_set_decimal_point(curr_subscr_decimal_loc);
-  conv_int_to_bcd_tmp(v1);
-  conv_bcd_to_scr(curr_subscr_decimal_loc);
+  conv_uint_to_bcd_tmp(digits);
+  conv_bcd_tmp_to_scr(curr_subscr_decimal_loc);
   put_msg_on_scr(1, scr_msg_tmp);
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (0800747C) --------------------------------------------------------
@@ -3330,7 +3299,7 @@ void __fastcall subscr_disp_burden_voltage(signed int meas, char a2)
   int v5; // r7@6
 
   v2 = 0;
-  if ( burden_active_msg_showing_timer )
+  if ( burden_active_msg_showing_timer_1s )
   {
     show_burden_msg();
   }
@@ -3375,28 +3344,27 @@ void __fastcall subscr_disp_burden_voltage(signed int meas, char a2)
     }
     else
     {
-      conv_int_to_bcd_tmp(v5);
+      conv_uint_to_bcd_tmp(v5);
       curr_subscr_decimal_loc = 1;
       subscr_set_decimal_point(1u);
-      conv_bcd_to_scr(curr_subscr_decimal_loc);
+      conv_bcd_tmp_to_scr(curr_subscr_decimal_loc);
     }
     if ( v2 )
-      segment_buffer[4] |= 0x20000000u;
+      segment_buffer_C2L |= S2L_SS_NEGATIVE;
     else
-      segment_buffer[4] &= 0xDFFFFFFF;
+      segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
     scr_msg_tmp[0] = 'b';
     put_msg_on_scr(1, scr_msg_tmp);
   }
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003A7C: using guessed type __int16 curr_burden_voltage;
 // 20003AF7: using guessed type char lcd_needs_update;
 // 20003B3F: using guessed type char burden_overflow;
-// 20003B42: using guessed type char burden_active_msg_showing_timer;
+// 20003B42: using guessed type char burden_active_msg_showing_timer_1s;
 
 //----- (080075AA) --------------------------------------------------------
-void show_burden_msg(void)
+void __fastcall show_burden_msg()
 {
   subscr_set_decimal_point(0);
   scr_msg_tmp[0] = 'b';
@@ -3417,9 +3385,9 @@ void __fastcall show_batt_charge(signed __int16 percent)
   v1 = percent;
   curr_subscr_decimal_loc = 1;
   subscr_set_decimal_point(1u);
-  if ( v1 >= 100 )
+  if ( (signed int)(unsigned __int16)v1 >= 100 )
     v1 = 99;
-  conv_int_to_bcd_tmp(v1);
+  conv_uint_to_bcd_tmp((unsigned __int16)v1);
   scr_msg_tmp[0] = 'B';
   scr_msg_tmp[1] = 'A';
   scr_msg_tmp[2] = 'T';
@@ -3434,28 +3402,22 @@ void __fastcall show_batt_charge(signed __int16 percent)
 //----- (08007664) --------------------------------------------------------
 void __fastcall show_contrast(char contrast)
 {
-  char v1; // r4@1
-
-  v1 = contrast;
   subscr_set_decimal_point(0);
   scr_msg_tmp[0] = 'L';
   scr_msg_tmp[1] = 'c';
   scr_msg_tmp[2] = 'd';
   scr_msg_tmp[3] = '-';
-  scr_msg_tmp[4] = v1 + 38;
+  scr_msg_tmp[4] = contrast + 38;
   put_msg_on_scr(1, scr_msg_tmp);
   lcd_needs_update = 1;
 }
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (080076B4) --------------------------------------------------------
-void __fastcall show_apo_status(char off)
+void __fastcall show_apo_status(char is_off)
 {
-  char v1; // r4@1
-
-  v1 = off;
   subscr_set_decimal_point(2u);
-  if ( v1 )
+  if ( is_off )
     put_msg_on_scr(1, "APOoF");
   else
     put_msg_on_scr(1, "APOoN");
@@ -3474,20 +3436,20 @@ void __fastcall show_logging_interval(unsigned __int16 interval)
   subscr_set_decimal_point(0);
   scr_msg_tmp[0] = 'I';
   scr_msg_tmp[1] = 'n';
-  if ( v1 < 100 )
+  if ( (signed int)v1 < 100 )
   {
     scr_msg_tmp[2] = 0x20;
   }
   else
   {
-    scr_msg_tmp[2] = v2 / 100 + 48;
-    v2 = v2 % 100;
+    scr_msg_tmp[2] = (unsigned __int16)v2 / 100 + 48;
+    v2 = (unsigned __int16)v2 % 100;
   }
-  if ( v1 < 10 )
+  if ( (signed int)v1 < 10 )
     scr_msg_tmp[3] = 32;
   else
-    scr_msg_tmp[3] = v2 / 10 + 48;
-  scr_msg_tmp[4] = v2 % 10 + 48;
+    scr_msg_tmp[3] = (unsigned __int16)v2 / 10 + 48;
+  scr_msg_tmp[4] = (unsigned __int16)v2 % 10 + 48;
   put_msg_on_scr(1, scr_msg_tmp);
   lcd_needs_update = 1;
 }
@@ -3513,12 +3475,12 @@ void __fastcall subscr_show_dBm()
     fp_compare_c_ge(curr_subscr_dBm, 0.0);
     if ( cf )                                   // >= 0
     {
-      segment_buffer[4] &= 0xDFFFFFFF;
+      segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
       v1 = curr_subscr_dBm;
     }
     else
     {
-      segment_buffer[4] |= 0x20000000u;
+      segment_buffer_C2L |= S2L_SS_NEGATIVE;
       LODWORD(v1) = LODWORD(curr_subscr_dBm) ^ 0x80000000;
     }
     fp_compare_c_le(v1, 1000.0);
@@ -3559,15 +3521,13 @@ void __fastcall subscr_show_dBm()
     else
       curr_subscr_digits = -v3;
     subscr_set_decimal_point(curr_subscr_decimal_loc);
-    conv_int_to_bcd_tmp(v3);
-    conv_bcd_to_scr(curr_subscr_decimal_loc);
+    conv_uint_to_bcd_tmp(v3);
+    conv_bcd_tmp_to_scr(curr_subscr_decimal_loc);
     put_msg_on_scr(1, scr_msg_tmp);
     lcd_needs_update = 1;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003978: using guessed type int curr_subscr_digits;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (080078C0) --------------------------------------------------------
@@ -3604,7 +3564,7 @@ void __fastcall show_continuity_threshold(unsigned __int8 threshold)
   unsigned __int8 v1; // r4@1
 
   v1 = threshold;
-  segment_buffer[4] &= 0xDFFFFFFF;
+  segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   subscr_set_decimal_point(0);
   if ( v1 )
   {
@@ -3628,7 +3588,6 @@ void __fastcall show_continuity_threshold(unsigned __int8 threshold)
   }
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (0800799C) --------------------------------------------------------
@@ -3640,8 +3599,8 @@ void __fastcall show_year_on_subscreen(char update_now, unsigned __int8 year_off
   v2 = update_now;
   v3 = year_offset + 2000;
   subscr_set_decimal_point(0);
-  conv_int_to_bcd_tmp(v3);
-  conv_bcd_to_scr(0);
+  conv_uint_to_bcd_tmp(v3);
+  conv_bcd_tmp_to_scr(0);
   put_msg_on_scr(1, scr_msg_tmp);
   if ( v2 )
     update_lcd_if_appropriate();
@@ -3661,13 +3620,13 @@ void __fastcall show_two_nums_on_subscreen(char update_now, unsigned __int8 left
   v4 = left;
   v5 = right;
   subscr_set_decimal_point(0);
-  conv_int_to_bcd_tmp(v4);
+  conv_uint_to_bcd_tmp(v4);
   disp_bcd_tmp[3] += 48;
   scr_msg_tmp[0] = LOBYTE(disp_bcd_tmp[3]);
   disp_bcd_tmp[4] += 48;
   scr_msg_tmp[1] = LOBYTE(disp_bcd_tmp[4]);
   scr_msg_tmp[2] = 45;
-  conv_int_to_bcd_tmp(v5);
+  conv_uint_to_bcd_tmp(v5);
   disp_bcd_tmp[3] += 48;
   scr_msg_tmp[3] = LOBYTE(disp_bcd_tmp[3]);
   disp_bcd_tmp[4] += 48;
@@ -3692,7 +3651,7 @@ void __fastcall show_two_nums_on_subscreen_with_dash(char update_now, unsigned _
   v4 = left;
   v5 = right;
   subscr_set_decimal_point(0);
-  conv_int_to_bcd_tmp(v4);
+  conv_uint_to_bcd_tmp(v4);
   disp_bcd_tmp[3] += 48;
   scr_msg_tmp[0] = LOBYTE(disp_bcd_tmp[3]);
   disp_bcd_tmp[4] += 48;
@@ -3701,7 +3660,7 @@ void __fastcall show_two_nums_on_subscreen_with_dash(char update_now, unsigned _
     scr_msg_tmp[2] = '-';
   else
     scr_msg_tmp[2] = 32;
-  conv_int_to_bcd_tmp(v5);
+  conv_uint_to_bcd_tmp(v5);
   disp_bcd_tmp[3] += 48;
   scr_msg_tmp[3] = LOBYTE(disp_bcd_tmp[3]);
   disp_bcd_tmp[4] += 48;
@@ -3725,8 +3684,6 @@ void __fastcall show_hour_min_on_subscr(char update_now)
     show_two_nums_on_subscreen_with_dash(update_now, curr_hour, curr_minute);
 }
 // 20003B0A: using guessed type char setup_currently_editing;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
 // 20003B72: using guessed type char edit_hour;
 // 20003B73: using guessed type char edit_minute;
 
@@ -3737,8 +3694,8 @@ void __fastcall show_meter_serial(char update_now)
 
   v1 = update_now;
   subscr_set_decimal_point(0);
-  conv_int_to_bcd_tmp(edit_meter_serial);
-  conv_bcd_to_scr(4u);
+  conv_uint_to_bcd_tmp(edit_meter_serial);
+  conv_bcd_tmp_to_scr(4u);
   put_msg_on_scr(1, scr_msg_tmp);
   if ( v1 )
     update_lcd_if_appropriate();
@@ -3754,7 +3711,7 @@ void __fastcall show_temperature(__int16 measurement)
   int v1; // r6@1
   char v2; // r5@4
 
-  segment_buffer[4] &= 0xDFFFFFFF;
+  segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   LOWORD(v1) = convert_temp_and_round(measurement);
   if ( there_was_a_temp_error )
   {
@@ -3764,17 +3721,17 @@ void __fastcall show_temperature(__int16 measurement)
   else
   {
     subscr_set_decimal_point(2u);
-    if ( v1 >= 0 )
+    if ( (signed __int16)v1 >= 0 )
     {
       v2 = 0;
     }
     else
     {
       v2 = 1;
-      v1 = -v1;
+      v1 = -(signed __int16)v1;
     }
-    conv_int_to_bcd_tmp(10 * v1);
-    conv_bcd_to_scr(2u);
+    conv_uint_to_bcd_tmp(10 * (signed __int16)v1);
+    conv_bcd_tmp_to_scr(2u);
     if ( v2 == 1 )
     {
       if ( disp_bcd_tmp[1] == 32 )
@@ -3796,7 +3753,6 @@ void __fastcall show_temperature(__int16 measurement)
     lcd_needs_update = 1;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003890: using guessed type int disp_bcd_tmp[5];
 // 20003AF7: using guessed type char lcd_needs_update;
 // 20003B43: using guessed type char temp_in_c;
@@ -3823,119 +3779,119 @@ __int16 __fastcall convert_temp_and_round(signed __int16 a1)
 void update_bargraph_if_in_appropriate_range(void)
 {
   need_to_update_bargraph = 0;
-  if ( (curr_meas_mode < MM_HZ || curr_meas_mode >= MM_OHMS) && curr_meas_mode != MM_CAP && curr_meas_mode != MM_TEMP )
-    update_bargraph();
+  if ( (curr_meas_mode < (signed int)MM_HZ || curr_meas_mode >= (signed int)MM_OHMS)
+    && curr_meas_mode != MM_CAP
+    && curr_meas_mode != MM_TEMP )
+    scr_update_bargraph();
 }
 // 20003AFA: using guessed type char need_to_update_bargraph;
 
 //----- (08007D40) --------------------------------------------------------
-void update_bargraph(void)
+void __fastcall scr_update_bargraph()
 {
   calc_bargraph_pos_for_mode();
   if ( curr_bargraph_bars )
-    segment_buffer[2] |= 2u;
+    segment_buffer_C1L |= S1L_BG_B1;
   else
-    scr_set_bargraph(25u, 1);
-  if ( curr_bargraph_bars < 2 )
-    scr_set_bargraph(25u, 2);
+    scr_clear_bargraph_bars(25u, 1);
+  if ( (signed int)curr_bargraph_bars < 2 )
+    scr_clear_bargraph_bars(25u, 2);
   else
-    segment_buffer[4] |= 2u;
-  if ( curr_bargraph_bars < 3 )
-    scr_set_bargraph(25u, 3);
+    segment_buffer_C2L |= S2L_BG_B2;
+  if ( (signed int)curr_bargraph_bars < 3 )
+    scr_clear_bargraph_bars(25u, 3);
   else
-    segment_buffer[6] |= 2u;
-  if ( curr_bargraph_bars < 4 )
-    scr_set_bargraph(25u, 4);
+    segment_buffer_C3L |= S3L_BG_B3;
+  if ( (signed int)curr_bargraph_bars < 4 )
+    scr_clear_bargraph_bars(25u, 4);
   else
-    segment_buffer[6] |= 4u;
-  if ( curr_bargraph_bars < 5 )
-    scr_set_bargraph(25u, 5);
+    segment_buffer_C3L |= S3L_BG_B4;
+  if ( (signed int)curr_bargraph_bars < 5 )
+    scr_clear_bargraph_bars(25u, 5);
   else
-    segment_buffer[4] |= 4u;
-  if ( curr_bargraph_bars < 6 )
-    scr_set_bargraph(25u, 6);
+    segment_buffer_C2L |= S2L_BG_B5;
+  if ( (signed int)curr_bargraph_bars < 6 )
+    scr_clear_bargraph_bars(25u, 6);
   else
-    segment_buffer[2] |= 4u;
-  if ( curr_bargraph_bars < 7 )
-    scr_set_bargraph(0x19u, 7);
+    segment_buffer_C1L |= S1L_BG_B6;
+  if ( (signed int)curr_bargraph_bars < 7 )
+    scr_clear_bargraph_bars(25u, 7);
   else
-    segment_buffer[0] |= 4u;
-  if ( curr_bargraph_bars < 8 )
-    scr_set_bargraph(0x19u, 8);
+    segment_buffer_C0L |= S0L_BG_B7;
+  if ( (signed int)curr_bargraph_bars < 8 )
+    scr_clear_bargraph_bars(25u, 8);
   else
-    segment_buffer[0] |= 8u;
-  if ( curr_bargraph_bars < 9 )
-    scr_set_bargraph(0x19u, 9);
+    segment_buffer_C0L |= S0L_BG_B8;
+  if ( (signed int)curr_bargraph_bars < 9 )
+    scr_clear_bargraph_bars(25u, 9);
   else
-    segment_buffer[2] |= 8u;
-  if ( curr_bargraph_bars < 10 )
-    scr_set_bargraph(0x19u, 10);
+    segment_buffer_C1L |= S1L_BG_B9;
+  if ( (signed int)curr_bargraph_bars < 10 )
+    scr_clear_bargraph_bars(25u, 10);
   else
-    segment_buffer[4] |= 8u;
-  if ( curr_bargraph_bars < 11 )
-    scr_set_bargraph(0x19u, 11);
+    segment_buffer_C2L |= S2L_BG_B10;
+  if ( (signed int)curr_bargraph_bars < 11 )
+    scr_clear_bargraph_bars(25u, 11);
   else
-    segment_buffer[6] |= 8u;
-  if ( curr_bargraph_bars < 12 )
-    scr_set_bargraph(0x19u, 12);
+    segment_buffer_C3L |= S3L_BG_B11;
+  if ( (signed int)curr_bargraph_bars < 12 )
+    scr_clear_bargraph_bars(25u, 12);
   else
-    segment_buffer[6] |= 0x10u;
-  if ( curr_bargraph_bars < 13 )
-    scr_set_bargraph(0x19u, 13);
+    segment_buffer_C3L |= S3L_BG_B12;
+  if ( (signed int)curr_bargraph_bars < 13 )
+    scr_clear_bargraph_bars(25u, 13);
   else
-    segment_buffer[4] |= 0x10u;
-  if ( curr_bargraph_bars < 14 )
-    scr_set_bargraph(0x19u, 14);
+    segment_buffer_C2L |= S2L_BG_B13;
+  if ( (signed int)curr_bargraph_bars < 14 )
+    scr_clear_bargraph_bars(25u, 14);
   else
-    segment_buffer[2] |= 0x10u;
-  if ( curr_bargraph_bars < 15 )
-    scr_set_bargraph(0x19u, 15);
+    segment_buffer_C1L |= S1L_BG_B14;
+  if ( (signed int)curr_bargraph_bars < 15 )
+    scr_clear_bargraph_bars(25u, 15);
   else
-    segment_buffer[0] |= 0x10u;
-  if ( curr_bargraph_bars < 16 )
-    scr_set_bargraph(0x19u, 16);
+    segment_buffer_C0L |= S0L_BG_B15;
+  if ( (signed int)curr_bargraph_bars < 16 )
+    scr_clear_bargraph_bars(25u, 16);
   else
-    segment_buffer[0] |= 0x20u;
-  if ( curr_bargraph_bars < 17 )
-    scr_set_bargraph(0x19u, 17);
+    segment_buffer_C0L |= S0L_BG_B16;
+  if ( (signed int)curr_bargraph_bars < 17 )
+    scr_clear_bargraph_bars(25u, 17);
   else
-    segment_buffer[2] |= 0x20u;
-  if ( curr_bargraph_bars < 18 )
-    scr_set_bargraph(0x19u, 18);
+    segment_buffer_C1L |= S1L_BG_B17;
+  if ( (signed int)curr_bargraph_bars < 18 )
+    scr_clear_bargraph_bars(25u, 18);
   else
-    segment_buffer[4] |= 0x20u;
-  if ( curr_bargraph_bars < 19 )
-    scr_set_bargraph(0x19u, 19);
+    segment_buffer_C2L |= S2L_BG_B18;
+  if ( (signed int)curr_bargraph_bars < 19 )
+    scr_clear_bargraph_bars(25u, 19);
   else
-    segment_buffer[6] |= 0x20u;
-  if ( curr_bargraph_bars < 20 )
-    scr_set_bargraph(0x19u, 20);
+    segment_buffer_C3L |= S3L_BG_B19;
+  if ( (signed int)curr_bargraph_bars < 20 )
+    scr_clear_bargraph_bars(25u, 20);
   else
-    segment_buffer[6] |= 0x40u;
-  if ( curr_bargraph_bars < 21 )
-    scr_set_bargraph(0x19u, 21);
+    segment_buffer_C3L |= S3L_BG_B20;
+  if ( (signed int)curr_bargraph_bars < 21 )
+    scr_clear_bargraph_bars(25u, 21);
   else
-    segment_buffer[4] |= 0x40u;
-  if ( curr_bargraph_bars < 22 )
-    scr_set_bargraph(0x19u, 22);
+    segment_buffer_C2L |= S2L_BG_B21;
+  if ( (signed int)curr_bargraph_bars < 22 )
+    scr_clear_bargraph_bars(25u, 22);
   else
-    segment_buffer[2] |= 0x40u;
-  if ( curr_bargraph_bars < 23 )
-    scr_set_bargraph(0x19u, 23);
+    segment_buffer_C1L |= S1L_BG_B22;
+  if ( (signed int)curr_bargraph_bars < 23 )
+    scr_clear_bargraph_bars(25u, 23);
   else
-    segment_buffer[0] |= 0x40u;
-  if ( curr_bargraph_bars < 24 )
-    scr_set_bargraph(0x19u, 24);
+    segment_buffer_C0L |= S0L_BG_B23;
+  if ( (signed int)curr_bargraph_bars < 24 )
+    scr_clear_bargraph_bars(25u, 24);
   else
-    segment_buffer[0] |= 0x80u;
-  if ( curr_bargraph_bars < 25 )
-    scr_set_bargraph(0x19u, 25);
+    segment_buffer_C0L |= S0L_BG_B24;
+  if ( (signed int)curr_bargraph_bars < 25 )
+    scr_clear_bargraph_bars(25u, 25);
   else
-    segment_buffer[2] |= 0x80u;
+    segment_buffer_C1L |= S1L_BG_B25;
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (080080DC) --------------------------------------------------------
@@ -3947,7 +3903,7 @@ void calc_bargraph_pos_for_mode(void)
 
   if ( curr_meas_mode )
   {
-    if ( curr_meas_mode - MM_DCV <= 3 )
+    if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_DCV <= 3 )
     {
       if ( curr_meas_range == 3 )
         calc_bargraph_pos(1);
@@ -3956,27 +3912,27 @@ void calc_bargraph_pos_for_mode(void)
     }
     else
     {
-      if ( curr_meas_mode - MM_OHMS <= 2 )
+      if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_OHMS <= 2 )
         goto LABEL_20;
-      v0 = curr_meas_mode - MM_ACuVA;
-      if ( v0 <= 2 )
+      v0 = (unsigned __int8)curr_meas_mode - MM_ACuVA;
+      if ( (unsigned int)v0 <= 2 )
       {
 LABEL_8:
         calc_bargraph_pos(0);
         return;
       }
-      v1 = curr_meas_mode - MM_ACuA;
-      if ( v1 <= 3 )
+      v1 = (unsigned __int8)curr_meas_mode - MM_ACuA;
+      if ( (unsigned int)v1 <= 3 )
       {
 LABEL_20:
         calc_bargraph_pos(0);
       }
       else
       {
-        v2 = curr_meas_mode - MM_ACA;
-        if ( v2 > 1 )
+        v2 = (unsigned __int8)curr_meas_mode - MM_ACA;
+        if ( (unsigned int)v2 > 1 )
         {
-          if ( curr_meas_mode - MM_DCuVA > 2 )
+          if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_DCuVA > 2 )
             return;
           goto LABEL_8;
         }
@@ -3999,154 +3955,153 @@ void __fastcall calc_bargraph_pos(char range)
   signed __int16 v1; // r5@10
   signed int v2; // r6@13
 
-  if ( (curr_meas_mode < MM_HZ || curr_meas_mode >= MM_OHMS) && curr_meas_mode != MM_CAP && curr_meas_mode != MM_TEMP )
+  if ( (curr_meas_mode < (signed int)MM_HZ || curr_meas_mode >= (signed int)MM_OHMS)
+    && curr_meas_mode != MM_CAP
+    && curr_meas_mode != MM_TEMP )
   {
     if ( curr_bargraph_digits >= 0 )
     {
-      segment_buffer[4] = 2 * (segment_buffer[4] >> 1);
-      segment_buffer[2] |= 1u;
+      segment_buffer_C2L = 2 * ((unsigned int)segment_buffer_C2L >> 1);// S1L_BG_NEGATIVE
+      segment_buffer_C1L |= S1L_BG_POSITIVE;
     }
     else
     {
-      segment_buffer[4] |= 1u;
-      segment_buffer[2] = 2 * (segment_buffer[2] >> 1);
+      segment_buffer_C2L |= S2L_BG_NEGATIVE;
+      segment_buffer_C1L = 2 * ((unsigned int)segment_buffer_C1L >> 1);// S1L_BG_POSITIVE
     }
     if ( range == 1 )
     {
-      segment_buffer[0] &= 0xFFFFEFFF;
-      segment_buffer[0] |= 0x400u;
-      segment_party_21(1);
+      segment_buffer_C0L &= ~S0L_BG_SCALE_5;
+      segment_buffer_C0L |= S0L_BG_SCALE_10;
+      scr_update_bargraph_range(1);
       v1 = 400;
     }
     else
     {
-      segment_buffer[0] |= 0x1000u;
-      segment_buffer[0] &= 0xFFFFFBFF;
-      segment_party_21(0);
+      segment_buffer_C0L |= S0L_BG_SCALE_5;
+      segment_buffer_C0L &= ~S0L_BG_SCALE_10;
+      scr_update_bargraph_range(0);
       v1 = 2000;
     }
-    segment_buffer[0] |= 2u;
+    segment_buffer_C0L |= S0L_BG_SCALE;
     if ( curr_bargraph_digits >= 0 )
       v2 = curr_bargraph_digits;
     else
       v2 = -curr_bargraph_digits;
-    curr_bargraph_bars = v2 / v1;
+    curr_bargraph_bars = v2 / (unsigned __int16)v1;
     if ( curr_scr_overflow )
       curr_bargraph_bars = 25;
-    if ( curr_meas_mode == MM_DIODE && curr_bargraph_bars >= 16 )
+    if ( curr_meas_mode == MM_DIODE && (signed int)curr_bargraph_bars >= 16 )
       curr_bargraph_bars = 15;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 2000385C: using guessed type int curr_bargraph_digits;
-// 20003AE5: using guessed type char curr_bargraph_bars;
-// 20003AE8: using guessed type char curr_scr_overflow;
 
 //----- (080082B4) --------------------------------------------------------
-void __fastcall segment_party_21(char a1)
+void __fastcall scr_update_bargraph_range(char a1)
 {
   int v1; // r0@9
 
   if ( a1 == 1 )
   {
-    segment_buffer[6] |= 0x100u;
+    segment_buffer_C3L |= S3L_BG_RANGE_1000;
     bargraph_range = 3;
-    segment_buffer[4] &= 0xFFFFFF7F;
-    segment_buffer[6] &= 0xFFFFFF7F;
-    segment_buffer[2] &= 0xFFFFF7FF;
+    segment_buffer_C2L &= ~S2L_BG_RANGE_5;
+    segment_buffer_C3L &= ~S3L_BG_RANGE_0_FOR_50;
+    segment_buffer_C1L &= ~S1L_BG_RANGE_0_FOR_500;
     return;
   }
-  segment_buffer[6] &= 0xFFFFFEFF;
-  segment_buffer[4] |= 0x80u;
+  segment_buffer_C3L &= ~S3L_BG_RANGE_1000;
+  segment_buffer_C2L |= S2L_BG_RANGE_5;
   bargraph_range = 0;
-  if ( curr_meas_mode - 1 <= 1 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 1 <= 1 )
     goto LABEL_15;
-  if ( curr_meas_mode - 3 <= 1 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 3 <= 1 )
     goto LABEL_25;
   if ( curr_meas_mode == 9 )
   {
-    if ( curr_meas_range >= 2 )
+    if ( (signed int)curr_meas_range >= 2 )
     {
-      if ( curr_meas_range >= 5 )
-        maybe_scr_update_bargraph_range((curr_meas_range - 5));
+      if ( (signed int)curr_meas_range >= 5 )
+        scr_update_bargraph_range_5s(curr_meas_range - 5);
       else
-        maybe_scr_update_bargraph_range((curr_meas_range - 2));
+        scr_update_bargraph_range_5s(curr_meas_range - 2);
     }
     else
     {
-      maybe_scr_update_bargraph_range((curr_meas_range + 1));
+      scr_update_bargraph_range_5s(curr_meas_range + 1);
     }
     return;
   }
   if ( curr_meas_mode == 10 )
   {
-    maybe_scr_update_bargraph_range(2u);
+    scr_update_bargraph_range_5s(2u);
     return;
   }
   if ( curr_meas_mode == MM_DIODE )
   {
 LABEL_15:
-    maybe_scr_update_bargraph_range(curr_meas_range);
+    scr_update_bargraph_range_5s(curr_meas_range);
     return;
   }
-  if ( curr_meas_mode - 16 <= 1 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 16 <= 1 )
   {
 LABEL_25:
-    maybe_scr_update_bargraph_range((curr_meas_range + 1));
+    scr_update_bargraph_range_5s(curr_meas_range + 1);
     return;
   }
-  v1 = curr_meas_mode - 18;
-  if ( v1 <= 1 )
+  v1 = (unsigned __int8)curr_meas_mode - 18;
+  if ( (unsigned int)v1 <= 1 )
     goto LABEL_15;
-  if ( curr_meas_mode - 20 <= 1 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 20 <= 1 )
   {
     if ( curr_meas_range )
-      maybe_scr_update_bargraph_range(0);
+      scr_update_bargraph_range_5s(0);
     else
-      maybe_scr_update_bargraph_range(2u);
+      scr_update_bargraph_range_5s(2u);
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AED: using guessed type char bargraph_range;
 
 //----- (080083F0) --------------------------------------------------------
-void __fastcall maybe_scr_update_bargraph_range(unsigned int bargraph_range)
+void __fastcall scr_update_bargraph_range_5s(unsigned __int8 bargraph_range_in)
 {
-  bargraph_range = bargraph_range;
-  if ( bargraph_range )
+  *(_DWORD *)&bargraph_range_in = bargraph_range_in;
+  if ( bargraph_range_in )
   {
-    if ( bargraph_range == 2 )
+    if ( bargraph_range_in == 2 )
     {
-      segment_buffer[6] |= 0x80u;
-      segment_buffer[2] |= 0x800u;
-      ::bargraph_range = 2;
+      segment_buffer_C3L |= S3L_BG_RANGE_0_FOR_50;
+      segment_buffer_C1L |= S1L_BG_RANGE_0_FOR_500;
+      bargraph_range = 2;
     }
-    else if ( bargraph_range < 2 )
+    else if ( bargraph_range_in < 2u )
     {
-      segment_buffer[6] |= 0x80u;
-      segment_buffer[2] &= 0xFFFFF7FF;
-      ::bargraph_range = 1;
+      segment_buffer_C3L |= S3L_BG_RANGE_0_FOR_50;
+      segment_buffer_C1L &= ~S1L_BG_RANGE_0_FOR_500;
+      bargraph_range = 1;
     }
   }
   else
   {
-    segment_buffer[6] &= 0xFFFFFF7F;
-    segment_buffer[2] &= 0xFFFFF7FF;
-    ::bargraph_range = 0;
+    segment_buffer_C3L &= ~S3L_BG_RANGE_0_FOR_50;
+    segment_buffer_C1L &= ~S1L_BG_RANGE_0_FOR_500;
+    bargraph_range = 0;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AED: using guessed type char bargraph_range;
 
 //----- (08008480) --------------------------------------------------------
-void scr_update_bargraph_disp()
+void scr_reset_bargraph()
 {
-  if ( (curr_meas_mode < MM_HZ || curr_meas_mode >= MM_OHMS) && curr_meas_mode != MM_CAP && curr_meas_mode != MM_TEMP )
+  if ( (curr_meas_mode < (signed int)MM_HZ || curr_meas_mode >= (signed int)MM_OHMS)
+    && curr_meas_mode != MM_CAP
+    && curr_meas_mode != MM_TEMP )
   {
     curr_bargraph_digits = 0;
     curr_bargraph_bars = 0;
     calc_bargraph_pos_for_mode();
-    scr_set_bargraph(25u, 1);
+    scr_clear_bargraph_bars(25u, 1);
     lcd_needs_update = 1;
   }
   else
@@ -4155,188 +4110,186 @@ void scr_update_bargraph_disp()
   }
 }
 // 2000385C: using guessed type int curr_bargraph_digits;
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (080084DC) --------------------------------------------------------
 void scr_turn_off_bargraph(void)
 {
-  segment_buffer[4] = 2 * (segment_buffer[4] >> 1);
-  segment_buffer[2] = 2 * (segment_buffer[2] >> 1);
-  segment_buffer[0] &= 0xFFFFEFFF;
-  segment_buffer[0] &= 0xFFFFFBFF;
-  segment_buffer[6] &= 0xFFFFFEFF;
-  segment_buffer[4] &= 0xFFFFFF7F;
-  segment_buffer[6] &= 0xFFFFFF7F;
-  segment_buffer[2] &= 0xFFFFF7FF;
-  scr_set_bargraph(25u, 0);
+  segment_buffer_C2L = 2 * ((unsigned int)segment_buffer_C2L >> 1);// S2L_BG_NEGATIVE
+  segment_buffer_C1L = 2 * ((unsigned int)segment_buffer_C1L >> 1);// S1L_BG_POSITIVE
+  segment_buffer_C0L &= ~S0L_BG_SCALE_5;
+  segment_buffer_C0L &= ~S0L_BG_SCALE_10;
+  segment_buffer_C3L &= ~S3L_BG_RANGE_1000;
+  segment_buffer_C2L &= ~S2L_BG_RANGE_5;
+  segment_buffer_C3L &= ~S3L_BG_RANGE_0_FOR_50;
+  segment_buffer_C1L &= ~S1L_BG_RANGE_0_FOR_500;
+  scr_clear_bargraph_bars(25u, 0);
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08008588) --------------------------------------------------------
-void __fastcall scr_set_bargraph(unsigned int max, char val)
+void __fastcall scr_clear_bargraph_bars(unsigned __int8 end, char start)
 {
-  max = max;
-  if ( !max )
+  // turn off the bargraph segments >= start and <= end
+  *(_DWORD *)&end = end;
+  if ( !end )
   {
 LABEL_52:
-    segment_buffer[0] &= 0xFFFFFFFD;
+    segment_buffer_C0L &= ~S0L_BG_SCALE;
     return;
   }
-  if ( max == 2 )
+  if ( end == 2 )
     goto LABEL_50;
-  if ( max < 2 )
+  if ( end < 2u )
     goto LABEL_51;
-  if ( max == 4 )
+  if ( end == 4 )
     goto LABEL_48;
-  if ( max < 4 )
+  if ( end < 4u )
     goto LABEL_49;
-  if ( max == 6 )
+  if ( end == 6 )
     goto LABEL_46;
-  if ( max < 6 )
+  if ( end < 6u )
     goto LABEL_47;
-  if ( max == 8 )
+  if ( end == 8 )
     goto LABEL_44;
-  if ( max < 8 )
+  if ( end < 8u )
     goto LABEL_45;
-  if ( max == 10 )
+  if ( end == 10 )
     goto LABEL_42;
-  if ( max < 0xA )
+  if ( end < 0xAu )
     goto LABEL_43;
-  if ( max == 12 )
+  if ( end == 12 )
     goto LABEL_40;
-  if ( max < 0xC )
+  if ( end < 0xCu )
     goto LABEL_41;
-  if ( max == 14 )
+  if ( end == 14 )
     goto LABEL_38;
-  if ( max < 0xE )
+  if ( end < 0xEu )
     goto LABEL_39;
-  if ( max == 16 )
+  if ( end == 16 )
     goto LABEL_36;
-  if ( max < 0x10 )
+  if ( end < 0x10u )
     goto LABEL_37;
-  if ( max == 18 )
+  if ( end == 18 )
     goto LABEL_34;
-  if ( max < 0x12 )
+  if ( end < 0x12u )
     goto LABEL_35;
-  if ( max == 20 )
+  if ( end == 20 )
     goto LABEL_32;
-  if ( max < 0x14 )
+  if ( end < 0x14u )
     goto LABEL_33;
-  if ( max == 22 )
+  if ( end == 22 )
     goto LABEL_30;
-  if ( max < 0x16 )
+  if ( end < 0x16u )
     goto LABEL_31;
-  if ( max == 24 )
+  if ( end == 24 )
     goto LABEL_55;
-  if ( max < 0x18 )
+  if ( end < 0x18u )
     goto LABEL_29;
-  if ( max == 25 )
+  if ( end == 25 )
   {
-    segment_buffer[2] &= 0xFFFFFF7F;
-    if ( val != 25 )
+    segment_buffer_C1L &= ~S1L_BG_B25;
+    if ( start != 25 )
     {
 LABEL_55:
-      segment_buffer[0] &= 0xFFFFFF7F;
-      if ( val == 24 )
+      segment_buffer_C0L &= ~S0L_BG_B24;
+      if ( start == 24 )
         return;
 LABEL_29:
-      segment_buffer[0] &= 0xFFFFFFBF;
-      if ( val == 23 )
+      segment_buffer_C0L &= ~S0L_BG_B23;
+      if ( start == 23 )
         return;
 LABEL_30:
-      segment_buffer[2] &= 0xFFFFFFBF;
-      if ( val == 22 )
+      segment_buffer_C1L &= ~S1L_BG_B22;
+      if ( start == 22 )
         return;
 LABEL_31:
-      segment_buffer[4] &= 0xFFFFFFBF;
-      if ( val == 21 )
+      segment_buffer_C2L &= ~S2L_BG_B21;
+      if ( start == 21 )
         return;
 LABEL_32:
-      segment_buffer[6] &= 0xFFFFFFBF;
-      if ( val == 20 )
+      segment_buffer_C3L &= ~S3L_BG_B20;
+      if ( start == 20 )
         return;
 LABEL_33:
-      segment_buffer[6] &= 0xFFFFFFDF;
-      if ( val == 19 )
+      segment_buffer_C3L &= ~S3L_BG_B19;
+      if ( start == 19 )
         return;
 LABEL_34:
-      segment_buffer[4] &= 0xFFFFFFDF;
-      if ( val == 18 )
+      segment_buffer_C2L &= ~S2L_BG_B18;
+      if ( start == 18 )
         return;
 LABEL_35:
-      segment_buffer[2] &= 0xFFFFFFDF;
-      if ( val == 17 )
+      segment_buffer_C1L &= ~S1L_BG_B17;
+      if ( start == 17 )
         return;
 LABEL_36:
-      segment_buffer[0] &= 0xFFFFFFDF;
-      if ( val == 16 )
+      segment_buffer_C0L &= ~S0L_BG_B16;
+      if ( start == 16 )
         return;
 LABEL_37:
-      segment_buffer[0] &= 0xFFFFFFEF;
-      if ( val == 15 )
+      segment_buffer_C0L &= ~S0L_BG_B15;
+      if ( start == 15 )
         return;
 LABEL_38:
-      segment_buffer[2] &= 0xFFFFFFEF;
-      if ( val == 14 )
+      segment_buffer_C1L &= ~S1L_BG_B14;
+      if ( start == 14 )
         return;
 LABEL_39:
-      segment_buffer[4] &= 0xFFFFFFEF;
-      if ( val == 13 )
+      segment_buffer_C2L &= ~S2L_BG_B13;
+      if ( start == 13 )
         return;
 LABEL_40:
-      segment_buffer[6] &= 0xFFFFFFEF;
-      if ( val == 12 )
+      segment_buffer_C3L &= ~S3L_BG_B12;
+      if ( start == 12 )
         return;
 LABEL_41:
-      segment_buffer[6] &= 0xFFFFFFF7;
-      if ( val == 11 )
+      segment_buffer_C3L &= ~S3L_BG_B11;
+      if ( start == 11 )
         return;
 LABEL_42:
-      segment_buffer[4] &= 0xFFFFFFF7;
-      if ( val == 10 )
+      segment_buffer_C2L &= ~S2L_BG_B10;
+      if ( start == 10 )
         return;
 LABEL_43:
-      segment_buffer[2] &= 0xFFFFFFF7;
-      if ( val == 9 )
+      segment_buffer_C1L &= ~S1L_BG_B9;
+      if ( start == 9 )
         return;
 LABEL_44:
-      segment_buffer[0] &= 0xFFFFFFF7;
-      if ( val == 8 )
+      segment_buffer_C0L &= ~S0L_BG_B8;
+      if ( start == 8 )
         return;
 LABEL_45:
-      segment_buffer[0] &= 0xFFFFFFFB;
-      if ( val == 7 )
+      segment_buffer_C0L &= ~S0L_BG_B7;
+      if ( start == 7 )
         return;
 LABEL_46:
-      segment_buffer[2] &= 0xFFFFFFFB;
-      if ( val == 6 )
+      segment_buffer_C1L &= ~S1L_BG_B6;
+      if ( start == 6 )
         return;
 LABEL_47:
-      segment_buffer[4] &= 0xFFFFFFFB;
-      if ( val == 5 )
+      segment_buffer_C2L &= ~S2L_BG_B5;
+      if ( start == 5 )
         return;
 LABEL_48:
-      segment_buffer[6] &= 0xFFFFFFFB;
-      if ( val == 4 )
+      segment_buffer_C3L &= ~S3L_BG_B4;
+      if ( start == 4 )
         return;
 LABEL_49:
-      segment_buffer[6] &= 0xFFFFFFFD;
-      if ( val == 3 )
+      segment_buffer_C3L &= ~S3L_BG_B3;
+      if ( start == 3 )
         return;
 LABEL_50:
-      segment_buffer[4] &= 0xFFFFFFFD;
-      if ( val == 2 )
+      segment_buffer_C2L &= ~S2L_BG_B2;
+      if ( start == 2 )
         return;
 LABEL_51:
-      segment_buffer[2] &= 0xFFFFFFFD;
-      if ( val == 1 )
+      segment_buffer_C1L &= ~S1L_BG_B1;
+      if ( start == 1 )
         return;
       goto LABEL_52;
     }
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (0800880C) --------------------------------------------------------
 void __fastcall show_cal_msg_countdown(unsigned __int8 a1)
@@ -4344,7 +4297,7 @@ void __fastcall show_cal_msg_countdown(unsigned __int8 a1)
   char v1; // r5@1
 
   v1 = cal_countdown_timer;
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= 0xFFFFFF7F;
   scr_msg_tmp[0] = '-';
   if ( a1 )
   {
@@ -4373,27 +4326,26 @@ void __fastcall show_cal_msg_countdown(unsigned __int8 a1)
     scr_msg_tmp[1] = 'O';
   }
   scr_msg_tmp[2] = '-';
-  if ( cal_countdown_timer < 10 )
+  if ( (signed int)(unsigned __int8)cal_countdown_timer < 10 )
   {
     scr_msg_tmp[3] = '0';
   }
   else
   {
-    scr_msg_tmp[3] = cal_countdown_timer / 10 + 48;
+    scr_msg_tmp[3] = (unsigned __int8)cal_countdown_timer / 10 + 48;
     v1 = cal_countdown_timer - 10;
   }
   scr_msg_tmp[4] = v1 + 48;
   put_msg_on_scr(0, scr_msg_tmp);
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 // 20003B2F: using guessed type char cal_countdown_timer;
 
 //----- (080088C0) --------------------------------------------------------
 void __fastcall show_cal_msg_end(unsigned __int8 a1)
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= 0xFFFFFF7F;
   if ( a1 )
   {
     if ( a1 == 2 )
@@ -4416,84 +4368,76 @@ void __fastcall show_cal_msg_end(unsigned __int8 a1)
   }
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08008920) --------------------------------------------------------
-void show_sdcal_msg(void)
+void __fastcall show_sdcal_msg()
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
   put_msg_on_scr(0, "SdCAL");
   scr_set_decimal_point(3u);
   update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08008944) --------------------------------------------------------
-void show_sdsav_msg(void)
+void __fastcall show_sdsav_msg()
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
   put_msg_on_scr(0, "SdSAv");
   scr_set_decimal_point(3u);
   update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08008968) --------------------------------------------------------
-void show_sdset_msg(void)
+void __fastcall show_sdset_msg()
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
   put_msg_on_scr(0, "SdSEt");
   scr_set_decimal_point(3u);
   update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (0800898C) --------------------------------------------------------
 void __fastcall show_sd_cal_success()
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
   put_msg_on_scr(0, "SAvEd");
   scr_set_decimal_point(0);
   update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (080089B4) --------------------------------------------------------
-void show_sd_cal_err(void)
+void __fastcall show_sd_cal_err()
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
   put_msg_on_scr(0, "-Err-");
   scr_set_decimal_point(0);
   update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (080089DC) --------------------------------------------------------
-void show_cal_mode_msg(void)
+void __fastcall show_cal_mode_msg()
 {
-  segment_buffer[3] &= 0xFFFFFF7F;
+  segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
   put_msg_on_scr(0, " CAL1");
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08008A04) --------------------------------------------------------
-void show_cal_mode_sub_msg()
+void show_cal_mode_msg_on_subscr()
 {
-  segment_buffer[4] &= 0xDFFFFFFF;
+  segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   subscr_set_decimal_point(0);
   put_msg_on_scr(1, " CAL ");
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08008A34) --------------------------------------------------------
-void display_low_batt(void)
+void __fastcall show_low_batt()
 {
-  segment_buffer[4] &= 0xFFFDFFFF;
+  segment_buffer_C2L &= ~S2L_SS_KILO;           // might be into kilo log samples
   scr_msg_tmp[0] = 'L';
   scr_msg_tmp[1] = 'o';
   scr_msg_tmp[2] = 'B';
@@ -4502,13 +4446,12 @@ void display_low_batt(void)
   put_msg_on_scr(1, scr_msg_tmp);
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08008A84) --------------------------------------------------------
-void show_msg_logging_ended(void)
+void __fastcall show_msg_logging_ended()
 {
-  segment_buffer[4] &= 0xFFFDFFFF;
+  segment_buffer_C2L &= ~S2L_SS_KILO;           // might be into kilo log samples
   scr_msg_tmp[0] = 'S';
   scr_msg_tmp[1] = 'd';
   scr_msg_tmp[2] = 'E';
@@ -4517,121 +4460,106 @@ void show_msg_logging_ended(void)
   put_msg_on_scr(1, scr_msg_tmp);
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08008AD0) --------------------------------------------------------
-void __fastcall display_sd_error(char a1)
+void __fastcall show_sd_error(unsigned __int8 error)
 {
-  char v1; // r5@1
-
-  v1 = a1;
-  segment_buffer[4] &= 0xFFFDFFFF;
+  segment_buffer_C2L &= ~S2L_SS_KILO;
   scr_msg_tmp[0] = 'S';
   scr_msg_tmp[1] = 'd';
   scr_msg_tmp[2] = 'E';
-  if ( a1 < 10 )
+  if ( (signed int)error < 10 )
   {
     scr_msg_tmp[3] = '0';
   }
   else
   {
-    scr_msg_tmp[3] = a1 / 10 + 48;
-    v1 = a1 - 10;
+    scr_msg_tmp[3] = error / 10 + 48;
+    error -= 10;
   }
-  scr_msg_tmp[4] = v1 + 48;
+  scr_msg_tmp[4] = error + 48;
   put_msg_on_scr(1, scr_msg_tmp);
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08008B3C) --------------------------------------------------------
-int __fastcall show_overload(char screen)
+void __fastcall show_overload(char on_subscr)
 {
-  int result; // r0@3
-
-  if ( screen || !meter_amp_leads_incorrect )
+  if ( on_subscr || !meter_amp_leads_incorrect )
   {
-    if ( screen == 1 )
-      segment_buffer[4] &= 0xDFFFFFFF;
+    if ( on_subscr == 1 )
+      segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
     else
-      segment_buffer[3] &= 0xFFFFFF7F;
-    result = put_msg_on_scr(screen, " OFL ");
-  }
-  else
-  {
-    result = show_lead_err(0);
-  }
-  return result;
-}
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003B12: using guessed type char meter_amp_leads_incorrect;
-
-//----- (08008B8E) --------------------------------------------------------
-void __fastcall show_temp_error(char sub_screen)
-{
-  if ( sub_screen || !meter_amp_leads_incorrect )
-  {
-    if ( sub_screen == 1 )
-      segment_buffer[4] &= 0xDFFFFFFF;
-    else
-      segment_buffer[3] &= 0xFFFFFF7F;
-    put_msg_on_scr(sub_screen, " OPEN");
+      segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
+    put_msg_on_scr(on_subscr, " OFL ");
   }
   else
   {
     show_lead_err(0);
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
+// 20003B12: using guessed type char meter_amp_leads_incorrect;
+
+//----- (08008B8E) --------------------------------------------------------
+void __fastcall show_temp_error(char on_subscr)
+{
+  if ( on_subscr || !meter_amp_leads_incorrect )
+  {
+    if ( on_subscr == 1 )
+      segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
+    else
+      segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
+    put_msg_on_scr(on_subscr, " OPEN");
+  }
+  else
+  {
+    show_lead_err(0);
+  }
+}
 // 20003B12: using guessed type char meter_amp_leads_incorrect;
 
 //----- (08008BE0) --------------------------------------------------------
-int __fastcall show_lead_err(char screen)
+void __fastcall show_lead_err(char on_subscr)
 {
-  return put_msg_on_scr(screen, " LEAD");
+  put_msg_on_scr(on_subscr, " LEAD");
 }
 
 //----- (08008BF2) --------------------------------------------------------
-void erase_scr(char subscreen)
+void scr_erase(char subscr)
 {
   meter_overflow_was_negative = 0;
-  if ( subscreen == 1 )
-    segment_buffer[4] &= ~0x20000000u;
+  if ( subscr == 1 )
+    segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
   else
-    segment_buffer[3] &= ~0x80u;
-  put_msg_on_scr(subscreen, "     ");
+    segment_buffer_C1H &= ~S1H_MS_NEGATIVE;
+  put_msg_on_scr(subscr, "     ");
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AE7: using guessed type char meter_overflow_was_negative;
 
 //----- (08008C34) --------------------------------------------------------
-int __fastcall put_msg_on_scr(char on_subscr, char *msg)
+void __fastcall put_msg_on_scr(char on_subscr, char *msg)
 {
-  int v2; // r3@0
-  unsigned __int8 *v3; // r5@1
-  int v4; // r6@1
-  unsigned __int8 v5; // r7@2
-  int v7; // [sp+0h] [bp-18h]@1
+  unsigned __int8 *v2; // r5@1
+  int v3; // r6@1
+  unsigned __int8 v4; // r7@2
 
-  v7 = v2;
-  v3 = msg;
-  v4 = 0;
+  v2 = (unsigned __int8 *)msg;
+  v3 = 0;
   if ( on_subscr )
-    v5 = 0;
+    v4 = 0;
   else
-    v5 = 5;
+    v4 = 5;
   while ( 1 )
   {
-    set_7seg(*v3, v5);
-    ++v4;
-    if ( v4 >= 5 )
-      break;
+    set_7seg(*v2, v4);
     ++v3;
-    ++v5;
+    if ( (signed int)(unsigned __int8)v3 >= 5 )
+      break;
+    ++v2;
+    ++v4;
   }
-  return v7;
 }
 
 //----- (08008C68) --------------------------------------------------------
@@ -4653,107 +4581,98 @@ void __fastcall put_2_chrs_on_scr_at_offset(unsigned __int8 offset, unsigned __i
   {
     set_7seg(*v2, i);
     ++v3;
-    if ( v3 >= 2 )
+    if ( (signed int)(unsigned __int8)v3 >= 2 )
       break;
     ++v2;
   }
 }
 
 //----- (08008CA0) --------------------------------------------------------
-void __fastcall scr_maybe_turn_off_all_units()
+void __fastcall scr_turn_off_units()
 {
-  segment_buffer[0] &= 0xDFFFFFFF;
-  segment_buffer[0] &= 0xBFFFFFFF;
-  segment_buffer[4] &= 0xFFFFFEFF;
-  segment_buffer[4] = (2 * segment_buffer[4]) >> 1;
-  segment_buffer[6] = (2 * segment_buffer[6]) >> 1;
-  segment_buffer[0] &= 0xFFFFFEFF;
-  segment_buffer[2] &= 0xFFFFFEFF;
-  segment_buffer[0] &= 0xFFFFF7FF;
-  segment_buffer[6] &= 0xFFFFFBFF;
-  segment_buffer[2] &= 0xFFFFFBFF;
-  segment_buffer[4] &= 0xFFFFFBFF;
-  segment_buffer[2] &= 0xFFFFFDFF;
-  segment_buffer[0] &= 0xFFFFFDFF;
-  segment_buffer[4] &= 0xFFFFFDFF;
+  segment_buffer_C0L &= ~S0L_ICON_TEST;
+  segment_buffer_C0L &= ~S0L_ICON_LOWZ;
+  segment_buffer_C2L &= ~S2L_MS_HERTZ;
+  segment_buffer_C2L = 2 * segment_buffer_C2L >> 1;// S2L_ICON_CONTINUITY
+  segment_buffer_C3L = 2 * segment_buffer_C3L >> 1;// S3L_ICON_DIODE
+  segment_buffer_C0L &= ~S0L_MS_KILO;
+  segment_buffer_C1L &= ~S1L_MS_OHMS;
+  segment_buffer_C0L &= ~S0L_MS_MEGA;
+  segment_buffer_C3L &= ~S3L_MS_AMPS;
+  segment_buffer_C1L &= ~S1L_MS_MILLI;
+  segment_buffer_C2L &= ~S2L_MS_VOLTS;
+  segment_buffer_C1L &= ~S1L_MS_NANO;
+  segment_buffer_C0L &= ~S0L_MS_MICRO;
+  segment_buffer_C2L &= ~S2L_MS_FARADS;
   if ( !input_1ms_peak_enabled )
-    segment_buffer[6] = 2 * (segment_buffer[6] >> 1);
-  segment_buffer[0] &= 0xFFFDFFFF;
+    segment_buffer_C3L = 2 * ((unsigned int)segment_buffer_C3L >> 1);// S3L_MS_mSEC
+  segment_buffer_C0L &= ~S0L_MS_DUTY_PERCENT;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
 
 //----- (08008DB0) --------------------------------------------------------
 void __fastcall scr_update_apo_status(char update_now)
 {
   if ( curr_apo_off | logging_active )
-    segment_buffer[5] &= 0xFFFFFF7F;
+    segment_buffer_C2H &= ~S2H_ICON_APO;
   else
-    segment_buffer[5] |= 0x80u;
+    segment_buffer_C2H |= S2H_ICON_APO;
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003A9C: using guessed type char came_from_standby;
-// 20003A9D: using guessed type char logging_active;
 // 20003ADC: using guessed type char apo_woke_up;
-// 20003ADD: using guessed type char curr_apo_off;
 
 //----- (08008DFC) --------------------------------------------------------
-void __fastcall scr_update_low_batt(char update_now)
+void __fastcall scr_update_low_batt_icon(char update_now)
 {
   if ( batt_is_low_icon )
-    segment_buffer[7] |= 0x80u;
+    segment_buffer_C3H |= S3H_ICON_BATT;
   else
-    segment_buffer[7] &= 0xFFFFFF7F;
+    segment_buffer_C3H &= ~S3H_ICON_BATT;
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003ADF: using guessed type char batt_is_low_icon;
 
 //----- (08008E38) --------------------------------------------------------
 void __fastcall scr_update_bt_icon(char update_now)
 {
   if ( bt_enabled )
-    segment_buffer[0] |= 0x80000000;
+    segment_buffer_C0L |= S0L_ICON_BT;
   else
-    segment_buffer[0] = (2 * segment_buffer[0]) >> 1;
+    segment_buffer_C0L = 2 * segment_buffer_C0L >> 1;// S0L_ICON_BT
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AD3: using guessed type char bt_enabled;
 
 //----- (08008E78) --------------------------------------------------------
 void __fastcall scr_update_autorange_icon(char update_now)
 {
-  char v1; // r4@1
   int v2; // r0@1
 
-  v1 = update_now;
   LOBYTE(v2) = determine_if_autoranging();
   if ( v2 )
-    segment_buffer[7] |= 1u;
+    segment_buffer_C3H |= S3H_ICON_AUTO_RANGE;
   else
-    segment_buffer[7] = 2 * (segment_buffer[7] >> 1);
-  if ( v1 == 1 )
+    segment_buffer_C3H = 2 * ((unsigned int)segment_buffer_C3H >> 1);// S3H_ICON_AUTO_RANGE
+  if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08008EB2) --------------------------------------------------------
 char determine_if_autoranging(void)
 {
-  char result; // r0@2
+  char autoranging; // r0@2
 
   if ( meter_in_cal_mode )
   {
-    result = 0;
+    autoranging = 0;
   }
-  else if ( logging_active & (manual_hold_is_enabled ^ 1) )
+  else if ( logging_active & (unsigned __int8)(auto_hold_is_enabled ^ 1) )
   {
-    result = 0;
+    autoranging = 0;
   }
   else if ( curr_meas_mode != MM_DIODE
          && curr_meas_mode != MM_CONTINUITY
@@ -4761,67 +4680,62 @@ char determine_if_autoranging(void)
          && curr_meas_mode
          && curr_meas_mode != MM_DUTY )
   {
-    result = autoranging_disabled == 0;
+    autoranging = autoranging_disabled == 0;
   }
   else
   {
-    result = 0;
+    autoranging = 0;
   }
-  return result;
+  return autoranging;
 }
-// 20003A9D: using guessed type char logging_active;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003B24: using guessed type char meter_in_cal_mode;
 
 //----- (08008F34) --------------------------------------------------------
-void __fastcall scr_update_min_max_segs(char update_now)
+void __fastcall scr_update_min_max_icons(char update_now)
 {
-  segment_buffer[6] &= 0xBFFFFFFF;
-  segment_buffer[4] &= 0xBFFFFFFF;
-  segment_buffer[2] &= 0xBFFFFFFF;
+  segment_buffer_C3L &= ~S3L_ICON_MIN;
+  segment_buffer_C2L &= ~S2L_ICON_MAX;
+  segment_buffer_C1L &= ~S1L_ICON_AVG;
   if ( !(logging_active | log_playback_mode) )
   {
     if ( input_1ms_peak_enabled )
     {
       if ( peakdet_show_min_always_zero )
-        segment_buffer[6] |= 0x40000000u;
+        segment_buffer_C3L |= S3L_ICON_MIN;
       else
-        segment_buffer[4] |= 0x40000000u;
+        segment_buffer_C2L |= S2L_ICON_MAX;
     }
     else if ( meter_min_max_mode == 1 )
     {
-      segment_buffer[4] |= 0x40000000u;
+      segment_buffer_C2L |= S2L_ICON_MAX;
     }
     else if ( meter_min_max_mode >= 1u )
     {
       if ( meter_min_max_mode == 3 )
       {
-        segment_buffer[2] |= 0x40000000u;
+        segment_buffer_C1L |= S1L_ICON_AVG;
       }
       else if ( meter_min_max_mode >= 3u )
       {
         if ( meter_min_max_mode == 4 )
         {
-          segment_buffer[6] |= 0x40000000u;
-          segment_buffer[4] |= 0x40000000u;
-          segment_buffer[2] |= 0x40000000u;
+          segment_buffer_C3L |= S3L_ICON_MIN;
+          segment_buffer_C2L |= S2L_ICON_MAX;
+          segment_buffer_C1L |= S1L_ICON_AVG;
         }
       }
       else
       {
-        segment_buffer[6] |= 0x40000000u;
+        segment_buffer_C3L |= S3L_ICON_MIN;
       }
     }
   }
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003A9C: using guessed type char came_from_standby;
-// 20003A9D: using guessed type char logging_active;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
 // 20003B50: using guessed type char peakdet_show_min_always_zero;
 
@@ -4830,62 +4744,56 @@ void __fastcall scr_update_rel_meas_icon(char update_now)
 {
   if ( logging_active )
   {
-    segment_buffer[0] = 2 * (segment_buffer[0] >> 1);
+    segment_buffer_C0L = 2 * ((unsigned int)segment_buffer_C0L >> 1);// S0L_ICON_REL
   }
   else if ( log_playback_mode )
   {
-    segment_buffer[0] = 2 * (segment_buffer[0] >> 1);
+    segment_buffer_C0L = 2 * ((unsigned int)segment_buffer_C0L >> 1);// S0L_ICON_REL
   }
   else if ( rel_meas_enabled )
   {
-    segment_buffer[0] |= 1u;
+    segment_buffer_C0L |= S0L_ICON_REL;
   }
   else
   {
-    segment_buffer[0] = 2 * (segment_buffer[0] >> 1);
+    segment_buffer_C0L = 2 * ((unsigned int)segment_buffer_C0L >> 1);// S0L_ICON_REL
   }
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003A9D: using guessed type char logging_active;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AF5: using guessed type char rel_meas_enabled;
 
 //----- (080090B2) --------------------------------------------------------
-void __fastcall scr_update_hold_icons(int update_now)
+void __fastcall scr_update_hold_icons(char update_now)
 {
-  char v1; // r4@1
-  char v2; // r5@1
+  char hold_status; // r5@1
 
-  v1 = update_now;
-  v2 = maybe_get_hold_status();
-  if ( v2 == 1 )
+  hold_status = hold_get_status();
+  if ( hold_status == 1 )
   {
-    segment_buffer[2] |= 0x10000u;
-    segment_buffer[4] |= 0x10000u;
+    segment_buffer_C1L |= S1L_ICON_AUTO_OF_HOLD;
+    segment_buffer_C2L |= S2L_ICON_HOLD;
   }
-  else if ( v2 == 2 )
+  else if ( hold_status == 2 )
   {
-    segment_buffer[2] &= 0xFFFEFFFF;
-    segment_buffer[4] |= 0x10000u;
+    segment_buffer_C1L &= ~S1L_ICON_AUTO_OF_HOLD;
+    segment_buffer_C2L |= S2L_ICON_HOLD;
   }
   else
   {
-    segment_buffer[2] &= 0xFFFEFFFF;
-    segment_buffer[4] &= 0xFFFEFFFF;
+    segment_buffer_C1L &= ~S1L_ICON_AUTO_OF_HOLD;
+    segment_buffer_C2L &= ~S2L_ICON_HOLD;
   }
-  if ( v1 == 1 )
+  if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08009138) --------------------------------------------------------
-char maybe_get_hold_status()
+char hold_get_status()
 {
   char result; // r0@2
 
-  if ( logging_active & (manual_hold_is_enabled ^ 1) )
+  if ( logging_active & (unsigned __int8)(auto_hold_is_enabled ^ 1) )
   {
     result = 0;
   }
@@ -4893,18 +4801,16 @@ char maybe_get_hold_status()
   {
     result = 0;
   }
-  else if ( auto_hold_is_enabled )
+  else if ( manual_hold_is_enabled )
   {
     result = 2;
   }
   else
   {
-    result = manual_hold_is_enabled != 0;
+    result = auto_hold_is_enabled != 0;
   }
   return result;
 }
-// 20003A9D: using guessed type char logging_active;
-// 20003AA0: using guessed type char log_playback_mode;
 
 //----- (0800918C) --------------------------------------------------------
 void __fastcall scr_update_1ms_peak_icon(char update_now)
@@ -4913,144 +4819,133 @@ void __fastcall scr_update_1ms_peak_icon(char update_now)
   {
     if ( log_rdsamp_input_1ms_peak_enabled )
     {
-      segment_buffer[6] |= 0x10000u;
-      segment_buffer[6] |= 1u;
+      segment_buffer_C3L |= S3L_ICON_ONE_OF_1ms_PEAK;
+      segment_buffer_C3L |= S3L_MS_mSEC;
     }
     else
     {
-      segment_buffer[6] &= 0xFFFEFFFF;
-      segment_buffer[6] = 2 * (segment_buffer[6] >> 1);
+      segment_buffer_C3L &= ~S3L_ICON_ONE_OF_1ms_PEAK;
+      segment_buffer_C3L = 2 * ((unsigned int)segment_buffer_C3L >> 1);// S3L_MS_mSEC
     }
   }
   else if ( input_1ms_peak_enabled )
   {
-    segment_buffer[6] |= 0x10000u;
-    segment_buffer[6] |= 1u;
+    segment_buffer_C3L |= S3L_ICON_ONE_OF_1ms_PEAK;
+    segment_buffer_C3L |= S3L_MS_mSEC;
   }
   else
   {
-    segment_buffer[6] &= 0xFFFEFFFF;
-    segment_buffer[6] = 2 * (segment_buffer[6] >> 1);
+    segment_buffer_C3L &= ~S3L_ICON_ONE_OF_1ms_PEAK;
+    segment_buffer_C3L = 2 * ((unsigned int)segment_buffer_C3L >> 1);// S3L_MS_mSEC
   }
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AA4: using guessed type char log_rdsamp_input_1ms_peak_enabled;
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
 
 //----- (0800923E) --------------------------------------------------------
-void scr_update_lpf_icon()
+void __fastcall scr_update_lpf_icon()
 {
   if ( log_playback_mode )
   {
     if ( log_rdsamp_input_lpf_enabled )
-      segment_buffer[2] |= 0x80000000;
+      segment_buffer_C1L |= S1L_ICON_LPF;
     else
-      segment_buffer[2] = (2 * segment_buffer[2]) >> 1;
+      segment_buffer_C1L = 2 * segment_buffer_C1L >> 1;// S1L_ICON_LPF
   }
   else if ( input_lpf_enabled )
   {
-    segment_buffer[2] |= 0x80000000;
+    segment_buffer_C1L |= S1L_ICON_LPF;
   }
   else
   {
-    segment_buffer[2] = (2 * segment_buffer[2]) >> 1;
+    segment_buffer_C1L = 2 * segment_buffer_C1L >> 1;// S1L_ICON_LPF
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AA3: using guessed type char log_rdsamp_input_lpf_enabled;
 // 20003B51: using guessed type char input_lpf_enabled;
 
 //----- (0800929C) --------------------------------------------------------
-void segment_party_5()
+void scr_update_main_acdc_icons()
 {
   if ( log_playback_mode )
   {
     if ( log_rdsamp_in_ac_dc_mode )
     {
-      segment_buffer[5] |= 1u;
-      segment_buffer[3] |= 1u;
-      segment_buffer[1] |= 1u;
+      segment_buffer_C2H |= S2H_MS_DC;
+      segment_buffer_C1H |= S1H_MS_PLUS_OF_AC_DC;
+      segment_buffer_C0H |= S0H_MS_AC;
     }
     else
     {
-      segment_buffer[5] = 2 * (segment_buffer[5] >> 1);
-      segment_buffer[3] = 2 * (segment_buffer[3] >> 1);
-      segment_buffer[1] = 2 * (segment_buffer[1] >> 1);
+      segment_buffer_C2H = 2 * ((unsigned int)segment_buffer_C2H >> 1);// S2H_MS_DC
+      segment_buffer_C1H = 2 * ((unsigned int)segment_buffer_C1H >> 1);// S2H_MS_PLUS_OF_AC_DC
+      segment_buffer_C0H = 2 * ((unsigned int)segment_buffer_C0H >> 1);// S0H_MS_AC
       if ( logged_meas_mode == MM_ACuA
         || logged_meas_mode == MM_ACmA
         || logged_meas_mode == MM_ACA
         || logged_meas_mode == MM_ACV
         || logged_meas_mode == MM_ACmV )
-        segment_buffer[1] |= 1u;
+        segment_buffer_C0H |= S0H_MS_AC;
       if ( logged_meas_mode == MM_DCuA
         || logged_meas_mode == MM_DCmA
         || logged_meas_mode == MM_DCA
         || logged_meas_mode == MM_DCV
         || logged_meas_mode == MM_DCmV )
-        segment_buffer[5] |= 1u;
+        segment_buffer_C2H |= S2H_MS_DC;
     }
   }
   else if ( meter_mode_acv_dcv )
   {
-    segment_buffer[5] |= 1u;
-    segment_buffer[3] |= 1u;
-    segment_buffer[1] |= 1u;
+    segment_buffer_C2H |= S2H_MS_DC;
+    segment_buffer_C1H |= S1H_MS_PLUS_OF_AC_DC;
+    segment_buffer_C0H |= S0H_MS_AC;
   }
   else
   {
-    segment_buffer[5] = 2 * (segment_buffer[5] >> 1);
-    segment_buffer[3] = 2 * (segment_buffer[3] >> 1);
-    segment_buffer[1] = 2 * (segment_buffer[1] >> 1);
+    segment_buffer_C2H = 2 * ((unsigned int)segment_buffer_C2H >> 1);// S2H_MS_DC
+    segment_buffer_C1H = 2 * ((unsigned int)segment_buffer_C1H >> 1);// S1H_MS_PLUS_OF_AC_DC
+    segment_buffer_C0H = 2 * ((unsigned int)segment_buffer_C0H >> 1);// S0H_MS_AC
     if ( curr_meas_mode == MM_ACuA
       || curr_meas_mode == MM_ACmA
       || curr_meas_mode == MM_ACA
       || curr_meas_mode == MM_ACV
       || curr_meas_mode == MM_ACmV )
-      segment_buffer[1] |= 1u;
+      segment_buffer_C0H |= S0H_MS_AC;
     if ( curr_meas_mode == MM_DCuA
       || curr_meas_mode == MM_DCmA
       || curr_meas_mode == MM_DCA
       || curr_meas_mode == MM_DCV
       || curr_meas_mode == MM_DCmV )
-      segment_buffer[5] |= 1u;
+      segment_buffer_C2H |= S2H_MS_DC;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AA5: using guessed type char log_rdsamp_in_ac_dc_mode;
 // 20003B52: using guessed type char meter_mode_acv_dcv;
 
 //----- (0800945C) --------------------------------------------------------
 void __fastcall scr_update_mem_icon(char update_now)
 {
-  if ( (logging_active & maybe_logging_was_active_at_some_point) | log_playback_mode )
-    segment_buffer[0] |= 0x10000u;
+  if ( (unsigned __int8)(logging_active & maybe_logging_was_active_at_some_point) | log_playback_mode )
+    segment_buffer_C0L |= S0L_ICON_MEM;
   else
-    segment_buffer[0] &= 0xFFFEFFFF;
+    segment_buffer_C0L &= ~S0L_ICON_MEM;
   if ( update_now == 1 )
     update_lcd_if_appropriate();
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003A9C: using guessed type char came_from_standby;
-// 20003A9D: using guessed type char logging_active;
-// 20003A9E: using guessed type char logging_interval_elapsed;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
 
 //----- (080094A2) --------------------------------------------------------
-void scr_update_overflow_icon()
+void scr_update_danger_icon()
 {
-  if ( meter_overflow_icon )
-    segment_buffer[1] |= 0x80u;
+  if ( meter_danger_icon )
+    segment_buffer_C0H |= S0H_ICON_DANGER;
   else
-    segment_buffer[1] &= 0xFFFFFF7F;
+    segment_buffer_C0H &= ~S0H_ICON_DANGER;
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003B49: using guessed type char meter_overflow_icon;
+// 20003B49: using guessed type char meter_danger_icon;
 
 //----- (080094C8) --------------------------------------------------------
 void scr_update_temp_unit()
@@ -5059,31 +4954,30 @@ void scr_update_temp_unit()
   {
     if ( temp_in_c )
     {
-      segment_buffer[4] |= 0x800u;
-      segment_buffer[6] &= 0xFFFFF7FF;
+      segment_buffer_C2L |= S2L_MS_DEG_C;
+      segment_buffer_C3L &= ~S3L_MS_DEG_F;
     }
     else
     {
-      segment_buffer[4] &= 0xFFFFF7FF;
-      segment_buffer[6] |= 0x800u;
+      segment_buffer_C2L &= ~S2L_MS_DEG_C;
+      segment_buffer_C3L |= S3L_MS_DEG_F;
     }
   }
   else
   {
-    segment_buffer[4] &= 0xFFFFF7FF;
-    segment_buffer[6] &= 0xFFFFF7FF;
+    segment_buffer_C2L &= ~S2L_MS_DEG_C;
+    segment_buffer_C3L &= ~S3L_MS_DEG_F;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003B43: using guessed type char temp_in_c;
 
 //----- (08009554) --------------------------------------------------------
-void subscr_update_units(void)
+void __fastcall subscr_update_units()
 {
   if ( !meter_in_cal_mode )
   {
-    scr_turn_off_many_segments();
-    if ( curr_sub_mode != 100 )
+    subscr_turn_off_units();
+    if ( curr_sub_mode != SM_LOG_POS )
     {
       if ( (curr_meas_mode == MM_ACuA
          || curr_meas_mode == MM_ACmA
@@ -5091,11 +4985,11 @@ void subscr_update_units(void)
          || curr_meas_mode == MM_DCuA
          || curr_meas_mode == MM_DCmA
          || curr_meas_mode == MM_DCA)
-        && curr_sub_mode == 10
+        && curr_sub_mode == SM_SPL2
         && burden_enabled_for_current_ranges )
       {
-        segment_buffer[0] |= 0x40000u;
-        segment_buffer[2] |= 0x20000u;
+        segment_buffer_C0L |= S0L_SS_MILLI;
+        segment_buffer_C1L |= S1L_SS_VOLTS;
       }
       else
       {
@@ -5105,67 +4999,67 @@ void subscr_update_units(void)
             if ( (curr_meas_mode == MM_ACuA || curr_meas_mode == MM_ACmA || curr_meas_mode == MM_ACA)
               && burden_enabled_for_current_ranges )
             {
-              if ( ac_input_freq_range >= 2 )
-                segment_buffer[4] |= 0x20000u;
-              segment_buffer[6] |= 0x20000u;
+              if ( (signed int)ac_input_freq_range >= 2 )
+                segment_buffer_C2L |= S2L_SS_KILO;
+              segment_buffer_C3L |= S3L_SS_HERTZ;
             }
             break;
           case SM_SPL2:
-            if ( curr_meas_mode == 2 )
+            if ( curr_meas_mode == MM_ACV )
             {
-              segment_buffer[0] |= 0x80000u;
-              segment_buffer[0] |= 0x40000u;
+              segment_buffer_C0L |= S0L_SS_dB;
+              segment_buffer_C0L |= S0L_SS_MILLI;
             }
             else if ( (curr_meas_mode == MM_ACuA || curr_meas_mode == MM_ACmA || curr_meas_mode == MM_ACA)
                    && !burden_enabled_for_current_ranges )
             {
-              if ( ac_input_freq_range >= 2 )
-                segment_buffer[4] |= 0x20000u;
-              segment_buffer[6] |= 0x20000u;
+              if ( (signed int)ac_input_freq_range >= 2 )
+                segment_buffer_C2L |= S2L_SS_KILO;
+              segment_buffer_C3L |= S3L_SS_HERTZ;
             }
             break;
           case SM_SPL1:
             if ( curr_meas_mode == MM_DIODE )
             {
-              segment_buffer[2] |= 0x20000u;
+              segment_buffer_C1L |= S1L_SS_VOLTS;
               scr_update_temp_unit();
             }
             else if ( curr_meas_mode != MM_ACuVA
                    && curr_meas_mode != MM_ACmVA
                    && curr_meas_mode != MM_ACVA
-                   && curr_meas_mode != 22
-                   && curr_meas_mode != 23
-                   && curr_meas_mode != 24 )
+                   && curr_meas_mode != MM_DCuVA
+                   && curr_meas_mode != MM_DCmVA
+                   && curr_meas_mode != MM_DCVA )
             {
-              if ( curr_meas_mode == 10 )
+              if ( curr_meas_mode == MM_CONTINUITY )
               {
-                segment_buffer[6] |= 0x40000u;
+                segment_buffer_C3L |= S3L_SS_OHMS;
               }
-              else if ( curr_meas_mode != MM_ACmV && (curr_meas_mode != 2 || meter_mode_acv_dcv) )
+              else if ( curr_meas_mode != MM_ACmV && (curr_meas_mode != MM_ACV || meter_mode_acv_dcv) )
               {
                 scr_update_temp_unit();
               }
               else
               {
-                if ( ac_input_freq_range >= 2 )
-                  segment_buffer[4] |= 0x20000u;
-                segment_buffer[6] |= 0x20000u;
+                if ( (signed int)ac_input_freq_range >= 2 )
+                  segment_buffer_C2L |= S2L_SS_KILO;
+                segment_buffer_C3L |= S3L_SS_HERTZ;
               }
             }
             else if ( subscr_showing_power_amps )
             {
-              segment_party_3();
+              subscr_set_power_amp_units();
             }
             else
             {
-              segment_buffer[2] |= 0x20000u;
+              segment_buffer_C1L |= S1L_SS_VOLTS;
             }
             break;
           case SM_BATTERY:
-            segment_buffer[2] |= 0x20000u;
+            segment_buffer_C1L |= S1L_SS_VOLTS;
             break;
           default:
-            if ( curr_sub_mode != 2 )
+            if ( curr_sub_mode != SM_APO )
               scr_update_temp_unit();
             break;
         }
@@ -5174,8 +5068,6 @@ void subscr_update_units(void)
     }
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003AE2: using guessed type char ac_input_freq_range;
 // 20003AF7: using guessed type char lcd_needs_update;
 // 20003B24: using guessed type char meter_in_cal_mode;
 // 20003B3D: using guessed type char burden_enabled_for_current_ranges;
@@ -5183,7 +5075,7 @@ void subscr_update_units(void)
 // 20003B57: using guessed type char subscr_showing_power_amps;
 
 //----- (080097E8) --------------------------------------------------------
-void segment_party_3(void)
+void subscr_set_power_amp_units(void)
 {
   if ( curr_meas_mode != MM_ACmVA
     && curr_meas_mode != MM_ACuVA
@@ -5191,54 +5083,51 @@ void segment_party_3(void)
     && curr_meas_mode != MM_DCuVA )
   {
     if ( (curr_meas_mode == MM_ACVA || curr_meas_mode == MM_DCVA) && !curr_power_amps_range )
-      segment_buffer[0] |= 0x40000u;
+      segment_buffer_C0L |= S0L_SS_MILLI;
   }
   else
   {
-    segment_buffer[0] |= 0x40000u;
+    segment_buffer_C0L |= S0L_SS_MILLI;
   }
-  segment_buffer[2] |= 0x40000u;
+  segment_buffer_C1L |= S1L_SS_AMPS;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003B5C: using guessed type char curr_power_amps_range;
 
 //----- (08009864) --------------------------------------------------------
-void scr_turn_off_many_segments()
+void subscr_turn_off_units()
 {
-  segment_buffer[4] &= 0xFFFBFFFF;
-  segment_buffer[4] &= 0xDFFFFFFF;
-  segment_buffer[2] &= 0xDFFFFFFF;
-  segment_buffer[6] &= 0xDFFFFFFF;
-  segment_buffer[6] &= 0xFFFBFFFF;
-  segment_buffer[0] &= 0xFFF7FFFF;
-  segment_buffer[0] &= 0xFFFBFFFF;
-  segment_buffer[2] &= 0xFFFBFFFF;
-  segment_buffer[2] &= 0xFFFDFFFF;
-  segment_buffer[4] &= 0xFFFDFFFF;
-  segment_buffer[6] &= 0xFFFDFFFF;
+  segment_buffer_C2L &= ~S2L_SS_nS;
+  segment_buffer_C2L &= ~S2L_SS_NEGATIVE;
+  segment_buffer_C1L &= ~S1L_SS_DC;
+  segment_buffer_C3L &= ~S3L_SS_AC;
+  segment_buffer_C3L &= ~S3L_SS_OHMS;
+  segment_buffer_C0L &= ~S0L_SS_dB;
+  segment_buffer_C0L &= ~S0L_SS_MILLI;
+  segment_buffer_C1L &= ~S1L_SS_AMPS;
+  segment_buffer_C1L &= ~S1L_SS_VOLTS;
+  segment_buffer_C2L &= ~S2L_SS_KILO;
+  segment_buffer_C3L &= ~S3L_SS_HERTZ;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (08009920) --------------------------------------------------------
-void turn_off_all_lcd_segments()
+void lcd_turn_off_all_segments()
 {
   unsigned __int8 i; // r4@2
 
   while ( read_lcd_sr(4) )                      // wait for any display update to be finished
     ;
   for ( i = 0; i < 0x10u; ++i )
-    segment_buffer[i] = 0;
+    *((_DWORD *)&segment_buffer_C0L + i) = 0;
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (0800995C) --------------------------------------------------------
 void __cdecl show_firmware_version()
 {
-  turn_off_all_lcd_segments();
-  conv_int_to_bcd_tmp(102u);
-  conv_bcd_to_scr(0);
+  lcd_turn_off_all_segments();
+  conv_uint_to_bcd_tmp(102u);
+  conv_bcd_tmp_to_scr(0);
   scr_msg_tmp[0] = 'V';
   scr_msg_tmp[1] = '-';
   put_msg_on_scr(0, scr_msg_tmp);
@@ -5248,179 +5137,180 @@ void __cdecl show_firmware_version()
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (080099A4) --------------------------------------------------------
-void __cdecl turn_on_all_segments()
+void __cdecl lcd_turn_on_all_segments()
 {
-  segment_buffer[0] = 0xFFFFFFFF;
-  segment_buffer[1] |= 0xFFFu;
-  segment_buffer[2] = 0xFFFFFFFF;
-  segment_buffer[3] |= 0xFFFu;
-  segment_buffer[4] = 0xFFFFFFFF;
-  segment_buffer[5] |= 0xFFFu;
-  segment_buffer[6] = 0xFFFFFFFF;
-  segment_buffer[7] |= 0xFFFu;
+  segment_buffer_C0L = 0xFFFFFFFF;
+  segment_buffer_C0H |= 0xFFFu;
+  segment_buffer_C1L = 0xFFFFFFFF;
+  segment_buffer_C1H |= 0xFFFu;
+  segment_buffer_C2L = 0xFFFFFFFF;
+  segment_buffer_C2H |= 0xFFFu;
+  segment_buffer_C3L = 0xFFFFFFFF;
+  segment_buffer_C3H |= 0xFFFu;
   lcd_needs_update = 1;
 }
-// 200035C8: using guessed type int segment_buffer[16];
 // 20003AF7: using guessed type char lcd_needs_update;
 
 //----- (08009A58) --------------------------------------------------------
 void __fastcall set_7seg(unsigned __int8 chr, unsigned __int8 where)
 {
-  unsigned __int8 v2; // r5@1
-  unsigned int v3; // r0@1
+  unsigned int segs; // r0@1
 
-  v2 = where;
-  LOBYTE(v3) = ascii_to_segs(chr);
-  if ( v2 )
+  LOBYTE(segs) = ascii_to_segs(chr);
+  // segment byte is structured
+  // DxECFGAB
+  // where x is unused
+
+  // screen digits
+  // subscreen: 0-4, left to right
+  // main screen: 5-9, left to right
+  if ( where )
   {
-    if ( v2 == 2 )
+    if ( where == 2 )
     {
-      segment_buffer[0] &= 0xFEFFFFFF;
-      segment_buffer[2] &= 0xFE7FFFFF;
-      segment_buffer[4] &= 0xFE7FFFFF;
-      segment_buffer[6] &= 0xFE7FFFFF;
-      segment_buffer[0] |= (v3 & 0xC0) << 17;
-      segment_buffer[2] |= (v3 & 0x30) << 19;
-      segment_buffer[4] |= (v3 & 0xC) << 21;
-      segment_buffer[6] |= (v3 & 3) << 23;
+      segment_buffer_C0L &= ~S0L_SS_100_D;
+      segment_buffer_C1L &= ~(S1L_SS_100_E|S1L_SS_100_C);
+      segment_buffer_C2L &= ~(S2L_SS_100_F|S2L_SS_100_G);
+      segment_buffer_C3L &= ~(S3L_SS_100_A|S3L_SS_100_B);
+      segment_buffer_C0L |= (unsigned __int8)(segs & 0xC0) << 17;
+      segment_buffer_C1L |= (segs & 0x30) << 19;
+      segment_buffer_C2L |= (segs & 0xC) << 21;
+      segment_buffer_C3L |= (segs & 3) << 23;
     }
-    else if ( v2 >= 2u )
+    else if ( where >= 2u )
     {
-      if ( v2 == 4 )
+      if ( where == 4 )
       {
-        segment_buffer[0] &= 0xFFEFFFFF;
-        segment_buffer[2] &= 0xFFE7FFFF;
-        segment_buffer[4] &= 0xFFE7FFFF;
-        segment_buffer[6] &= 0xFFE7FFFF;
-        segment_buffer[0] |= (v3 & 0xC0) << 13;
-        segment_buffer[2] |= (v3 & 0x30) << 15;
-        segment_buffer[4] |= (v3 & 0xC) << 17;
-        segment_buffer[6] |= (v3 & 3) << 19;
+        segment_buffer_C0L &= ~S0L_SS_1_D;
+        segment_buffer_C1L &= ~(S1L_SS_1_E|S1L_SS_1_C);
+        segment_buffer_C2L &= ~(S2L_SS_1_F|S2L_SS_1_G);
+        segment_buffer_C3L &= ~(S3L_SS_1_A|S3L_SS_1_B);
+        segment_buffer_C0L |= (unsigned __int8)(segs & 0xC0) << 13;
+        segment_buffer_C1L |= (segs & 0x30) << 15;
+        segment_buffer_C2L |= (segs & 0xC) << 17;
+        segment_buffer_C3L |= (segs & 3) << 19;
       }
-      else if ( v2 >= 4u )
+      else if ( where >= 4u )
       {
-        if ( v2 == 6 )
+        if ( where == 6 )
         {
-          segment_buffer[1] = segment_buffer[1] & 0xFEF;
-          segment_buffer[3] = segment_buffer[3] & 0xFE7;
-          segment_buffer[5] = segment_buffer[5] & 0xFE7;
-          segment_buffer[7] = segment_buffer[7] & 0xFE7;
-          segment_buffer[1] |= (v3 >> 3) & 0x18;
-          segment_buffer[3] |= (v3 >> 1) & 0x18;
-          segment_buffer[5] |= 2 * (v3 & 0xC);
-          segment_buffer[7] |= 8 * (v3 & 3);
+          segment_buffer_C0H &= ~0xFFFFF010;    // D
+          segment_buffer_C1H &= ~0xFFFFF018;    // EC
+          segment_buffer_C2H &= ~0xFFFFF018;    // FG
+          segment_buffer_C3H &= ~0xFFFFF018;    // AB
+          segment_buffer_C0H |= (segs >> 3) & 0x18;
+          segment_buffer_C1H |= (segs >> 1) & 0x18;
+          segment_buffer_C2H |= 2 * (segs & 0xC);
+          segment_buffer_C3H |= 8 * (segs & 3);
         }
-        else if ( v2 >= 6u )
+        else if ( where >= 6u )
         {
-          if ( v2 == 8 )
+          if ( where == 8 )
           {
-            segment_buffer[0] &= 0xFFFF7FFF;
-            segment_buffer[2] &= 0xFFFF3FFF;
-            segment_buffer[4] &= 0xFFFF3FFF;
-            segment_buffer[6] &= 0xFFFF3FFF;
-            segment_buffer[0] |= (v3 & 0xC0) << 8;
-            segment_buffer[2] |= (v3 & 0x30) << 10;
-            segment_buffer[4] |= (v3 & 0xC) << 12;
-            segment_buffer[6] |= (v3 & 3) << 14;
+            segment_buffer_C0L &= ~S0L_MS_10_D;
+            segment_buffer_C1L &= ~(S1L_MS_10_E|S1L_MS_10_C);
+            segment_buffer_C2L &= ~(S2L_MS_10_F|S2L_MS_10_G);
+            segment_buffer_C3L &= ~(S3L_MS_10_A|S3L_MS_10_B);
+            segment_buffer_C0L |= (unsigned __int8)(segs & 0xC0) << 8;
+            segment_buffer_C1L |= (segs & 0x30) << 10;
+            segment_buffer_C2L |= (segs & 0xC) << 12;
+            segment_buffer_C3L |= (segs & 3) << 14;
           }
-          else if ( v2 >= 8u )
+          else if ( where >= 8u )
           {
-            if ( v2 == 9 )
+            if ( where == 9 )
             {
-              segment_buffer[0] &= 0xFFFFDFFF;
-              segment_buffer[2] &= 0xFFFFCFFF;
-              segment_buffer[4] &= 0xFFFFCFFF;
-              segment_buffer[6] &= 0xFFFFCFFF;
-              segment_buffer[0] |= (v3 & 0xC0) << 6;
-              segment_buffer[2] |= (v3 & 0x30) << 8;
-              segment_buffer[4] |= (v3 & 0xC) << 10;
-              segment_buffer[6] |= (v3 & 3) << 12;
+              segment_buffer_C0L &= ~S0L_MS_1_D;
+              segment_buffer_C1L &= ~(S1L_MS_1_E|S1L_MS_1_C);
+              segment_buffer_C2L &= ~(S2L_MS_1_F|S2L_MS_1_G);
+              segment_buffer_C3L &= ~(S3L_MS_1_A|S3L_MS_1_B);
+              segment_buffer_C0L |= (unsigned __int8)(segs & 0xC0) << 6;
+              segment_buffer_C1L |= (segs & 0x30) << 8;
+              segment_buffer_C2L |= (segs & 0xC) << 10;
+              segment_buffer_C3L |= (segs & 3) << 12;
             }
           }
           else
           {
-            segment_buffer[1] = segment_buffer[1] & 0xFFB;
-            segment_buffer[3] = segment_buffer[3] & 0xFF9;
-            segment_buffer[5] = segment_buffer[5] & 0xFF9;
-            segment_buffer[7] = segment_buffer[7] & 0xFF9;
-            segment_buffer[1] |= (v3 >> 5) & 6;
-            segment_buffer[3] |= (v3 >> 3) & 6;
-            segment_buffer[5] |= (v3 >> 1) & 6;
-            segment_buffer[7] |= 2 * (v3 & 3);
+            segment_buffer_C0H &= ~0xFFFFF004;  // D
+            segment_buffer_C1H &= ~0xFFFFF006;  // EC
+            segment_buffer_C2H &= ~0xFFFFF006;  // FG
+            segment_buffer_C3H &= ~0xFFFFF006;  // AB
+            segment_buffer_C0H |= (segs >> 5) & 6;
+            segment_buffer_C1H |= (segs >> 3) & 6;
+            segment_buffer_C2H |= (segs >> 1) & 6;
+            segment_buffer_C3H |= 2 * (segs & 3);
           }
         }
         else
         {
-          segment_buffer[1] = segment_buffer[1] & 0xFBF;
-          segment_buffer[3] = segment_buffer[3] & 0xF9F;
-          segment_buffer[5] = segment_buffer[5] & 0xF9F;
-          segment_buffer[7] = segment_buffer[7] & 0xF9F;
-          segment_buffer[1] |= (v3 >> 1) & 0x60;
-          segment_buffer[3] |= 2 * (v3 & 0x30);
-          segment_buffer[5] |= 8 * (v3 & 0xC);
-          segment_buffer[7] |= 32 * (v3 & 3);
+          segment_buffer_C0H &= ~0xFFFFF040;    // D
+          segment_buffer_C1H &= ~0xFFFFF060;    // EC
+          segment_buffer_C2H &= ~0xFFFFF060;    // FG
+          segment_buffer_C3H &= ~0xFFFFF060;    // AB
+          segment_buffer_C0H |= (segs >> 1) & 0x60;
+          segment_buffer_C1H |= 2 * (segs & 0x30);
+          segment_buffer_C2H |= 8 * (segs & 0xC);
+          segment_buffer_C3H |= 32 * (segs & 3);
         }
       }
       else
       {
-        segment_buffer[0] &= 0xFFBFFFFF;
-        segment_buffer[2] &= 0xFF9FFFFF;
-        segment_buffer[4] &= 0xFF9FFFFF;
-        segment_buffer[6] &= 0xFF9FFFFF;
-        segment_buffer[0] |= (v3 & 0xC0) << 15;
-        segment_buffer[2] |= (v3 & 0x30) << 17;
-        segment_buffer[4] |= (v3 & 0xC) << 19;
-        segment_buffer[6] |= (v3 & 3) << 21;
+        segment_buffer_C0L &= ~S0L_SS_10_D;
+        segment_buffer_C1L &= ~(S1L_SS_10_E|S1L_SS_10_C);
+        segment_buffer_C2L &= ~(S2L_SS_10_F|S2L_SS_10_G);
+        segment_buffer_C3L &= ~(S3L_SS_10_A|S3L_SS_10_B);
+        segment_buffer_C0L |= (unsigned __int8)(segs & 0xC0) << 15;
+        segment_buffer_C1L |= (segs & 0x30) << 17;
+        segment_buffer_C2L |= (segs & 0xC) << 19;
+        segment_buffer_C3L |= (segs & 3) << 21;
       }
     }
     else
     {
-      segment_buffer[2] &= 0xFDFFFFFF;
-      segment_buffer[4] &= 0xFDFFFFFF;
-      segment_buffer[6] &= 0xFDFFFFFF;
-      segment_buffer[0] |= (v3 & 0x40) << 19;
-      segment_buffer[2] |= (v3 & 0x10) << 21;
-      segment_buffer[4] |= (v3 & 4) << 23;
-      segment_buffer[6] |= (v3 & 1) << 25;
-      segment_buffer[1] = segment_buffer[1] & 0xEFF;
-      segment_buffer[3] = segment_buffer[3] & 0xEFF;
-      segment_buffer[5] = segment_buffer[5] & 0xEFF;
-      segment_buffer[7] = segment_buffer[7] & 0xEFF;
-      segment_buffer[1] |= 2 * (v3 & 0x80);
-      segment_buffer[3] |= 8 * (v3 & 0x20);
-      segment_buffer[5] |= 32 * (v3 & 8);
-      segment_buffer[7] |= (v3 & 2) << 7;
+      segment_buffer_C1L &= ~S1L_SS_1000_C;
+      segment_buffer_C2L &= ~S2L_SS_1000_G;
+      segment_buffer_C3L &= ~S3L_SS_1000_B;
+      segment_buffer_C0L |= (segs & 0x40) << 19;
+      segment_buffer_C1L |= (segs & 0x10) << 21;
+      segment_buffer_C2L |= (segs & 4) << 23;
+      segment_buffer_C3L |= (segs & 1) << 25;
+      segment_buffer_C0H &= ~0xFFFFF100;        // D
+      segment_buffer_C1H &= ~0xFFFFF100;        // E
+      segment_buffer_C2H &= ~0xFFFFF100;        // F
+      segment_buffer_C3H &= ~0xFFFFF100;        // A
+      segment_buffer_C0H |= 2 * (unsigned __int8)(segs & 0x80);
+      segment_buffer_C1H |= 8 * (segs & 0x20);
+      segment_buffer_C2H |= 32 * (segs & 8);
+      segment_buffer_C3H |= (segs & 2) << 7;
     }
   }
   else
   {
-    segment_buffer[0] &= 0xEFFFFFFF;
-    segment_buffer[2] &= 0xE7FFFFFF;
-    segment_buffer[4] &= 0xE7FFFFFF;
-    segment_buffer[6] &= 0xE7FFFFFF;
-    segment_buffer[0] |= (v3 & 0xC0) << 21;
-    segment_buffer[2] |= (v3 & 0x30) << 23;
-    segment_buffer[4] |= (v3 & 0xC) << 25;
-    segment_buffer[6] |= (v3 & 3) << 27;
+    segment_buffer_C0L &= ~S0L_SS_10000_D;
+    segment_buffer_C1L &= ~(S1L_SS_10000_E|S1L_SS_10000_C);
+    segment_buffer_C2L &= ~(S2L_SS_10000_F|S2L_SS_10000_G);
+    segment_buffer_C3L &= ~(S3L_SS_10000_A|S3L_SS_10000_B);
+    segment_buffer_C0L |= (unsigned __int8)(segs & 0xC0) << 21;
+    segment_buffer_C1L |= (segs & 0x30) << 23;
+    segment_buffer_C2L |= (segs & 0xC) << 25;
+    segment_buffer_C3L |= (segs & 3) << 27;
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
 
 //----- (0800A104) --------------------------------------------------------
 unsigned __int8 __fastcall ascii_to_segs(unsigned __int8 chr)
 {
-  unsigned __int8 v1; // r1@1
   unsigned __int8 result; // r0@1
 
-  v1 = chr;
   result = 0;
-  if ( v1 < '0' || v1 >= ':' )
+  if ( (signed int)chr < '0' || (signed int)chr >= ':' )
   {
-    if ( v1 >= '[' || v1 < 'A' )
+    if ( (signed int)chr >= '[' || (signed int)chr < 'A' )
     {
-      if ( v1 >= '{' || v1 < 'a' )
+      if ( (signed int)chr >= '{' || (signed int)chr < 'a' )
       {
-        switch ( v1 )
+        switch ( chr )
         {
           case ' ':
             result = 0;
@@ -5438,34 +5328,34 @@ unsigned __int8 __fastcall ascii_to_segs(unsigned __int8 chr)
       }
       else
       {
-        result = ascii_to_segs_tbl_lowercase[v1 - 97];
+        result = ascii_to_segs_tbl_lowercase[chr - 97];
       }
     }
     else
     {
-      result = ascii_to_segs_tbl_uppercase[v1 - 65];
+      result = ascii_to_segs_tbl_uppercase[chr - 65];
     }
   }
   else
   {
-    result = ascii_to_segs_tbl_digits[v1 - 48];
+    result = ascii_to_segs_tbl_digits[chr - 48];
   }
   return result;
 }
 
 //----- (0800A198) --------------------------------------------------------
-void __fastcall conv_int_to_bcd_tmp(unsigned int num)
+void __fastcall conv_uint_to_bcd_tmp(unsigned int num)
 {
   disp_bcd_tmp[0] = num / 10000;
-  disp_bcd_tmp[1] = (num % 10000) / 1000;
-  disp_bcd_tmp[2] = (num % 1000) / 100;
-  disp_bcd_tmp[3] = (num % 100) / 10;
+  disp_bcd_tmp[1] = (signed int)(num % 10000) / 1000;
+  disp_bcd_tmp[2] = (signed int)(num % 1000) / 100;
+  disp_bcd_tmp[3] = (signed int)(num % 100) / 10;
   disp_bcd_tmp[4] = num % 10;
 }
 // 20003890: using guessed type int disp_bcd_tmp[5];
 
 //----- (0800A238) --------------------------------------------------------
-void __fastcall conv_bcd_to_scr(unsigned __int8 decimal_place)
+void __fastcall conv_bcd_tmp_to_scr(unsigned __int8 decimal_place)
 {
   if ( disp_bcd_tmp[0] > 255 )
     disp_bcd_tmp[0] = 0;
@@ -5477,7 +5367,7 @@ void __fastcall conv_bcd_to_scr(unsigned __int8 decimal_place)
     disp_bcd_tmp[3] = 0;
   if ( disp_bcd_tmp[4] > 255 )
     disp_bcd_tmp[4] = 0;
-  *&decimal_place = decimal_place;
+  *(_DWORD *)&decimal_place = decimal_place;
   if ( decimal_place )
   {
     if ( decimal_place == 2 )
@@ -5542,25 +5432,22 @@ void __fastcall conv_bcd_to_scr(unsigned __int8 decimal_place)
 //----- (0800A40C) --------------------------------------------------------
 void update_lcd_if_appropriate()
 {
-  if ( !((manual_hold_is_enabled & (logging_active ^ 1)) & (lcd_update_from_auto_hold ^ 1)) )
+  if ( !((unsigned __int8)(auto_hold_is_enabled & (logging_active ^ 1)) & (lcd_update_from_auto_hold ^ 1)) )
   {
     lcd_update_from_auto_hold = 0;
     while ( read_lcd_sr(4) )                    // wait for display update to be done
       ;
-    LCD_RAM0L = segment_buffer[0];
-    LCD_RAM0H = segment_buffer[1];
-    LCD_RAM1L = segment_buffer[2];
-    LCD_RAM1H = segment_buffer[3];
-    LCD_RAM2L = segment_buffer[4];
-    LCD_RAM2H = segment_buffer[5];
-    LCD_RAM3L = segment_buffer[6];
-    LCD_RAM3H = segment_buffer[7];
+    LCD_RAM0L = segment_buffer_C0L;
+    LCD_RAM0H = segment_buffer_C0H;
+    LCD_RAM1L = segment_buffer_C1L;
+    LCD_RAM1H = segment_buffer_C1H;
+    LCD_RAM2L = segment_buffer_C2L;
+    LCD_RAM2H = segment_buffer_C2H;
+    LCD_RAM3L = segment_buffer_C3L;
+    LCD_RAM3H = segment_buffer_C3H;
     set_lcd_update_request();
   }
 }
-// 200035C8: using guessed type int segment_buffer[16];
-// 20003A9D: using guessed type char logging_active;
-// 20003AF4: using guessed type char lcd_update_from_auto_hold;
 // 40002414: using guessed type int LCD_RAM0L;
 // 40002418: using guessed type int LCD_RAM0H;
 // 4000241C: using guessed type int LCD_RAM1L;
@@ -5571,52 +5458,48 @@ void update_lcd_if_appropriate()
 // 40002430: using guessed type int LCD_RAM3H;
 
 //----- (0800A4A8) --------------------------------------------------------
-void __fastcall init_the_lcd(unsigned __int8 contrast, char blank)
+void __fastcall lcd_init(unsigned __int8 contrast, char blank)
 {
-  unsigned __int8 v2; // r4@1
-  char v3; // r5@1
   int v4; // [sp+0h] [bp-20h]@1
   int v5; // [sp+4h] [bp-1Ch]@1
   int v6; // [sp+8h] [bp-18h]@1
   int v7; // [sp+Ch] [bp-14h]@1
   int v8; // [sp+10h] [bp-10h]@1
 
-  v2 = contrast;
-  v3 = blank;
-  init_lcd_gpio_modes();
-  set_apb1_periph(512, 1);
-  v4 = 12582912;
-  v5 = 0;
-  v6 = 12;
-  v7 = 64;
-  v8 = 0;
-  sub_8010FCC(&v4);
-  sub_8011036(0);
-  set_lcd_contrast(v2);
-  sub_8011056(0);
-  sub_801103E(64);
-  sub_801101A();
-  sub_8011012(1);
-  while ( !read_lcd_sr(1) )
+  gpio_config_lcd_pins();
+  set_APB1_periph_clock(512, 1);
+  v4 = 0xC00000;                                // set prescaler to LCDCLK/4
+  v5 = 0;                                       // set DIV to /16
+  v6 = 12;                                      // set 1/4 duty cycle
+  v7 = 64;                                      // set bias to 1/3
+  v8 = 0;                                       // select internal voltage generator
+  lcd_set_fcr_and_cr((int)&v4);
+  lcd_set_segment_multiplexing(0);
+  lcd_set_contrast(contrast);
+  lcd_set_dead_time(0);
+  lcd_set_pulse_on_duration(64);
+  lcd_wait_for_FCR_sync();
+  lcd_set_enable(1u);
+  while ( !read_lcd_sr(1) )                     // wait for LCD to be enabled
     ;
-  while ( !read_lcd_sr(16) )
+  while ( !read_lcd_sr(16) )                    // wait for LCD voltage to be stable
     ;
-  sub_801106E(0, 0x4000);
-  if ( v3 )
-    turn_off_all_lcd_segments();
+  lcd_set_blink(0, 0x4000);
+  if ( blank )
+    lcd_turn_off_all_segments();
   update_lcd_if_appropriate();
 }
 
 //----- (0800A52E) --------------------------------------------------------
-GPIO_CONFIG init_lcd_gpio_modes()
+void __fastcall gpio_config_lcd_pins()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
   power_all_gpio_banks();
-  sub_80121A4(&cfg);
+  gpio_clear_config(&cfg);
   cfg.pins = 34766;
   cfg.mode = 2;
-  config_pins(&GPIOA, &cfg);
+  gpio_config_pin(&GPIOA, &cfg);
   set_gpio_pin_func(&GPIOA, 1u, 0xBu);
   set_gpio_pin_func(&GPIOA, 2u, 0xBu);
   set_gpio_pin_func(&GPIOA, 3u, 0xBu);
@@ -5624,11 +5507,11 @@ GPIO_CONFIG init_lcd_gpio_modes()
   set_gpio_pin_func(&GPIOA, 7u, 0xBu);
   set_gpio_pin_func(&GPIOA, 8u, 0xBu);
   set_gpio_pin_func(&GPIOA, 9u, 0xBu);
-  set_gpio_pin_func(&GPIOA, 0xAu, 0xBu);
-  set_gpio_pin_func(&GPIOA, 0xFu, 0xBu);
+  set_gpio_pin_func(&GPIOA, 10u, 0xBu);
+  set_gpio_pin_func(&GPIOA, 15u, 0xBu);
   cfg.pins = 65339;
   cfg.mode = 2;
-  config_pins(&GPIOB, &cfg);
+  gpio_config_pin(&GPIOB, &cfg);
   set_gpio_pin_func(&GPIOB, 0, 0xBu);
   set_gpio_pin_func(&GPIOB, 1u, 0xBu);
   set_gpio_pin_func(&GPIOB, 3u, 0xBu);
@@ -5636,15 +5519,15 @@ GPIO_CONFIG init_lcd_gpio_modes()
   set_gpio_pin_func(&GPIOB, 5u, 0xBu);
   set_gpio_pin_func(&GPIOB, 8u, 0xBu);
   set_gpio_pin_func(&GPIOB, 9u, 0xBu);
-  set_gpio_pin_func(&GPIOB, 0xAu, 0xBu);
-  set_gpio_pin_func(&GPIOB, 0xBu, 0xBu);
-  set_gpio_pin_func(&GPIOB, 0xCu, 0xBu);
-  set_gpio_pin_func(&GPIOB, 0xDu, 0xBu);
-  set_gpio_pin_func(&GPIOB, 0xEu, 0xBu);
-  set_gpio_pin_func(&GPIOB, 0xFu, 0xBu);
+  set_gpio_pin_func(&GPIOB, 10u, 0xBu);
+  set_gpio_pin_func(&GPIOB, 11u, 0xBu);
+  set_gpio_pin_func(&GPIOB, 12u, 0xBu);
+  set_gpio_pin_func(&GPIOB, 13u, 0xBu);
+  set_gpio_pin_func(&GPIOB, 14u, 0xBu);
+  set_gpio_pin_func(&GPIOB, 15u, 0xBu);
   cfg.pins = 1791;
   cfg.mode = 2;
-  config_pins(&GPIOC, &cfg);
+  gpio_config_pin(&GPIOC, &cfg);
   set_gpio_pin_func(&GPIOC, 0, 0xBu);
   set_gpio_pin_func(&GPIOC, 1u, 0xBu);
   set_gpio_pin_func(&GPIOC, 2u, 0xBu);
@@ -5654,26 +5537,25 @@ GPIO_CONFIG init_lcd_gpio_modes()
   set_gpio_pin_func(&GPIOC, 6u, 0xBu);
   set_gpio_pin_func(&GPIOC, 7u, 0xBu);
   set_gpio_pin_func(&GPIOC, 9u, 0xBu);
-  set_gpio_pin_func(&GPIOC, 0xAu, 0xBu);
+  set_gpio_pin_func(&GPIOC, 10u, 0xBu);
   cfg.pins = 65280;
   cfg.mode = 2;
-  config_pins(&GPIOD, &cfg);
+  gpio_config_pin(&GPIOD, &cfg);
   set_gpio_pin_func(&GPIOD, 8u, 0xBu);
   set_gpio_pin_func(&GPIOD, 9u, 0xBu);
-  set_gpio_pin_func(&GPIOD, 0xAu, 0xBu);
-  set_gpio_pin_func(&GPIOD, 0xBu, 0xBu);
-  set_gpio_pin_func(&GPIOD, 0xCu, 0xBu);
-  set_gpio_pin_func(&GPIOD, 0xDu, 0xBu);
-  set_gpio_pin_func(&GPIOD, 0xEu, 0xBu);
-  set_gpio_pin_func(&GPIOD, 0xFu, 0xBu);
+  set_gpio_pin_func(&GPIOD, 10u, 0xBu);
+  set_gpio_pin_func(&GPIOD, 11u, 0xBu);
+  set_gpio_pin_func(&GPIOD, 12u, 0xBu);
+  set_gpio_pin_func(&GPIOD, 13u, 0xBu);
+  set_gpio_pin_func(&GPIOD, 14u, 0xBu);
+  set_gpio_pin_func(&GPIOD, 15u, 0xBu);
   cfg.pins = 15;
   cfg.mode = 2;
-  config_pins(&GPIOE, &cfg);
+  gpio_config_pin(&GPIOE, &cfg);
   set_gpio_pin_func(&GPIOE, 0, 0xBu);
   set_gpio_pin_func(&GPIOE, 1u, 0xBu);
   set_gpio_pin_func(&GPIOE, 2u, 0xBu);
   set_gpio_pin_func(&GPIOE, 3u, 0xBu);
-  return cfg;
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 // 40020800: using guessed type GPIO_REGS GPIOC;
@@ -5681,48 +5563,48 @@ GPIO_CONFIG init_lcd_gpio_modes()
 // 40021000: using guessed type GPIO_REGS GPIOE;
 
 //----- (0800A75E) --------------------------------------------------------
-void __fastcall set_lcd_contrast(unsigned __int8 contrast)
+void __fastcall lcd_set_contrast(unsigned __int8 contrast)
 {
   if ( contrast == 10 )
   {
-    set_lcd_contrast_reg(0);
+    lcd_set_contrast_reg(0);
   }
   else if ( contrast >= 0xAu )
   {
     if ( contrast == 12 )
     {
-      set_lcd_contrast_reg(2048);
+      lcd_set_contrast_reg(2048);
     }
     else if ( contrast >= 0xCu )
     {
       if ( contrast == 14 )
       {
-        set_lcd_contrast_reg(0x1000);
+        lcd_set_contrast_reg(0x1000);
       }
       else if ( contrast >= 0xEu )
       {
         if ( contrast == 16 )
         {
-          set_lcd_contrast_reg(6144);
+          lcd_set_contrast_reg(0x1800);
         }
         else if ( contrast >= 0x10u )
         {
           if ( contrast == 17 )
-            set_lcd_contrast_reg(7168);
+            lcd_set_contrast_reg(7168);
         }
         else
         {
-          set_lcd_contrast_reg(5120);
+          lcd_set_contrast_reg(5120);
         }
       }
       else
       {
-        set_lcd_contrast_reg(3072);
+        lcd_set_contrast_reg(3072);
       }
     }
     else
     {
-      set_lcd_contrast_reg(1024);
+      lcd_set_contrast_reg(1024);
     }
   }
 }
@@ -5736,25 +5618,25 @@ void maybe_refresh_lcd_contrast_register()
   {
     v0 = 0;
   }
-  else if ( curr_lcd_contrast >= 0xAu )
+  else if ( (unsigned __int8)curr_lcd_contrast >= 0xAu )
   {
     if ( curr_lcd_contrast == 12 )
     {
       v0 = LCD_FCR & 0x800;
     }
-    else if ( curr_lcd_contrast >= 0xCu )
+    else if ( (unsigned __int8)curr_lcd_contrast >= 0xCu )
     {
       if ( curr_lcd_contrast == 14 )
       {
         v0 = LCD_FCR & 0x1000;
       }
-      else if ( curr_lcd_contrast >= 0xEu )
+      else if ( (unsigned __int8)curr_lcd_contrast >= 0xEu )
       {
         if ( curr_lcd_contrast == 16 )
         {
           v0 = LCD_FCR & 0x1800;
         }
-        else if ( curr_lcd_contrast >= 0x10u )
+        else if ( (unsigned __int8)curr_lcd_contrast >= 0x10u )
         {
           if ( curr_lcd_contrast == 17 )
             v0 = LCD_FCR & 0x1C00;
@@ -5774,7 +5656,7 @@ void maybe_refresh_lcd_contrast_register()
       v0 = LCD_FCR & 0x400;
     }
   }
-  set_lcd_contrast_reg(v0);
+  lcd_set_contrast_reg(v0);
 }
 // 20000222: using guessed type char curr_lcd_contrast;
 // 40002404: using guessed type int LCD_FCR;
@@ -5904,17 +5786,17 @@ LABEL_80:
             return;
           }
 LABEL_78:
-          if ( curr_meas_range >= 2 )
+          if ( (signed int)curr_meas_range >= 2 )
             log_prsamp_G_ex_amp_range_mode += 64;
           goto LABEL_80;
         }
 LABEL_75:
-        if ( curr_meas_range >= 2 )
+        if ( (signed int)curr_meas_range >= 2 )
           log_prsamp_G_ex_amp_range_mode += 32;
         goto LABEL_80;
       }
     }
-    if ( curr_meas_range >= 2 )
+    if ( (signed int)curr_meas_range >= 2 )
       log_prsamp_G_ex_amp_range_mode += 32;
     goto LABEL_80;
   }
@@ -5932,7 +5814,6 @@ LABEL_75:
 // 20003AAD: using guessed type char log_prsamp_E_ex_volt_flags;
 // 20003AAE: using guessed type char log_prsamp_G_ex_amp_range_mode;
 // 20003AAF: using guessed type char log_prsamp_H_ex_amp_flags;
-// 20003AE2: using guessed type char ac_input_freq_range;
 // 20003AE9: using guessed type char ac_input_hz_overflow;
 // 20003B32: using guessed type char lowz_measuring_ac;
 // 20003B33: using guessed type char lowz_active_cause_of_enough_volts;
@@ -5948,7 +5829,9 @@ LABEL_75:
 //----- (0800AC9C) --------------------------------------------------------
 void __cdecl log_prepare_sample_main_measurement()
 {
-  if ( (curr_meas_mode < MM_HZ || curr_meas_mode >= MM_OHMS) && curr_meas_mode != MM_CAP && curr_meas_mode != MM_TEMP )
+  if ( (curr_meas_mode < (signed int)MM_HZ || curr_meas_mode >= (signed int)MM_OHMS)
+    && curr_meas_mode != MM_CAP
+    && curr_meas_mode != MM_TEMP )
   {
     // diode and continuity use bargraph as sample
     if ( curr_bargraph_digits >= 0 )
@@ -5983,7 +5866,6 @@ void __cdecl log_prepare_sample_main_measurement()
 // 2000385C: using guessed type int curr_bargraph_digits;
 // 20003AAB: using guessed type char log_prsamp_B_flags;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AE8: using guessed type char curr_scr_overflow;
 
 //----- (0800AD74) --------------------------------------------------------
 void __fastcall logging_begin()
@@ -5996,11 +5878,11 @@ void __fastcall logging_begin()
   else
   {
     curr_sub_mode = 100;
-    if ( !manual_hold_is_enabled )
+    if ( !auto_hold_is_enabled )
       autoranging_disabled = 1;
     rel_meas_enabled = 0;
     meter_min_max_mode = 0;
-    auto_hold_is_enabled = 0;
+    manual_hold_is_enabled = 0;
     maybe_logging_was_active_at_some_point = 1;
     logging_interval_elapsed = 0;
     log_playback_mode = 0;
@@ -6016,26 +5898,21 @@ void __fastcall logging_begin()
     log_file_need_to_write_header = 0;
     log_file_is_ending = 0;
     log_file_chain_idx = 0;
-    logging_interval_timer = curr_logging_interval - 1;
-    logging_interval_maybe_subtimer = 0;
+    logging_interval_timer_1s = curr_logging_interval - 1;
+    logging_interval_maxspeed_timer_200ms = 0;
     write_logged_meas_mode_and_range_to_eeprom();
     set_log_start_time_and_write_to_eeprom_badly();
   }
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 // 2000382C: using guessed type int log_successful_flushes;
 // 20003830: using guessed type int log_total_samples;
 // 20003834: using guessed type int log_file_total_samples_written;
 // 2000383C: using guessed type int log_file_total_samples_written_backup;
 // 20003A54: using guessed type __int16 log_playback_pos;
 // 20003A5C: using guessed type __int16 log_samples_in_eeprom;
-// 20003A60: using guessed type __int16 logging_interval_timer;
 // 20003A64: using guessed type __int16 log_file_chain_idx;
-// 20003A9E: using guessed type char logging_interval_elapsed;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
-// 20003AB6: using guessed type char logging_interval_maybe_subtimer;
-// 20003AC3: using guessed type char curr_sys_error;
+// 20003AB6: using guessed type char logging_interval_maxspeed_timer_200ms;
 // 20003AC4: using guessed type char log_need_to_flush_samples_from_eeprom;
 // 20003AC5: using guessed type char need_to_display_logging_ended;
 // 20003ACC: using guessed type char log_file_starting_new_link;
@@ -6043,7 +5920,6 @@ void __fastcall logging_begin()
 // 20003ACE: using guessed type char log_file_need_to_write_header;
 // 20003ADF: using guessed type char batt_is_low_icon;
 // 20003AE6: using guessed type char autoranging_disabled;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF5: using guessed type char rel_meas_enabled;
 // 20003AFE: using guessed type char need_to_update_subscr;
 
@@ -6056,8 +5932,8 @@ void __fastcall logging_end(char flush_samples)
   meter_set_default_subscr_mode();
   save_eeprom_sample_count();
   set_log_end_time_and_write_start_time_to_eeprom_badly();
-  if ( log_samples_in_eeprom && log_samples_in_eeprom < 60 )
-    log_samples_in_eeprom_that_need_flushing = log_samples_in_eeprom;
+  if ( log_samples_in_eeprom && (signed int)(unsigned __int16)log_samples_in_eeprom < 60 )
+    log_samples_in_eeprom_that_need_flushing = (unsigned __int16)log_samples_in_eeprom;
   log_file_is_ending = 1;
   log_file_starting_new_link = 0;
   if ( v1 == 1 )
@@ -6073,10 +5949,10 @@ void __fastcall logging_end(char flush_samples)
 void __fastcall log_save_sample()
 {
   logging_interval_elapsed = 0;
-  if ( log_samples_in_eeprom >= 60 )
+  if ( (signed int)(unsigned __int16)log_samples_in_eeprom >= 60 )
     log_samples_in_eeprom = 0;
   log_write_sample_to_eeprom(log_samples_in_eeprom++);
-  if ( log_samples_in_eeprom >= 60 )
+  if ( (signed int)(unsigned __int16)log_samples_in_eeprom >= 60 )
   {
     log_need_to_flush_samples_from_eeprom = 1;
     log_samples_in_eeprom_that_need_flushing = 60;
@@ -6087,7 +5963,6 @@ void __fastcall log_save_sample()
 // 20003830: using guessed type int log_total_samples;
 // 20003838: using guessed type int log_samples_in_eeprom_that_need_flushing;
 // 20003A5C: using guessed type __int16 log_samples_in_eeprom;
-// 20003A9E: using guessed type char logging_interval_elapsed;
 // 20003AC4: using guessed type char log_need_to_flush_samples_from_eeprom;
 // 20003AFE: using guessed type char need_to_update_subscr;
 
@@ -6105,7 +5980,7 @@ void load_eeprom_sample_count()
 {
   log_samples_in_eeprom = read_eeprom_2byte(1200);
   log_total_samples = read_eeprom_4byte(1202);
-  if ( log_samples_in_eeprom >= 61 || log_total_samples >= 600000 )
+  if ( (signed int)(unsigned __int16)log_samples_in_eeprom >= 61 || (unsigned int)log_total_samples >= 600000 )
   {
     log_samples_in_eeprom = 0;
     log_total_samples = 0;
@@ -6118,7 +5993,7 @@ void load_eeprom_sample_count()
 //----- (0800AF7E) --------------------------------------------------------
 void log_calc_playback_window()
 {
-  if ( log_total_samples < 61 )
+  if ( (unsigned int)log_total_samples < 61 )
   {
     log_playback_window_start = 1;
     log_playback_window_len = log_samples_in_eeprom;
@@ -6134,24 +6009,20 @@ void log_calc_playback_window()
 }
 // 20003830: using guessed type int log_total_samples;
 // 20003A54: using guessed type __int16 log_playback_pos;
-// 20003A56: using guessed type __int16 log_playback_window_end;
-// 20003A58: using guessed type __int16 log_playback_window_start;
 // 20003A5A: using guessed type __int16 log_playback_window_len;
 // 20003A5C: using guessed type __int16 log_samples_in_eeprom;
 
 //----- (0800AFD6) --------------------------------------------------------
-int __fastcall log_get_eeprom_idx_for_sample(unsigned __int16 a1)
+unsigned __int16 __fastcall log_get_eeprom_idx_for_sample(unsigned __int16 sample)
 {
-  int result; // r0@2
+  unsigned __int16 result; // r0@2
 
-  if ( log_playback_window_end >= log_playback_window_start + a1 - 1 )
-    LOWORD(result) = log_playback_window_start + a1 - 1;
+  if ( log_playback_window_end >= log_playback_window_start + sample - 1 )
+    result = log_playback_window_start + sample - 1;
   else
-    LOWORD(result) = log_playback_window_start + a1 - 1 - log_playback_window_end;
+    result = log_playback_window_start + sample - 1 - log_playback_window_end;
   return result;
 }
-// 20003A56: using guessed type __int16 log_playback_window_end;
-// 20003A58: using guessed type __int16 log_playback_window_start;
 
 //----- (0800B016) --------------------------------------------------------
 void __fastcall write_logged_meas_mode_and_range_to_eeprom()
@@ -6178,11 +6049,11 @@ void __fastcall set_log_start_time_and_write_to_eeprom_badly()
   log_start_minute = curr_minute;
   log_start_second = curr_second;
   try_to_write_byte_10_times_also(1216, curr_year);
-  try_to_write_byte_10_times_also(1217, log_start_month);
-  try_to_write_byte_10_times_also(1217, log_start_day);
-  try_to_write_byte_10_times_also(1217, log_start_hour);
-  try_to_write_byte_10_times_also(1217, log_start_minute);
-  try_to_write_byte_10_times_also(1217, log_start_second);
+  try_to_write_byte_10_times_also(1217, (unsigned __int8)log_start_month);
+  try_to_write_byte_10_times_also(1217, (unsigned __int8)log_start_day);
+  try_to_write_byte_10_times_also(1217, (unsigned __int8)log_start_hour);
+  try_to_write_byte_10_times_also(1217, (unsigned __int8)log_start_minute);
+  try_to_write_byte_10_times_also(1217, (unsigned __int8)log_start_second);
 }
 // 20003AB7: using guessed type char log_start_year;
 // 20003AB8: using guessed type char log_start_month;
@@ -6190,12 +6061,6 @@ void __fastcall set_log_start_time_and_write_to_eeprom_badly()
 // 20003ABA: using guessed type char log_start_hour;
 // 20003ABB: using guessed type char log_start_minute;
 // 20003ABC: using guessed type char log_start_second;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
-// 20003B6E: using guessed type char curr_second;
 
 //----- (0800B0EA) --------------------------------------------------------
 void __fastcall load_log_start_time_from_eeprom_badly()
@@ -6223,12 +6088,12 @@ void __fastcall set_log_end_time_and_write_start_time_to_eeprom_badly()
   log_end_hour = curr_hour;
   log_end_minute = curr_minute;
   log_end_second = curr_second;
-  try_to_write_byte_10_times_also(1222, log_start_year);
-  try_to_write_byte_10_times_also(1223, log_start_month);
-  try_to_write_byte_10_times_also(1223, log_start_day);
-  try_to_write_byte_10_times_also(1223, log_start_hour);
-  try_to_write_byte_10_times_also(1223, log_start_minute);
-  try_to_write_byte_10_times_also(1223, log_start_second);
+  try_to_write_byte_10_times_also(1222, (unsigned __int8)log_start_year);
+  try_to_write_byte_10_times_also(1223, (unsigned __int8)log_start_month);
+  try_to_write_byte_10_times_also(1223, (unsigned __int8)log_start_day);
+  try_to_write_byte_10_times_also(1223, (unsigned __int8)log_start_hour);
+  try_to_write_byte_10_times_also(1223, (unsigned __int8)log_start_minute);
+  try_to_write_byte_10_times_also(1223, (unsigned __int8)log_start_second);
 }
 // 20003AB7: using guessed type char log_start_year;
 // 20003AB8: using guessed type char log_start_month;
@@ -6242,12 +6107,6 @@ void __fastcall set_log_end_time_and_write_start_time_to_eeprom_badly()
 // 20003AC0: using guessed type char log_end_hour;
 // 20003AC1: using guessed type char log_end_minute;
 // 20003AC2: using guessed type char log_end_second;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
-// 20003B6E: using guessed type char curr_second;
 
 //----- (0800B1D2) --------------------------------------------------------
 void __fastcall load_log_end_time_from_eeprom_badly()
@@ -6272,14 +6131,14 @@ void __fastcall log_write_sample_to_eeprom(unsigned __int16 a1)
   int v1; // r5@1
 
   v1 = 18 * a1 + 1280;
-  try_to_write_byte_10_times_also(v1, log_prsamp_A_range_mode);
-  try_to_write_byte_10_times_also(v1 + 1, log_prsamp_B_flags);
+  try_to_write_byte_10_times_also(v1, (unsigned __int8)log_prsamp_A_range_mode);
+  try_to_write_byte_10_times_also(v1 + 1, (unsigned __int8)log_prsamp_B_flags);
   write_eeprom_4byte(v1 + 2, log_prsamp_C_main_measurement);
-  try_to_write_byte_10_times_also(v1 + 6, log_prsamp_D_ex_volt_range_mode);
-  try_to_write_byte_10_times_also(v1 + 7, log_prsamp_E_ex_volt_flags);
+  try_to_write_byte_10_times_also(v1 + 6, (unsigned __int8)log_prsamp_D_ex_volt_range_mode);
+  try_to_write_byte_10_times_also(v1 + 7, (unsigned __int8)log_prsamp_E_ex_volt_flags);
   write_eeprom_4byte(v1 + 8, log_prsamp_F_ex_volt_value);
-  try_to_write_byte_10_times_also(v1 + 12, log_prsamp_G_ex_amp_range_mode);
-  try_to_write_byte_10_times_also(v1 + 13, log_prsamp_H_ex_amp_flags);
+  try_to_write_byte_10_times_also(v1 + 12, (unsigned __int8)log_prsamp_G_ex_amp_range_mode);
+  try_to_write_byte_10_times_also(v1 + 13, (unsigned __int8)log_prsamp_H_ex_amp_flags);
   write_eeprom_4byte(v1 + 14, log_prsamp_I_ex_amp_value);
 }
 // 20003820: using guessed type int log_prsamp_C_main_measurement;
@@ -6300,7 +6159,7 @@ void __fastcall log_read_sample_from_eeprom(unsigned __int16 sample)
   v1 = 18 * sample + 1280;
   log_rdsamp_A_range_mode = read_eeprom_byte(v1);
   log_rdsamp_mode = log_rdsamp_A_range_mode & 0x1F;
-  log_rdsamp_range = log_rdsamp_A_range_mode >> 5;
+  log_rdsamp_range = (unsigned __int8)log_rdsamp_A_range_mode >> 5;
   log_rdsamp_B_flags = read_eeprom_byte(v1 + 1);
   log_rdsamp_lowz_measuring_ac = 0;
   if ( log_rdsamp_B_flags & 1 )
@@ -6323,12 +6182,12 @@ void __fastcall log_read_sample_from_eeprom(unsigned __int16 sample)
   log_rdsamp_C_main_measurement = read_eeprom_4byte(v1 + 2);
   log_rdsamp_D_ex_volt_range_mode = read_eeprom_byte(v1 + 6);
   log_rdsamp_ex_volt_mode = log_rdsamp_D_ex_volt_range_mode & 0x1F;
-  log_rdsamp_ex_volt_range = log_rdsamp_D_ex_volt_range_mode >> 5;
+  log_rdsamp_ex_volt_range = (unsigned __int8)log_rdsamp_D_ex_volt_range_mode >> 5;
   log_rdsamp_E_ex_volt_flags = read_eeprom_byte(v1 + 7);
   log_rdsamp_F_ex_volt_value = read_eeprom_4byte(v1 + 8);
   log_rdsamp_G_ex_amp_range_mode = read_eeprom_byte(v1 + 12);
   log_rdsamp_ex_amp_mode = log_rdsamp_G_ex_amp_range_mode & 0x1F;
-  log_rdsamp_ex_amp_range = log_rdsamp_G_ex_amp_range_mode >> 5;
+  log_rdsamp_ex_amp_range = (unsigned __int8)log_rdsamp_G_ex_amp_range_mode >> 5;
   log_rdsamp_H_ex_amp_flags = read_eeprom_byte(v1 + 13);
   log_rdsamp_I_ex_amp_value = read_eeprom_4byte(v1 + 14);
 }
@@ -6364,14 +6223,14 @@ void load_curr_year_month()
 //----- (0800B4C0) --------------------------------------------------------
 void __fastcall save_last_cal_year_month()
 {
-  try_to_write_byte_10_times_also(1, last_cal_year_month);
+  try_to_write_byte_10_times_also(1, (unsigned __int8)last_cal_year_month);
 }
 
 //----- (0800B4D8) --------------------------------------------------------
 void load_meter_serial()
 {
   curr_meter_serial = read_eeprom_4byte(3);
-  if ( curr_meter_serial >= 100000 )
+  if ( (unsigned int)curr_meter_serial >= 100000 )
     curr_meter_serial = 0;
 }
 // 2000380C: using guessed type int curr_meter_serial;
@@ -6391,7 +6250,7 @@ meter_meas_mode __fastcall get_last_mode_v()
 
   v0 = MM_DCV;
   v1 = read_eeprom_byte(8);
-  if ( v1 == 130 )
+  if ( (unsigned __int8)v1 == 130 )
   {
     v0 = MM_ACV;
     meter_enable_acv_dcv_mode();
@@ -6411,8 +6270,8 @@ meter_meas_mode get_last_mode_mv(void)
 
   v0 = MM_DCmV;
   v1 = read_eeprom_byte(9);
-  if ( v1 == MM_DCmV || v1 == MM_ACmV || v1 == MM_TEMP )
-    v0 = v1;
+  if ( v1 == MM_DCmV || (unsigned __int8)v1 == MM_ACmV || (unsigned __int8)v1 == MM_TEMP )
+    v0 = (unsigned __int8)v1;
   return v0;
 }
 
@@ -6424,8 +6283,8 @@ meter_meas_mode get_last_mode_hz(void)
 
   v0 = MM_HZ;
   v1 = read_eeprom_byte(10);
-  if ( v1 == MM_HZ || v1 == MM_mSEC || v1 == MM_DUTY )
-    v0 = v1;
+  if ( v1 == MM_HZ || (unsigned __int8)v1 == MM_mSEC || (unsigned __int8)v1 == MM_DUTY )
+    v0 = (unsigned __int8)v1;
   return v0;
 }
 
@@ -6437,8 +6296,11 @@ meter_meas_mode get_last_mode_ohms(void)
 
   v0 = MM_OHMS;
   v1 = read_eeprom_byte(11);
-  if ( v1 == MM_OHMS || v1 == MM_CONTINUITY || v1 == MM_DIODE || v1 == MM_CAP )
-    v0 = v1;
+  if ( v1 == MM_OHMS
+    || (unsigned __int8)v1 == MM_CONTINUITY
+    || (unsigned __int8)v1 == MM_DIODE
+    || (unsigned __int8)v1 == MM_CAP )
+    v0 = (unsigned __int8)v1;
   return v0;
 }
 
@@ -6450,8 +6312,8 @@ meter_meas_mode get_last_mode_pwr(void)
 
   v0 = MM_DCVA;
   v1 = read_eeprom_byte(12);
-  if ( v1 == MM_DCVA || v1 == MM_ACVA )
-    v0 = v1;
+  if ( v1 == MM_DCVA || (unsigned __int8)v1 == MM_ACVA )
+    v0 = (unsigned __int8)v1;
   return v0;
 }
 
@@ -6463,8 +6325,11 @@ meter_meas_mode get_last_mode_uA(void)
 
   v0 = MM_DCuA;
   v1 = read_eeprom_byte(13);
-  if ( v1 == MM_DCuA || v1 == MM_ACuA || v1 == MM_ACuVA || v1 == MM_DCuVA )
-    v0 = v1;
+  if ( v1 == MM_DCuA
+    || (unsigned __int8)v1 == MM_ACuA
+    || (unsigned __int8)v1 == MM_ACuVA
+    || (unsigned __int8)v1 == MM_DCuVA )
+    v0 = (unsigned __int8)v1;
   return v0;
 }
 
@@ -6503,7 +6368,7 @@ void __fastcall write_curr_meas_mode_with_a_lockout_or_something(unsigned __int8
         v2 = 130;
     }
   }
-  try_to_write_byte_10_times_also(a1, v2);
+  try_to_write_byte_10_times_also(a1, (unsigned __int8)v2);
 }
 // 20003B52: using guessed type char meter_mode_acv_dcv;
 
@@ -6514,23 +6379,23 @@ void __fastcall save_curr_meas_mode()
   int v1; // r0@7
   int v2; // r0@8
 
-  if ( curr_meas_mode - 1 <= 1 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 1 <= 1 )
   {
     write_curr_meas_mode_with_a_lockout_or_something(8u, curr_meas_mode);
     return;
   }
-  if ( curr_meas_mode - 3 <= 2 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 3 <= 2 )
   {
     write_curr_meas_mode_with_a_lockout_or_something(9u, curr_meas_mode);
     return;
   }
-  if ( curr_meas_mode - 6 <= 2 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - 6 <= 2 )
   {
     write_curr_meas_mode_with_a_lockout_or_something(0xAu, curr_meas_mode);
     return;
   }
-  v0 = curr_meas_mode - 9;
-  if ( v0 <= 3 )
+  v0 = (unsigned __int8)curr_meas_mode - 9;
+  if ( (unsigned int)v0 <= 3 )
   {
     write_curr_meas_mode_with_a_lockout_or_something(0xBu, curr_meas_mode);
     return;
@@ -6543,11 +6408,11 @@ LABEL_16:
     write_curr_meas_mode_with_a_lockout_or_something(0xCu, curr_meas_mode);
     return;
   }
-  v1 = curr_meas_mode - 16;
-  if ( v1 <= 1 )
+  v1 = (unsigned __int8)curr_meas_mode - 16;
+  if ( (unsigned int)v1 <= 1 )
     goto LABEL_21;
-  v2 = curr_meas_mode - 18;
-  if ( v2 <= 3 )
+  v2 = (unsigned __int8)curr_meas_mode - 18;
+  if ( (unsigned int)v2 <= 3 )
   {
     write_curr_meas_mode_with_a_lockout_or_something(0xEu, curr_meas_mode);
     return;
@@ -6568,12 +6433,11 @@ void load_logging_interval()
   unsigned __int16 v0; // r4@1
 
   v0 = read_eeprom_2byte(24);
-  if ( v0 >= 1000 )
+  if ( (signed int)v0 >= 1000 )
     curr_logging_interval = 1;
   else
     curr_logging_interval = v0;
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 
 //----- (0800B7BC) --------------------------------------------------------
 void __fastcall save_logging_interval(__int16 a1)
@@ -6587,7 +6451,7 @@ void load_lcd_contrast()
   unsigned __int8 v0; // r4@1
 
   v0 = read_eeprom_byte(26);
-  if ( v0 < 12 || v0 >= 18 )
+  if ( (signed int)v0 < 12 || (signed int)v0 >= 18 )
     curr_lcd_contrast = 14;
   else
     curr_lcd_contrast = v0;
@@ -6606,12 +6470,11 @@ void load_curr_apo_status()
   unsigned __int8 v0; // r4@1
 
   v0 = read_eeprom_byte(22);
-  if ( v0 >= 2 )
+  if ( (signed int)v0 >= 2 )
     curr_apo_off = 0;
   else
     curr_apo_off = v0 != 0;
 }
-// 20003ADD: using guessed type char curr_apo_off;
 
 //----- (0800B832) --------------------------------------------------------
 void __fastcall save_curr_apo_status(unsigned __int8 a1)
@@ -6625,7 +6488,7 @@ void load_temp_mode()
   unsigned __int8 v0; // r4@1
 
   v0 = read_eeprom_byte(16);
-  if ( v0 >= 2 )
+  if ( (signed int)v0 >= 2 )
     temp_in_c = 0;
   else
     temp_in_c = v0;
@@ -6644,7 +6507,7 @@ void load_hv_diode_mode()
   unsigned __int8 v0; // r4@1
 
   v0 = read_eeprom_byte(18);
-  if ( v0 >= 2 )
+  if ( (signed int)v0 >= 2 )
     high_voltage_diode = 0;
   else
     high_voltage_diode = v0 != 0;
@@ -6663,7 +6526,7 @@ void load_curr_cont_threshold()
   unsigned __int8 v0; // r4@1
 
   v0 = read_eeprom_byte(20);
-  if ( v0 >= 4 )
+  if ( (signed int)v0 >= 4 )
     curr_continuity_threshold = 0;
   else
     curr_continuity_threshold = v0;
@@ -6690,7 +6553,7 @@ void __fastcall save_burden_enabled_for_power_ranges(unsigned __int8 a1)
 }
 
 //----- (0800B92C) --------------------------------------------------------
-void __fastcall load_amp_rel(meter_meas_mode mode, char range)
+void __fastcall cal_load_amp_rel(meter_meas_mode mode, char range)
 {
   unsigned __int16 v2; // r7@8
 
@@ -6706,7 +6569,7 @@ void __fastcall load_amp_rel(meter_meas_mode mode, char range)
 // 200038EC: using guessed type int curr_amp_rel;
 
 //----- (0800B9C0) --------------------------------------------------------
-void __fastcall save_amp_rel(meter_meas_mode mode, char range, int rel)
+void __fastcall cal_save_amp_rel(meter_meas_mode mode, char range, int rel)
 {
   int v3; // r6@1
   unsigned __int16 v4; // r7@8
@@ -6722,38 +6585,38 @@ void __fastcall save_amp_rel(meter_meas_mode mode, char range, int rel)
 }
 
 //----- (0800BA12) --------------------------------------------------------
-void __fastcall erase_some_amp_parameters()
+void __fastcall cal_erase_amp_rel_data()
 {
-  save_amp_rel(MM_ACuA, 0, 0);
-  save_amp_rel(MM_DCuA, 0, 0);
-  save_amp_rel(MM_ACmA, 0, 0);
-  save_amp_rel(MM_DCmA, 0, 0);
-  save_amp_rel(MM_ACA, 0, 0);
-  save_amp_rel(MM_DCA, 0, 0);
+  cal_save_amp_rel(MM_ACuA, 0, 0);
+  cal_save_amp_rel(MM_DCuA, 0, 0);
+  cal_save_amp_rel(MM_ACmA, 0, 0);
+  cal_save_amp_rel(MM_DCmA, 0, 0);
+  cal_save_amp_rel(MM_ACA, 0, 0);
+  cal_save_amp_rel(MM_DCA, 0, 0);
 }
 
 //----- (0800BA52) --------------------------------------------------------
 int __fastcall calc_amp_rel_eeprom_addr(int mode)
 {
-  if ( mode == MM_ACuA )
+  if ( (unsigned __int8)mode == MM_ACuA )
   {
     LOWORD(mode) = 1232;
   }
-  else if ( mode >= MM_ACuA )
+  else if ( (unsigned __int8)mode >= (unsigned int)MM_ACuA )
   {
-    if ( mode == MM_ACmA )
+    if ( (unsigned __int8)mode == MM_ACmA )
     {
       LOWORD(mode) = 1248;
     }
-    else if ( mode >= MM_ACmA )
+    else if ( (unsigned __int8)mode >= (unsigned int)MM_ACmA )
     {
-      if ( mode == MM_ACA )
+      if ( (unsigned __int8)mode == MM_ACA )
       {
         LOWORD(mode) = 1264;
       }
-      else if ( mode >= MM_ACA )
+      else if ( (unsigned __int8)mode >= (unsigned int)MM_ACA )
       {
-        if ( mode == MM_DCA )
+        if ( (unsigned __int8)mode == MM_DCA )
           LOWORD(mode) = 1272;
       }
       else
@@ -6766,13 +6629,13 @@ int __fastcall calc_amp_rel_eeprom_addr(int mode)
       LOWORD(mode) = 1240;
     }
   }
-  return mode;
+  return (unsigned __int16)mode;
 }
 
 //----- (0800BAA0) --------------------------------------------------------
 int *__fastcall get_cal_factor_addr()
 {
-  return (cal_factor_eeloc_tbl[curr_meas_mode] + 16 * curr_meas_range);
+  return (int *)(unsigned __int16)(cal_factor_eeloc_tbl[(unsigned __int8)curr_meas_mode] + 16 * curr_meas_range);
 }
 
 //----- (0800BAC8) --------------------------------------------------------
@@ -6786,7 +6649,9 @@ unsigned __int16 *__fastcall get_ac_cal_data_addr(meter_meas_mode mode, char ran
   {
     range = 1;
   }
-  return (cal_factor_eeloc_tbl[mode] + 8 + 16 * range);
+  return (unsigned __int16 *)(unsigned __int16)(cal_factor_eeloc_tbl[(unsigned __int8)mode]
+                                              + 8
+                                              + 16 * (unsigned __int8)range);
 }
 
 //----- (0800BB24) --------------------------------------------------------
@@ -6794,7 +6659,7 @@ void __fastcall cal_load_factors_for_mode_and_range(meter_meas_mode mode, unsign
 {
   unsigned int v4; // r0@41
 
-  if ( mode == 200 )
+  if ( (unsigned __int8)mode == MM_INTERNAL_THERMISTOR )
   {
     curr_cal_factor_eeloc = 0x2E0;
     cal_internal_thermistor_factor = read_eeprom_2byte(0x2E0);
@@ -6815,8 +6680,8 @@ void __fastcall cal_load_factors_for_mode_and_range(meter_meas_mode mode, unsign
       {
         if ( mode == MM_HZ )
         {
-          curr_cal_factor_eeloc = cal_factor_eeloc_tbl[MM_HZ];
-          hy_sysclk_in_decihz = read_eeprom_4byte(cal_factor_eeloc_tbl[MM_HZ] + 4);
+          curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[MM_HZ];
+          hy_sysclk_in_decihz = read_eeprom_4byte((unsigned __int16)cal_factor_eeloc_tbl[MM_HZ] + 4);
           if ( hy_sysclk_in_decihz >= 60000001 || hy_sysclk_in_decihz < 40000000 )
             hy_sysclk_in_decihz = 49152050;     // nominal HY3131 frequency
         }
@@ -6828,7 +6693,7 @@ void __fastcall cal_load_factors_for_mode_and_range(meter_meas_mode mode, unsign
           }
           else
           {
-            curr_cal_factor_eeloc = cal_factor_eeloc_tbl[25];
+            curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[25];
           }
           cal_curr_offset_val = read_eeprom_4byte(curr_cal_factor_eeloc);
           v4 = read_eeprom_4byte(curr_cal_factor_eeloc + 4);
@@ -6875,7 +6740,7 @@ void cal_load_va_factors(void)
   unsigned int v0; // r0@1
   unsigned int v1; // r0@1
 
-  curr_cal_factor_eeloc = get_cal_factor_addr();
+  curr_cal_factor_eeloc = (int)get_cal_factor_addr();
   cal_curr_offset_va_volts = read_eeprom_4byte(curr_cal_factor_eeloc);
   v0 = read_eeprom_4byte(curr_cal_factor_eeloc + 4);
   cal_curr_gain_va_volts = fp_from_uint(v0);
@@ -6893,8 +6758,8 @@ void cal_load_va_factors(void)
 //----- (0800BE84) --------------------------------------------------------
 void __fastcall cal_validate_ac_factor(unsigned int which)
 {
-  which = which;
-  if ( which )
+  which = (unsigned __int8)which;
+  if ( (_BYTE)which )
   {
     if ( which == 2 )
     {
@@ -6921,9 +6786,9 @@ void __fastcall cal_validate_ac_factor(unsigned int which)
 void cal_load_ac_factors(void)
 {
   if ( curr_meas_mode )
-    curr_cal_factor_eeloc = get_ac_cal_data_addr(curr_meas_mode, curr_meas_range);
+    curr_cal_factor_eeloc = (int)get_ac_cal_data_addr(curr_meas_mode, curr_meas_range);
   else
-    curr_cal_factor_eeloc = get_ac_cal_data_addr(MM_ACV, 3);
+    curr_cal_factor_eeloc = (int)get_ac_cal_data_addr(MM_ACV, 3);
   cal_ac_factor_decirange = read_eeprom_2byte_signed(curr_cal_factor_eeloc);
   cal_validate_ac_factor(0);
   cal_ac_factor_fullrange = read_eeprom_2byte_signed(curr_cal_factor_eeloc + 2);
@@ -6943,7 +6808,7 @@ void __fastcall cal_write_factor(char factor, signed int val)
   float v4; // r0@39
   int v5; // r0@39
 
-  if ( factor == 0xC8 )
+  if ( (unsigned __int8)factor == 0xC8 )
   {
     curr_cal_factor_eeloc = 736;
     if ( cal_internal_thermistor_factor > 1000
@@ -6951,7 +6816,7 @@ void __fastcall cal_write_factor(char factor, signed int val)
       cal_internal_thermistor_factor = 0;
     write_eeprom_2byte(curr_cal_factor_eeloc, cal_internal_thermistor_factor);
   }
-  else if ( factor == 0x96 )
+  else if ( (unsigned __int8)factor == 0x96 )
   {
     cal_ohms_50M_offset_factor_validate();
     write_eeprom_4byte(0x178, cal_ohms_50M_offset_factor);
@@ -6967,19 +6832,19 @@ void __fastcall cal_write_factor(char factor, signed int val)
           case 1:
             if ( curr_meas_mode == MM_HZ )
             {
-              curr_cal_factor_eeloc = cal_factor_eeloc_tbl[curr_meas_mode] + 4;
+              curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[(unsigned __int8)curr_meas_mode] + 4;
               write_eeprom_4byte(curr_cal_factor_eeloc, hy_sysclk_in_decihz);
             }
             else
             {
               if ( curr_meas_mode != MM_ACV && curr_meas_mode != MM_ACmV || input_1ms_peak_enabled != 1 )
               {
-                curr_cal_factor_eeloc = cal_factor_eeloc_tbl[curr_meas_mode];
+                curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[(unsigned __int8)curr_meas_mode];
                 curr_cal_factor_eeloc += 16 * curr_meas_range + 4;
               }
               else
               {
-                curr_cal_factor_eeloc = cal_factor_eeloc_tbl[MM_BURDEN] + 4;
+                curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[MM_BURDEN] + 4;
               }
               if ( curr_meas_mode == MM_CAP )
                 v2 = fp_mul(100000.0, cal_curr_gain_val);
@@ -6990,12 +6855,12 @@ void __fastcall cal_write_factor(char factor, signed int val)
             }
             break;
           case 2:
-            curr_cal_factor_eeloc = cal_factor_eeloc_tbl[curr_meas_mode];
+            curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[(unsigned __int8)curr_meas_mode];
             curr_cal_factor_eeloc += 16 * curr_meas_range + 8;
             write_eeprom_4byte(curr_cal_factor_eeloc, val);
             break;
           case 3:
-            curr_cal_factor_eeloc = cal_factor_eeloc_tbl[curr_meas_mode];
+            curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[(unsigned __int8)curr_meas_mode];
             curr_cal_factor_eeloc += 16 * curr_meas_range + 12;
             v4 = fp_from_int(10000 * val);
             v5 = fp_to_int(v4);
@@ -7007,12 +6872,12 @@ void __fastcall cal_write_factor(char factor, signed int val)
       {
         if ( curr_meas_mode != MM_ACV && curr_meas_mode != MM_ACmV || input_1ms_peak_enabled != 1 )
         {
-          curr_cal_factor_eeloc = cal_factor_eeloc_tbl[curr_meas_mode];
+          curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[(unsigned __int8)curr_meas_mode];
           curr_cal_factor_eeloc += 16 * curr_meas_range;
         }
         else
         {
-          curr_cal_factor_eeloc = cal_factor_eeloc_tbl[25];
+          curr_cal_factor_eeloc = (unsigned __int16)cal_factor_eeloc_tbl[25];
         }
         write_eeprom_4byte(curr_cal_factor_eeloc, val);
       }
@@ -7044,7 +6909,7 @@ void __fastcall cal_save_va_factors(char cal_gain)
   {
     if ( cal_gain == 1 )
     {
-      curr_cal_factor_eeloc = (get_cal_factor_addr() + 1);
+      curr_cal_factor_eeloc = (int)(get_cal_factor_addr() + 1);
       v1 = fp_mul(1000000.0, cal_curr_gain_va_volts);
       v2 = fp_to_int(v1);
       write_eeprom_4byte(curr_cal_factor_eeloc, v2);
@@ -7056,7 +6921,7 @@ void __fastcall cal_save_va_factors(char cal_gain)
   }
   else
   {
-    curr_cal_factor_eeloc = get_cal_factor_addr();
+    curr_cal_factor_eeloc = (int)get_cal_factor_addr();
     write_eeprom_4byte(curr_cal_factor_eeloc, cal_curr_offset_va_volts);
     curr_cal_factor_eeloc += 8;
     write_eeprom_4byte(curr_cal_factor_eeloc, cal_curr_offset_va_amps);
@@ -7072,7 +6937,7 @@ void __fastcall cal_save_ac_factor(meter_meas_mode mode, char range, char which)
   char v3; // r6@1
 
   v3 = which;
-  curr_cal_factor_eeloc = get_ac_cal_data_addr(mode, range);
+  curr_cal_factor_eeloc = (int)get_ac_cal_data_addr(mode, range);
   if ( v3 == 1 || v3 == 100 )
   {
     cal_validate_ac_factor(0);
@@ -7115,24 +6980,19 @@ void cal_erase_ac_factors(void)
 // 20003B39: using guessed type char cal_save_ac_factor_fullrange_lf;
 
 //----- (0800C3BC) --------------------------------------------------------
-unsigned int __fastcall read_eeprom_4byte(int a1)
+unsigned int __fastcall read_eeprom_4byte(int loc)
 {
-  int v1; // r4@1
-  int v2; // r5@1
-  unsigned __int8 v4; // [sp+0h] [bp-18h]@3
-  unsigned __int8 v5; // [sp+1h] [bp-17h]@4
-  unsigned __int8 v6; // [sp+2h] [bp-16h]@4
-  unsigned __int8 v7; // [sp+3h] [bp-15h]@4
+  int idx; // r5@1
+  unsigned __int8 result[4]; // [sp+0h] [bp-18h]@3
 
-  v1 = a1;
-  LOBYTE(v2) = 0;
-  while ( v2 < 4 )
+  LOBYTE(idx) = 0;
+  while ( (signed int)(unsigned __int8)idx < 4 )
   {
-    v2 = v2;
-    *(&v4 + v2) = read_eeprom_byte_core(v2 + v1);
-    LOBYTE(v2) = v2 + 1;
+    idx = (unsigned __int8)idx;
+    result[idx] = read_eeprom_byte_core((unsigned __int8)idx + loc);
+    LOBYTE(idx) = idx + 1;
   }
-  return v7 + (v4 << 24) + (v5 << 16) + (v6 << 8);
+  return result[3] + (result[0] << 24) + (result[1] << 16) + (result[2] << 8);
 }
 
 //----- (0800C410) --------------------------------------------------------
@@ -7142,7 +7002,7 @@ int __fastcall read_eeprom_2byte_signed(int loc)
   int v2; // r5@2
 
   v1 = read_eeprom_2byte(loc);
-  if ( v1 < 0x8000 )
+  if ( (signed int)v1 < 0x8000 )
     v2 = v1;
   else
     v2 = v1 - 0x10000;
@@ -7152,20 +7012,17 @@ int __fastcall read_eeprom_2byte_signed(int loc)
 //----- (0800C43C) --------------------------------------------------------
 unsigned __int16 __fastcall read_eeprom_2byte(int loc)
 {
-  int v1; // r4@1
-  int v2; // r5@1
-  unsigned __int8 v4; // [sp+0h] [bp-18h]@3
-  unsigned __int8 v5; // [sp+1h] [bp-17h]@4
+  int idx; // r5@1
+  unsigned __int8 result[2]; // [sp+0h] [bp-18h]@3
 
-  v1 = loc;
-  LOBYTE(v2) = 0;
-  while ( v2 < 2 )
+  LOBYTE(idx) = 0;
+  while ( (signed int)(unsigned __int8)idx < 2 )
   {
-    v2 = v2;
-    *(&v4 + v2) = read_eeprom_byte_core(v2 + v1);
-    LOBYTE(v2) = v2 + 1;
+    idx = (unsigned __int8)idx;
+    result[idx] = read_eeprom_byte_core((unsigned __int8)idx + loc);
+    LOBYTE(idx) = idx + 1;
   }
-  return v5 + (v4 << 8);
+  return result[1] + (result[0] << 8);
 }
 
 //----- (0800C476) --------------------------------------------------------
@@ -7177,7 +7034,7 @@ unsigned __int8 __fastcall read_eeprom_byte(int loc)
 //----- (0800C488) --------------------------------------------------------
 unsigned __int8 __fastcall read_eeprom_byte_core(int loc)
 {
-  return *(loc + 0x8080000);
+  return *(_DWORD *)(loc + 0x8080000);
 }
 
 //----- (0800C4A0) --------------------------------------------------------
@@ -7236,7 +7093,7 @@ void __fastcall try_to_write_byte_10_times(int loc, unsigned __int8 data)
 
   v2 = loc;
   v3 = data;
-  for ( i = 0; i < 10 && write_eeprom_byte_without_first_erasing(v2, v3) != 4; ++i )
+  for ( i = 0; i < 10 && (unsigned __int8)write_eeprom_byte_without_first_erasing(v2, v3) != 4; ++i )
     ;
 }
 
@@ -7245,7 +7102,7 @@ void __fastcall bt_echo_rx_msg()
 {
   unsigned __int8 i; // r4@1
 
-  for ( i = 0; i < bt_rx_msg_len; ++i )
+  for ( i = 0; i < (unsigned int)(unsigned __int8)bt_rx_msg_len; ++i )
     usart_write_byte(&USART2_1, bt_rx_msg[i]);
 }
 // 20003AD6: using guessed type char bt_rx_msg_len;
@@ -7255,19 +7112,19 @@ void __fastcall bt_process_received_msg()
 {
   unsigned int i; // r10@1
   int v1; // r0@5
-  char v2; // r4@5
+  unsigned __int8 v2; // r4@5
   int v3; // r11@5
   int v4; // r0@5
-  char v5; // r5@5
+  unsigned __int8 v5; // r5@5
   int v6; // r11@5
   int v7; // r0@5
-  char v8; // r6@5
+  unsigned __int8 v8; // r6@5
   int v9; // r11@5
   int v10; // r0@5
-  char v11; // r7@5
+  unsigned __int8 v11; // r7@5
   int v12; // r11@5
   int v13; // r0@5
-  char v14; // r8@5
+  unsigned __int8 v14; // r8@5
   int v15; // r11@5
   int v16; // r0@5
   int v17; // r0@10
@@ -7275,9 +7132,9 @@ void __fastcall bt_process_received_msg()
   unsigned __int8 v19; // [sp+1h] [bp-27h]@10
 
   bt_new_received_msg = 0;
-  for ( i = 0; i < bt_rx_msg_len; ++i )
+  for ( i = 0; i < (unsigned __int8)bt_rx_msg_len; ++i )
     bt_rx_msg[i] = bt_rx_buf[i];
-  if ( bt_rx_msg[0] == 0xF8 )                   // remote time set (???)
+  if ( (unsigned __int8)bt_rx_msg[0] == 0xF8 )  // remote time set
   {
     v18 = read_hex_digit_from_bt_rx_msg(1u);
     LOBYTE(v1) = read_hex_digit_from_bt_rx_msg(3u);
@@ -7299,7 +7156,7 @@ void __fastcall bt_process_received_msg()
     if ( v15 == v16 )
     {
       bt_echo_rx_msg();
-      if ( !maybe_new_time_from_bt )
+      if ( !bt_set_the_time )
       {
         curr_year = v18;
         curr_month = v2;
@@ -7307,8 +7164,8 @@ void __fastcall bt_process_received_msg()
         curr_hour = v8;
         curr_minute = v11;
         curr_second = v14;
-        probably_write_time_to_rtc();
-        maybe_new_time_from_bt = 1;
+        rtc_write_time();
+        bt_set_the_time = 1;
       }
     }
     else
@@ -7316,30 +7173,23 @@ void __fastcall bt_process_received_msg()
       bt_rx_checksum_valid = 0;
     }
   }
-  else if ( bt_rx_msg[0] == 0xF4 )              // press a button
+  else if ( (unsigned __int8)bt_rx_msg[0] == 0xF4 )// press a button
   {
     v19 = read_hex_digit_from_bt_rx_msg(1u);
     LOBYTE(v17) = read_hex_digit_from_bt_rx_msg(3u);
     if ( v19 == v17 )
     {
       bt_echo_rx_msg();
-      bt_new_rx_button = 1;
-      bt_keycode_pressed = v19;
+      bt_new_rxed_button = 1;
+      bt_pressed_keycode = v19;
     }
   }
 }
 // 20003AD6: using guessed type char bt_rx_msg_len;
 // 20003AD7: using guessed type char bt_new_received_msg;
-// 20003AD9: using guessed type char maybe_new_time_from_bt;
+// 20003AD9: using guessed type char bt_set_the_time;
 // 20003ADA: using guessed type char bt_rx_checksum_valid;
-// 20003B05: using guessed type char bt_new_rx_button;
-// 20003B09: using guessed type char bt_keycode_pressed;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
-// 20003B6E: using guessed type char curr_second;
+// 20003B05: using guessed type char bt_new_rxed_button;
 
 //----- (0800C77E) --------------------------------------------------------
 unsigned __int8 __fastcall read_hex_digit_from_bt_rx_msg(unsigned __int8 pos)
@@ -7349,18 +7199,18 @@ unsigned __int8 __fastcall read_hex_digit_from_bt_rx_msg(unsigned __int8 pos)
 
   v1 = pos;
   LOBYTE(v2) = 0;
-  if ( bt_rx_msg[v1] < 48 || bt_rx_msg[v1] >= 58 )
+  if ( (signed int)(unsigned __int8)bt_rx_msg[v1] < 48 || (signed int)(unsigned __int8)bt_rx_msg[v1] >= 58 )
   {
-    if ( bt_rx_msg[v1] >= 65 && bt_rx_msg[v1] < 71 )
-      v2 = 16 * (bt_rx_msg[v1] - 55);
+    if ( (signed int)(unsigned __int8)bt_rx_msg[v1] >= 65 && (signed int)(unsigned __int8)bt_rx_msg[v1] < 71 )
+      v2 = 16 * ((unsigned __int8)bt_rx_msg[v1] - 55);
   }
   else
   {
     LOBYTE(v2) = 16 * bt_rx_msg[v1];
   }
-  if ( bt_rx_msg[v1 + 1] < 48 || bt_rx_msg[v1 + 1] >= 58 )
+  if ( (signed int)(unsigned __int8)bt_rx_msg[v1 + 1] < 48 || (signed int)(unsigned __int8)bt_rx_msg[v1 + 1] >= 58 )
   {
-    if ( bt_rx_msg[v1 + 1] >= 65 && bt_rx_msg[v1 + 1] < 71 )
+    if ( (signed int)(unsigned __int8)bt_rx_msg[v1 + 1] >= 65 && (signed int)(unsigned __int8)bt_rx_msg[v1 + 1] < 71 )
       LOBYTE(v2) = bt_rx_msg[v1 + 1] - 55 + v2;
   }
   else
@@ -7371,12 +7221,12 @@ unsigned __int8 __fastcall read_hex_digit_from_bt_rx_msg(unsigned __int8 pos)
 }
 
 //----- (0800C828) --------------------------------------------------------
-void update_usart2_power()
+void update_bt_power()
 {
   if ( bt_enabled )
-    init_usart2();
+    bt_powerup();
   else
-    uninit_usart2();
+    bt_shutdown();
   scr_update_bt_icon(1);
 }
 // 20003AD3: using guessed type char bt_enabled;
@@ -7384,12 +7234,12 @@ void update_usart2_power()
 //----- (0800C848) --------------------------------------------------------
 void write_time_and_serial_to_bt_buf(void)
 {
-  conv_int_to_bcd_tmp(last_cal_year_month);
+  conv_uint_to_bcd_tmp((unsigned __int16)last_cal_year_month);
   bt_buf[1] = LOBYTE(disp_bcd_tmp[1]) + 48;
   bt_buf[2] = LOBYTE(disp_bcd_tmp[2]) + 48;
   bt_buf[3] = LOBYTE(disp_bcd_tmp[3]) + 48;
   bt_buf[4] = LOBYTE(disp_bcd_tmp[4]) + 48;
-  conv_int_to_bcd_tmp(curr_meter_serial);
+  conv_uint_to_bcd_tmp(curr_meter_serial);
   bt_buf[5] = LOBYTE(disp_bcd_tmp[0]) + 48;
   bt_buf[6] = LOBYTE(disp_bcd_tmp[1]) + 48;
   bt_buf[7] = LOBYTE(disp_bcd_tmp[2]) + 48;
@@ -7481,7 +7331,9 @@ void build_and_write_bt_packet()
   }
   // bargraph data and value
   v2 = bargraph_range;
-  if ( curr_meas_mode >= 6 && curr_meas_mode < MM_OHMS || curr_meas_mode == MM_CAP || curr_meas_mode == MM_TEMP )
+  if ( (signed int)(unsigned __int8)curr_meas_mode >= 6 && curr_meas_mode < (signed int)MM_OHMS
+    || curr_meas_mode == MM_CAP
+    || curr_meas_mode == MM_TEMP )
     v2 = bargraph_range + 16;                   // bar is on
   if ( curr_bargraph_digits < 0 )
     v2 += 4;
@@ -7531,7 +7383,7 @@ void build_and_write_bt_packet()
     v5 = 64;
   else
     v5 = 0;
-  if ( meter_overflow_icon )
+  if ( meter_danger_icon )
     v5 += 32;
   if ( rel_meas_enabled )
     v5 += 16;
@@ -7550,8 +7402,8 @@ void build_and_write_bt_packet()
   }
   bt_buf_cksum ^= v5;
   write_hex_byte_to_bt_buf(0x20u, v5);
-  v6 = 4 * maybe_get_hold_status();
-  if ( (logging_active & maybe_logging_was_active_at_some_point) | log_playback_mode )
+  v6 = 4 * hold_get_status();
+  if ( (unsigned __int8)(logging_active & maybe_logging_was_active_at_some_point) | log_playback_mode )
     v6 += 16;
   bt_buf_cksum ^= v6;
   write_hex_byte_to_bt_buf(0x22u, v6);
@@ -7573,7 +7425,7 @@ void build_and_write_bt_packet()
   }
   else
   {
-    bt_write_hz_sub(0x24u, curr_subscr_decimal_loc, ac_input_hz_overflow, ac_input_freq);
+    bt_write_hz_sub(0x24u, curr_subscr_decimal_loc, (unsigned __int8)ac_input_hz_overflow, ac_input_freq);
   }
   if ( curr_meas_mode != 13
     && curr_meas_mode != 14
@@ -7594,28 +7446,22 @@ void build_and_write_bt_packet()
   write_hex_byte_to_bt_buf(0x34u, bt_buf_cksum);
   bt_buf[54] = 13;
   bt_buf[55] = 10;
-  for ( i = 0; i < 56; ++i )
+  for ( i = 0; (signed int)i < 56; ++i )
     usart_write_byte(&USART2_1, bt_buf[i]);
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 2000385C: using guessed type int curr_bargraph_digits;
 // 20003870: using guessed type int ac_input_freq;
 // 20003A9C: using guessed type char came_from_standby;
-// 20003A9D: using guessed type char logging_active;
-// 20003A9E: using guessed type char logging_interval_elapsed;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AD3: using guessed type char bt_enabled;
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003ADD: using guessed type char curr_apo_off;
 // 20003ADF: using guessed type char batt_is_low_icon;
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AE9: using guessed type char ac_input_hz_overflow;
 // 20003AEA: using guessed type char scr_overload_displayed;
 // 20003AED: using guessed type char bargraph_range;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF5: using guessed type char rel_meas_enabled;
-// 20003B49: using guessed type char meter_overflow_icon;
+// 20003B49: using guessed type char meter_danger_icon;
 // 20003B4B: using guessed type char high_voltage_diode;
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
 // 20003B50: using guessed type char peakdet_show_min_always_zero;
@@ -7662,7 +7508,7 @@ void __fastcall bt_write_battery_sub(unsigned __int8 loc)
   write_hex_byte_to_bt_buf(loc, MM_SUB_BATT);
   bt_buf_cksum ^= 1u;
   write_hex_byte_to_bt_buf(v1 + 2, 1u);
-  write_hex_2bytes_to_bt_buf(v1 + 4, curr_batt_charge);
+  write_hex_2bytes_to_bt_buf(v1 + 4, (unsigned __int16)curr_batt_charge);
 }
 // 20003A6E: using guessed type __int16 curr_batt_charge;
 // 20003AD8: using guessed type char bt_buf_cksum;
@@ -7685,7 +7531,6 @@ void __fastcall bt_write_apo_sub(unsigned __int8 loc)
   write_hex_2bytes_to_bt_buf(v1 + 4, 0);
 }
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003ADD: using guessed type char curr_apo_off;
 
 //----- (0800CED4) --------------------------------------------------------
 void __fastcall bt_write_lcd_sub(unsigned __int8 loc)
@@ -7696,7 +7541,7 @@ void __fastcall bt_write_lcd_sub(unsigned __int8 loc)
   bt_buf_cksum ^= MM_SUB_CONTRAST;
   write_hex_byte_to_bt_buf(loc, MM_SUB_CONTRAST);
   write_hex_byte_to_bt_buf(v1 + 2, 0);
-  write_hex_2bytes_to_bt_buf(v1 + 4, curr_lcd_contrast - 10);
+  write_hex_2bytes_to_bt_buf(v1 + 4, (unsigned __int8)curr_lcd_contrast - 10);
 }
 // 20000222: using guessed type char curr_lcd_contrast;
 // 20003AD8: using guessed type char bt_buf_cksum;
@@ -7713,7 +7558,6 @@ void __fastcall bt_write_year_sub(unsigned __int8 loc)
   write_hex_2bytes_to_bt_buf(v1 + 4, curr_year);
 }
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003B69: using guessed type char curr_year;
 
 //----- (0800CF76) --------------------------------------------------------
 void __fastcall bt_write_month_day_sub(unsigned __int8 loc)
@@ -7730,8 +7574,6 @@ void __fastcall bt_write_month_day_sub(unsigned __int8 loc)
   write_hex_byte_to_bt_buf(v1 + 6, curr_day);
 }
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
 
 //----- (0800CFF8) --------------------------------------------------------
 void __fastcall bt_write_hour_minute_sub(unsigned __int8 loc)
@@ -7748,8 +7590,6 @@ void __fastcall bt_write_hour_minute_sub(unsigned __int8 loc)
   write_hex_byte_to_bt_buf(v1 + 6, curr_minute);
 }
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
 
 //----- (0800D084) --------------------------------------------------------
 void __fastcall bt_write_spl1_sub(unsigned __int8 loc)
@@ -7804,7 +7644,7 @@ void __fastcall bt_write_spl1_sub(unsigned __int8 loc)
   }
   else
   {
-    bt_write_hz_sub(loc, curr_subscr_decimal_loc, ac_input_hz_overflow, ac_input_freq / 10);
+    bt_write_hz_sub(loc, curr_subscr_decimal_loc, (unsigned __int8)ac_input_hz_overflow, ac_input_freq / 10);
   }
 }
 // 20003870: using guessed type int ac_input_freq;
@@ -7839,7 +7679,7 @@ void __fastcall bt_write_spl2_sub(unsigned __int8 loc)
       LOWORD(v3) = curr_subscr_digits;
     else
       v3 = -curr_subscr_digits;
-    write_hex_2bytes_to_bt_buf(v1 + 4, v3);
+    write_hex_2bytes_to_bt_buf(v1 + 4, (signed __int16)v3);
   }
   else if ( curr_meas_mode != MM_ACuA && curr_meas_mode != MM_ACmA && curr_meas_mode != MM_ACA
          || burden_enabled_for_current_ranges )
@@ -7870,13 +7710,12 @@ void __fastcall bt_write_spl2_sub(unsigned __int8 loc)
   }
   else
   {
-    bt_write_hz_sub(loc, curr_subscr_decimal_loc, ac_input_hz_overflow, ac_input_freq / 10);
+    bt_write_hz_sub(loc, curr_subscr_decimal_loc, (unsigned __int8)ac_input_hz_overflow, ac_input_freq / 10);
   }
 }
 // 20003870: using guessed type int ac_input_freq;
 // 20003978: using guessed type int curr_subscr_digits;
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AE9: using guessed type char ac_input_hz_overflow;
 // 20003B3D: using guessed type char burden_enabled_for_current_ranges;
 // 20003B40: using guessed type char burden_enabled_for_power_ranges;
@@ -7929,7 +7768,7 @@ void __fastcall bt_write_hz_sub(unsigned __int8 a1, char a2, int a3, int a4)
   if ( v7 < 0 )
     v8 += 64;
   v9 = v8 + 16;
-  if ( ac_input_freq_range >= 2 )
+  if ( (signed int)ac_input_freq_range >= 2 )
     v9 += 32;
   bt_buf_cksum ^= v9;
   write_hex_byte_to_bt_buf(v4 + 2, v9);
@@ -7940,7 +7779,6 @@ void __fastcall bt_write_hz_sub(unsigned __int8 a1, char a2, int a3, int a4)
   write_hex_2bytes_to_bt_buf(v4 + 4, v10);
 }
 // 20003AD8: using guessed type char bt_buf_cksum;
-// 20003AE2: using guessed type char ac_input_freq_range;
 
 //----- (0800D4DC) --------------------------------------------------------
 void __fastcall bt_write_power_volts(unsigned __int8 a1, unsigned __int8 a2)
@@ -7953,11 +7791,11 @@ void __fastcall bt_write_power_volts(unsigned __int8 a1, unsigned __int8 a2)
 
   v3 = a1;
   v4 = a2;
-  if ( curr_meas_mode - MM_ACuVA <= 2 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_ACuVA <= 2 )
   {
     v2 = 2;
   }
-  else if ( curr_meas_mode - MM_DCuVA <= 2 )
+  else if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_DCuVA <= 2 )
   {
     v2 = 1;
   }
@@ -7974,7 +7812,7 @@ void __fastcall bt_write_power_volts(unsigned __int8 a1, unsigned __int8 a2)
     LOWORD(v6) = meter_power_volts;
   else
     v6 = -meter_power_volts;
-  write_hex_2bytes_to_bt_buf(v3 + 4, v6);
+  write_hex_2bytes_to_bt_buf(v3 + 4, (signed __int16)v6);
 }
 // 2000398C: using guessed type int meter_power_volts;
 // 20003AD8: using guessed type char bt_buf_cksum;
@@ -8025,7 +7863,7 @@ void __fastcall bt_write_power_amps(unsigned __int8 loc, unsigned __int8 a2)
     LOWORD(v6) = meter_power_amps;
   else
     v6 = -meter_power_amps;
-  write_hex_2bytes_to_bt_buf(v3 + 4, v6);
+  write_hex_2bytes_to_bt_buf(v3 + 4, (signed __int16)v6);
 }
 // 20003990: using guessed type int meter_power_amps;
 // 20003AD8: using guessed type char bt_buf_cksum;
@@ -8051,7 +7889,7 @@ void __fastcall bt_write_burden_sub()
   }
   bt_buf_cksum ^= v0;
   write_hex_byte_to_bt_buf(0x14u, v0);
-  write_hex_2bytes_to_bt_buf(0x16u, v1);
+  write_hex_2bytes_to_bt_buf(0x16u, (signed __int16)v1);
 }
 // 20003A7C: using guessed type __int16 curr_burden_voltage;
 // 20003AD8: using guessed type char bt_buf_cksum;
@@ -8126,10 +7964,10 @@ void __fastcall usart_write_byte(USART_REGS *USART, unsigned __int8 data)
 }
 
 //----- (0800D816) --------------------------------------------------------
-void end_setup_without_saving_after_timeout(void)
+void end_setup_without_saving_after_2min_timeout(void)
 {
-  ++setup_edit_timeout;
-  if ( setup_edit_timeout >= 241 )
+  ++setup_edit_timeout_2min;
+  if ( (signed int)(unsigned __int8)setup_edit_timeout_2min >= 241 )
   {
     setup_currently_editing = 0;
     switch ( curr_sub_mode )
@@ -8172,13 +8010,8 @@ void end_setup_without_saving_after_timeout(void)
 // 20003810: using guessed type int edit_meter_serial;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B0A: using guessed type char setup_currently_editing;
-// 20003B0C: using guessed type char setup_edit_timeout;
+// 20003B0C: using guessed type char setup_edit_timeout_2min;
 // 20003B68: using guessed type char editing_rightside_time_val;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
 // 20003B6F: using guessed type char edit_year;
 // 20003B70: using guessed type char edit_month;
 // 20003B71: using guessed type char edit_day;
@@ -8222,7 +8055,7 @@ void __fastcall meter_process_range_mode_changed(char should_stop_logging)
     {
       curr_meas_range = 0;
     }
-    manual_hold_is_enabled = 0;
+    auto_hold_is_enabled = 0;
     if ( should_stop_logging == 1 && logging_active )
     {
       logging_end(1);
@@ -8231,8 +8064,8 @@ void __fastcall meter_process_range_mode_changed(char should_stop_logging)
     log_playback_mode_stop();
   }
   hy_change_CTA_val_timer = 0;
-  TIM2_ac_input_freq_timed_out = 0;
-  meter_overflow_icon = 0;
+  freq_input_timeout_timer_10ms_unit = 0;
+  meter_danger_icon = 0;
   meter_overload = 0;
   if ( curr_meas_mode != MM_ACV && curr_meas_mode != MM_ACmV )
     input_lpf_enabled = 0;
@@ -8247,19 +8080,19 @@ void __fastcall meter_process_range_mode_changed(char should_stop_logging)
   subscr_need_to_update_units = 1;
   scr_need_to_refresh_meas_units_and_icons = 1;
   need_to_update_subscr = 1;
-  if ( !__PAIR__(manual_hold_is_enabled, auto_hold_is_enabled) )
+  if ( !__PAIR__(auto_hold_is_enabled, manual_hold_is_enabled) )
     force_new_measurement_available_on_range_mode_change = 1;
   meter_set_mode_range_change_delay();
   scr_update_decimal_point();
   update_max_digits_in_range();
-  config_hy_load_cal_factors_then_do_cap_something(1u);
+  meas_prepare_for_new_mode_range(1u);
   curr_scr_digits = 0;
   curr_bargraph_digits = 0;
-  disable_hv_diode_and_configure_various_gpios(curr_meas_mode, curr_meas_range);
+  meas_setup_hw(curr_meas_mode, curr_meas_range);
   if ( meter_mode_changed )
   {
     reset_apo_timeout();
-    beep_amount_of_time(300);
+    beep_ms(0x12Cu);
   }
   meter_mode_changed = 0;
   meter_range_changed = 0;
@@ -8271,14 +8104,10 @@ void __fastcall meter_process_range_mode_changed(char should_stop_logging)
 // 20003944: using guessed type int ac_input_freq_lowz;
 // 2000396C: using guessed type int peakhold_max_value;
 // 20003970: using guessed type int peakhold_min_value;
-// 20003A74: using guessed type __int16 TIM2_ac_input_freq_timed_out;
-// 20003A76: using guessed type __int16 hy_change_CTA_val_timer;
-// 20003A9D: using guessed type char logging_active;
+// 20003A74: using guessed type __int16 freq_input_timeout_timer_10ms_unit;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AEC: using guessed type char meter_range_changed;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF5: using guessed type char rel_meas_enabled;
-// 20003AFB: using guessed type char force_new_measurement_available_on_range_mode_change;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003AFF: using guessed type char subscr_need_to_update_units;
@@ -8290,7 +8119,7 @@ void __fastcall meter_process_range_mode_changed(char should_stop_logging)
 // 20003B3B: using guessed type char ac_input_freq_range_lowz;
 // 20003B3D: using guessed type char burden_enabled_for_current_ranges;
 // 20003B3E: using guessed type char edit_burden_enabled_for_current_ranges;
-// 20003B49: using guessed type char meter_overflow_icon;
+// 20003B49: using guessed type char meter_danger_icon;
 // 20003B4A: using guessed type char meter_overload;
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
 // 20003B51: using guessed type char input_lpf_enabled;
@@ -8307,13 +8136,13 @@ void __cdecl update_max_digits_in_range()
   if ( curr_meas_mode == MM_DIODE )
   {
     if ( high_voltage_diode )
-      max_digits_in_range = max_digits_in_range_tbl[curr_meas_mode][1];
+      max_digits_in_range = max_digits_in_range_tbl[(unsigned __int8)curr_meas_mode][1];
     else
-      max_digits_in_range = max_digits_in_range_tbl[curr_meas_mode][0];
+      max_digits_in_range = max_digits_in_range_tbl[(unsigned __int8)curr_meas_mode][0];
   }
   else
   {
-    max_digits_in_range = max_digits_in_range_tbl[curr_meas_mode][curr_meas_range];
+    max_digits_in_range = max_digits_in_range_tbl[(unsigned __int8)curr_meas_mode][curr_meas_range];
   }
 }
 // 20003854: using guessed type int max_digits_in_range;
@@ -8330,14 +8159,13 @@ void __cdecl subscr_periodically_switch_between_amps_and_volts_for_power()
     || curr_meas_mode == MM_DCVA )
   {
     ++subscr_power_v_a_switch_timer;
-    if ( subscr_power_v_a_switch_timer >= 300 )
+    if ( (signed int)subscr_power_v_a_switch_timer >= 300 )// switch every 3 seconds
     {
       subscr_showing_power_amps = subscr_showing_power_amps != 1;
       subscr_update_power_amps_or_volts_display();
     }
   }
 }
-// 20003A8A: using guessed type __int16 subscr_power_v_a_switch_timer;
 // 20003B57: using guessed type char subscr_showing_power_amps;
 
 //----- (0800DC1C) --------------------------------------------------------
@@ -8351,7 +8179,6 @@ void __cdecl subscr_update_power_amps_or_volts_display()
   subscr_need_to_update_units = 1;
   need_to_update_subscr = 1;
 }
-// 20003A8A: using guessed type __int16 subscr_power_v_a_switch_timer;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003AFF: using guessed type char subscr_need_to_update_units;
 // 20003B57: using guessed type char subscr_showing_power_amps;
@@ -8388,7 +8215,7 @@ void meter_set_default_subscr_mode()
       else
       {
         curr_sub_mode = 9;
-        burden_active_msg_showing_timer = 100;
+        burden_active_msg_showing_timer_1s = 100;
       }
     }
     else
@@ -8402,27 +8229,27 @@ void meter_set_default_subscr_mode()
   }
 }
 // 20003B25: using guessed type char setting_last_cal_year_month;
-// 20003B42: using guessed type char burden_active_msg_showing_timer;
+// 20003B42: using guessed type char burden_active_msg_showing_timer_1s;
 // 20003B52: using guessed type char meter_mode_acv_dcv;
 
 //----- (0800DD3C) --------------------------------------------------------
-void __fastcall config_hy_load_cal_factors_then_do_cap_something(unsigned __int8 a1)
+void __fastcall meas_prepare_for_new_mode_range(unsigned __int8 should_load_cal_factors)
 {
-  config_hy_then_load_cal_factors(a1);
-  update_cap_something_based_on_range();
+  meas_config_hy_and_load_cal_factors(should_load_cal_factors);
+  meas_cap_reset_no_reading_timeout_timer();
 }
 
 //----- (0800DD4E) --------------------------------------------------------
-void __fastcall config_hy_then_load_cal_factors(char should_load_factors)
+void __fastcall meas_config_hy_and_load_cal_factors(char should_load_factors)
 {
   char v1; // r4@1
 
   v1 = should_load_factors;
-  config_hy_based_on_mode(curr_meas_mode, curr_meas_range);
+  config_hy_based_on_mode_range(curr_meas_mode, curr_meas_range);
   if ( v1 == 1 )
   {
     cal_load_factors_for_mode_and_range(curr_meas_mode, curr_meas_range);
-    load_amp_rel(curr_meas_mode, curr_meas_range);
+    cal_load_amp_rel(curr_meas_mode, curr_meas_range);
   }
   if ( v1 == 1 && curr_meas_mode != MM_HZ )
     cal_load_factors_for_mode_and_range(MM_HZ, 0);
@@ -8443,10 +8270,10 @@ void __fastcall update_stuff_based_on_new_power_range()
   meas_va_never_processed = 1;
   meas_amp_burden_timer = 0;
   measuring_amps_of_va_or_volts_of_burden = 0;
-  config_hy_load_cal_factors_then_do_cap_something(1u);
-  set_GPIOE5_based_on_mode_and_range(curr_meas_mode, curr_meas_range);
+  meas_prepare_for_new_mode_range(1u);
+  meas_hw_set_amp_x10(curr_meas_mode, curr_meas_range);
   meter_set_mode_range_change_delay();
-  segment_party_20(curr_meas_mode, curr_meas_range);
+  scr_update_milli_for_VA(curr_meas_mode, curr_meas_range);
   scr_update_decimal_point();
 }
 // 20003B58: using guessed type char meas_va_never_processed;
@@ -8463,22 +8290,22 @@ signed int __fastcall calc_decimal_place_for_mode_range(meter_meas_mode mode, un
     return 1;
   if ( mode == MM_LOW_Z )
     goto LABEL_117;
-  if ( mode == MM_ACV || mode < MM_ACV )
+  if ( mode == MM_ACV || mode < (unsigned int)MM_ACV )
     goto LABEL_73;
-  if ( mode == MM_ACmV || mode < MM_ACmV || mode == MM_HZ )
+  if ( mode == MM_ACmV || mode < (unsigned int)MM_ACmV || mode == MM_HZ )
     goto LABEL_85;
-  if ( mode >= MM_HZ && mode != MM_DUTY )
+  if ( mode >= (unsigned int)MM_HZ && mode != MM_DUTY )
   {
-    if ( mode < MM_DUTY )
+    if ( mode < (unsigned int)MM_DUTY )
       goto LABEL_73;
     if ( mode != MM_CONTINUITY )
     {
-      if ( mode >= MM_CONTINUITY )
+      if ( mode >= (unsigned int)MM_CONTINUITY )
       {
         if ( mode == MM_CAP )
         {
-          range = range;
-          if ( range )
+          range = (unsigned __int8)range;
+          if ( (_BYTE)range )
           {
             if ( range == 2 )
             {
@@ -8509,43 +8336,43 @@ signed int __fastcall calc_decimal_place_for_mode_range(meter_meas_mode mode, un
           {
             v2 = 2;
           }
-          return v2;
+          return (unsigned __int8)v2;
         }
-        if ( mode < MM_CAP )
+        if ( mode < (unsigned int)MM_CAP )
         {
           if ( high_voltage_diode )
             v2 = 3;
           else
             v2 = 4;
-          return v2;
+          return (unsigned __int8)v2;
         }
         if ( mode == MM_ACmVA )
           goto LABEL_39;
-        if ( mode < MM_ACmVA )
+        if ( mode < (unsigned int)MM_ACmVA )
           goto LABEL_49;
         if ( mode != MM_ACuA )
         {
-          if ( mode < MM_ACuA )
+          if ( mode < (unsigned int)MM_ACuA )
             goto LABEL_29;
           if ( mode == MM_ACmA )
             goto LABEL_73;
-          if ( mode >= MM_ACmA )
+          if ( mode >= (unsigned int)MM_ACmA )
           {
             if ( mode == MM_ACA )
               goto LABEL_65;
-            if ( mode >= MM_ACA )
+            if ( mode >= (unsigned int)MM_ACA )
             {
               if ( mode != MM_DCuVA )
               {
-                if ( mode >= MM_DCuVA )
+                if ( mode >= (unsigned int)MM_DCuVA )
                 {
                   if ( mode != MM_DCVA )
                   {
-                    if ( mode >= MM_DCVA )
-                      return v2;
+                    if ( mode >= (unsigned int)MM_DCVA )
+                      return (unsigned __int8)v2;
 LABEL_39:
-                    range = range;
-                    if ( range )
+                    range = (unsigned __int8)range;
+                    if ( (_BYTE)range )
                     {
                       if ( range == 2 )
                       {
@@ -8565,11 +8392,11 @@ LABEL_39:
                     {
                       v2 = 3;
                     }
-                    return v2;
+                    return (unsigned __int8)v2;
                   }
 LABEL_29:
-                  range = range;
-                  if ( range )
+                  range = (unsigned __int8)range;
+                  if ( (_BYTE)range )
                   {
                     if ( range == 2 )
                     {
@@ -8589,11 +8416,11 @@ LABEL_29:
                   {
                     v2 = 1;
                   }
-                  return v2;
+                  return (unsigned __int8)v2;
                 }
 LABEL_65:
-                range = range;
-                if ( range )
+                range = (unsigned __int8)range;
+                if ( (_BYTE)range )
                 {
                   if ( range == 2 )
                   {
@@ -8608,11 +8435,11 @@ LABEL_65:
                 {
                   v2 = 2;
                 }
-                return v2;
+                return (unsigned __int8)v2;
               }
 LABEL_49:
-              range = range;
-              if ( range )
+              range = (unsigned __int8)range;
+              if ( (_BYTE)range )
               {
                 if ( range == 2 )
                 {
@@ -8632,11 +8459,11 @@ LABEL_49:
               {
                 v2 = 2;
               }
-              return v2;
+              return (unsigned __int8)v2;
             }
 LABEL_73:
-            range = range;
-            if ( range )
+            range = (unsigned __int8)range;
+            if ( (_BYTE)range )
             {
               if ( range == 2 )
               {
@@ -8662,13 +8489,13 @@ LABEL_73:
             {
               v2 = 4;
             }
-            return v2;
+            return (unsigned __int8)v2;
           }
         }
       }
 LABEL_85:
-      range = range;
-      if ( range )
+      range = (unsigned __int8)range;
+      if ( (_BYTE)range )
       {
         if ( range == 2 )
         {
@@ -8705,7 +8532,7 @@ LABEL_85:
       {
         v2 = 3;
       }
-      return v2;
+      return (unsigned __int8)v2;
     }
     v2 = 2;
   }
@@ -8714,7 +8541,7 @@ LABEL_85:
 LABEL_117:
     v2 = 1;
   }
-  return v2;
+  return (unsigned __int8)v2;
 }
 // 20003B4B: using guessed type char high_voltage_diode;
 
@@ -8744,7 +8571,7 @@ void __fastcall meter_set_mode_range_change_delay()
     switch ( curr_meas_mode )
     {
       case MM_OHMS:
-        if ( curr_meas_range < 5 )
+        if ( (signed int)curr_meas_range < 5 )
           meter_mode_range_change_delay = 1;
         else
           meter_mode_range_change_delay = 2;
@@ -8761,9 +8588,9 @@ void __fastcall meter_set_mode_range_change_delay()
       default:
         if ( curr_meas_mode || lowz_measuring_ac )
         {
-          if ( curr_meas_mode != MM_CAP || curr_meas_range >= 2 )
+          if ( curr_meas_mode != MM_CAP || (signed int)curr_meas_range >= 2 )
           {
-            if ( curr_meas_mode != MM_CAP || curr_meas_range < 2 || curr_meas_range >= 5 )
+            if ( curr_meas_mode != MM_CAP || (signed int)curr_meas_range < 2 || (signed int)curr_meas_range >= 5 )
             {
               if ( curr_meas_mode != MM_CAP || curr_meas_range != 5 )
                 meter_mode_range_change_delay = 3;
@@ -8813,18 +8640,17 @@ void meter_process_new_meas(void)
     meter_process_overload();
   meter_process_hold();
   meter_process_rel_meas();
-  meter_update_min_max();
+  meter_process_min_max();
   scr_overload_displayed = curr_scr_overflow != 0;
 }
 // 20000223: using guessed type char meter_mode_range_change_delay;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AEA: using guessed type char scr_overload_displayed;
 
 //----- (0800E308) --------------------------------------------------------
 void meter_process_autorange()
 {
-  unsigned int v0; // r1@27
-  unsigned int max_value; // r2@33
+  unsigned int max_value; // r1@27
+  unsigned int min_value; // r2@33
   int scr_digits; // r0@44
 
   if ( curr_meas_mode != MM_HZ
@@ -8861,28 +8687,28 @@ void meter_process_autorange()
       {
         if ( curr_meas_mode == MM_DIODE )
         {
-          v0 = max_digits_in_range;
+          max_value = max_digits_in_range;
         }
         else if ( autorange_overflowed_last_time )
         {
-          v0 = max_digits_in_range / 12u + max_digits_in_range;
+          max_value = max_digits_in_range / 12u + max_digits_in_range;
         }
         else
         {
-          v0 = max_digits_in_range / 10u + max_digits_in_range;
+          max_value = max_digits_in_range / 10u + max_digits_in_range;
         }
         if ( curr_meas_mode != MM_CAP || curr_meas_range != 5 )
-          max_value = max_digits_in_range / 10u - 2 * (max_digits_in_range / 100u);
+          min_value = max_digits_in_range / 10u - 2 * (max_digits_in_range / 100u);
         else
-          max_value = max_digits_in_range / 100u - 2 * (max_digits_in_range / 1000u);
+          min_value = max_digits_in_range / 100u - 2 * (max_digits_in_range / 1000u);
         if ( curr_meas_mode != MM_ACV && curr_meas_mode != MM_DCV )
         {
           if ( (curr_meas_mode == MM_ACA || curr_meas_mode == MM_DCA) && curr_meas_range == 2 )
-            max_value *= 5;
+            min_value *= 5;
         }
         else if ( curr_meas_range == MM_DCmV )
         {
-          max_value *= 10;
+          min_value *= 10;
         }
         if ( curr_scr_digits >= 0 )
         {
@@ -8894,7 +8720,9 @@ void meter_process_autorange()
           scr_digits = -curr_scr_digits;
           meter_overflow_was_negative = 1;
         }
-        if ( meter_min_max_mode || autoranging_disabled || ranges_in_mode[curr_meas_mode] < 2 )
+        if ( meter_min_max_mode
+          || autoranging_disabled
+          || (signed int)ranges_in_mode[(unsigned __int8)curr_meas_mode] < 2 )
         {
           if ( curr_meas_mode == MM_TEMP )
           {
@@ -8909,29 +8737,29 @@ void meter_process_autorange()
               curr_scr_overflow = 1;
             }
           }
-          else if ( v0 < scr_digits )
+          else if ( max_value < scr_digits )
           {
             curr_scr_overflow = 1;
           }
         }
         else
         {
-          if ( v0 >= scr_digits )
+          if ( max_value >= scr_digits )
           {
-            if ( scr_digits < max_value && !auto_hold_is_enabled && curr_meas_range )
+            if ( scr_digits < min_value && !manual_hold_is_enabled && curr_meas_range )
             {
               --curr_meas_range;
               meter_range_changed = 1;
               autorange_changed_range = 1;
             }
           }
-          else if ( auto_hold_is_enabled
-                 && (!manual_hold_is_enabled
+          else if ( manual_hold_is_enabled
+                 && (!auto_hold_is_enabled
                   || curr_meas_mode == MM_HZ
                   || curr_meas_mode == MM_mSEC
                   || curr_meas_mode == MM_DUTY
                   || curr_meas_mode == MM_CAP)
-                 || curr_meas_range >= ranges_in_mode[curr_meas_mode] - 1 )
+                 || curr_meas_range >= ranges_in_mode[(unsigned __int8)curr_meas_mode] - 1 )
           {
             curr_scr_overflow = 1;
           }
@@ -8957,9 +8785,7 @@ void meter_process_autorange()
 // 20003A9A: using guessed type char autorange_overflowed_last_time;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AEC: using guessed type char meter_range_changed;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF8: using guessed type char autorange_changed_range;
 // 20003B24: using guessed type char meter_in_cal_mode;
 // 20003B45: using guessed type char temp_meas_sign;
@@ -8971,7 +8797,7 @@ void __fastcall meter_process_hold()
   unsigned int v1; // r5@29
 
   v0 = 0;
-  if ( __PAIR__(manual_hold_is_enabled, auto_hold_is_enabled)
+  if ( __PAIR__(auto_hold_is_enabled, manual_hold_is_enabled)
     && curr_meas_mode != MM_HZ
     && curr_meas_mode != MM_mSEC
     && curr_meas_mode != MM_DUTY
@@ -8984,14 +8810,14 @@ void __fastcall meter_process_hold()
     {
       auto_hold_holding = 1;
       auto_hold_need_to_unhold = 0;
-      TIM2_auto_hold_unhold_timer = 0;
+      TIM2_auto_hold_unhold_timer_1s = 0;
       meas_was_updated = 0;
     }
     else if ( auto_hold_holding )
     {
       auto_hold_holding = 0;
       auto_hold_need_to_unhold = 0;
-      TIM2_auto_hold_unhold_timer = 0;
+      TIM2_auto_hold_unhold_timer_1s = 0;
     }
     else if ( auto_hold_need_to_unhold | curr_scr_overflow )
     {
@@ -9002,7 +8828,7 @@ void __fastcall meter_process_hold()
           meas_was_updated = 0;
           hold_last_value_for_auto = 1000000;
         }
-        else if ( mode_range_just_got_changed_for_hold_purposes & (curr_scr_overflow ^ 1)
+        else if ( mode_range_just_got_changed_for_hold_purposes & (unsigned __int8)(curr_scr_overflow ^ 1)
                || curr_scr_digits >= hold_last_value_for_auto + 400
                || hold_last_value_for_auto - 400 >= curr_scr_digits )
         {
@@ -9017,7 +8843,7 @@ void __fastcall meter_process_hold()
             if ( logging_active )
               logging_interval_elapsed = 1;
             hold_last_value_for_auto = curr_scr_digits;
-            beep_amount_of_time(50);
+            beep_ms(50u);
           }
         }
         else
@@ -9025,7 +8851,7 @@ void __fastcall meter_process_hold()
           meas_was_updated = 0;
         }
         auto_hold_need_to_unhold = 0;
-        TIM2_auto_hold_unhold_timer = 0;
+        TIM2_auto_hold_unhold_timer_1s = 0;
       }
     }
     else
@@ -9037,17 +8863,10 @@ void __fastcall meter_process_hold()
 // 20003854: using guessed type int max_digits_in_range;
 // 20003858: using guessed type int curr_scr_digits;
 // 20003888: using guessed type int hold_last_value_for_auto;
-// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer;
-// 20003A9D: using guessed type char logging_active;
-// 20003A9E: using guessed type char logging_interval_elapsed;
+// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer_1s;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AF1: using guessed type char auto_hold_need_to_unhold;
 // 20003AF2: using guessed type char auto_hold_holding;
-// 20003AF3: using guessed type char mode_range_just_got_changed_for_hold_purposes;
-// 20003AF4: using guessed type char lcd_update_from_auto_hold;
 // 20003AF8: using guessed type char autorange_changed_range;
-// 20003AF9: using guessed type char meas_was_updated;
 
 //----- (0800E834) --------------------------------------------------------
 void __fastcall meter_process_rel_meas()
@@ -9064,12 +8883,11 @@ void __fastcall meter_process_rel_meas()
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 2000388C: using guessed type int rel_meas_rel_val;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AF5: using guessed type char rel_meas_enabled;
 // 20003AF6: using guessed type char rel_meas_got_rel_val;
 
 //----- (0800E87C) --------------------------------------------------------
-void __fastcall meter_update_min_max()
+void __fastcall meter_process_min_max()
 {
   int v0; // r0@7
 
@@ -9130,7 +8948,7 @@ void __fastcall meter_update_min_max()
           }
         }
       }
-      if ( meter_min_max_mode < 4 )
+      if ( (signed int)meter_min_max_mode < 4 )
         curr_scr_digits = v0;
     }
   }
@@ -9142,14 +8960,12 @@ void __fastcall meter_update_min_max()
 // 20003880: using guessed type int meter_min_max_avg_diff;
 // 20003884: using guessed type int meter_min_max_avg_count;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AEE: using guessed type char meter_min_max_mode;
 
 //----- (0800E9E8) --------------------------------------------------------
 void meter_process_overload()
 {
   meter_overload = 0;
-  meter_overflow_icon = 0;
+  meter_danger_icon = 0;
   if ( curr_meas_mode != MM_DCV && curr_meas_mode != MM_ACV || curr_meas_range != MM_DCmV )
   {
     if ( curr_meas_mode == MM_LOW_Z )
@@ -9176,16 +8992,16 @@ void meter_process_overload()
     {
       if ( curr_meas_mode == MM_LOW_Z )
       {
-        meter_overflow_icon = is_abs_out_of_range(curr_scr_digits, 300);
+        meter_danger_icon = is_abs_out_of_range(curr_scr_digits, 300);
         if ( curr_scr_overflow )
-          meter_overflow_icon = 1;
+          meter_danger_icon = 1;
       }
     }
     else if ( curr_meas_range == MM_DCV || curr_meas_range == MM_DCmV )
     {
-      meter_overflow_icon = is_abs_out_of_range(meas_va_last_volts, 30000);
+      meter_danger_icon = is_abs_out_of_range(meas_va_last_volts, 30000);
       if ( curr_power_volts_overflow )
-        meter_overflow_icon = 1;
+        meter_danger_icon = 1;
     }
   }
   else
@@ -9194,40 +9010,39 @@ void meter_process_overload()
     {
       if ( curr_meas_range == 2 )
       {
-        meter_overflow_icon = is_abs_out_of_range(curr_scr_digits, 3000);
+        meter_danger_icon = is_abs_out_of_range(curr_scr_digits, 3000);
       }
       else if ( curr_meas_range >= 2u )
       {
         if ( curr_meas_range == MM_DCmV )
-          meter_overflow_icon = is_abs_out_of_range(curr_scr_digits, 300);
+          meter_danger_icon = is_abs_out_of_range(curr_scr_digits, 300);
       }
       else
       {
-        meter_overflow_icon = is_abs_out_of_range(curr_scr_digits, 30000);
+        meter_danger_icon = is_abs_out_of_range(curr_scr_digits, 30000);
       }
     }
     if ( curr_meas_range && curr_scr_overflow )
-      meter_overflow_icon = 1;
+      meter_danger_icon = 1;
   }
-  scr_update_overflow_icon();
+  scr_update_danger_icon();
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 20003868: using guessed type int meas_va_last_volts;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003B49: using guessed type char meter_overflow_icon;
+// 20003B49: using guessed type char meter_danger_icon;
 // 20003B4A: using guessed type char meter_overload;
 // 20003B5D: using guessed type char curr_power_volts_overflow;
 
 //----- (0800EBAC) --------------------------------------------------------
-bool __fastcall is_abs_out_of_range(bool result, int range)
+bool __fastcall is_abs_out_of_range(bool num, int range)
 {
   int v2; // r2@1
 
-  v2 = result;
-  LOBYTE(result) = 0;
+  v2 = num;
+  LOBYTE(num) = 0;
   if ( v2 >= range || -range >= v2 )
-    LOBYTE(result) = 1;
-  return result;
+    LOBYTE(num) = 1;
+  return num;
 }
 
 //----- (0800EBC2) --------------------------------------------------------
@@ -9235,30 +9050,30 @@ void __cdecl finish_sys_init_and_handle_boot_buttons()
 {
   int v0; // r0@22
 
-  turn_on_GPIOD1();
+  meas_hw_turn_on_4V_supply();
   high_voltage_diode = 0;
-  set_gpio_based_on_hv_diode(0);
-  set_GPIOA11_based_on_mode(0);
-  set_GPIOH2_based_on_mode(0);
-  set_GPIOA12_based_on_mode(0);
-  set_GPIOE12_based_on_mode(0);
-  set_GPIOE5_based_on_mode_and_range(0, 0);
+  meas_hw_set_hv_diode(MM_LOW_Z);
+  meas_hw_set_va_ctl_useless(MM_LOW_Z);
+  meas_hw_set_temp_ctl(MM_LOW_Z);
+  meas_hw_set_fre_ctl(MM_LOW_Z);
+  meas_hw_set_amp_amplifier_power(MM_LOW_Z);
+  meas_hw_set_amp_x10(MM_LOW_Z, 0);
   show_firmware_version();
   update_lcd_if_appropriate();
-  sys_boot_button_delay_timer = 2000;
-  config_hy_based_on_mode(MM_TEMP, 0);
-  while ( sys_boot_button_delay_timer || cal_sd_state == 4 )
+  sys_boot_button_delay_timer_1ms_unit = 2000;
+  config_hy_based_on_mode_range(MM_TEMP, 0);
+  while ( sys_boot_button_delay_timer_1ms_unit || cal_sd_state == 4 )
   {
-    if ( TIM2_interrupt_did_fire )
+    if ( TIM2_10ms_interrupt )
     {
-      TIM2_interrupt_did_fire = 0;
+      TIM2_10ms_interrupt = 0;
       read_buttons_then_update();
       if ( cal_manual_state )
       {
         if ( cal_manual_state == 1 )
         {
           show_cal_mode_msg();
-          show_cal_mode_sub_msg();
+          show_cal_mode_msg_on_subscr();
           update_lcd_if_appropriate();
         }
         else
@@ -9267,8 +9082,8 @@ void __cdecl finish_sys_init_and_handle_boot_buttons()
           {
             meter_in_cal_mode = 1;
             need_to_update_subscr = 1;
-            erase_some_amp_parameters();
-            sys_boot_button_delay_timer = 0;
+            cal_erase_amp_rel_data();
+            sys_boot_button_delay_timer_1ms_unit = 0;
             break;
           }
           if ( cal_manual_state == 3 )
@@ -9276,7 +9091,7 @@ void __cdecl finish_sys_init_and_handle_boot_buttons()
             setting_last_cal_year_month = 1;
             need_to_update_subscr = 1;
             edit_year = curr_year;
-            sys_boot_button_delay_timer = 0;
+            sys_boot_button_delay_timer_1ms_unit = 0;
             break;
           }
         }
@@ -9333,14 +9148,14 @@ void __cdecl finish_sys_init_and_handle_boot_buttons()
   }
   cal_sd_state = 0;
   cal_manual_state = 0;
-  sys_boot_button_delay_timer = 0;
+  sys_boot_button_delay_timer_1ms_unit = 0;
   cal_mode_load_from_sd = 0;
   cal_mode_save_to_sd = 0;
-  turn_off_all_lcd_segments();
+  lcd_turn_off_all_segments();
   update_lcd_if_appropriate();
 }
 // 8012438: using guessed type int cal_load_from_sd(void);
-// 2000021A: using guessed type __int16 sys_boot_button_delay_timer;
+// 2000021A: using guessed type __int16 sys_boot_button_delay_timer_1ms_unit;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B22: using guessed type char cal_mode_save_to_sd;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
@@ -9349,40 +9164,39 @@ void __cdecl finish_sys_init_and_handle_boot_buttons()
 // 20003B4B: using guessed type char high_voltage_diode;
 // 20003B5F: using guessed type char cal_manual_state;
 // 20003B60: using guessed type char cal_sd_state;
-// 20003B62: using guessed type char TIM2_interrupt_did_fire;
-// 20003B69: using guessed type char curr_year;
+// 20003B62: using guessed type char TIM2_10ms_interrupt;
 // 20003B6F: using guessed type char edit_year;
 
 //----- (0800ED94) --------------------------------------------------------
-void update_cap_something_based_on_range()
+void meas_cap_reset_no_reading_timeout_timer()
 {
   int v0; // r0@3
 
   if ( curr_meas_mode == MM_CAP )
   {
-    meas_cap_maybe_recheck_timer_elapsed = 0;
-    meas_cap_some_other_timer_seems_unused = 0;
+    meas_cap_no_reading_timeout_elapsed = 0;
+    meas_cap_some_other_timer_unused = 0;
     if ( curr_meas_range <= 1u )
     {
-      meas_cap_maybe_recheck_timer = 200;
+      mes_cap_no_reading_timeout_timer_10ms_unit = 200;
     }
     else
     {
       v0 = curr_meas_range - 2;
-      if ( v0 <= 2 )
+      if ( (unsigned int)v0 <= 2 )
       {
-        meas_cap_maybe_recheck_timer = 200;
+        mes_cap_no_reading_timeout_timer_10ms_unit = 200;
       }
       else if ( v0 == 3 )
       {
-        meas_cap_maybe_recheck_timer = 300;
+        mes_cap_no_reading_timeout_timer_10ms_unit = 300;
       }
     }
   }
 }
-// 20003A78: using guessed type __int16 meas_cap_maybe_recheck_timer;
-// 20003A7A: using guessed type __int16 meas_cap_some_other_timer_seems_unused;
-// 20003B3C: using guessed type char meas_cap_maybe_recheck_timer_elapsed;
+// 20003A78: using guessed type __int16 mes_cap_no_reading_timeout_timer_10ms_unit;
+// 20003A7A: using guessed type __int16 meas_cap_some_other_timer_unused;
+// 20003B3C: using guessed type char meas_cap_no_reading_timeout_elapsed;
 
 //----- (0800EDE2) --------------------------------------------------------
 void __fastcall spinloop(unsigned int amount)
@@ -9405,12 +9219,11 @@ void __fastcall SysTick_Handler_real()
 void reset_apo_timeout()
 {
   if ( meter_min_max_mode )
-    apo_timeout = 3600;
+    apo_timeout_sec = 3600;
   else
-    apo_timeout = 1800;
+    apo_timeout_sec = 1800;
 }
-// 2000021C: using guessed type __int16 apo_timeout;
-// 20003AEE: using guessed type char meter_min_max_mode;
+// 2000021C: using guessed type __int16 apo_timeout_sec;
 
 //----- (0800EE48) --------------------------------------------------------
 void __fastcall hy_change_CTA_val_for_ac_freq()
@@ -9431,7 +9244,7 @@ void __fastcall hy_change_CTA_val_for_ac_freq()
     else
       v0 = 500;
     ++hy_change_CTA_val_timer;
-    if ( v0 < hy_change_CTA_val_timer )
+    if ( (unsigned __int16)v0 < (unsigned int)hy_change_CTA_val_timer )
     {
       hy_change_CTA_val_timer = 0;
       hy_change_CTA_val_next = hy_change_CTA_val_next != 1;
@@ -9439,12 +9252,11 @@ void __fastcall hy_change_CTA_val_for_ac_freq()
         hy_CTA_initial_val = 0x8000;
       else
         hy_CTA_initial_val = 0xE000;
-      config_hy_based_on_mode(curr_meas_mode, curr_meas_range);
+      config_hy_based_on_mode_range(curr_meas_mode, curr_meas_range);
     }
   }
 }
 // 2000020C: using guessed type int hy_CTA_initial_val;
-// 20003A76: using guessed type __int16 hy_change_CTA_val_timer;
 // 20003B32: using guessed type char lowz_measuring_ac;
 // 20003B35: using guessed type char hy_change_CTA_val_next;
 // 20003B3D: using guessed type char burden_enabled_for_current_ranges;
@@ -9469,28 +9281,24 @@ void __fastcall beep_angrily()
 }
 
 //----- (0800EF42) --------------------------------------------------------
-void __fastcall beep_and_reset_apo_timeout_if_asked(char should_reset_apo_timeout, char num, __int16 time)
+void __fastcall beep_and_reset_apo_timeout_if_asked(char should_reset_apo_timeout, char num, __int16 ms)
 {
-  char v3; // r5@1
-
-  v3 = num;
   if ( should_reset_apo_timeout == 1 )
     reset_apo_timeout();
-  beep_num_beeps = v3;
-  beep_time = time;
-  beep_amount_of_time(time);
+  beep_num_beeps = num;
+  beep_time = ms;
+  beep_ms(ms);
 }
 // 20003A6A: using guessed type __int16 beep_time;
-// 20003B15: using guessed type char beep_num_beeps;
 
 //----- (0800EF74) --------------------------------------------------------
-void __fastcall beep_amount_of_time(int time)
+void __fastcall beep_ms(unsigned __int16 ms)
 {
   beep_currently_beeping = 1;
-  beep_timer = time;
+  beep_timer_1ms = ms;
   LOWORD(GPIOE.BSRR) = 128;
 }
-// 20003A68: using guessed type __int16 beep_timer;
+// 20003A68: using guessed type __int16 beep_timer_1ms;
 // 20003B14: using guessed type char beep_currently_beeping;
 // 40021000: using guessed type GPIO_REGS GPIOE;
 
@@ -9525,11 +9333,11 @@ int __fastcall cal_update_curr_offset_accu(int a1)
   {
     cal_curr_offset_accu = a1;
   }
-  else if ( curr_meas_mode != MM_OHMS || curr_meas_range < 5 )
+  else if ( curr_meas_mode != MM_OHMS || (signed int)curr_meas_range < 5 )
   {
     cal_curr_offset_accu += a1;
   }
-  else if ( cal_countdown_timer < 9 )
+  else if ( (signed int)(unsigned __int8)cal_countdown_timer < 9 )
   {
     cal_curr_offset_accu += a1;
   }
@@ -9543,7 +9351,7 @@ int __fastcall cal_update_curr_offset_accu(int a1)
     calibrating_offset = 0;
     calibrating_offset_finished = 1;
     meas_was_updated = 1;
-    if ( curr_meas_mode == MM_OHMS && curr_meas_range >= 5 )
+    if ( curr_meas_mode == MM_OHMS && (signed int)curr_meas_range >= 5 )
       v1 = 8;
     cal_curr_offset_val = cal_curr_offset_accu / v1;
     cal_write_factor(0, cal_curr_offset_accu / v1);
@@ -9552,7 +9360,6 @@ int __fastcall cal_update_curr_offset_accu(int a1)
 }
 // 200038E0: using guessed type int cal_curr_offset_val;
 // 200038FC: using guessed type int cal_curr_offset_accu;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B27: using guessed type char calibrating_offset_finished;
 // 20003B2F: using guessed type char cal_countdown_timer;
@@ -9579,7 +9386,6 @@ int __fastcall cal_update_cap_offset_accu(unsigned int a1)
   return result;
 }
 // 200038DC: using guessed type int cal_offset_val_unused;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B27: using guessed type char calibrating_offset_finished;
 // 20003B2F: using guessed type char cal_countdown_timer;
@@ -9609,7 +9415,6 @@ int __fastcall cal_update_ac_offset_accu(int a1)
 }
 // 200038E4: using guessed type int cal_curr_offset_accu_div_by_16_never_read;
 // 200038FC: using guessed type int cal_curr_offset_accu;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B27: using guessed type char calibrating_offset_finished;
 // 20003B2F: using guessed type char cal_countdown_timer;
@@ -9628,7 +9433,7 @@ signed int __fastcall cal_prepare_ac_factor_calibration(char cal_gain)
     && curr_meas_mode != MM_ACmV )
     return 0;
   hz = ac_input_freq_to_hz(ac_input_freq_range, ac_input_freq);
-  if ( curr_meas_mode != MM_ACV || curr_meas_range < 2 || hz < 8000 || hz >= 12001 )
+  if ( curr_meas_mode != MM_ACV || (signed int)curr_meas_range < 2 || hz < 8000 || hz >= 12001 )
   {
     if ( curr_meas_mode != MM_ACV && curr_meas_mode != MM_ACmV || hz < 90000 )
     {
@@ -9688,11 +9493,10 @@ signed int __fastcall cal_prepare_ac_factor_calibration(char cal_gain)
     v2 = 1;
     meter_mode_range_change_delay = 5;
   }
-  return v2;
+  return (unsigned __int8)v2;
 }
 // 20000223: using guessed type char meter_mode_range_change_delay;
 // 20003870: using guessed type int ac_input_freq;
-// 20003AE2: using guessed type char ac_input_freq_range;
 // 20003B36: using guessed type char cal_save_ac_factor_decirange;
 // 20003B37: using guessed type char cal_save_ac_factor_fullrange;
 // 20003B38: using guessed type char cal_save_ac_factor_decirange_lf;
@@ -9811,7 +9615,7 @@ int __fastcall cal_update_curr_gain_accu(int num)
   v2 = 16;
   if ( calibrating_ohms_50M_offset )
   {
-    if ( cal_countdown_timer < 9 )
+    if ( (signed int)(unsigned __int8)cal_countdown_timer < 9 )
       cal_curr_gain_accu += num;
     else
       cal_curr_gain_accu = 0LL;
@@ -9830,11 +9634,11 @@ int __fastcall cal_update_curr_gain_accu(int num)
   }
   else
   {
-    if ( curr_meas_mode != MM_OHMS || curr_meas_range < 5 )
+    if ( curr_meas_mode != MM_OHMS || (signed int)curr_meas_range < 5 )
     {
       cal_curr_gain_accu += num;
     }
-    else if ( cal_countdown_timer < 9 )
+    else if ( (signed int)(unsigned __int8)cal_countdown_timer < 9 )
     {
       cal_curr_gain_accu += num;
     }
@@ -9855,7 +9659,7 @@ int __fastcall cal_update_curr_gain_accu(int num)
       calibrating_gain = 0;
       calibrating_gain_finished = 1;
       meas_was_updated = 1;
-      if ( curr_meas_mode == MM_OHMS && curr_meas_range >= 5 )
+      if ( curr_meas_mode == MM_OHMS && (signed int)curr_meas_range >= 5 )
         v2 = 8;
       v7 = int64_div(cal_curr_gain_accu, v2);
       cal_curr_gain_accu_float = fp_from_int(v7);
@@ -9872,7 +9676,6 @@ int __fastcall cal_update_curr_gain_accu(int num)
 }
 // 20000223: using guessed type char meter_mode_range_change_delay;
 // 200038F4: using guessed type int cal_ohms_50M_offset_factor;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B28: using guessed type char calibrating_gain;
 // 20003B29: using guessed type char calibrating_gain_finished;
 // 20003B2A: using guessed type char calibrating_ohms_50M_offset;
@@ -9939,7 +9742,6 @@ void __fastcall cal_update_cap_gain_accu(unsigned int gain, int last_offset)
 }
 // 200038E0: using guessed type int cal_curr_offset_val;
 // 20003948: using guessed type int curr_cap_val;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B28: using guessed type char calibrating_gain;
 // 20003B29: using guessed type char calibrating_gain_finished;
 // 20003B2F: using guessed type char cal_countdown_timer;
@@ -9981,7 +9783,6 @@ void __fastcall cal_update_ac_gain_accu(int num, int offset)
 // 200038E0: using guessed type int cal_curr_offset_val;
 // 200038FC: using guessed type int cal_curr_offset_accu;
 // 20003948: using guessed type int curr_cap_val;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B28: using guessed type char calibrating_gain;
 // 20003B29: using guessed type char calibrating_gain_finished;
 // 20003B2F: using guessed type char cal_countdown_timer;
@@ -9996,7 +9797,7 @@ void __fastcall cal_ac_factor_update_and_save(char a1, int a2)
     else
       cal_ac_factor_decirange = a2 - 600;
   }
-  else if ( a1 >= 1u )
+  else if ( (unsigned __int8)a1 >= 1u )
   {
     if ( a1 == 3 )
     {
@@ -10005,7 +9806,7 @@ void __fastcall cal_ac_factor_update_and_save(char a1, int a2)
       else
         cal_ac_factor_decirange_lf = a2 - 600;
     }
-    else if ( a1 < 3u )
+    else if ( (unsigned __int8)a1 < 3u )
     {
       if ( curr_meas_mode != MM_ACV || curr_meas_range != 3 )
         cal_ac_factor_fullrange = a2 - 50000;
@@ -10036,9 +9837,9 @@ void __fastcall cal_calc_gain_from_gain_accu()
   {
 LABEL_29:
     if ( curr_meas_range == 3 )
-      div_gain_by_6000();
+      cal_set_curr_gain_div_by_6000();
     else
-      div_gain_by_50000();
+      cal_set_curr_gain_div_by_50000();
     return;
   }
   if ( curr_meas_mode == MM_ACmV )
@@ -10046,7 +9847,7 @@ LABEL_29:
 LABEL_27:
     if ( input_1ms_peak_enabled )
     {
-      div_gain_by_42426();
+      cal_set_curr_gain_div_by_42426();
       return;
     }
     goto LABEL_29;
@@ -10055,22 +9856,22 @@ LABEL_27:
     goto LABEL_45;
   if ( curr_meas_mode == MM_OHMS )
   {
-    div_gain_by_50000();
+    cal_set_curr_gain_div_by_50000();
     return;
   }
   if ( curr_meas_mode == MM_CONTINUITY )
     goto LABEL_45;
   if ( curr_meas_mode == MM_DIODE )
   {
-    div_gain_by_30000();
+    call_set_curr_gain_div_by_30000();
     return;
   }
   if ( curr_meas_mode == MM_CAP )
   {
     if ( curr_meas_range == 5 )
-      div_gain_by(0.0, 1000.0);
+      cal_set_curr_gain_div_by_n(0.0, 1000.0);
     else
-      div_gain_by(0.0, 10000.0);
+      cal_set_curr_gain_div_by_n(0.0, 10000.0);
     return;
   }
   if ( curr_meas_mode == MM_ACuVA )
@@ -10082,24 +9883,24 @@ LABEL_27:
 LABEL_21:
     if ( v0 )
     {
-      if ( curr_meas_range >= 2 )
-        div_gain_by_10000();
+      if ( (signed int)curr_meas_range >= 2 )
+        cal_set_curr_gain_div_by_10000();
       else
-        div_gain_by_50000();
+        cal_set_curr_gain_div_by_50000();
     }
     else
     {
-      div_gain_by_50000();
+      cal_set_curr_gain_div_by_50000();
     }
     return;
   }
-  if ( curr_meas_mode - MM_ACuA <= 3 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_ACuA <= 3 )
   {
 LABEL_45:
-    div_gain_by_50000();
+    cal_set_curr_gain_div_by_50000();
     return;
   }
-  if ( curr_meas_mode - MM_ACA > 1 )
+  if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_ACA > 1 )
   {
     if ( curr_meas_mode != MM_DCuVA )
     {
@@ -10110,52 +9911,52 @@ LABEL_45:
         goto LABEL_21;
       }
 LABEL_20:
-      div_gain_by_50000();
+      cal_set_curr_gain_div_by_50000();
       return;
     }
 LABEL_19:
-    div_gain_by_50000();
+    cal_set_curr_gain_div_by_50000();
     return;
   }
   if ( curr_meas_range == 2 )
-    div_gain_by_10000();
+    cal_set_curr_gain_div_by_10000();
   else
-    div_gain_by_50000();
+    cal_set_curr_gain_div_by_50000();
 }
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
 
 //----- (0800FAFC) --------------------------------------------------------
-void __fastcall div_gain_by(float a1, float num)
+void __fastcall cal_set_curr_gain_div_by_n(float a1, float num)
 {
   cal_curr_gain_val = fp_div(cal_curr_gain_accu_float, num);
 }
 
 //----- (0800FB16) --------------------------------------------------------
-void __fastcall div_gain_by_50000()
+void __fastcall cal_set_curr_gain_div_by_50000()
 {
   cal_curr_gain_val = fp_div(cal_curr_gain_accu_float, 50000.0);
 }
 
 //----- (0800FB3C) --------------------------------------------------------
-void __fastcall div_gain_by_30000()
+void __fastcall call_set_curr_gain_div_by_30000()
 {
   cal_curr_gain_val = fp_div(cal_curr_gain_accu_float, 30000.0);
 }
 
 //----- (0800FB5C) --------------------------------------------------------
-void __fastcall div_gain_by_10000()
+void __fastcall cal_set_curr_gain_div_by_10000()
 {
   cal_curr_gain_val = fp_div(cal_curr_gain_accu_float, 10000.0);
 }
 
 //----- (0800FB76) --------------------------------------------------------
-void __fastcall div_gain_by_6000()
+void __fastcall cal_set_curr_gain_div_by_6000()
 {
   cal_curr_gain_val = fp_div(cal_curr_gain_accu_float, 6000.0);
 }
 
 //----- (0800FB90) --------------------------------------------------------
-void div_gain_by_42426(void)
+void cal_set_curr_gain_div_by_42426(void)
 {
   double v0; // r0@1
   double v1; // r0@1
@@ -10166,29 +9967,31 @@ void div_gain_by_42426(void)
 }
 
 //----- (0800FBB4) --------------------------------------------------------
-void __fastcall disable_hv_diode_and_configure_various_gpios(meter_meas_mode mode, char range)
+void __fastcall meas_setup_hw(meter_meas_mode mode, char range)
 {
-  meter_meas_mode v2; // r4@1
-  char v3; // r5@1
-
-  v2 = mode;
-  v3 = range;
-  turn_on_GPIOD1();
-  gpio_party_mode_related(v2);
+  meas_hw_turn_on_4V_supply();
+  meas_hw_set_ac_rms_filter_ctl(mode);
   high_voltage_diode = 0;
-  set_gpio_based_on_hv_diode(v2);
-  set_GPIOA12_based_on_mode(v2);
-  set_GPIOA11_based_on_mode(v2);
-  set_GPIOH2_based_on_mode(v2);
-  set_GPIOE12_based_on_mode(v2);
-  set_GPIOE5_based_on_mode_and_range(v2, v3);
+  meas_hw_set_hv_diode(mode);
+  meas_hw_set_fre_ctl(mode);
+  meas_hw_set_va_ctl_useless(mode);
+  meas_hw_set_temp_ctl(mode);
+  meas_hw_set_amp_amplifier_power(mode);
+  meas_hw_set_amp_x10(mode, range);
 }
 // 20003B32: using guessed type char lowz_measuring_ac;
 // 20003B4B: using guessed type char high_voltage_diode;
 
 //----- (0800FC34) --------------------------------------------------------
-void __fastcall gpio_party_mode_related(meter_meas_mode mode)
+void __fastcall meas_hw_set_ac_rms_filter_ctl(meter_meas_mode mode)
 {
+  // CTL_A: when 0, uses switch X of U16 to connect the RMS output to the HY PB7
+  // CTL_E/D:
+  // * 0, RMS_IN and 1kHz filter input unconnected
+  // * 1, AC connected to RMS chip
+  // * 2, AC connected to OP2O on HY, input of 1kHz filter,
+  //      output of 1kHz filter connected to RMS chip
+  // * 3, RMS_IN and 1kHz filter input unconnected
   if ( mode != MM_ACuA
     && mode != MM_ACmA
     && mode != MM_ACA
@@ -10199,28 +10002,31 @@ void __fastcall gpio_party_mode_related(meter_meas_mode mode)
     && mode != MM_ACmVA
     && mode != MM_ACVA )
   {
-    LOWORD(GPIOD.BSRR) = 1;
-    LOWORD(GPIOF.BSRR) = 32;
+    LOWORD(GPIOD.BSRR) = 1;                     // turn on PD0 (CTL_A)
+    LOWORD(GPIOF.BSRR) = 32;                    // turn on PF5 (CTL_E)
   }
   else if ( (mode == MM_ACuA || mode == MM_ACmA || mode == MM_ACA || mode == MM_ACV || mode == MM_ACmV)
          && input_lpf_enabled )
   {
-    HIWORD(GPIOD.BSRR) = 1;
-    GPIOF.BSRR = 0x100020;
+    HIWORD(GPIOD.BSRR) = 1;                     // turn off PD0 (CTL_A)
+    GPIOF.BSRR = 0x100020;                      // turn off PF4 (CTL_D) and on PF5 (CTL_E)
   }
   else
   {
-    HIWORD(GPIOD.BSRR) = 1;
-    GPIOF.BSRR = 0x200010;
+    HIWORD(GPIOD.BSRR) = 1;                     // turn off PD0 (CTL_A)
+    GPIOF.BSRR = 0x200010;                      // turn off PF5 (CTL_E) and on PF4 (CTL_D)
   }
+  // use switch Y of U16 to connect a 1.5nF between the HY PB0
+  // and input ground on OHMS mode
   if ( mode == MM_OHMS )
-    HIWORD(GPIOC.BSRR) = 2048;
+    HIWORD(GPIOC.BSRR) = 0x800;                 // turn off PC11 (CTL_B)
   else
-    LOWORD(GPIOC.BSRR) = 2048;
+    LOWORD(GPIOC.BSRR) = 0x800;                 // turn on PC11 (CTL_B)
+  // sets DCmV_CTL which is only connected to the unpopulated U14
   if ( mode == MM_ACV )
-    HIWORD(GPIOD.BSRR) = 128;
+    HIWORD(GPIOD.BSRR) = 0x80;                  // turn off PD7 (DCmV_CTL)
   else
-    LOWORD(GPIOD.BSRR) = 128;
+    LOWORD(GPIOD.BSRR) = 0x80;                  // turn on PD7 (DCmV_CTL)
 }
 // 20003B51: using guessed type char input_lpf_enabled;
 // 40020800: using guessed type GPIO_REGS GPIOC;
@@ -10228,17 +10034,29 @@ void __fastcall gpio_party_mode_related(meter_meas_mode mode)
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (0800FD18) --------------------------------------------------------
-void __fastcall set_gpio_based_on_hv_diode(meter_meas_mode mode)
+void __fastcall meas_hw_set_hv_diode(meter_meas_mode mode)
 {
+  // If in the high voltage diode range, ENB is asserted
+  // which switches on U10 which generates the 15V test voltage
+
+  // Also sets LED_CK which sets switches Y and Z of U9 to position 1.
+
+  // The diode is then connected to the V jack which is connected
+  // * to R_RLD via range switch contacts 36 and 37
+  // * to the test voltage via switch Y on U9 in pos. 1
+  // * to input ground via switch Z on U9 in pos. 1 thru a 910K resistor
+  // * to the other side of the diode through the ground jack
+
+  // The voltage is measured at the V jack using HY3131 PA8 (probably).
   if ( mode == MM_DIODE && high_voltage_diode )
   {
-    HIWORD(GPIOE.BSRR) = 0x8000u;
-    LOWORD(GPIOF.BSRR) = 0x40;
+    HIWORD(GPIOE.BSRR) = 0x8000u;               // turn off PE15 (LED_CK)
+    LOWORD(GPIOF.BSRR) = 0x40;                  // turn on PF6 (ENB)
   }
   else
   {
-    LOWORD(GPIOE.BSRR) = 0x8000u;
-    HIWORD(GPIOF.BSRR) = 0x40;
+    LOWORD(GPIOE.BSRR) = 0x8000u;               // turn on PE15 (LED_CK)
+    HIWORD(GPIOF.BSRR) = 0x40;                  // turn off PF6 (ENB)
   }
 }
 // 20003B4B: using guessed type char high_voltage_diode;
@@ -10246,43 +10064,62 @@ void __fastcall set_gpio_based_on_hv_diode(meter_meas_mode mode)
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (0800FD5C) --------------------------------------------------------
-void __fastcall set_GPIOA11_based_on_mode(meter_meas_mode mode)
+void __fastcall meas_hw_set_va_ctl_useless(meter_meas_mode mode)
 {
+  // asserts VA_CTL in ACmVA and ACVA modes
+  // which isn't actually connected to anything
+  // (would be U14 but it's not populated)
+
   if ( mode != MM_ACmVA && mode != MM_ACVA )
-    LOWORD(GPIOA.BSRR) = 0x800;
+    LOWORD(GPIOA.BSRR) = 0x800;                 // turn on PA11 (VA_CTL)
   else
-    HIWORD(GPIOA.BSRR) = 0x800;
+    HIWORD(GPIOA.BSRR) = 0x800;                 // turn off PA11 (VA_CTL)
 }
 
 //----- (0800FD84) --------------------------------------------------------
-void __fastcall set_GPIOH2_based_on_mode(meter_meas_mode mode)
+void __fastcall meas_hw_set_temp_ctl(meter_meas_mode mode)
 {
+  // asserts TEMP_CTL in TEMP mode, which sets switch Z of U16 to pos. 0
+
+  // Connects VDD to TEMP_OL and then the V jack through 21Mohm of resistors. Must be for detecting open leads
   if ( mode == MM_TEMP )
-    LOWORD(GPIOH.BSRR) = 4;
+    LOWORD(GPIOH.BSRR) = 4;                     // turn on PH2 (TEMP_CTL)
   else
-    HIWORD(GPIOH.BSRR) = 4;
+    HIWORD(GPIOH.BSRR) = 4;                     // turn off PH2 (TEMP_CTL)
 }
 // 40021400: using guessed type GPIO_REGS GPIOH;
 
 //----- (0800FD9E) --------------------------------------------------------
-void __fastcall set_GPIOA12_based_on_mode(meter_meas_mode mode)
+void __fastcall meas_hw_set_fre_ctl(meter_meas_mode mode)
 {
+  // when in a frequency related mode, asserts FRE_CTL
+
+  // This sets Switch X on U9 to position 1.
+  // The frequency source is connected to the V jack which is connected
+  // * to R_RLD via range switch contacts 36 and 37
+  // * to RLD through switch Y on U9 in pos. 0
+  // * to RLD1 through switch X on U9 set to pos. 1
+  // * to the HY's CNT input through some filter
   if ( mode != MM_HZ && mode != MM_mSEC && mode != MM_DUTY )
-    LOWORD(GPIOA.BSRR) = 0x1000;
+    LOWORD(GPIOA.BSRR) = 0x1000;                // turn on PA12 (FRE_CTL)
   else
-    HIWORD(GPIOA.BSRR) = 0x1000;
+    HIWORD(GPIOA.BSRR) = 0x1000;                // turn off PA12 (FRE_CTL)
 }
 
 //----- (0800FDC8) --------------------------------------------------------
-void turn_on_GPIOD1()
+void meas_hw_turn_on_4V_supply()
 {
+  // enable U13, the regulator for the 4V analog supply
+  // this is PD1, labeled PWR_CTL2 on the schematic
   LOWORD(GPIOD.BSRR) = 2;
 }
 // 40020C00: using guessed type GPIO_REGS GPIOD;
 
 //----- (0800FDDC) --------------------------------------------------------
-void __fastcall set_GPIOE12_based_on_mode(meter_meas_mode mode)
+void __fastcall meas_hw_set_amp_amplifier_power(meter_meas_mode mode)
 {
+  // if in an amp mode, the x10 voltage amplifier's
+  // shutdown input is deasserted
   if ( mode != MM_ACuA
     && mode != MM_ACmA
     && mode != MM_ACA
@@ -10295,15 +10132,19 @@ void __fastcall set_GPIOE12_based_on_mode(meter_meas_mode mode)
     && mode != MM_DCuVA
     && mode != MM_DCmVA
     && mode != MM_DCVA )
-    HIWORD(GPIOE.BSRR) = 4096;
+    HIWORD(GPIOE.BSRR) = 0x1000;                // turn off PE12 (SHDN_A)
   else
-    LOWORD(GPIOE.BSRR) = 4096;
+    LOWORD(GPIOE.BSRR) = 0x1000;                // turn on PE12 (SHDN_A)
 }
 // 40021000: using guessed type GPIO_REGS GPIOE;
 
 //----- (0800FE48) --------------------------------------------------------
-void __fastcall set_GPIOE5_based_on_mode_and_range(meter_meas_mode mode, char range)
+void __fastcall meas_hw_set_amp_x10(meter_meas_mode mode, char range)
 {
+  // This enables reading the x10 amp amplifier on low amp ranges
+
+  // when PE5 is turned on, switch Y of U11 is at pos. 0 and connects X10 to the HY
+  // otherwise, X1 is connected
   if ( mode != MM_ACuA && mode != MM_ACmA && mode != MM_ACA && mode != MM_DCuA && mode != MM_DCmA && mode != MM_DCA )
   {
     if ( mode != MM_ACuVA
@@ -10313,31 +10154,31 @@ void __fastcall set_GPIOE5_based_on_mode_and_range(meter_meas_mode mode, char ra
       && mode != MM_DCmVA
       && mode != MM_DCVA )
     {
-      LOWORD(GPIOE.BSRR) = 32;
+      LOWORD(GPIOE.BSRR) = 32;                  // turn on PE5 (A_CTL)
     }
     else if ( curr_power_amps_range )
     {
-      HIWORD(GPIOE.BSRR) = 32;
+      HIWORD(GPIOE.BSRR) = 32;                  // turn off PE5 (A_CTL)
     }
     else
     {
-      LOWORD(GPIOE.BSRR) = 32;
+      LOWORD(GPIOE.BSRR) = 32;                  // turn on PE5 (A_CTL)
     }
   }
   else if ( range )
   {
-    HIWORD(GPIOE.BSRR) = 32;
+    HIWORD(GPIOE.BSRR) = 32;                    // turn off PE5 (A_CTL)
   }
   else
   {
-    LOWORD(GPIOE.BSRR) = 32;
+    LOWORD(GPIOE.BSRR) = 32;                    // turn on PE5 (A_CTL)
   }
 }
 // 20003B5C: using guessed type char curr_power_amps_range;
 // 40021000: using guessed type GPIO_REGS GPIOE;
 
 //----- (0800FEEC) --------------------------------------------------------
-void read_time_from_rtc()
+void rtc_read_time()
 {
   unsigned __int8 v0; // r4@1
   unsigned __int8 v1; // r4@7
@@ -10346,11 +10187,11 @@ void read_time_from_rtc()
   unsigned __int8 v4; // r0@23
   unsigned __int8 v5; // r4@27
 
-  v0 = prob_read_rtc_mem(2);
-  if ( v0 && v0 < 154 )
+  v0 = rtc_read_reg(RTC_REG_YEAR);
+  if ( v0 && (signed int)v0 < 0x9A )
   {
     curr_year = bcd2_to_int(v0);
-    if ( !curr_year || curr_year >= 100 )
+    if ( !curr_year || (signed int)curr_year >= 100 )
       curr_year = 16;
   }
   else
@@ -10358,11 +10199,11 @@ void read_time_from_rtc()
     curr_year = 16;
   }
   spinloop(5u);
-  v1 = prob_read_rtc_mem(4);
-  if ( v1 && v1 < 19 )
+  v1 = rtc_read_reg(RTC_REG_MONTH);
+  if ( v1 && (signed int)v1 < 0x13 )
   {
     curr_month = bcd2_to_int(v1);
-    if ( !curr_month || curr_month >= 13 )
+    if ( !curr_month || (signed int)curr_month >= 13 )
       curr_month = 7;
   }
   else
@@ -10370,11 +10211,11 @@ void read_time_from_rtc()
     curr_month = 7;
   }
   spinloop(5u);
-  v2 = prob_read_rtc_mem(6);
-  if ( v2 && v2 < 50 )
+  v2 = rtc_read_reg(RTC_REG_DAY);
+  if ( v2 && (signed int)v2 < 0x32 )
   {
     curr_day = bcd2_to_int(v2);
-    if ( !curr_day || curr_day >= 32 )
+    if ( !curr_day || (signed int)curr_day >= 32 )
       curr_day = 1;
   }
   else
@@ -10382,55 +10223,48 @@ void read_time_from_rtc()
     curr_day = 1;
   }
   spinloop(5u);
-  v3 = prob_read_rtc_mem(10);
-  if ( v3 >= 36 )
+  v3 = rtc_read_reg(RTC_REG_HOUR);
+  if ( (signed int)v3 >= 0x24 )
   {
     curr_hour = 12;
   }
   else
   {
     curr_hour = bcd2_to_int(v3);
-    if ( curr_hour >= 24 )
+    if ( (signed int)curr_hour >= 24 )
       curr_hour = 12;
   }
   spinloop(5u);
-  v4 = prob_read_rtc_mem(12);
-  if ( v4 >= 90 )
+  v4 = rtc_read_reg(RTC_REG_MINUTE);
+  if ( (signed int)v4 >= 0x5A )
   {
     curr_minute = 0;
   }
   else
   {
     curr_minute = bcd2_to_int(v4);
-    if ( curr_minute >= 60 )
+    if ( (signed int)curr_minute >= 60 )
       curr_minute = 0;
   }
   spinloop(5u);
-  v5 = prob_read_rtc_mem(14);
-  if ( byte_20000221 != v5 )
+  v5 = rtc_read_reg(RTC_REG_SECOND);
+  if ( rtc_last_read_seconds != v5 )
   {
-    byte_20000221 = v5;
-    need_to_read_rtc = 1;
+    rtc_last_read_seconds = v5;
+    rtc_last_read_was_new_second = 1;
   }
-  if ( v5 >= 90 )
+  if ( (signed int)v5 >= 0x5A )
   {
     curr_second = 0;
   }
   else
   {
     curr_second = bcd2_to_int(v5);
-    if ( curr_second >= 60 )
+    if ( (signed int)curr_second >= 60 )
       curr_second = 0;
   }
 }
-// 20000221: using guessed type char byte_20000221;
-// 20003B66: using guessed type char need_to_read_rtc;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
-// 20003B6E: using guessed type char curr_second;
+// 20003B66: using guessed type char rtc_last_read_was_new_second;
 
 //----- (080100B4) --------------------------------------------------------
 unsigned __int8 __fastcall bcd2_to_int(unsigned __int8 bcd)
@@ -10441,70 +10275,58 @@ unsigned __int8 __fastcall bcd2_to_int(unsigned __int8 bcd)
 //----- (080100D8) --------------------------------------------------------
 unsigned __int8 __fastcall int_to_bcd2(unsigned __int8 a1)
 {
-  return (a1 % 10) + 16 * (a1 / 10);
+  return (unsigned __int16)(a1 % 10) + 16 * (a1 / 10);
 }
 
 //----- (08010106) --------------------------------------------------------
-void probably_write_time_to_rtc()
+void rtc_write_time()
 {
-  prob_write_rtc_mem(2, curr_year);
-  prob_write_rtc_mem(4, curr_month);
-  prob_write_rtc_mem(6, curr_day);
-  prob_write_rtc_mem(10, curr_hour);
-  prob_write_rtc_mem(12, curr_minute);
-  prob_write_rtc_mem(14, curr_second);
+  rtc_write_reg(RTC_REG_YEAR, curr_year);
+  rtc_write_reg(RTC_REG_MONTH, curr_month);
+  rtc_write_reg(RTC_REG_DAY, curr_day);
+  rtc_write_reg(RTC_REG_HOUR, curr_hour);
+  rtc_write_reg(RTC_REG_MINUTE, curr_minute);
+  rtc_write_reg(RTC_REG_SECOND, curr_second);
 }
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
-// 20003B6E: using guessed type char curr_second;
 
 //----- (08010154) --------------------------------------------------------
-void __fastcall prob_write_rtc_mem(char loc, unsigned __int8 data)
+void __fastcall rtc_write_reg(RTC_REGS loc, unsigned __int8 data)
 {
-  char v2; // r4@1
   unsigned __int8 v3; // r6@1
 
-  v2 = loc;
   v3 = int_to_bcd2(data);
-  turn_off_GPIOB7_and_on_GPIOC13();
+  rtc_select_chip();
   spinloop(5u);
-  prob_send_rtc_addr(v2 + 1);
-  prob_send_rtc_data(v3);
+  rtc_send_reg_number((RTC_REGS)(loc + 1));
+  rtc_send_data(v3);
   spinloop(5u);
-  turn_off_GPIOB7_and_GPIOC13();
+  rtc_deselect_chip();
 }
 
 //----- (0801018A) --------------------------------------------------------
-_BYTE __fastcall prob_read_rtc_mem(int loc)
+_BYTE __fastcall rtc_read_reg(RTC_REGS loc)
 {
-  unsigned __int8 v1; // r4@1
   char v2; // r5@1
 
-  v1 = loc;
-  turn_off_GPIOB7_and_on_GPIOC13();
-  prob_send_rtc_addr(v1);
-  v2 = prob_recv_rtc_data();
-  turn_off_GPIOB7_and_GPIOC13();
+  rtc_select_chip();
+  rtc_send_reg_number(loc);
+  v2 = rtc_recv_data();
+  rtc_deselect_chip();
   return v2;
 }
 
 //----- (080101AC) --------------------------------------------------------
-void __fastcall prob_send_rtc_addr(unsigned __int8 loc)
+void __fastcall rtc_send_reg_number(RTC_REGS loc)
 {
-  unsigned __int8 v1; // r4@1
   unsigned __int8 i; // r5@1
 
-  v1 = loc;
-  for ( i = 0; i < 4; ++i )
+  for ( i = 0; (signed int)i < 4; ++i )
   {
-    if ( ((v1 >> i) & 1) == 1 )
-      LOWORD(GPIOB.BSRR) = 128;
+    if ( (((signed int)(unsigned __int8)loc >> i) & 1) == 1 )
+      LOWORD(GPIOB.BSRR) = 128;                 // send this bit
     else
       HIWORD(GPIOB.BSRR) = 128;
-    LOWORD(GPIOB.BSRR) = 64;
+    LOWORD(GPIOB.BSRR) = 64;                    // pulse clock
     spinloop(5u);
     HIWORD(GPIOB.BSRR) = 64;
     spinloop(5u);
@@ -10513,16 +10335,16 @@ void __fastcall prob_send_rtc_addr(unsigned __int8 loc)
 // 40020400: using guessed type GPIO_REGS GPIOB;
 
 //----- (080101F8) --------------------------------------------------------
-_BYTE prob_recv_rtc_data()
+_BYTE rtc_recv_data()
 {
   unsigned int v0; // r5@1
   unsigned __int8 i; // r4@1
 
   LOBYTE(v0) = 0;
   spinloop(5u);
-  config_GPIOB7();
+  rtc_config_data_input();
   spinloop(5u);
-  for ( i = 0; i < 8; ++i )
+  for ( i = 0; (signed int)i < 8; ++i )
   {
     LOWORD(GPIOB.BSRR) = 64;
     spinloop(5u);
@@ -10530,27 +10352,25 @@ _BYTE prob_recv_rtc_data()
       LOBYTE(v0) = v0 | 0x80;
     HIWORD(GPIOB.BSRR) = 64;
     spinloop(5u);
-    if ( i < 7 )
-      v0 = v0 >> 1;
+    if ( (signed int)i < 7 )
+      v0 = (unsigned int)(unsigned __int8)v0 >> 1;
   }
-  unconfig_GPIOB7();
+  rtc_config_data_output();
   spinloop(5u);
   return v0;
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 
 //----- (0801025C) --------------------------------------------------------
-void __fastcall prob_send_rtc_data(unsigned __int8 a1)
+void __fastcall rtc_send_data(unsigned __int8 data)
 {
-  unsigned __int8 v1; // r4@1
   unsigned __int8 i; // r5@1
 
-  v1 = a1;
-  for ( i = 0; i < 8; ++i )
+  for ( i = 0; (signed int)i < 8; ++i )
   {
     HIWORD(GPIOB.BSRR) = 64;
     spinloop(5u);
-    if ( ((v1 >> i) & 1) == 1 )
+    if ( (((signed int)data >> i) & 1) == 1 )
       LOWORD(GPIOB.BSRR) = 128;
     else
       HIWORD(GPIOB.BSRR) = 128;
@@ -10561,76 +10381,72 @@ void __fastcall prob_send_rtc_data(unsigned __int8 a1)
 // 40020400: using guessed type GPIO_REGS GPIOB;
 
 //----- (080102A8) --------------------------------------------------------
-void turn_off_GPIOB7_and_on_GPIOC13()
+void rtc_select_chip()
 {
-  HIWORD(GPIOB.BSRR) = 128;
-  LOWORD(GPIOC.BSRR) = 0x2000;
+  HIWORD(GPIOB.BSRR) = 128;                     // turn off output (PB7)
+  LOWORD(GPIOC.BSRR) = 0x2000;                  // assert chip sdelect (PC13)
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 // 40020800: using guessed type GPIO_REGS GPIOC;
 
 //----- (080102BE) --------------------------------------------------------
-void turn_off_GPIOB7_and_GPIOC13()
+void rtc_deselect_chip()
 {
-  HIWORD(GPIOB.BSRR) = 128;
-  HIWORD(GPIOC.BSRR) = 0x2000;
+  HIWORD(GPIOB.BSRR) = 128;                     // turn off data output (PB7)
+  HIWORD(GPIOC.BSRR) = 0x2000;                  // deassert chip select (PC13)
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 // 40020800: using guessed type GPIO_REGS GPIOC;
 
 //----- (080102D4) --------------------------------------------------------
-void unconfig_GPIOB7()
+void rtc_config_data_output()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
-  cfg.pins = 128;
-  cfg.mode = 1;
-  cfg.pull = 0;
-  *&cfg.speed = 1;
-  config_pins(&GPIOB, &cfg);
+  cfg.pins = 128;                               // PB7
+  cfg.mode = 1;                                 // output
+  cfg.pull = 0;                                 // no pullup/down
+  *(_WORD *)&cfg.speed = 1;                     // 'medium' speed, push-pull output
+  gpio_config_pin(&GPIOB, &cfg);
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 
 //----- (080102FE) --------------------------------------------------------
-void config_GPIOB7()
+void rtc_config_data_input()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
-  cfg.pins = 128;
-  *&cfg.mode = 768;
-  cfg.pull = 1;
-  config_pins(&GPIOB, &cfg);
+  cfg.pins = 0x80;                              // PB7
+  *(_WORD *)&cfg.mode = 0x300;                  // Mode = input
+  cfg.pull = 1;                                 // pull-up
+  gpio_config_pin(&GPIOB, &cfg);
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 
 //----- (08010340) --------------------------------------------------------
-int __fastcall get_days_in_month_without_going_over(unsigned __int8 year, unsigned __int8 month, unsigned __int8 curr_day)
+unsigned __int8 __fastcall get_days_in_month_without_going_over(unsigned __int8 year, unsigned __int8 month, unsigned __int8 curr_day)
 {
-  unsigned __int8 v3; // r7@1
   unsigned int v4; // r0@1
 
-  v3 = curr_day;
   LOBYTE(v4) = get_days_in_month(year, month);
-  if ( v4 < v3 )
-    v3 = v4;
-  return v3;
+  if ( v4 < curr_day )
+    curr_day = v4;
+  return curr_day;
 }
 
 //----- (0801036E) --------------------------------------------------------
 unsigned __int8 __fastcall get_days_in_month(unsigned __int8 year, unsigned __int8 month)
 {
   unsigned int v2; // r3@1
-  int v4; // [sp+0h] [bp-18h]@1
-  signed int v5; // [sp+4h] [bp-14h]@1
-  signed int v6; // [sp+8h] [bp-10h]@1
+  char days_in_month[12]; // [sp+0h] [bp-18h]@1
 
-  v4 = 0x1E1F1C1F;
-  v5 = 0x1F1F1E1F;
-  v6 = 0x1F1E1F1E;
+  *(_DWORD *)days_in_month = 0x1E1F1C1F;
+  *(_DWORD *)&days_in_month[4] = 0x1F1F1E1F;
+  *(_DWORD *)&days_in_month[8] = 0x1F1E1F1E;
   v2 = year + 2000;
   if ( !(v2 % 4) && v2 % 100 || !(v2 % 400) )
-    BYTE1(v4) = 29;
-  return *(&v4 + month - 1);
+    days_in_month[1] = 29;
+  return days_in_month[month - 1];
 }
 
 //----- (08010460) --------------------------------------------------------
@@ -10762,7 +10578,7 @@ float __fastcall fp_mul(float a, float b)
     }
 LABEL_8:
     v10 = bsig * asig;
-    v9 = bsig * asig >> 32;
+    v9 = bsig * (unsigned __int64)asig >> 32;
     v11 = __CFSHL__(v9, 1);
     if ( !__CFSHL__(v9, 1) )
       v9 *= 2;
@@ -10794,7 +10610,7 @@ LABEL_8:
     {
       v26 = __CFADD__(v24, 0x1000000);
       v27 = v24 == -16777216;
-      if ( v24 <= 0xFF000000 )
+      if ( (unsigned int)v24 <= 0xFF000000 )
       {
         v26 = __CFADD__(v25, 0x1000000);
         v27 = v25 == -16777216;
@@ -10815,7 +10631,7 @@ LABEL_30:
 void __cdecl check_on_batt_and_internal_temp()
 {
   ++cobait_timer;
-  if ( cobait_timer >= 2 )
+  if ( (signed int)(unsigned __int8)cobait_timer >= 2 )
     cobait_timer = 0;
   if ( cobait_timer )
   {
@@ -10837,32 +10653,31 @@ void read_batt_level()
 
   curr_adc_val_for_batt_level_and_internal_temp = prob_read_adc1_ch(1);
   powerdown_adc1();
-  v0 = curr_adc_val_for_batt_level_and_internal_temp;
-  if ( curr_adc_val_for_batt_level_and_internal_temp < 1020 )
+  v0 = (unsigned __int16)curr_adc_val_for_batt_level_and_internal_temp;
+  if ( (signed int)(unsigned __int16)curr_adc_val_for_batt_level_and_internal_temp < 1020 )
     v0 = 1020;
-  if ( curr_adc_val_for_batt_level_and_internal_temp > 3120 )
+  if ( (signed int)(unsigned __int16)curr_adc_val_for_batt_level_and_internal_temp > 3120 )
     v0 = 3120;
   v1 = batt_level_adjust(v0);
   curr_batt_charge = batt_level_avg(v1) / 10;
-  bat_is_low = curr_batt_charge < 41;
+  bat_is_low = (signed int)(unsigned __int16)curr_batt_charge < 41;
   if ( curr_sub_mode == SM_BATTERY )
     need_to_update_subscr = 1;
-  if ( bat_is_low == batt_is_low_icon )
+  if ( (unsigned __int8)bat_is_low == (unsigned __int8)batt_is_low_icon )
   {
     batt_really_is_low_timer = 0;
   }
   else
   {
     ++batt_really_is_low_timer;
-    if ( batt_really_is_low_timer >= 11 )
+    if ( (signed int)batt_really_is_low_timer >= 11 )
     {
       batt_is_low_icon = bat_is_low;
       batt_really_is_low_timer = 0;
-      scr_update_low_batt(1);
+      scr_update_low_batt_icon(1);
     }
   }
 }
-// 20003A4E: using guessed type __int16 batt_really_is_low_timer;
 // 20003A6E: using guessed type __int16 curr_batt_charge;
 // 20003A84: using guessed type __int16 curr_adc_val_for_batt_level_and_internal_temp;
 // 20003A9B: using guessed type char bat_is_low;
@@ -10881,23 +10696,25 @@ unsigned int __fastcall batt_level_avg(int a1)
   v1 = 0;
   if ( batt_level_avg_count == 20 )
   {
-    for ( i = 1; i < batt_level_avg_count; ++i )
-      batt_level_avg_buf[batt_level_avg_count - i] = batt_level_avg_buf[batt_level_avg_count - 1 - i];
+    for ( i = 1; i < (unsigned __int16)batt_level_avg_count; ++i )
+      batt_level_avg_buf[(unsigned __int16)batt_level_avg_count - i] = batt_level_avg_buf[(unsigned __int16)batt_level_avg_count
+                                                                                        - 1
+                                                                                        - i];
     batt_level_avg_buf[0] = a1;
     batt_level_avg_sort_buf();
-    for ( j = 5; j < batt_level_avg_count - 5; ++j )
+    for ( j = 5; j < (unsigned int)(unsigned __int16)batt_level_avg_count - 5; ++j )
       v1 += batt_level_avg_buf_sorted[j];
-    v4 = v1 / (batt_level_avg_count - 10);
+    v4 = v1 / ((unsigned int)(unsigned __int16)batt_level_avg_count - 10);
   }
   else
   {
-    batt_level_avg_buf[batt_level_avg_count] = a1;
-    for ( k = 0; batt_level_avg_count >= k; ++k )
+    batt_level_avg_buf[(unsigned __int16)batt_level_avg_count] = a1;
+    for ( k = 0; (unsigned __int16)batt_level_avg_count >= k; ++k )
       v1 += batt_level_avg_buf[k];
-    v4 = v1 / (batt_level_avg_count + 1);
+    v4 = v1 / ((unsigned int)(unsigned __int16)batt_level_avg_count + 1);
   }
   ++batt_level_avg_count;
-  if ( batt_level_avg_count >= 21 )
+  if ( (signed int)(unsigned __int16)batt_level_avg_count >= 21 )
     batt_level_avg_count = 20;
   return v4;
 }
@@ -10915,12 +10732,12 @@ void batt_level_avg_sort_buf()
   int tmp[20]; // [sp+0h] [bp-58h]@11
 
   maxi = 0;
-  for ( i = 0; i < 20; ++i )
+  for ( i = 0; (signed int)i < 20; ++i )
     batt_level_avg_buf_sorted[i] = batt_level_avg_buf[i];
-  for ( j = 0; j < 20; ++j )
+  for ( j = 0; (signed int)j < 20; ++j )
   {
     max = 0;
-    for ( k = 0; k < 20; ++k )
+    for ( k = 0; (signed int)k < 20; ++k )
     {
       if ( batt_level_avg_buf_sorted[k] >= max )
       {
@@ -10931,7 +10748,7 @@ void batt_level_avg_sort_buf()
     batt_level_avg_buf_sorted[maxi] = 0;
     tmp[j] = max;
   }
-  for ( l = 0; l < 20; ++l )
+  for ( l = 0; (signed int)l < 20; ++l )
     batt_level_avg_buf_sorted[l] = tmp[l];
 }
 
@@ -10965,18 +10782,18 @@ int __fastcall prob_read_adc1_ch(char a1)
   char v1; // r4@1
 
   v1 = a1;
-  en_apb2_periph(512, 1);
+  set_APB2_periph_clock(512, 1);
   enable_adc(&ADC1_BASE, 1);
   while ( !and_bool_low16(&ADC1_BASE, 0x40u) )
     ;
   if ( v1 == 1 )
-    sub_801C894(&ADC1_BASE, 5u, 1u, 7u);
+    sub_801C894((int)&ADC1_BASE, 5u, 1u, 7u);
   else
-    sub_801C894(&ADC1_BASE, 4u, 1u, 7u);
-  sub_801CA52(&ADC1_BASE);
+    sub_801C894((int)&ADC1_BASE, 4u, 1u, 7u);
+  sub_801CA52((int)&ADC1_BASE);
   while ( !and_bool_low16(&ADC1_BASE, 2u) )
     ;
-  return sub_801CA5C(&ADC1_BASE);
+  return sub_801CA5C((int)&ADC1_BASE);
 }
 // 40012400: using guessed type ADC_REGS ADC1_BASE;
 
@@ -10985,7 +10802,7 @@ void __cdecl prob_read_internal_temp()
 {
   curr_adc_val_for_batt_level_and_internal_temp = prob_read_adc1_ch(0);
   powerdown_adc1();
-  if ( curr_adc_val_for_batt_level_and_internal_temp < 0x8000 )
+  if ( (signed int)(unsigned __int16)curr_adc_val_for_batt_level_and_internal_temp < 0x8000 )
   {
     calc_internal_temp(curr_adc_val_for_batt_level_and_internal_temp);
     if ( curr_sub_mode == SM_TEMP )
@@ -11009,37 +10826,35 @@ void __fastcall calc_internal_temp(__int16 adc)
   v1 = 0;
   v2 = 0;
   curr_internal_temp_adc = adc;
-  if ( adc >= 51 )
+  if ( (signed int)(unsigned __int16)adc >= 51 )
   {
     curr_internal_temp_invalid_timer = 0;
     curr_internal_temp_invalid = 0;
     if ( curr_internal_temp_avg_count == 10 )
     {
-      for ( i = 1; i < curr_internal_temp_avg_count; ++i )
-        curr_internal_temp_avg_buf[curr_internal_temp_avg_count - i] = curr_internal_temp_avg_buf[curr_internal_temp_avg_count
-                                                                                                - 1
-                                                                                                - i];
+      for ( i = 1; i < (unsigned __int16)curr_internal_temp_avg_count; ++i )
+        curr_internal_temp_avg_buf[(unsigned __int16)curr_internal_temp_avg_count - i] = curr_internal_temp_avg_buf[(unsigned __int16)curr_internal_temp_avg_count - 1 - i];
       curr_internal_temp_avg_buf[0] = curr_internal_temp_adc;
-      for ( j = 0; j < curr_internal_temp_avg_count; ++j )
-        v2 += curr_internal_temp_avg_buf[j];
-      curr_internal_temp_avg = v2 / curr_internal_temp_avg_count;
+      for ( j = 0; j < (unsigned __int16)curr_internal_temp_avg_count; ++j )
+        v2 += (unsigned __int16)curr_internal_temp_avg_buf[j];
+      curr_internal_temp_avg = v2 / (unsigned __int16)curr_internal_temp_avg_count;
     }
     else
     {
-      curr_internal_temp_avg_buf[curr_internal_temp_avg_count] = curr_internal_temp_adc;
-      for ( k = 0; curr_internal_temp_avg_count >= k; ++k )
-        v2 += curr_internal_temp_avg_buf[k];
-      curr_internal_temp_avg = v2 / (curr_internal_temp_avg_count + 1);
+      curr_internal_temp_avg_buf[(unsigned __int16)curr_internal_temp_avg_count] = curr_internal_temp_adc;
+      for ( k = 0; (unsigned __int16)curr_internal_temp_avg_count >= k; ++k )
+        v2 += (unsigned __int16)curr_internal_temp_avg_buf[k];
+      curr_internal_temp_avg = v2 / ((unsigned __int16)curr_internal_temp_avg_count + 1);
     }
     ++curr_internal_temp_avg_count;
-    if ( curr_internal_temp_avg_count >= 11 )
+    if ( (signed int)(unsigned __int16)curr_internal_temp_avg_count >= 11 )
       curr_internal_temp_avg_count = 10;
   }
   else
   {
     curr_internal_temp_avg_count = 0;
     ++curr_internal_temp_invalid_timer;
-    if ( curr_internal_temp_invalid_timer >= 11 )
+    if ( (signed int)(unsigned __int16)curr_internal_temp_invalid_timer >= 11 )
     {
       curr_internal_temp_invalid_timer = 10;
       curr_internal_temp_invalid = 1;
@@ -11054,13 +10869,13 @@ void __fastcall calc_internal_temp(__int16 adc)
       calibrating_thermistor_23c = 0;
       cal_switch_to_temp_on_subscr_delay = 3;
       cal_internal_thermistor_factor = 2300 - curr_internal_temperature;
-      cal_write_factor(0xC8, (2300 - curr_internal_temperature));
+      cal_write_factor(0xC8, (signed __int16)(2300 - curr_internal_temperature));
     }
     curr_internal_temperature += cal_internal_thermistor_factor;
     if ( curr_internal_temp_calc_invalid )
     {
       ++curr_internal_temp_calc_invalid_timer;
-      if ( curr_internal_temp_calc_invalid_timer >= 11 )
+      if ( (signed int)(unsigned __int8)curr_internal_temp_calc_invalid_timer >= 11 )
       {
         curr_internal_temp_calc_invalid_timer = 10;
         curr_internal_temp_invalid = 1;
@@ -11079,7 +10894,7 @@ void __fastcall calc_internal_temp(__int16 adc)
         v6 = 0;
         v7 = curr_internal_temperature;
       }
-      temp_load_offset(v6, v7 / 10);
+      temp_load_offset((unsigned __int8)v6, v7 / 10);
     }
   }
   if ( curr_internal_temp_invalid == 1 )
@@ -11115,7 +10930,7 @@ int __fastcall calc_internal_temp_core(unsigned __int16 a1)
 
   v1 = 1;
   there_was_a_temp_error = 0;
-  if ( a1 < 518 || a1 >= 3673 )
+  if ( (signed int)a1 < 518 || (signed int)a1 >= 3673 )
   {
     v6 = 0;
     curr_internal_temp_calc_invalid = 1;
@@ -11125,7 +10940,7 @@ int __fastcall calc_internal_temp_core(unsigned __int16 a1)
     v2 = 0;
     while ( v1 )
     {
-      if ( a1 >= internal_temp_offset_factor_tbl[v2] )
+      if ( a1 >= (unsigned int)internal_temp_offset_factor_tbl[v2] )
         v1 = 0;
       else
         ++v2;
@@ -11255,24 +11070,26 @@ void __fastcall temp_load_offset(int temp_is_negative, signed int a2)
   int v2; // r2@4
   int v3; // r3@4
 
-  if ( (!temp_is_negative || a2 < 201) && a2 <= 1000 )
+  if ( (!(_BYTE)temp_is_negative || a2 < 201) && a2 <= 1000 )
   {
     v2 = a2 / 100;
     v3 = a2 % 100;
-    if ( temp_is_negative )
-      temp_offset = temp_range_offset_factor_tbl[(21 - v2)]
+    if ( (_BYTE)temp_is_negative )
+      temp_offset = temp_range_offset_factor_tbl[(unsigned __int8)(21 - v2)]
                   - v3
                   * (10
-                   * (~temp_range_offset_factor_tbl[(21 - v2) - 1] - ~temp_range_offset_factor_tbl[(21 - v2)])
+                   * (~temp_range_offset_factor_tbl[(unsigned __int8)(21 - v2) - 1]
+                    - ~temp_range_offset_factor_tbl[(unsigned __int8)(21 - v2)])
                    / 100)
                   / 10;
     else
       temp_offset = v3
                   * (10
-                   * (temp_range_offset_factor_tbl[(v2 + 21) + 1] - temp_range_offset_factor_tbl[(v2 + 21)])
+                   * (temp_range_offset_factor_tbl[(unsigned __int8)(v2 + 21) + 1]
+                    - temp_range_offset_factor_tbl[(unsigned __int8)(v2 + 21)])
                    / 100)
                   / 10
-                  + temp_range_offset_factor_tbl[(v2 + 21)];
+                  + temp_range_offset_factor_tbl[(unsigned __int8)(v2 + 21)];
   }
 }
 // 2000395C: using guessed type int temp_offset;
@@ -11288,7 +11105,7 @@ void init_adc_and_stuff()
   char v5; // [sp+14h] [bp-Ch]@1
 
   reset_adc(&ADC1_BASE);
-  *chan = 0;
+  *(_DWORD *)chan = 0;
   v1 = 0;
   v2 = 0;
   v3 = 0;
@@ -11302,66 +11119,55 @@ void init_adc_and_stuff()
 // 40012400: using guessed type ADC_REGS ADC1_BASE;
 
 //----- (08010FCC) --------------------------------------------------------
-int __fastcall sub_8010FCC(int a1)
+void __fastcall lcd_set_fcr_and_cr(int a1)
 {
   int v1; // r4@1
-  int v2; // r2@1
-  int result; // r0@1
 
   v1 = a1;
   LCD_FCR &= 0xFC03FFFF;
-  LCD_FCR |= *a1 | *(a1 + 4);
-  sub_801101A();
+  LCD_FCR |= *(_DWORD *)a1 | *(_DWORD *)(a1 + 4);
+  lcd_wait_for_FCR_sync();
   LCD_CR &= 0xFFFFFF81;
-  v2 = *(v1 + 16);
-  result = LCD_CR | *(v1 + 8) | *(v1 + 12) | v2;
-  LCD_CR |= *(v1 + 8) | *(v1 + 12) | v2;
-  return result;
+  LCD_CR |= *(_DWORD *)(v1 + 8) | *(_DWORD *)(v1 + 12) | *(_DWORD *)(v1 + 16);
 }
 // 40002400: using guessed type int LCD_CR;
 // 40002404: using guessed type int LCD_FCR;
 
 //----- (08011012) --------------------------------------------------------
-int __fastcall sub_8011012(int result)
+void __fastcall lcd_set_enable(unsigned __int8 result)
 {
-  result = result;
   v42048000 = result;
-  return result;
 }
 
 //----- (0801101A) --------------------------------------------------------
-int sub_801101A()
+void __fastcall lcd_wait_for_FCR_sync()
 {
-  int result; // r0@1
+  int v0; // r0@1
 
-  result = 0;
+  v0 = 0;
   do
-    ++result;
-  while ( result != 0x8000 && !(LCD_SR & 0x20) );
-  return result;
+    ++v0;
+  while ( v0 != 0x8000 && !(LCD_SR & 0x20) );
 }
 // 40002408: using guessed type int LCD_SR;
 
 //----- (08011036) --------------------------------------------------------
-int __fastcall sub_8011036(int result)
+void __fastcall lcd_set_segment_multiplexing(unsigned __int8 result)
 {
-  result = result;
   v4204801C = result;
-  return result;
 }
 
 //----- (0801103E) --------------------------------------------------------
-int __fastcall sub_801103E(int result)
+void __fastcall lcd_set_pulse_on_duration(int result)
 {
   LCD_FCR &= 0xFFFFFF8F;
   LCD_FCR |= result;
-  return result;
 }
 // 40002400: using guessed type int LCD_CR;
 // 40002404: using guessed type int LCD_FCR;
 
 //----- (08011056) --------------------------------------------------------
-void __fastcall sub_8011056(int result)
+void __fastcall lcd_set_dead_time(int result)
 {
   LCD_FCR &= 0xFFFFFC7F;
   LCD_FCR |= result;
@@ -11370,17 +11176,16 @@ void __fastcall sub_8011056(int result)
 // 40002404: using guessed type int LCD_FCR;
 
 //----- (0801106E) --------------------------------------------------------
-int __fastcall sub_801106E(int result, int a2)
+void __fastcall lcd_set_blink(int result, int a2)
 {
   LCD_FCR &= 0xFFFC1FFF;
   LCD_FCR |= a2 | result;
-  return result;
 }
 // 40002400: using guessed type int LCD_CR;
 // 40002404: using guessed type int LCD_FCR;
 
 //----- (0801108A) --------------------------------------------------------
-void __fastcall set_lcd_contrast_reg(int contrast)
+void __fastcall lcd_set_contrast_reg(int contrast)
 {
   LCD_FCR &= 0xFFFFE3FF;
   LCD_FCR |= contrast;
@@ -11402,7 +11207,7 @@ bool __fastcall read_lcd_sr(int mask)
 // 40002408: using guessed type int LCD_SR;
 
 //----- (080110DC) --------------------------------------------------------
-void sub_80110DC()
+void apo_config_rcc()
 {
   RCC_CR |= 0x100u;
   RCC_CFGR &= 0x88FFC00C;
@@ -11429,26 +11234,24 @@ bool wait_for_hse_ready()
   v2 = 0;
   do
   {
-    v0 = read_rcc_cr_or_csr_bit(0x31u);
+    v0 = read_clock_ready_bit(0x31u);
     ++v2;
   }
   while ( v2 != 20480 && !v0 );
-  return read_rcc_cr_or_csr_bit(0x31u) != 0;
+  return read_clock_ready_bit(0x31u) != 0;
 }
 
 //----- (0801118A) --------------------------------------------------------
-void __fastcall set_clock_calibration(int mask)
+void __fastcall set_MSI_range(int mask)
 {
   RCC_ICSCR = RCC_ICSCR & 0xFFFF1FFF | mask;
 }
 // 40023804: using guessed type int RCC_ICSCR;
 
 //----- (080111A2) --------------------------------------------------------
-int __fastcall sub_80111A2(int result)
+void __fastcall set_HSI_ON(int result)
 {
-  result = result;
-  v42470000 = result;
-  return result;
+  v42470000 = (unsigned __int8)result;
 }
 
 //----- (080111AC) --------------------------------------------------------
@@ -11459,26 +11262,24 @@ void __fastcall set_lse_bits(char result)
 // 40023834: using guessed type int RCC_CSR;
 
 //----- (080111BC) --------------------------------------------------------
-int __fastcall sub_80111BC(int result)
+void __fastcall set_RCC_LSION(unsigned __int8 result)
 {
-  result = result;
   v42470680 = result;
-  return result;
 }
 
 //----- (080111C6) --------------------------------------------------------
-void __fastcall set_system_clock_switch(int result)
+void __fastcall set_system_clock_source(int result)
 {
-  RCC_CFGR = 4 * (RCC_CFGR >> 2) | result;
+  RCC_CFGR = 4 * ((unsigned int)RCC_CFGR >> 2) | result;
 }
 // 40023808: using guessed type int RCC_CFGR;
 
 //----- (080111DE) --------------------------------------------------------
-int sub_80111DE()
+int read_RCC_curr_clock_source()
 {
   return RCC_CFGR & 0xC;
 }
-// 80111DE: using guessed type int sub_80111DE(void);
+// 80111DE: using guessed type int read_RCC_curr_clock_source(void);
 // 40023808: using guessed type int RCC_CFGR;
 
 //----- (080111EA) --------------------------------------------------------
@@ -11508,13 +11309,13 @@ void __fastcall get_sys_clock_info(_DWORD *info)
           *info = 16000000 * v2 / v3;
         break;
       default:
-        *info = 1 << ((RCC_ICSCR >> 13) + 1) << 15;
+        *info = 1 << (((unsigned __int16)RCC_ICSCR >> 13) + 1) << 15;
         break;
     }
   }
   else
   {
-    *info = 1 << ((RCC_ICSCR >> 13) + 1) << 15;
+    *info = 1 << (((unsigned __int16)RCC_ICSCR >> 13) + 1) << 15;
   }
   info[1] = *info >> AHB_APB_PrescTable[(RCC_CFGR & 0xF0u) >> 4];
   info[2] = info[1] >> AHB_APB_PrescTable[(RCC_CFGR & 0x700u) >> 8];
@@ -11524,30 +11325,29 @@ void __fastcall get_sys_clock_info(_DWORD *info)
 // 40023808: using guessed type int RCC_CFGR;
 
 //----- (080112F4) --------------------------------------------------------
-int __fastcall sub_80112F4(int result)
+void __fastcall set_internal_rtc_and_lcd_clocksource(int result)
 {
-  if ( (result & 0x30000) == 196608 )
+  if ( (result & 0x30000) == 0x30000 )
     RCC_CR = RCC_CR & 0x9FFFFFFF | result & 0x60000000;
   RCC_CSR &= 0xFFFCFFFF;
   RCC_CSR |= result & 0x30000;
-  return result;
 }
 // 40023834: using guessed type int RCC_CSR;
 
 //----- (08011330) --------------------------------------------------------
-void __fastcall set_RCC_CSR_RTCEN(int val)
+void __fastcall set_RCC_CSR_RTCEN(unsigned __int8 val)
 {
   v424706D8 = val;
 }
 
 //----- (08011338) --------------------------------------------------------
-void __fastcall set_RCC_CSR_RTCRST(int val)
+void __fastcall set_RCC_CSR_RTCRST(unsigned __int8 val)
 {
   v424706DC = val;
 }
 
 //----- (08011340) --------------------------------------------------------
-void __fastcall en_ahb_periph(int mask, char enable)
+void __fastcall set_AHB_periph_clk(int mask, char enable)
 {
   if ( enable )
     RCC_AHBENR |= mask;
@@ -11557,7 +11357,7 @@ void __fastcall en_ahb_periph(int mask, char enable)
 // 4002381C: using guessed type int RCC_AHBENR;
 
 //----- (0801135E) --------------------------------------------------------
-void __fastcall en_apb2_periph(int mask, char enable)
+void __fastcall set_APB2_periph_clock(int mask, char enable)
 {
   if ( enable )
     RCC_APB2ENR |= mask;
@@ -11568,7 +11368,7 @@ void __fastcall en_apb2_periph(int mask, char enable)
 // 40023820: using guessed type int RCC_APB2ENR;
 
 //----- (0801137C) --------------------------------------------------------
-void __fastcall set_apb1_periph(int mask, char enable)
+void __fastcall set_APB1_periph_clock(int mask, char enable)
 {
   if ( enable )
     RCC_APB1ENR |= mask;
@@ -11589,7 +11389,7 @@ void __fastcall reset_apb2_periph(int mask, char reset)
 // 40023814: using guessed type int RCC_APB2RSTR;
 
 //----- (080113B8) --------------------------------------------------------
-bool __fastcall read_rcc_cr_or_csr_bit(unsigned __int8 a1)
+bool __fastcall read_clock_ready_bit(unsigned __int8 a1)
 {
   unsigned int v1; // r3@2
 
@@ -11604,7 +11404,7 @@ bool __fastcall read_rcc_cr_or_csr_bit(unsigned __int8 a1)
 //----- (08011450) --------------------------------------------------------
 void __fastcall sub_8011450(int result)
 {
-  *(4 * (result >> 5) - 0x1FFF1F00) = 1 << (result & 0x1F);
+  *(_DWORD *)(4 * ((unsigned int)(char)result >> 5) - 0x1FFF1F00) = 1 << (result & 0x1F);
 }
 
 //----- (0801146A) --------------------------------------------------------
@@ -11612,7 +11412,7 @@ void config_clock_interrupts_and_gpio()
 {
   if ( test_pwr_csr_bits(1) )                   // came from standby?
   {
-    set_apb1_periph(0x10000000, 1);             // enable pwr
+    set_APB1_periph_clock(0x10000000, 1);       // enable PWR
     set_pwr_cr_bits_offset(2);                  // then reset standby flag
     came_from_standby = 1;
   }
@@ -11633,10 +11433,10 @@ void config_clock_interrupts_and_gpio()
   while ( test_pwr_csr_bits(0x10) )             // wait for change to be complete
     ;
   set_clocks_and_power_periphs(0);
-  more_internal_stuff();
+  enable_internal_rtc_and_lcd_clk();
   sub_801CE7C(7, 1);
-  some_manner_of_gpio_config();
-  config_gpioa_and_f();
+  gpio_config_meter_hardware();
+  gpio_config_analog_inputs();
   init_adc_and_stuff();
   probably_something_with_interrupts();
   config_TIM2();
@@ -11654,59 +11454,53 @@ void __fastcall set_clocks_and_power_periphs(char use_hse)
     set_hse_bits(1);
     if ( wait_for_hse_ready() == 1 )
     {
-      set_system_clock_switch(2);               // switch to HSE
-      sub_80111A2(0);
+      set_system_clock_source(2);               // switch to HSE
+      set_HSI_ON(0);
     }
   }
   else                                          // use MSI instead
   {
-    sub_80111A2(1);
-    while ( !read_rcc_cr_or_csr_bit(0x21u) )
+    set_HSI_ON(1);
+    while ( !read_clock_ready_bit(0x21u) )
       ;
-    set_system_clock_switch(0);
-    set_clock_calibration(0xC000);
+    set_system_clock_source(0);
+    set_MSI_range(0xC000);
     set_lse_bits(0);
     set_hse_bits(0);
-    if ( read_rcc_cr_or_csr_bit(0x31u) )
+    if ( read_clock_ready_bit(0x31u) )
     {
       while ( 1 )
         ;
     }
   }
   power_all_gpio_banks();
-  set_apb1_periph(0x10000200, 1);               // enable power and lcd
-  en_apb2_periph(0x201, 1);                     // enable adc and syscfg
+  set_APB1_periph_clock(0x10000200, 1);         // enable power and lcd
+  set_APB2_periph_clock(0x201, 1);              // enable adc and syscfg
 }
 
 //----- (08011586) --------------------------------------------------------
-int more_internal_stuff()
+void __fastcall enable_internal_rtc_and_lcd_clk()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
-  sub_801CDD0(1);
-  set_RCC_CSR_RTCRST(1);
+  set_rtc_rcc_csr_access(1u);
+  set_RCC_CSR_RTCRST(1u);
   set_RCC_CSR_RTCRST(0);
-  sub_80111BC(1);
-  while ( !read_rcc_cr_or_csr_bit(0x41u) )
+  set_RCC_LSION(1u);
+  while ( !read_clock_ready_bit(0x41u) )        // wait for LSI to be ready
     ;
-  set_RCC_CSR_RTCEN(1);
-  sub_80112F4(0x20000);
-  return v1;
+  set_RCC_CSR_RTCEN(1u);
+  set_internal_rtc_and_lcd_clocksource(0x20000);// to LSI
 }
 
 //----- (080115BA) --------------------------------------------------------
 void power_all_gpio_banks()
 {
-  en_ahb_periph(0xFF, 1);
+  set_AHB_periph_clk(0xFF, 1);
 }
 
 //----- (080115C6) --------------------------------------------------------
-int sub_80115C6()
+void __fastcall power_off_all_gpio_banks()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
-  en_ahb_periph(255, 0);
-  return v1;
+  set_AHB_periph_clk(255, 0);
 }
 
 //----- (080115D2) --------------------------------------------------------
@@ -11722,108 +11516,138 @@ void probably_something_with_interrupts()
   v1 = 0;
   v2 = 0;
   v3 = 1;
-  sub_801CEAA(&v0);
+  sub_801CEAA((int)&v0);
   v0 = 53;
   v1 = 0;
-  sub_801CEAA(&v0);
+  sub_801CEAA((int)&v0);
   v0 = 28;
   v1 = 2;
   v2 = 2;
   v3 = 1;
-  sub_801CEAA(&v0);
+  sub_801CEAA((int)&v0);
   v0 = 29;
   v1 = 1;
   v2 = 1;
   v3 = 1;
-  sub_801CEAA(&v0);
+  sub_801CEAA((int)&v0);
 }
 
 //----- (0801164A) --------------------------------------------------------
-GPIO_CONFIG some_manner_of_gpio_config()
+void __fastcall gpio_config_meter_hardware()
 {
-  int v0; // r1@1
-  __int64 v1; // r2@1
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
   power_all_gpio_banks();
-  sub_80118AE(0, v0, v1);
-  sub_8011950();
-  cfg.pins = 131;
+  gpio_config_switch_button_inputs(0);
+  gpio_config_jack_detector_inputs();
+  // configure PD0 (CTL_A), PD1 (PWR_CTL2), PD7 (DCmV_CTL)
+  // * output, push-pull
+  // * no pull up/down
+  // * medium speed
+  cfg.pins = 0x83;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOD, &cfg);
-  LOWORD(GPIOD.BSRR) = 128;
-  cfg.pins = 45984;
+  gpio_config_pin(&GPIOD, &cfg);
+  LOWORD(GPIOD.BSRR) = 128;                     // PD7 on at poweron
+  // configure PE5 (A_CTL), PE7 (BUZZER), PE8 (BL_OUT),
+  // PE9 (PWR_CTL), PE12 (SHDN_A), PE13 (N/C), PE15 (LED_CK)
+  // * output, push-pull
+  // * no pull up/down
+  // * medium speed
+  cfg.pins = 0xB3A0;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOE, &cfg);
-  GPIOE.BSRR = 2097664;
+  gpio_config_pin(&GPIOE, &cfg);
+  GPIOE.BSRR = 0x200200;                        // PE9 on at poweron
+  // configure PF2 (HY_DI) to medium speed output
   cfg.pins = 4;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOF, &cfg);
+  gpio_config_pin(&GPIOF, &cfg);
+  // configure PF0 (HY_CK) to medium speed output
   cfg.pins = 1;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOF, &cfg);
+  gpio_config_pin(&GPIOF, &cfg);
+  // configure PF1 (HY_CS) to medium speed output
   cfg.pins = 2;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOF, &cfg);
+  gpio_config_pin(&GPIOF, &cfg);
+  // configure PF3 (HY_DO) to input with pull-up
   cfg.pins = 8;
   cfg.mode = 0;
   cfg.pull = 1;
   cfg.speed = 3;
-  config_pins(&GPIOF, &cfg);
-  GPIOF.BSRR = 65540;
-  cfg.pins = 192;
+  gpio_config_pin(&GPIOF, &cfg);
+  GPIOF.BSRR = 0x10004;                         // PF2 on at poweron
+  // configure PB6 (EE_CLK) and PB7 (EE_DO)
+  // * output, push/pull
+  // * no pull up/down
+  // * medium speed
+  cfg.pins = 0xC0;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOB, &cfg);
-  HIWORD(GPIOB.BSRR) = 128;
-  cfg.pins = 10240;
+  gpio_config_pin(&GPIOB, &cfg);
+  HIWORD(GPIOB.BSRR) = 128;                     // PB7 on at poweron
+  // configure PC11 (CTL_B) and PC13 (RTC_CE)
+  // * output, push/pull
+  // * no pull up/down
+  // * medium speed
+  cfg.pins = 0x2800;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOC, &cfg);
-  HIWORD(GPIOC.BSRR) = 0x2000;
-  cfg.pins = 112;
+  gpio_config_pin(&GPIOC, &cfg);
+  HIWORD(GPIOC.BSRR) = 0x2000;                  // PC13 on at poweron
+  // configure PF4 (CTL_D), PF5 (CTL_E), and PF6 (ENB)
+  // * output, push/pull
+  // * no pull up/down
+  // * medium speed
+  cfg.pins = 0x70;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOF, &cfg);
+  gpio_config_pin(&GPIOF, &cfg);
+  // configure PH2 (TEMP_CTL)
+  // * output, push/pull
+  // * no pull up/down
+  // * medium speed
   cfg.pins = 4;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOH, &cfg);
-  cfg.pins = 6144;
+  gpio_config_pin(&GPIOH, &cfg);
+  // configure PA11 (VA_CTL) and PA12 (FRE_CTL)
+  // * output, push/pull
+  // * no pull up/down
+  // * medium speed
+  cfg.pins = 0x1800;
   cfg.mode = 1;
   cfg.out_type = 0;
   cfg.pull = 0;
   cfg.speed = 1;
-  config_pins(&GPIOA, &cfg);
-  GPIOA.BSRR = 134221824;
-  HIWORD(GPIOE.BSRR) = -32768;
-  HIWORD(GPIOF.BSRR) = 64;
+  gpio_config_pin(&GPIOA, &cfg);
+  GPIOA.BSRR = 0x8001000;                       // PA12 on at poweron
+  HIWORD(GPIOE.BSRR) = 0x8000u;
+  HIWORD(GPIOF.BSRR) = 0x40;
   HIWORD(GPIOH.BSRR) = 4;
-  gpio_party_mode_related(MM_SUB_TEMPC);
-  return cfg;
+  meas_hw_set_ac_rms_filter_ctl(MM_SUB_TEMPC);
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 // 40020800: using guessed type GPIO_REGS GPIOC;
@@ -11833,39 +11657,41 @@ GPIO_CONFIG some_manner_of_gpio_config()
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (080118AE) --------------------------------------------------------
-GPIO_CONFIG __fastcall sub_80118AE(int a1, int a2, __int64 a3)
+void __fastcall gpio_config_switch_button_inputs(unsigned __int8 except_this_range_switch_input)
 {
-  GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
-
-  cfg = a3;
-  a1 = a1;
-  if ( a1 )
+  GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@11
+                                                // configure the range switch and button inputs on port G
+                                                // * input
+                                                // * pull-up
+                                                // * max drive speed
+  *(_DWORD *)&except_this_range_switch_input = except_this_range_switch_input;
+  if ( except_this_range_switch_input )
   {
-    switch ( a1 )
+    switch ( except_this_range_switch_input )
     {
-      case 1:
-        cfg.pins = 127;
+      case 1u:
+        cfg.pins = 0x7F;
         break;
-      case 2:
-        cfg.pins = 191;
+      case 2u:
+        cfg.pins = 0xBF;
         break;
-      case 4:
-        cfg.pins = 223;
+      case 4u:
+        cfg.pins = 0xDF;
         break;
-      case 8:
-        cfg.pins = 239;
+      case 8u:
+        cfg.pins = 0xEF;
         break;
-      case 16:
-        cfg.pins = 247;
+      case 0x10u:
+        cfg.pins = 0xF7;
         break;
-      case 32:
-        cfg.pins = 251;
+      case 0x20u:
+        cfg.pins = 0xFB;
         break;
-      case 64:
-        cfg.pins = 253;
+      case 0x40u:
+        cfg.pins = 0xFD;
         break;
-      case 128:
-        cfg.pins = 254;
+      case 0x80u:
+        cfg.pins = 0xFE;
         break;
     }
   }
@@ -11876,32 +11702,34 @@ GPIO_CONFIG __fastcall sub_80118AE(int a1, int a2, __int64 a3)
   cfg.mode = 0;
   cfg.pull = 1;
   cfg.speed = 3;
-  config_pins(&GPIOG, &cfg);
-  cfg.pins = 65280;
+  gpio_config_pin(&GPIOG, &cfg);
+  cfg.pins = 0xFF00;
   cfg.mode = 0;
   cfg.pull = 1;
   cfg.speed = 3;
-  config_pins(&GPIOG, &cfg);
-  return cfg;
+  gpio_config_pin(&GPIOG, &cfg);
 }
 // 40021C00: using guessed type GPIO_REGS GPIOG;
 
 //----- (08011950) --------------------------------------------------------
-GPIO_CONFIG sub_8011950()
+void __fastcall gpio_config_jack_detector_inputs()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
-  cfg.pins = 3072;
+  // PE10 and PE11
+  // * input
+  // * no pull
+  // * max drive speed
+  cfg.pins = 0xC00;
   cfg.mode = 0;
   cfg.pull = 0;
   cfg.speed = 3;
-  config_pins(&GPIOE, &cfg);
-  return cfg;
+  gpio_config_pin(&GPIOE, &cfg);
 }
 // 40021000: using guessed type GPIO_REGS GPIOE;
 
 //----- (08011978) --------------------------------------------------------
-void __cdecl init_usart2()
+void __cdecl bt_powerup()
 {
   GPIO_CONFIG gpio_cfg; // [sp+0h] [bp-20h]@1
   char v1; // [sp+4h] [bp-1Ch]@1
@@ -11920,25 +11748,25 @@ void __cdecl init_usart2()
   v3 = 0;
   v4 = 0;
   v2 = 3;
-  config_pins(&GPIOF, &gpio_cfg);
+  gpio_config_pin(&GPIOF, &gpio_cfg);
   LOWORD(GPIOF.BSRR) = 0x8000u;
-  en_ahb_periph(8, 1);
+  set_AHB_periph_clk(8, 1);
   gpio_cfg.pins = 96;
   v1 = 2;
   v2 = 3;
   v3 = 0;
   v4 = 1;
-  config_pins(&GPIOD, &gpio_cfg);
+  gpio_config_pin(&GPIOD, &gpio_cfg);
   set_gpio_pin_func(&GPIOD, 5u, 7u);
   set_gpio_pin_func(&GPIOD, 6u, 7u);
-  set_apb1_periph(0x20000, 1);
+  set_APB1_periph_clock(0x20000, 1);
   v5 = 19200;
   v6 = 0;
   v7 = 0;
   v8 = 0;
   v10 = 0;
   v9 = 12;
-  config_usart(&USART2_1, &v5);
+  config_usart(&USART2_1, (int)&v5);
   set_usart_enable(&USART2_1, 1);
   set_usart_control_bit(&USART2_1, 37u, 1);
   sub_8011450(38);
@@ -11947,37 +11775,44 @@ void __cdecl init_usart2()
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (08011A4E) --------------------------------------------------------
-void config_gpioa_and_f()
+void gpio_config_analog_inputs()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
-  cfg.pins = 48;
+  // configure PA4 and PA5
+  // * max speed
+  // * analog
+  // * no pull up/down
+  cfg.pins = 0x30;
   cfg.speed = 3;
   cfg.mode = 3;
   cfg.pull = 0;
-  config_pins(&GPIOA, &cfg);
-  cfg.pins = 26624;
+  gpio_config_pin(&GPIOA, &cfg);
+  // configure PF11 (N/C), PF13 (N/C), and PF14 (N/C)
+  // * max speed
+  // * analog
+  // * no pull up/down
+  cfg.pins = 0x6800;
   cfg.speed = 3;
   cfg.mode = 3;
   cfg.pull = 0;
-  config_pins(&GPIOF, &cfg);
+  gpio_config_pin(&GPIOF, &cfg);
 }
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (08011A96) --------------------------------------------------------
-__int64 config_TIM2()
+void __fastcall config_TIM2()
 {
   __int64 a2; // [sp+0h] [bp-10h]@1
-  __int16 v2; // [sp+8h] [bp-8h]@1
+  __int16 v1; // [sp+8h] [bp-8h]@1
 
-  set_apb1_periph(1, 1);
+  set_APB1_periph_clock(1, 1);
   a2 = 0xA000000104LL;
-  v2 = 0;
-  TIM_configure(&TIM2_0, &a2);
+  v1 = 0;
+  TIM_Base_SetConfig(&TIM2_0, (int *)&a2);
   TIM_clear_status_bits(&TIM2_0, 1);
   sub_801CFBC(0x40000000, 1, 1);
   set_timer_enable(&TIM2_0, 1);
-  return a2;
 }
 
 //----- (08011AE4) --------------------------------------------------------
@@ -11986,124 +11821,115 @@ void __fastcall config_TIM3()
   __int64 a2; // [sp+0h] [bp-10h]@1
   __int16 v1; // [sp+8h] [bp-8h]@1
 
-  set_apb1_periph(2, 1);
+  set_APB1_periph_clock(2, 1);
   a2 = 0xE00000104LL;
   v1 = 0;
-  TIM_configure(&TIM3, &a2);
+  TIM_Base_SetConfig(&TIM3, (int *)&a2);
   TIM_clear_status_bits(&TIM3, 1);
-  sub_801CFBC(&TIM3, 1, 1);
+  sub_801CFBC((int)&TIM3, 1, 1);
   set_timer_enable(&TIM3, 1);
 }
 
 //----- (08011B32) --------------------------------------------------------
-void prepare_to_apo(void)
+void apo_prepare_to_turn_off(void)
 {
-  sub_8011B94();
-  disable_timer_2_and_3();
-  sub_8011FB8();
-  sub_8011FC2();
-  sub_8011FEC();
-  sub_80110DC();
-  set_apb1_periph(0x10000000, 1);
+  apo_unset_gpios();
+  apo_disable_timers();
+  disable_PWR_voltage_detector();
+  apo_config_rcc_power_stuff();
+  apo_something_with_power();
+  apo_config_rcc();
+  set_APB1_periph_clock(0x10000000, 1);
   set_most_pwr_cr_bits(6144);
   while ( test_pwr_csr_bits(16) )
     ;
-  set_clock_calibration(0);
-  set_system_clock_switch(0);
-  while ( sub_80111DE() )
+  set_MSI_range(0);
+  set_system_clock_source(0);
+  while ( read_RCC_curr_clock_source() )
     ;
-  sub_801CFDC(0x4000, 0);
-  sub_8012024();
-  sub_801203A();
-  sub_8011C2C();
+  apo_something_with_rtc(0x4000, 0);
+  apo_disable_oscillators();
+  apo_power_off_gpio();
+  apo_something_with_rangeswitch();
 }
-// 80111DE: using guessed type int sub_80111DE(void);
-// 8011B94: using guessed type int sub_8011B94(void);
+// 80111DE: using guessed type int read_RCC_curr_clock_source(void);
 
 //----- (08011B94) --------------------------------------------------------
-int sub_8011B94()
+void apo_unset_gpios(void)
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
   HIWORD(GPIOE.BSRR) = 256;
-  sub_8011F18();
+  lcd_shutdown();
   GPIOB.BSRR = 4194432;
-  do_some_things_with_GPIOF();
-  gpio_party_mode_related(MM_SUB_TEMPC);
+  apo_sleep_HY();
+  meas_hw_set_ac_rms_filter_ctl(MM_SUB_TEMPC);
   HIWORD(GPIOA.BSRR) = 4096;
   HIWORD(GPIOH.BSRR) = 4;
   HIWORD(GPIOE.BSRR) = -32768;
   HIWORD(GPIOF.BSRR) = 64;
-  uninit_usart2();
+  bt_shutdown();
   powerdown_adc1();
   HIWORD(GPIOE.BSRR) = 512;
-  return v1;
 }
-// 8011B94: using guessed type int sub_8011B94(void);
 // 40020400: using guessed type GPIO_REGS GPIOB;
 // 40021000: using guessed type GPIO_REGS GPIOE;
 // 40021400: using guessed type GPIO_REGS GPIOH;
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (08011C2C) --------------------------------------------------------
-int sub_8011C2C()
+void __fastcall apo_something_with_rangeswitch()
 {
-  int v0; // r1@1
-  __int64 v1; // r2@1
-  __int64 v2; // r0@1
-  int v3; // r2@1
-  int v4; // r3@1
-  __int64 v5; // r0@17
-  int v6; // r2@17
-  int v7; // r3@17
-  __int64 v8; // r0@17
-  int v9; // r2@17
-  int v10; // r3@17
-  __int64 v11; // r0@17
-  int v12; // r2@17
-  int v13; // r3@17
-  __int64 v14; // r0@17
-  int v15; // r2@17
-  int v16; // r3@17
-  __int64 v17; // r0@17
-  int v18; // r2@17
-  int v19; // r3@17
-  __int64 v20; // r0@17
-  int v21; // r2@17
-  int v22; // r3@17
-  __int64 v23; // r0@17
-  int v24; // r2@17
-  int v25; // r3@17
-  int v27; // [sp+0h] [bp-8h]@0
+  __int64 v0; // r0@1
+  int v1; // r2@1
+  int v2; // r3@1
+  __int64 v3; // r0@17
+  int v4; // r2@17
+  int v5; // r3@17
+  __int64 v6; // r0@17
+  int v7; // r2@17
+  int v8; // r3@17
+  __int64 v9; // r0@17
+  int v10; // r2@17
+  int v11; // r3@17
+  __int64 v12; // r0@17
+  int v13; // r2@17
+  int v14; // r3@17
+  __int64 v15; // r0@17
+  int v16; // r2@17
+  int v17; // r3@17
+  __int64 v18; // r0@17
+  int v19; // r2@17
+  int v20; // r3@17
+  __int64 v21; // r0@17
+  int v22; // r2@17
+  int v23; // r3@17
 
-  en_ahb_periph(128, 1);
-  sub_80118AE(curr_range_switch_bits, v0, v1);
-  en_apb2_periph(1, 1);
+  set_AHB_periph_clk(128, 1);
+  gpio_config_switch_button_inputs(curr_range_switch_bits);
+  set_APB2_periph_clock(1, 1);
   if ( curr_range_switch_bits != 1 )
-    v2 = sub_8011D04(7u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(7u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 2 )
-    v2 = sub_8011D04(6u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(6u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 4 )
-    v2 = sub_8011D04(5u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(5u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 8 )
-    v2 = sub_8011D04(4u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(4u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 16 )
-    v2 = sub_8011D04(3u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(3u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 32 )
-    v2 = sub_8011D04(2u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(2u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 64 )
-    v2 = sub_8011D04(1u, SHIDWORD(v2), v3, v4);
+    v0 = sub_8011D04(1u, SHIDWORD(v0), v1, v2);
   if ( curr_range_switch_bits != 128 )
-    v2 = sub_8011D04(0, SHIDWORD(v2), v3, v4);
-  v5 = sub_8011D04(8u, SHIDWORD(v2), v3, v4);
-  v8 = sub_8011D04(9u, SHIDWORD(v5), v6, v7);
-  v11 = sub_8011D04(0xAu, SHIDWORD(v8), v9, v10);
-  v14 = sub_8011D04(0xBu, SHIDWORD(v11), v12, v13);
-  v17 = sub_8011D04(0xCu, SHIDWORD(v14), v15, v16);
-  v20 = sub_8011D04(0xDu, SHIDWORD(v17), v18, v19);
-  v23 = sub_8011D04(0xEu, SHIDWORD(v20), v21, v22);
-  sub_8011D04(0xFu, SHIDWORD(v23), v24, v25);
-  return v27;
+    v0 = sub_8011D04(0, SHIDWORD(v0), v1, v2);
+  v3 = sub_8011D04(8u, SHIDWORD(v0), v1, v2);
+  v6 = sub_8011D04(9u, SHIDWORD(v3), v4, v5);
+  v9 = sub_8011D04(0xAu, SHIDWORD(v6), v7, v8);
+  v12 = sub_8011D04(0xBu, SHIDWORD(v9), v10, v11);
+  v15 = sub_8011D04(0xCu, SHIDWORD(v12), v13, v14);
+  v18 = sub_8011D04(0xDu, SHIDWORD(v15), v16, v17);
+  v21 = sub_8011D04(0xEu, SHIDWORD(v18), v19, v20);
+  sub_8011D04(0xFu, SHIDWORD(v21), v22, v23);
 }
 
 //----- (08011D04) --------------------------------------------------------
@@ -12121,20 +11947,20 @@ __int64 __fastcall sub_8011D04(unsigned __int8 a1, int a2, int a3, int a4)
   HIDWORD(v7) = one_hot_16bit(v4);
   LOWORD(v8) = 3072;
   BYTE2(v8) = 1;
-  sub_801D0FC((&v7 + 4));
-  LOWORD(v7) = sub_8011D66(v4);
+  sub_801D0FC((int)((char *)&v7 + 4));
+  LOWORD(v7) = (unsigned __int8)sub_8011D66(v4);
   BYTE2(v7) = v4;
   BYTE3(v7) = 1;
-  sub_801CEAA(&v7);
+  sub_801CEAA((int)&v7);
   return v7;
 }
 
 //----- (08011D66) --------------------------------------------------------
 int __fastcall sub_8011D66(int result)
 {
-  if ( result )
+  if ( (_BYTE)result )
   {
-    switch ( result )
+    switch ( (unsigned __int8)result )
     {
       case 1u:
         LOBYTE(result) = 7;
@@ -12149,11 +11975,11 @@ int __fastcall sub_8011D66(int result)
         LOBYTE(result) = 10;
         break;
       default:
-        if ( result - 5 <= 4 )
+        if ( (unsigned int)(unsigned __int8)result - 5 <= 4 )
         {
           LOBYTE(result) = 23;
         }
-        else if ( result - 10 <= 5 )
+        else if ( (unsigned int)(unsigned __int8)result - 10 <= 5 )
         {
           LOBYTE(result) = 40;
         }
@@ -12164,57 +11990,57 @@ int __fastcall sub_8011D66(int result)
   {
     LOBYTE(result) = 6;
   }
-  return result;
+  return (unsigned __int8)result;
 }
 
 //----- (08011DBA) --------------------------------------------------------
 unsigned __int32 __fastcall one_hot_16bit(unsigned __int32 result)
 {
-  if ( result )
+  if ( (_BYTE)result )
   {
-    if ( result == 2 )
+    if ( (unsigned __int8)result == 2 )
     {
       result = 4;
     }
-    else if ( result >= 2u )
+    else if ( (unsigned __int8)result >= 2u )
     {
-      if ( result == 4 )
+      if ( (unsigned __int8)result == 4 )
       {
         result = 16;
       }
-      else if ( result >= 4u )
+      else if ( (unsigned __int8)result >= 4u )
       {
-        if ( result == 6 )
+        if ( (unsigned __int8)result == 6 )
         {
           result = 64;
         }
-        else if ( result >= 6u )
+        else if ( (unsigned __int8)result >= 6u )
         {
-          if ( result == 8 )
+          if ( (unsigned __int8)result == 8 )
           {
             result = 256;
           }
-          else if ( result >= 8u )
+          else if ( (unsigned __int8)result >= 8u )
           {
-            if ( result == 10 )
+            if ( (unsigned __int8)result == 10 )
             {
               result = 1024;
             }
-            else if ( result >= 0xAu )
+            else if ( (unsigned __int8)result >= 0xAu )
             {
-              if ( result == 12 )
+              if ( (unsigned __int8)result == 12 )
               {
                 result = 4096;
               }
-              else if ( result >= 0xCu )
+              else if ( (unsigned __int8)result >= 0xCu )
               {
-                if ( result == 14 )
+                if ( (unsigned __int8)result == 14 )
                 {
                   result = 0x4000;
                 }
-                else if ( result >= 0xEu )
+                else if ( (unsigned __int8)result >= 0xEu )
                 {
-                  if ( result == 15 )
+                  if ( (unsigned __int8)result == 15 )
                     result = 0x8000;
                 }
                 else
@@ -12352,42 +12178,39 @@ unsigned __int8 __fastcall identity_if_lt_16(unsigned __int8 result)
 }
 
 //----- (08011EFC) --------------------------------------------------------
-void __cdecl do_some_things_with_GPIOF()
+void __cdecl apo_sleep_HY()
 {
   GPIOF.BSRR = 0x10004;
 }
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
 //----- (08011F18) --------------------------------------------------------
-int sub_8011F18()
+void __fastcall lcd_shutdown()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
-  turn_off_all_lcd_segments();
+  lcd_turn_off_all_segments();
   update_lcd_if_appropriate();
-  sub_8011012(0);
+  lcd_set_enable(0);
   while ( read_lcd_sr(1) == 1 )
     ;
-  set_apb1_periph(512, 0);
-  return v1;
+  set_APB1_periph_clock(512, 0);
 }
 
 //----- (08011F3E) --------------------------------------------------------
-void disable_timer_2_and_3()
+void apo_disable_timers()
 {
   set_timer_enable(&TIM2_0, 0);
-  set_apb1_periph(1, 0);
+  set_APB1_periph_clock(1, 0);
   set_timer_enable(&TIM3, 0);
-  set_apb1_periph(2, 0);
+  set_APB1_periph_clock(2, 0);
 }
 
 //----- (08011F64) --------------------------------------------------------
-void __cdecl uninit_usart2()
+void __cdecl bt_shutdown()
 {
-  HIWORD(GPIOF.BSRR) = -32768;
+  HIWORD(GPIOF.BSRR) = 0x8000u;
   set_usart_control_bit(&USART2_1, 0x25u, 0);
   set_usart_enable(&USART2_1, 0);
-  set_apb1_periph(0x20000, 0);
+  set_APB1_periph_clock(0x20000, 0);
 }
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
@@ -12395,56 +12218,47 @@ void __cdecl uninit_usart2()
 void __cdecl powerdown_adc1()
 {
   enable_adc(&ADC1_BASE, 0);
-  en_apb2_periph(512, 0);
+  set_APB2_periph_clock(512, 0);
 }
 // 40012400: using guessed type ADC_REGS ADC1_BASE;
 
 //----- (08011FB8) --------------------------------------------------------
-void sub_8011FB8()
+void disable_PWR_voltage_detector()
 {
-  sub_801CDD8(0);
+  set_PWR_voltage_detector_enable(0);
 }
 
 //----- (08011FC2) --------------------------------------------------------
-int sub_8011FC2()
+void __fastcall apo_config_rcc_power_stuff()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
-  sub_801CDE0(1);
+  set_PWR_Vrefint_off_in_low_power_mode(1);
   RCC_AHBENR = 5;
-  dword_40023828 = 5;
+  unused_dword_40023828 = 5;
   RCC_APB1ENR = 0x10000000;
   RCC_APB2ENR = 0;
-  return v1;
 }
 // 4002381C: using guessed type int RCC_AHBENR;
 // 40023820: using guessed type int RCC_APB2ENR;
 // 40023824: using guessed type int RCC_APB1ENR;
-// 40023828: using guessed type int dword_40023828;
+// 40023828: using guessed type int unused_dword_40023828;
 
 //----- (08011FEC) --------------------------------------------------------
-int sub_8011FEC()
+void __fastcall apo_something_with_power()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
   vE000E010 = 0;
   set_pwr_cr_bits_offset(1);
-  return v1;
 }
 
 //----- (08012024) --------------------------------------------------------
-int sub_8012024()
+void __fastcall apo_disable_oscillators()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
-  sub_80111A2(0);
+  set_HSI_ON(0);
   set_hse_bits(0);
   set_lse_bits(0);
-  return v1;
 }
 
 //----- (0801203A) --------------------------------------------------------
-GPIO_CONFIG sub_801203A()
+void __fastcall apo_power_off_gpio()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
@@ -12454,17 +12268,16 @@ GPIO_CONFIG sub_801203A()
   cfg.pull = 0;
   cfg.out_type = 0;
   cfg.pins = 0xFFFF;
-  config_pins(&GPIOB, &cfg);
-  config_pins(&GPIOC, &cfg);
-  config_pins(&GPIOG, &cfg);
-  config_pins(&GPIOH, &cfg);
-  config_pins(&GPIOD, &cfg);
-  config_pins(&GPIOE, &cfg);
-  config_pins(&GPIOF, &cfg);
-  cfg.pins = 40959;
-  config_pins(&GPIOA, &cfg);
-  sub_80115C6();
-  return cfg;
+  gpio_config_pin(&GPIOB, &cfg);
+  gpio_config_pin(&GPIOC, &cfg);
+  gpio_config_pin(&GPIOG, &cfg);
+  gpio_config_pin(&GPIOH, &cfg);
+  gpio_config_pin(&GPIOD, &cfg);
+  gpio_config_pin(&GPIOE, &cfg);
+  gpio_config_pin(&GPIOF, &cfg);
+  cfg.pins = 0x9FFF;
+  gpio_config_pin(&GPIOA, &cfg);
+  power_off_all_gpio_banks();
 }
 // 40020400: using guessed type GPIO_REGS GPIOB;
 // 40020800: using guessed type GPIO_REGS GPIOC;
@@ -12475,7 +12288,7 @@ GPIO_CONFIG sub_801203A()
 // 40021C00: using guessed type GPIO_REGS GPIOG;
 
 //----- (08012100) --------------------------------------------------------
-void __fastcall config_pins(GPIO_REGS *GPIO, GPIO_CONFIG *cfg)
+void __fastcall gpio_config_pin(GPIO_REGS *GPIO, GPIO_CONFIG *cfg)
 {
   unsigned int i; // r2@1
 
@@ -12495,21 +12308,20 @@ void __fastcall config_pins(GPIO_REGS *GPIO, GPIO_CONFIG *cfg)
 }
 
 //----- (080121A4) --------------------------------------------------------
-int __fastcall sub_80121A4(int result)
+void __fastcall gpio_clear_config(GPIO_CONFIG *cfg)
 {
-  *result = 0xFFFF;
-  *(result + 4) = 0;
-  *(result + 5) = 0;
-  *(result + 6) = 0;
-  *(result + 7) = 0;
-  return result;
+  cfg->pins = 0xFFFF;
+  cfg->mode = 0;
+  cfg->speed = 0;
+  cfg->out_type = 0;
+  cfg->pull = 0;
 }
 
 //----- (080121BC) --------------------------------------------------------
 void __fastcall set_gpio_pin_func(GPIO_REGS *GPIO, unsigned __int16 pin, unsigned __int8 func)
 {
-  *(&GPIO->AFRL + (pin >> 3)) &= ~(15 << 4 * (pin & 7));
-  *(&GPIO->AFRL + (pin >> 3)) |= func << 4 * (pin & 7);
+  *(&GPIO->AFRL + ((signed int)pin >> 3)) &= ~(15 << 4 * (pin & 7));
+  *(&GPIO->AFRL + ((signed int)pin >> 3)) |= func << 4 * (pin & 7);
 }
 
 //----- (08012216) --------------------------------------------------------
@@ -12532,7 +12344,7 @@ _DWORD *__fastcall sub_8012216(_DWORD *a1)
     v3 = v4;
     if ( !v4 )
       break;
-    v5 = (result + *result);
+    v5 = (_DWORD *)((char *)result + *result);
     v6 = result + 1;
     v8 = *v6;
     a1 = v6 + 1;
@@ -12543,7 +12355,7 @@ _DWORD *__fastcall sub_8012216(_DWORD *a1)
     {
       v9 = *v5;
       ++v5;
-      *v7 = v9;
+      *(_DWORD *)v7 = v9;
       v7 += 4;
       v3 -= 4;
     }
@@ -12562,13 +12374,13 @@ void cal_save_to_sd(void)
   unsigned int l; // r6@39
 
   v0 = 0;
-  for ( i = 0; i < 1200; ++i )
+  for ( i = 0; (unsigned int)i < 1200; ++i )
     sd_cal_buf[i] = read_eeprom_byte_also(i);
   set_clocks_and_power_periphs(1);
   if ( f_mount_tries(0xAu) )
     v0 = 1;
   if ( !v0 )
-    sub_801E1E0(0, &unk_20002938);
+    sub_801E1E0(0, (int)&unk_20002938);
   if ( !v0 && sub_8012608(0xAu) )
     v0 = 4;
   if ( !v0 )
@@ -12577,7 +12389,7 @@ void cal_save_to_sd(void)
     if ( f_op_err || f_bytes_written_temp != 1200 )
       v0 = 7;
   }
-  f_close(&f_file_structure);
+  f_close((int)&f_file_structure);
   f_open(&f_file_structure, "cal.bin", FA_READ);
   f_op_err = f_read(&f_file_structure, sd_readback_buf, 512u, &f_bytes_read_temp);
   if ( f_op_err || f_bytes_read_temp != 512 )
@@ -12621,7 +12433,7 @@ void cal_save_to_sd(void)
         ;
     }
   }
-  f_close(&f_file_structure);
+  f_close((int)&f_file_structure);
   turn_off_sd_card();
   set_clocks_and_power_periphs(0);
 }
@@ -12646,7 +12458,7 @@ int cal_load_from_sd()
   if ( f_mount_tries(0xAu) )
     v0 = 1;
   if ( !v0 )
-    sub_801E1E0(0, &unk_20002938);
+    sub_801E1E0(0, (int)&unk_20002938);
   if ( f_open(&f_file_structure, "cal.bin", FA_READ) )
     v0 = 4;
   if ( !v0 )
@@ -12688,25 +12500,25 @@ int cal_load_from_sd()
         sd_cal_buf[k + 1024] = sd_readback_buf[k];
     }
   }
-  f_close(&f_file_structure);
+  f_close((int)&f_file_structure);
   turn_off_sd_card();
   set_clocks_and_power_periphs(0);
   if ( !v0 )
   {
-    for ( l = 0; l < 0x4B0; ++l )
+    for ( l = 0; (unsigned int)l < 0x4B0; ++l )
       try_to_write_byte_10_times_also_also(l, sd_cal_buf[l]);
-    for ( m = 0; m < 0x4B0; ++m )
+    for ( m = 0; (unsigned int)m < 0x4B0; ++m )
       *(&v8 + m) = read_eeprom_byte_also(m);
     for ( n = 0; n < 0x4B0; ++n )
     {
-      if ( *(&v8 + n) != sd_cal_buf[n] )
+      if ( (unsigned __int8)*(&v8 + n) != sd_cal_buf[n] )
       {
         v0 = 9;
-        return v0;
+        return (unsigned __int8)v0;
       }
     }
   }
-  return v0;
+  return (unsigned __int8)v0;
 }
 // 8012438: using guessed type int cal_load_from_sd(void);
 // 200037EC: using guessed type int f_bytes_read_temp;
@@ -12724,15 +12536,15 @@ int __fastcall sub_8012608(unsigned __int8 a1)
   log_first_byte_of_vol_path_str = '0';
   log_second_byte_of_vol_path_str_never_read = ':';
   log_flush_samples_from_eeprom_try_counter = 0;
-  for ( i = 0; i < v1; ++i )
+  for ( i = 0; i < (unsigned int)v1; ++i )
   {
     if ( !f_open(&f_file_structure, "cal.bin", FA_CREATE_ALWAYS|FA_WRITE) )
     {
       v2 = 0;
-      return v2;
+      return (unsigned __int8)v2;
     }
   }
-  return v2;
+  return (unsigned __int8)v2;
 }
 // 20003A97: using guessed type char log_first_byte_of_vol_path_str;
 // 20003A98: using guessed type char log_second_byte_of_vol_path_str_never_read;
@@ -12742,7 +12554,7 @@ int __fastcall sub_8012608(unsigned __int8 a1)
 int log_flush_samples_from_eeprom(void)
 {
   char v0; // r5@1
-  char v1; // r4@7
+  unsigned __int8 v1; // r4@7
 
   v0 = 0;
   log_flush_samples_from_eeprom_try_counter = 20;
@@ -12771,14 +12583,13 @@ int log_flush_samples_from_eeprom(void)
         curr_sys_error = v1;
         need_to_update_subscr = 1;
         v0 = 1;
-        return v0;
+        return (unsigned __int8)v0;
       }
     }
   }
-  return v0;
+  return (unsigned __int8)v0;
 }
 // 20003A99: using guessed type char log_flush_samples_from_eeprom_try_counter;
-// 20003AC3: using guessed type char curr_sys_error;
 // 20003AFE: using guessed type char need_to_update_subscr;
 
 //----- (080126CE) --------------------------------------------------------
@@ -12796,7 +12607,7 @@ signed int log_try_flush_samples_from_eeprom()
   }
   else
   {
-    sub_801E1E0(0, &unk_20002938);
+    sub_801E1E0(0, (int)&unk_20002938);
     if ( log_file_starting_new_link )
     {
       log_file_total_len = 0;
@@ -12818,7 +12629,7 @@ signed int log_try_flush_samples_from_eeprom()
     }
     if ( !v0 && log_write_samples_to_file() )
       v0 = 7;
-    f_close(&f_file_structure);
+    f_close((int)&f_file_structure);
     if ( !v0 )
     {
       log_file_curr_pos = f_get_len(&f_file_structure);
@@ -12827,7 +12638,7 @@ signed int log_try_flush_samples_from_eeprom()
       {
         log_file_curr_pos = log_file_start_pos;
         log_second_byte_of_vol_path_str_never_read = 1;
-        if ( log_file_total_samples_written >= 60 )
+        if ( (unsigned int)log_file_total_samples_written >= 60 )
         {
           log_file_total_samples_written -= 60;
           --log_successful_flushes;
@@ -12836,7 +12647,7 @@ signed int log_try_flush_samples_from_eeprom()
       if ( !v0 && log_file_need_to_write_header )
         log_file_need_to_write_header = 0;
     }
-    if ( v0 || log_file_total_samples_written < 600000 )
+    if ( v0 || (unsigned int)log_file_total_samples_written < 600000 )
     {
       if ( batt_is_low_icon )
       {
@@ -12858,20 +12669,20 @@ signed int log_try_flush_samples_from_eeprom()
     if ( !v0 && log_file_is_ending )
     {
       log_file_is_ending = 0;
-      for ( i = 0; i < 20; ++i )
+      for ( i = 0; (signed int)i < 20; ++i )
       {
-        if ( !log_file_open_and_seek() && !log_write_footer() )
+        if ( !(unsigned __int8)log_file_open_and_seek() && !log_write_footer() )
         {
-          f_close(&f_file_structure);
+          f_close((int)&f_file_structure);
           break;
         }
-        f_close(&f_file_structure);
+        f_close((int)&f_file_structure);
       }
       v0 = 0;
     }
     turn_off_sd_card();
     set_clocks_and_power_periphs(0);
-    result = v0;
+    result = (unsigned __int8)v0;
   }
   return result;
 }
@@ -12885,8 +12696,6 @@ signed int log_try_flush_samples_from_eeprom()
 // 20003A64: using guessed type __int16 log_file_chain_idx;
 // 20003A96: using guessed type char f_op_err;
 // 20003A98: using guessed type char log_second_byte_of_vol_path_str_never_read;
-// 20003A9D: using guessed type char logging_active;
-// 20003AC3: using guessed type char curr_sys_error;
 // 20003AC5: using guessed type char need_to_display_logging_ended;
 // 20003ACC: using guessed type char log_file_starting_new_link;
 // 20003ACD: using guessed type char log_file_is_ending;
@@ -12905,11 +12714,11 @@ int log_file_open_and_seek()
   v1 = 0;
   while ( 1 )
   {
-    f_op_err = f_open(&f_file_structure, log_curr_filename_ptr, FA_WRITE);
+    f_op_err = f_open(&f_file_structure, (char *)log_curr_filename_ptr, FA_WRITE);
     if ( !f_op_err )
       break;
     ++v1;
-    if ( v1 >= 21 )
+    if ( (signed int)(unsigned __int8)v1 >= 21 )
     {
       v0 = 4;
       break;
@@ -12920,19 +12729,19 @@ int log_file_open_and_seek()
     v2 = 0;
     do
     {
-      f_op_err = f_seek(&f_file_structure, log_file_curr_pos);
+      f_op_err = f_seek((int)&f_file_structure, log_file_curr_pos);
       if ( !f_op_err )
       {
         log_second_byte_of_vol_path_str_never_read = 0;
         log_file_start_pos = f_get_len(&f_file_structure);
-        return v0;
+        return (unsigned __int8)v0;
       }
       ++v2;
     }
-    while ( v2 < 21 );
+    while ( (signed int)(unsigned __int8)v2 < 21 );
     v0 = 5;
   }
-  return v0;
+  return (unsigned __int8)v0;
 }
 // 200037E0: using guessed type int log_curr_filename_ptr;
 // 200037F4: using guessed type int log_file_start_pos;
@@ -12960,22 +12769,22 @@ int __fastcall log_file_create(char a1, unsigned __int8 a2)
 
   v2 = a1;
   v3 = a2;
-  for ( i = 0; i < v3; ++i )
+  for ( i = 0; i < (unsigned int)v3; ++i )
   {
     if ( v2 )
     {
-      f_op_err = f_open(&unk_20002D8C, log_curr_filename_ptr, FA_CREATE_ALWAYS|FA_WRITE|FA_READ);
+      f_op_err = f_open(&unk_20002D8C, (char *)log_curr_filename_ptr, FA_CREATE_ALWAYS|FA_WRITE|FA_READ);
       if ( !f_op_err )
-        f_op_err = f_open(&f_file_structure, dword_200037E4, FA_READ);
+        f_op_err = f_open(&f_file_structure, (char *)dword_200037E4, FA_READ);
     }
     else
     {
-      f_op_err = f_open(&f_file_structure, log_curr_filename_ptr, FA_CREATE_ALWAYS|FA_WRITE);
+      f_op_err = f_open(&f_file_structure, (char *)log_curr_filename_ptr, FA_CREATE_ALWAYS|FA_WRITE);
     }
     if ( !f_op_err )
-      return f_op_err;
+      return (unsigned __int8)f_op_err;
   }
-  return f_op_err;
+  return (unsigned __int8)f_op_err;
 }
 // 200037E0: using guessed type int log_curr_filename_ptr;
 // 200037E4: using guessed type int dword_200037E4;
@@ -12991,9 +12800,9 @@ int __fastcall log_file_get_name_then_create(unsigned __int8 a1)
   log_first_byte_of_vol_path_str = '0';
   log_second_byte_of_vol_path_str_never_read = ':';
   log_flush_samples_from_eeprom_try_counter = 0;
-  for ( i = 0; i < v1; ++i )
+  for ( i = 0; i < (unsigned int)v1; ++i )
   {
-    f_op_err = maybe_find_last_log_file_chain_link(&log_first_byte_of_vol_path_str);
+    f_op_err = maybe_find_last_log_file_chain_link((int)&log_first_byte_of_vol_path_str);
     if ( !f_op_err )
     {
       if ( log_file_chain_idx )
@@ -13002,10 +12811,10 @@ int __fastcall log_file_get_name_then_create(unsigned __int8 a1)
         log_file_build_name(log_file_name_number);
       f_op_err = log_file_create(0, 0xAu);
       if ( !f_op_err )
-        return f_op_err;
+        return (unsigned __int8)f_op_err;
     }
   }
-  return f_op_err;
+  return (unsigned __int8)f_op_err;
 }
 // 200037E8: using guessed type int log_file_name_number;
 // 20003A64: using guessed type __int16 log_file_chain_idx;
@@ -13021,10 +12830,10 @@ int __fastcall maybe_find_last_log_file_chain_link(int a1)
   int result; // r0@2
 
   v1 = 0;
-  f_op_err = sub_801EADA(&unk_20003684, a1);
+  f_op_err = sub_801EADA((int)&unk_20003684, a1);
   if ( f_op_err )
   {
-    result = f_op_err;
+    result = (unsigned __int8)f_op_err;
   }
   else
   {
@@ -13032,7 +12841,7 @@ int __fastcall maybe_find_last_log_file_chain_link(int a1)
     {
       while ( 1 )
       {
-        f_op_err = sub_801EB64(&unk_20003684, &unk_200036A0);
+        f_op_err = sub_801EB64((int)&unk_20003684, (int)&unk_200036A0);
         if ( f_op_err || !byte_200036A9 )
           break;
         if ( byte_200036A9 != '.'
@@ -13042,18 +12851,18 @@ int __fastcall maybe_find_last_log_file_chain_link(int a1)
           byte_20003B74 = byte_200036AA + 10 * byte_200036A9 - 16;
           byte_20003B75 = byte_200036AC + 10 * byte_200036AB - 16;
           byte_20003B76 = byte_200036AE + 10 * byte_200036AD - 16;
-          if ( byte_20003B74 == curr_year
-            && byte_20003B75 == curr_month
-            && byte_20003B76 == curr_day
-            && v1 < byte_200036B0 + 10 * byte_200036AF - 527 )
-            v1 = byte_200036B0 + 10 * byte_200036AF - 527;
+          if ( (unsigned __int8)byte_20003B74 == curr_year
+            && (unsigned __int8)byte_20003B75 == curr_month
+            && (unsigned __int8)byte_20003B76 == curr_day
+            && v1 < (unsigned __int8)byte_200036B0 + 10 * (unsigned __int8)byte_200036AF - 527 )
+            v1 = (unsigned __int8)byte_200036B0 + 10 * (unsigned __int8)byte_200036AF - 527;
         }
       }
       log_file_name_number = v1;
       if ( v1 >= 100 )
         log_file_name_number = 0;
     }
-    result = f_op_err;
+    result = (unsigned __int8)f_op_err;
   }
   return result;
 }
@@ -13071,9 +12880,6 @@ int __fastcall maybe_find_last_log_file_chain_link(int a1)
 // 200037E8: using guessed type int log_file_name_number;
 // 20003A64: using guessed type __int16 log_file_chain_idx;
 // 20003A96: using guessed type char f_op_err;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
 // 20003B74: using guessed type char byte_20003B74;
 // 20003B75: using guessed type char byte_20003B75;
 // 20003B76: using guessed type char byte_20003B76;
@@ -13090,9 +12896,9 @@ void __fastcall log_file_name_add_chain_link_num()
     log_file_name[4] = log_file_name[6];
     log_file_name[5] = log_file_name[7];
   }
-  log_file_name[6] = log_file_chain_idx / 10 + 48;
-  log_file_name[7] = log_file_chain_idx % 10 + 48;
-  log_curr_filename_ptr = log_file_name;
+  log_file_name[6] = (unsigned __int16)log_file_chain_idx / 10 + 48;
+  log_file_name[7] = (unsigned __int16)log_file_chain_idx % 10 + 48;
+  log_curr_filename_ptr = (int)log_file_name;
 }
 // 200037E0: using guessed type int log_curr_filename_ptr;
 // 20003A64: using guessed type __int16 log_file_chain_idx;
@@ -13101,23 +12907,20 @@ void __fastcall log_file_name_add_chain_link_num()
 void __fastcall log_file_build_name(signed int result)
 {
   log_file_name[0] = curr_year / 10 + 48;
-  log_file_name[1] = (curr_year % 10) + 48;
+  log_file_name[1] = (unsigned __int16)(curr_year % 10) + 48;
   log_file_name[2] = curr_month / 10 + 48;
-  log_file_name[3] = (curr_month % 10) + 48;
+  log_file_name[3] = (unsigned __int16)(curr_month % 10) + 48;
   log_file_name[4] = curr_day / 10 + 48;
-  log_file_name[5] = (curr_day % 10) + 48;
+  log_file_name[5] = (unsigned __int16)(curr_day % 10) + 48;
   log_file_name[6] = result / 10 + 48;
   log_file_name[7] = result % 10 + 48;
   log_file_name[8] = '.';
   log_file_name[9] = 'c';
   log_file_name[10] = 's';
   log_file_name[11] = 'v';
-  log_curr_filename_ptr = log_file_name;
+  log_curr_filename_ptr = (int)log_file_name;
 }
 // 200037E0: using guessed type int log_curr_filename_ptr;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
 
 //----- (08012D0A) --------------------------------------------------------
 int log_write_samples_to_file()
@@ -13132,22 +12935,22 @@ int log_write_samples_to_file()
   {
     LOBYTE(result) = log_file_write_header_lines();
     v0 = result;
-    if ( result )
-      return result;
+    if ( (_BYTE)result )
+      return (unsigned __int8)result;
   }
   else
   {
     log_file_total_samples_written_backup = log_file_total_samples_written;
-    for ( i = 0; i < log_samples_in_eeprom_that_need_flushing; ++i )
+    for ( i = 0; i < (unsigned int)log_samples_in_eeprom_that_need_flushing; ++i )
     {
       ++log_file_total_samples_written;
       LOBYTE(result) = log_file_write_sample(i);
       v0 = result;
-      if ( result )
+      if ( (_BYTE)result )
       {
         log_second_byte_of_vol_path_str_never_read = 1;
         log_file_total_samples_written = log_file_total_samples_written_backup;
-        return result;
+        return (unsigned __int8)result;
       }
       log_file_prepare_to_write_next_sample();
     }
@@ -13238,7 +13041,7 @@ void __fastcall sub_8012EBC()
   int v1; // r4@8
 
   if ( (!(log_rdsamp_B_flags & 0x80) || log_rdsamp_B_flags & 0x40)
-    && !((log_rdsamp_B_flags & 0x80) & log_rdsamp_B_flags & 0x40) )
+    && !((unsigned __int8)(log_rdsamp_B_flags & 0x80) & log_rdsamp_B_flags & 0x40) )
   {
     if ( byte_20003AD2 & 0x40 )
       v0 = ~dword_20003844;
@@ -13356,7 +13159,7 @@ bool __fastcall log_file_write_sample(unsigned __int16 sample_idx)
   }
   else
   {
-    if ( log_write_mode(log_rdsamp_ex_volt_mode) )
+    if ( log_write_mode((meter_meas_mode)log_rdsamp_ex_volt_mode) )
       return 1;
     if ( log_rdsamp_E_ex_volt_flags & 0x80 )
     {
@@ -13371,12 +13174,15 @@ bool __fastcall log_file_write_sample(unsigned __int16 sample_idx)
           return 1;
         log_rdsamp_F_ex_volt_value = -log_rdsamp_F_ex_volt_value;
       }
-      if ( log_write_measurement(log_rdsamp_ex_volt_mode, log_rdsamp_ex_volt_range, log_rdsamp_F_ex_volt_value) )
+      if ( log_write_measurement(
+             (meter_meas_mode)log_rdsamp_ex_volt_mode,
+             log_rdsamp_ex_volt_range,
+             log_rdsamp_F_ex_volt_value) )
         return 1;
     }
     if ( write_log_token(TOK_COMMA, 0, 0) )
       return 1;
-    if ( log_write_unit(log_rdsamp_ex_volt_mode, log_rdsamp_ex_volt_range) )
+    if ( log_write_unit((meter_meas_mode)log_rdsamp_ex_volt_mode, log_rdsamp_ex_volt_range) )
       return 1;
     if ( log_rdsamp_mode != MM_ACuVA
       && log_rdsamp_mode != MM_ACmVA
@@ -13394,7 +13200,7 @@ bool __fastcall log_file_write_sample(unsigned __int16 sample_idx)
     }
     else
     {
-      if ( log_write_mode(log_rdsamp_ex_amp_mode) )
+      if ( log_write_mode((meter_meas_mode)log_rdsamp_ex_amp_mode) )
         return 1;
       if ( log_rdsamp_H_ex_amp_flags & 0x80 )
       {
@@ -13409,12 +13215,15 @@ bool __fastcall log_file_write_sample(unsigned __int16 sample_idx)
             return 1;
           log_rdsamp_I_ex_amp_value = -log_rdsamp_I_ex_amp_value;
         }
-        if ( log_write_measurement(log_rdsamp_ex_amp_mode, log_rdsamp_ex_amp_range, log_rdsamp_I_ex_amp_value) )
+        if ( log_write_measurement(
+               (meter_meas_mode)log_rdsamp_ex_amp_mode,
+               log_rdsamp_ex_amp_range,
+               log_rdsamp_I_ex_amp_value) )
           return 1;
       }
       if ( write_log_token(TOK_COMMA, 0, 0) )
         return 1;
-      if ( log_write_unit(log_rdsamp_ex_amp_mode, log_rdsamp_ex_amp_range) )
+      if ( log_write_unit((meter_meas_mode)log_rdsamp_ex_amp_mode, log_rdsamp_ex_amp_range) )
         return 1;
     }
   }
@@ -13457,7 +13266,7 @@ bool __fastcall log_file_write_sample(unsigned __int16 sample_idx)
 //----- (080133F4) --------------------------------------------------------
 int __fastcall f_get_len(void *a1)
 {
-  return *(a1 + 2);
+  return *((_DWORD *)a1 + 2);
 }
 
 //----- (080133FC) --------------------------------------------------------
@@ -13480,11 +13289,11 @@ int __fastcall log_write_mode(meter_meas_mode mode)
 
   v1 = 0;
   v2 = mode;
-  if ( mode >= 26 )
+  if ( (signed int)(unsigned __int8)mode >= 26 )
     v2 = 2;
-  if ( write_log_token((v2 + 21), 0, 0) )
+  if ( write_log_token((LOG_TOKENS)((unsigned __int8)v2 + 21), 0, 0) )
     v1 = 1;
-  return v1;
+  return (unsigned __int8)v1;
 }
 
 //----- (0801345A) --------------------------------------------------------
@@ -13503,13 +13312,13 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
     }
     return 0;
   }
-  if ( mode == 2 || mode < 2u )
+  if ( mode == 2 || (unsigned __int8)mode < 2u )
   {
     if ( write_log_token(TOK_V, 0, 0) )
       return 1;
     return 0;
   }
-  if ( mode == 4 || mode < 4u )
+  if ( mode == 4 || (unsigned __int8)mode < 4u )
   {
     if ( write_log_token(TOK_mV, 0, 0) )
       return 1;
@@ -13517,7 +13326,7 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
   }
   if ( mode == 6 )
   {
-    if ( range >= 2 )
+    if ( (signed int)range >= 2 )
     {
       if ( write_log_token(TOK_KHZ, 0, 0) )
         return 1;
@@ -13528,7 +13337,7 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
     }
     return 0;
   }
-  if ( mode < 6u )
+  if ( (unsigned __int8)mode < 6u )
   {
     if ( log_rdsamp_temp_in_c )
     {
@@ -13547,7 +13356,7 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
       return 1;
     return 0;
   }
-  if ( mode < 8u )
+  if ( (unsigned __int8)mode < 8u )
   {
     if ( write_log_token(TOK_mSEC, 0, 0) )
       return 1;
@@ -13559,11 +13368,11 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
       return 1;
     return 0;
   }
-  if ( mode < 0xAu )
+  if ( (unsigned __int8)mode < 0xAu )
   {
-    if ( range >= 2 )
+    if ( (signed int)range >= 2 )
     {
-      if ( range >= 5 )
+      if ( (signed int)range >= 5 )
       {
         if ( write_log_token(TOK_MOHM, 0, 0) )
           return 1;
@@ -13581,7 +13390,7 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
   }
   if ( mode == 12 )
   {
-    if ( range >= 2 )
+    if ( (signed int)range >= 2 )
     {
       if ( write_log_token(TOK_uF, 0, 0) )
         return 1;
@@ -13592,7 +13401,7 @@ signed int __fastcall log_write_unit(meter_meas_mode mode, unsigned __int8 range
     }
     return 0;
   }
-  if ( mode < 0xCu )
+  if ( (unsigned __int8)mode < 0xCu )
   {
     if ( write_log_token(TOK_V, 0, 0) )
       return 1;
@@ -13605,7 +13414,7 @@ LABEL_82:
       return 1;
     return 0;
   }
-  if ( mode < 0xEu )
+  if ( (unsigned __int8)mode < 0xEu )
   {
 LABEL_79:
     if ( write_log_token(TOK_uVA_UNIT, 0, 0) )
@@ -13614,11 +13423,11 @@ LABEL_79:
   }
   if ( mode == 16 )
     goto LABEL_108;
-  if ( mode < 0x10u )
+  if ( (unsigned __int8)mode < 0x10u )
     goto LABEL_85;
   if ( mode == 18 )
     goto LABEL_94;
-  if ( mode < 0x12u )
+  if ( (unsigned __int8)mode < 0x12u )
   {
 LABEL_108:
     if ( write_log_token(TOK_uA, 0, 0) )
@@ -13627,7 +13436,7 @@ LABEL_108:
   }
   if ( mode == 20 )
     goto LABEL_97;
-  if ( mode < 0x14u )
+  if ( (unsigned __int8)mode < 0x14u )
   {
 LABEL_94:
     if ( write_log_token(TOK_mA, 0, 0) )
@@ -13636,7 +13445,7 @@ LABEL_94:
   }
   if ( mode == 22 )
     goto LABEL_79;
-  if ( mode < 0x16u )
+  if ( (unsigned __int8)mode < 0x16u )
   {
 LABEL_97:
     if ( range )
@@ -13664,7 +13473,7 @@ LABEL_85:
     }
     return 0;
   }
-  if ( mode < 0x18u )
+  if ( (unsigned __int8)mode < 0x18u )
     goto LABEL_82;
   if ( mode == 25 && write_log_token(TOK_mV, 0, 0) )
     return 1;
@@ -13683,36 +13492,36 @@ int log_file_write_header_lines()
   log_file_curr_pos = v0;
   log_file_start_pos = v0;
   LOBYTE(result) = log_file_write_header_line1();
-  if ( result )
+  if ( (_BYTE)result )
   {
-    result = result;
+    result = (unsigned __int8)result;
   }
   else
   {
     LOBYTE(result) = log_file_write_header_line2();
-    if ( result )
+    if ( (_BYTE)result )
     {
-      result = result;
+      result = (unsigned __int8)result;
     }
     else
     {
       LOBYTE(result) = log_file_write_header_line3();
-      if ( result )
+      if ( (_BYTE)result )
       {
-        result = result;
+        result = (unsigned __int8)result;
       }
       else
       {
         LOBYTE(result) = log_file_write_header_line4();
-        if ( result )
+        if ( (_BYTE)result )
         {
-          result = result;
+          result = (unsigned __int8)result;
         }
         else
         {
           LOBYTE(result) = log_file_write_header_line5();
-          if ( result )
-            result = result;
+          if ( (_BYTE)result )
+            result = (unsigned __int8)result;
           else
             result = 0;
         }
@@ -13764,7 +13573,7 @@ bool log_file_write_header_line5()
   }
   else
   {
-    for ( i = 0; i < 3; ++i )
+    for ( i = 0; (signed int)i < 3; ++i )
     {
       if ( write_log_token(TOK_FUNC, 0, 0) )
         return 1;
@@ -13828,7 +13637,7 @@ bool log_write_footer()
   bool result; // r0@2
 
   log_rdsamp_mode = byte_20003ACF & 0x1F;
-  log_rdsamp_range = byte_20003ACF >> 5;
+  log_rdsamp_range = (unsigned __int8)byte_20003ACF >> 5;
   if ( write_log_token(TOK_MAX, 0, 0) )
     return 1;
   if ( log_write_num_then_comma(dword_20003848) )
@@ -13861,7 +13670,7 @@ bool log_write_footer()
   if ( write_log_token(TOK_CRLF, 0, 0) )
     return 1;
   log_rdsamp_mode = byte_20003AD0 & 0x1F;
-  log_rdsamp_range = byte_20003AD0 >> 5;
+  log_rdsamp_range = (unsigned __int8)byte_20003AD0 >> 5;
   if ( write_log_token(TOK_MIN, 0, 0) )
     return 1;
   if ( log_write_num_then_comma(dword_2000384C) )
@@ -13943,7 +13752,7 @@ int __fastcall log_write_measurement(meter_meas_mode mode, unsigned __int8 range
 
   v3 = a3;
   v4 = calc_decimal_place_for_mode_range(mode, range);
-  return write_log_token(TOK_WRITE_DEC_NUM, v3, v4);
+  return (unsigned __int8)write_log_token(TOK_WRITE_DEC_NUM, v3, v4);
 }
 
 //----- (08013BF6) --------------------------------------------------------
@@ -14031,354 +13840,354 @@ signed int __fastcall write_log_token(LOG_TOKENS token, unsigned int num, unsign
   unsigned __int16 v83; // r0@299
   char str_cache[41]; // [sp+0h] [bp-50h]@287
 
-  *&token = token;
+  *(_DWORD *)&token = (unsigned __int16)token;
   if ( token )
   {
     switch ( token )
     {
       case TOK_CRLF:
-        v5 = strlen(asc_200001D4);
+        v5 = strlen((int)asc_200001D4);
         if ( write_bytes_to_log_file_and_cache_them_too(asc_200001D4, v5) )
           return 1;
         break;
       case TOK_NEGOVERFLOW:
-        v6 = strlen(aOverflow_1);
+        v6 = strlen((int)aOverflow_1);
         if ( write_bytes_to_log_file_and_cache_them_too(aOverflow_1, v6) )
           return 1;
         break;
       case TOK_POSOVERFLOW:
-        v7 = strlen(aOverflow_2);
+        v7 = strlen((int)aOverflow_2);
         if ( write_bytes_to_log_file_and_cache_them_too(aOverflow_2, v7) )
           return 1;
         break;
       case TOK_MINUS:
-        v8 = strlen(asc_20000216);
+        v8 = strlen((int)asc_20000216);
         if ( write_bytes_to_log_file_and_cache_them_too(asc_20000216, v8) )
           return 1;
         break;
       case TOK_START:
-        v9 = strlen(aStart_0);
+        v9 = strlen((int)aStart_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aStart_0, v9) )
           return 1;
         break;
       case TOK_ID:
-        v10 = strlen(aId_0);
+        v10 = strlen((int)aId_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aId_0, v10) )
           return 1;
         break;
       case TOK_INTERVAL:
-        v11 = strlen(aInterval_0);
+        v11 = strlen((int)aInterval_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aInterval_0, v11) )
           return 1;
         break;
       case TOK_SEC:
-        v12 = strlen(aSec_0);
+        v12 = strlen((int)aSec_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aSec_0, v12) )
           return 1;
         break;
       case TOK_MAIN:
-        v13 = strlen(aMain_0);
+        v13 = strlen((int)aMain_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMain_0, v13) )
           return 1;
         break;
       case TOK_SUB1:
-        v14 = strlen(aSub1_0);
+        v14 = strlen((int)aSub1_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aSub1_0, v14) )
           return 1;
         break;
       case TOK_SUB2:
-        v15 = strlen(aSub2_0);
+        v15 = strlen((int)aSub2_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aSub2_0, v15) )
           return 1;
         break;
       case TOK_REMARK:
-        v16 = strlen(aRemark_0);
+        v16 = strlen((int)aRemark_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aRemark_0, v16) )
           return 1;
         break;
       case TOK_No_AS_IN_NUMBER:
-        v17 = strlen(aNo__0);
+        v17 = strlen((int)aNo__0);
         if ( write_bytes_to_log_file_and_cache_them_too(aNo__0, v17) )
           return 1;
         break;
       case TOK_FUNC:
-        v18 = strlen(aFunc__0);
+        v18 = strlen((int)aFunc__0);
         if ( write_bytes_to_log_file_and_cache_them_too(aFunc__0, v18) )
           return 1;
         break;
       case TOK_VALUE:
-        v19 = strlen(aValue_0);
+        v19 = strlen((int)aValue_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aValue_0, v19) )
           return 1;
         break;
       case TOK_UNIT:
-        v20 = strlen(aUnit_0);
+        v20 = strlen((int)aUnit_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aUnit_0, v20) )
           return 1;
         break;
       case TOK_LOWZ:
-        v21 = strlen(aLowz_0);
+        v21 = strlen((int)aLowz_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aLowz_0, v21) )
           return 1;
         break;
       case TOK_DCV_MODE:
-        v22 = strlen(aDcv_0);
+        v22 = strlen((int)aDcv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcv_0, v22) )
           return 1;
         break;
       case TOK_ACV_MODE:
-        v23 = strlen(aAcv_0);
+        v23 = strlen((int)aAcv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aAcv_0, v23) )
           return 1;
         break;
       case TOK_DCmV:
-        v24 = strlen(aDcmv_0);
+        v24 = strlen((int)aDcmv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcmv_0, v24) )
           return 1;
         break;
       case TOK_ACmV:
-        v25 = strlen(aAcmv_0);
+        v25 = strlen((int)aAcmv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aAcmv_0, v25) )
           return 1;
         break;
       case TOK_TEMP:
-        v26 = strlen(aTemp__0);
+        v26 = strlen((int)aTemp__0);
         if ( write_bytes_to_log_file_and_cache_them_too(aTemp__0, v26) )
           return 1;
         break;
       case TOK_FREQ:
-        v27 = strlen(aFreq__0);
+        v27 = strlen((int)aFreq__0);
         if ( write_bytes_to_log_file_and_cache_them_too(aFreq__0, v27) )
           return 1;
         break;
       case TOK_PULSE:
-        v28 = strlen(aPulse_0);
+        v28 = strlen((int)aPulse_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aPulse_0, v28) )
           return 1;
         break;
       case TOK_DUTY:
-        v29 = strlen(aDuty_0);
+        v29 = strlen((int)aDuty_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDuty_0, v29) )
           return 1;
         break;
       case TOK_OHM_MODE:
-        v30 = strlen(aOhm_1);
+        v30 = strlen((int)aOhm_1);
         if ( write_bytes_to_log_file_and_cache_them_too(aOhm_1, v30) )
           return 1;
         break;
       case TOK_BEEP_CONTINUITY:
-        v31 = strlen(aBeep_0);
+        v31 = strlen((int)aBeep_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aBeep_0, v31) )
           return 1;
         break;
       case TOK_DIODE:
-        v32 = strlen(aDiode_0);
+        v32 = strlen((int)aDiode_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDiode_0, v32) )
           return 1;
         break;
       case TOK_CAP:
-        v33 = strlen(aCap__0);
+        v33 = strlen((int)aCap__0);
         if ( write_bytes_to_log_file_and_cache_them_too(aCap__0, v33) )
           return 1;
         break;
       case TOK_uVA_MODE:
-        v34 = strlen(aUva_0);
+        v34 = strlen((int)aUva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aUva_0, v34) )
           return 1;
         break;
       case TOK_mVA_MODE:
-        v35 = strlen(aMva_0);
+        v35 = strlen((int)aMva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMva_0, v35) )
           return 1;
         break;
       case TOK_VA_MODE:
-        v36 = strlen(aVa_0);
+        v36 = strlen((int)aVa_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aVa_0, v36) )
           return 1;
         break;
       case TOK_ACuA:
-        v37 = strlen(aAcua_0);
+        v37 = strlen((int)aAcua_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aAcua_0, v37) )
           return 1;
         break;
       case TOK_DCuA:
-        v38 = strlen(aDcua_0);
+        v38 = strlen((int)aDcua_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcua_0, v38) )
           return 1;
         break;
       case TOK_ACmA:
-        v39 = strlen(aAcma_0);
+        v39 = strlen((int)aAcma_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aAcma_0, v39) )
           return 1;
         break;
       case TOK_DCmA:
-        v40 = strlen(aDcma_0);
+        v40 = strlen((int)aDcma_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcma_0, v40) )
           return 1;
         break;
       case TOK_ACA:
-        v41 = strlen(aAca_0);
+        v41 = strlen((int)aAca_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aAca_0, v41) )
           return 1;
         break;
       case TOK_DCA:
-        v42 = strlen(aDca_0);
+        v42 = strlen((int)aDca_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDca_0, v42) )
           return 1;
         break;
       case TOK_DCuVA:
-        v43 = strlen(aDcuva_0);
+        v43 = strlen((int)aDcuva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcuva_0, v43) )
           return 1;
         break;
       case TOK_DCmVA:
-        v44 = strlen(aDcmva_0);
+        v44 = strlen((int)aDcmva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcmva_0, v44) )
           return 1;
         break;
       case TOK_DCVA:
-        v45 = strlen(aDcva_0);
+        v45 = strlen((int)aDcva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcva_0, v45) )
           return 1;
         break;
       case TOK_BURDEN:
-        v46 = strlen(aBurden_0);
+        v46 = strlen((int)aBurden_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aBurden_0, v46) )
           return 1;
         break;
       case TOK_ACV_UNIT:
-        v47 = strlen(aAcv_0);
+        v47 = strlen((int)aAcv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aAcv_0, v47) )
           return 1;
         break;
       case TOK_DCV_UNIT:
-        v48 = strlen(aDcv_0);
+        v48 = strlen((int)aDcv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aDcv_0, v48) )
           return 1;
         break;
       case TOK_V:
-        v49 = strlen(aV_0);
+        v49 = strlen((int)aV_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aV_0, v49) )
           return 1;
         break;
       case TOK_mV:
-        v50 = strlen(aMv_0);
+        v50 = strlen((int)aMv_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMv_0, v50) )
           return 1;
         break;
       case TOK_DEG_C:
-        v51 = strlen(aC_0);
+        v51 = strlen((int)aC_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aC_0, v51) )
           return 1;
         break;
       case TOK_DEG_F:
-        v52 = strlen(aF_0);
+        v52 = strlen((int)aF_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aF_0, v52) )
           return 1;
         break;
       case TOK_HZ:
-        v53 = strlen(aHz_0);
+        v53 = strlen((int)aHz_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aHz_0, v53) )
           return 1;
         break;
       case TOK_KHZ:
-        v54 = strlen(aKhz_0);
+        v54 = strlen((int)aKhz_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aKhz_0, v54) )
           return 1;
         break;
       case TOK_mSEC:
-        v55 = strlen(aMsec_0);
+        v55 = strlen((int)aMsec_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMsec_0, v55) )
           return 1;
         break;
       case TOK_PERCENT:
-        v56 = strlen(asc_20000200);
+        v56 = strlen((int)asc_20000200);
         if ( write_bytes_to_log_file_and_cache_them_too(asc_20000200, v56) )
           return 1;
         break;
       case TOK_OHM_UNIT:
-        v57 = strlen(aOhm_2);
+        v57 = strlen((int)aOhm_2);
         if ( write_bytes_to_log_file_and_cache_them_too(aOhm_2, v57) )
           return 1;
         break;
       case TOK_KOHM:
-        v58 = strlen(aKohm_0);
+        v58 = strlen((int)aKohm_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aKohm_0, v58) )
           return 1;
         break;
       case TOK_MOHM:
-        v59 = strlen(aMohm_0);
+        v59 = strlen((int)aMohm_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMohm_0, v59) )
           return 1;
         break;
       case TOK_nF:
-        v60 = strlen(aNf_0);
+        v60 = strlen((int)aNf_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aNf_0, v60) )
           return 1;
         break;
       case TOK_uF:
-        v61 = strlen(aUf_0);
+        v61 = strlen((int)aUf_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aUf_0, v61) )
           return 1;
         break;
       case TOK_uVA_UNIT:
-        v62 = strlen(aUva_0);
+        v62 = strlen((int)aUva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aUva_0, v62) )
           return 1;
         break;
       case TOK_mVA_UNIT:
-        v63 = strlen(aMva_0);
+        v63 = strlen((int)aMva_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMva_0, v63) )
           return 1;
         break;
       case TOK_VA_UNIT:
-        v64 = strlen(aVa_0);
+        v64 = strlen((int)aVa_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aVa_0, v64) )
           return 1;
         break;
       case TOK_uA:
-        v65 = strlen(aUa_0);
+        v65 = strlen((int)aUa_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aUa_0, v65) )
           return 1;
         break;
       case TOK_mA:
-        v66 = strlen(aMa_0);
+        v66 = strlen((int)aMa_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMa_0, v66) )
           return 1;
         break;
       case TOK_AMP:
-        v67 = strlen(aA_0);
+        v67 = strlen((int)aA_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aA_0, v67) )
           return 1;
         break;
       case TOK_PEAKHOLD:
-        v68 = strlen(aPeakhold_0);
+        v68 = strlen((int)aPeakhold_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aPeakhold_0, v68) )
           return 1;
         break;
       case TOK_1KHZ:
-        v69 = strlen(a1khz_0);
+        v69 = strlen((int)a1khz_0);
         if ( write_bytes_to_log_file_and_cache_them_too(a1khz_0, v69) )
           return 1;
         break;
       case TOK_ACDC:
-        v70 = strlen(aAcdc_1);
+        v70 = strlen((int)aAcdc_1);
         if ( write_bytes_to_log_file_and_cache_them_too(aAcdc_1, v70) )
           return 1;
         break;
       case TOK_MAX:
-        v71 = strlen(aMax_0);
+        v71 = strlen((int)aMax_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMax_0, v71) )
           return 1;
         break;
       case TOK_MIN:
-        v72 = strlen(aMin_0);
+        v72 = strlen((int)aMin_0);
         if ( write_bytes_to_log_file_and_cache_them_too(aMin_0, v72) )
           return 1;
         break;
       case TOK_WRITE_NUM:
-        v73 = uint_to_ascii(num);
-        v74 = v73;
+        v73 = (int)uint_to_ascii(num);
+        v74 = (char *)v73;
         v75 = strlen(v73);
         if ( write_bytes_to_log_file_and_cache_them_too(v74, v75) )
           return 1;
@@ -14390,49 +14199,49 @@ signed int __fastcall write_log_token(LOG_TOKENS token, unsigned int num, unsign
         str_cache[38] = v76 % 10 + 48;
         str_cache[39] = ',';
         str_cache[40] = 0;
-        v77 = strlen(&str_cache[36]);
+        v77 = strlen((int)&str_cache[36]);
         if ( write_bytes_to_log_file_and_cache_them_too(&str_cache[36], v77) )
           return 1;
         break;
       case TOK_START_DATE:
         str_cache[0] = '2';
         str_cache[1] = '0';
-        str_cache[2] = log_start_year / 10 + 48;
-        str_cache[3] = (log_start_year % 10) + 48;
+        str_cache[2] = (unsigned __int8)log_start_year / 10 + 48;
+        str_cache[3] = (unsigned __int16)((unsigned __int8)log_start_year % 10) + 48;
         str_cache[4] = '/';
-        str_cache[5] = log_start_month / 10 + 48;
-        str_cache[6] = (log_start_month % 10) + 48;
+        str_cache[5] = (unsigned __int8)log_start_month / 10 + 48;
+        str_cache[6] = (unsigned __int16)((unsigned __int8)log_start_month % 10) + 48;
         str_cache[7] = '/';
-        str_cache[8] = log_start_day / 10 + 48;
-        str_cache[9] = (log_start_day % 10) + 48;
+        str_cache[8] = (unsigned __int8)log_start_day / 10 + 48;
+        str_cache[9] = (unsigned __int16)((unsigned __int8)log_start_day % 10) + 48;
         str_cache[10] = ',';
         str_cache[11] = 0;
-        v78 = strlen(str_cache);
+        v78 = strlen((int)str_cache);
         if ( write_bytes_to_log_file_and_cache_them_too(str_cache, v78) )
           return 1;
         break;
       case TOK_START_TIME:
-        str_cache[24] = log_start_hour / 10 + 48;
-        str_cache[25] = (log_start_hour % 10) + 48;
+        str_cache[24] = (unsigned __int8)log_start_hour / 10 + 48;
+        str_cache[25] = (unsigned __int16)((unsigned __int8)log_start_hour % 10) + 48;
         str_cache[26] = 58;
-        str_cache[27] = log_start_minute / 10 + 48;
-        str_cache[28] = (log_start_minute % 10) + 48;
+        str_cache[27] = (unsigned __int8)log_start_minute / 10 + 48;
+        str_cache[28] = (unsigned __int16)((unsigned __int8)log_start_minute % 10) + 48;
         str_cache[29] = 58;
-        str_cache[30] = log_start_second / 10 + 48;
-        str_cache[31] = (log_start_second % 10) + 48;
+        str_cache[30] = (unsigned __int8)log_start_second / 10 + 48;
+        str_cache[31] = (unsigned __int16)((unsigned __int8)log_start_second % 10) + 48;
         str_cache[32] = 44;
         str_cache[33] = 0;
-        v79 = strlen(&str_cache[24]);
+        v79 = strlen((int)&str_cache[24]);
         if ( write_bytes_to_log_file_and_cache_them_too(&str_cache[24], v79) )
           return 1;
         break;
       case TOK_CAL_DATE_AND_SERIAL:
-        conv_int_to_bcd_tmp(last_cal_year_month);
+        conv_uint_to_bcd_tmp((unsigned __int16)last_cal_year_month);
         str_cache[12] = LOBYTE(disp_bcd_tmp[1]) + 48;
         str_cache[13] = LOBYTE(disp_bcd_tmp[2]) + 48;
         str_cache[14] = LOBYTE(disp_bcd_tmp[3]) + 48;
         str_cache[15] = LOBYTE(disp_bcd_tmp[4]) + 48;
-        conv_int_to_bcd_tmp(curr_meter_serial);
+        conv_uint_to_bcd_tmp(curr_meter_serial);
         str_cache[16] = LOBYTE(disp_bcd_tmp[0]) + 48;
         str_cache[17] = LOBYTE(disp_bcd_tmp[1]) + 48;
         str_cache[18] = LOBYTE(disp_bcd_tmp[2]) + 48;
@@ -14440,13 +14249,13 @@ signed int __fastcall write_log_token(LOG_TOKENS token, unsigned int num, unsign
         str_cache[20] = LOBYTE(disp_bcd_tmp[4]) + 48;
         str_cache[21] = 44;
         str_cache[22] = 0;
-        v80 = strlen(&str_cache[12]);
+        v80 = strlen((int)&str_cache[12]);
         if ( write_bytes_to_log_file_and_cache_them_too(&str_cache[12], v80) )
           return 1;
         break;
       case TOK_WRITE_DEC_NUM:
-        v81 = uint_to_ascii_with_point(num, point);
-        v82 = v81;
+        v81 = (int)uint_to_ascii_with_point(num, point);
+        v82 = (char *)v81;
         v83 = strlen(v81);
         if ( write_bytes_to_log_file_and_cache_them_too(v82, v83) )
           return 1;
@@ -14455,13 +14264,12 @@ signed int __fastcall write_log_token(LOG_TOKENS token, unsigned int num, unsign
   }
   else
   {
-    v3 = strlen(asc_20000214);
+    v3 = strlen((int)asc_20000214);
     if ( write_bytes_to_log_file_and_cache_them_too(asc_20000214, v3) )
       return 1;
   }
   return 0;
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 // 2000380C: using guessed type int curr_meter_serial;
 // 20003890: using guessed type int disp_bcd_tmp[5];
 // 20003AB7: using guessed type char log_start_year;
@@ -14479,8 +14287,8 @@ signed int __fastcall write_bytes_to_log_file_and_cache_them_too(char *bytes, un
   signed int result; // r0@6
 
   v2 = count;
-  for ( i = 0; i < count; ++i )
-    sd_cal_buf[curr_log_cache_pos++] = bytes[i];
+  for ( i = 0; i < (unsigned int)count; ++i )
+    sd_cal_buf[(unsigned __int16)curr_log_cache_pos++] = bytes[i];
   f_op_err = f_write(&f_file_structure, bytes, count, &f_bytes_written_temp);
   if ( f_op_err || f_bytes_written_temp != v2 )
   {
@@ -14509,25 +14317,25 @@ int log_file_reread_and_verify()
 
   v0 = 8;
   v1 = 0;
-  f_op_err = f_open(&f_file_structure, log_curr_filename_ptr, FA_READ);
+  f_op_err = f_open(&f_file_structure, (char *)log_curr_filename_ptr, FA_READ);
   if ( !f_op_err )
   {
-    f_op_err = f_seek(&f_file_structure, log_file_start_pos);
+    f_op_err = f_seek((int)&f_file_structure, log_file_start_pos);
     if ( !f_op_err )
     {
       v2 = curr_log_cache_pos;
       while ( 1 )
       {
-        LOWORD(v3) = v2 <= 512 ? v2 : 512;
+        LOWORD(v3) = (signed int)(unsigned __int16)v2 <= 512 ? v2 : 512;
         v2 -= v3;
-        f_op_err = f_read(&f_file_structure, sd_readback_buf, v3, &f_bytes_read_temp);
-        if ( f_op_err || f_bytes_read_temp != v3 )
+        f_op_err = f_read(&f_file_structure, sd_readback_buf, (unsigned __int16)v3, &f_bytes_read_temp);
+        if ( f_op_err || f_bytes_read_temp != (unsigned __int16)v3 )
           break;
         v0 = 0;
         for ( i = 0; ; ++i )
         {
-          v3 = v3;
-          if ( i >= v3 )
+          v3 = (unsigned __int16)v3;
+          if ( i >= (unsigned int)(unsigned __int16)v3 )
             break;
           if ( *(&sd_cal_buf[i] + v1) != sd_readback_buf[i] )
           {
@@ -14546,8 +14354,8 @@ int log_file_reread_and_verify()
     }
   }
 LABEL_18:
-  f_close(&f_file_structure);
-  return v0;
+  f_close((int)&f_file_structure);
+  return (unsigned __int8)v0;
 }
 // 80149B4: using guessed type int log_file_reread_and_verify(void);
 // 200037E0: using guessed type int log_curr_filename_ptr;
@@ -14605,7 +14413,7 @@ char *__fastcall uint_to_ascii_with_point(unsigned int num, unsigned __int8 plac
     }
     ++v3;
   }
-  while ( v4 < 6 );
+  while ( (signed int)v4 < 6 );
   return result;
 }
 // 2000379E: using guessed type char uint_to_ascii_with_point_unused_0;
@@ -14619,18 +14427,18 @@ int __fastcall f_mount_tries(unsigned __int8 a1)
 
   v1 = a1;
   v2 = 0;
-  for ( i = 0; i < v1; ++i )
+  for ( i = 0; i < (unsigned int)v1; ++i )
   {
-    v2 = sub_8014B6E();
+    v2 = sd_sub_8014B6E();
     if ( !v2 )
       return 0;
   }
   return v2;
 }
-// 8014B6E: using guessed type int sub_8014B6E(void);
+// 8014B6E: using guessed type int sd_sub_8014B6E(void);
 
 //----- (08014B6E) --------------------------------------------------------
-int sub_8014B6E()
+int sd_sub_8014B6E()
 {
   char v0; // r4@1
   signed int v1; // r6@1
@@ -14641,7 +14449,7 @@ int sub_8014B6E()
   do
   {
     disable_sd_card_hw();
-    if ( !sub_8014BAA() )
+    if ( !sd_sub_8014BAA() )
       break;
     v2 = v1--;
   }
@@ -14655,44 +14463,44 @@ int sub_8014B6E()
   {
     v0 = 1;
   }
-  return v0;
+  return (unsigned __int8)v0;
 }
-// 8014B6E: using guessed type int sub_8014B6E(void);
+// 8014B6E: using guessed type int sd_sub_8014B6E(void);
 
 //----- (08014BAA) --------------------------------------------------------
-bool sub_8014BAA()
+bool sd_sub_8014BAA()
 {
-  sub_801EBD4();
-  return sub_801E1E0(0, &unk_20002938) != 0;
+  HAL_SD_Init();
+  return sub_801E1E0(0, (int)&unk_20002938) != 0;
 }
 
 //----- (08014CEC) --------------------------------------------------------
 void read_amp_lead_pos_then_update()
 {
-  char v0; // r4@1
-  char v1; // r5@1
+  char lead_pos; // r4@1
+  char lead_pos_valid; // r5@1
   char changed_amp_range; // r6@1
 
-  v0 = 0;
-  v1 = 0;
+  lead_pos = 0;
+  lead_pos_valid = 0;
   changed_amp_range = 0;
   if ( !(GPIOE.IDR & 0x400) )
-    v0 = 1;                                     // mA jack sensor
+    lead_pos = 1;                               // mA jack sensor
   if ( !(GPIOE.IDR & 0x800) )
-    v0 += 2;                                    // A jack sensor
-  if ( amp_lead_pos_last == v0 )
+    lead_pos += 2;                              // A jack sensor
+  if ( (unsigned __int8)amp_lead_pos_last == (unsigned __int8)lead_pos )
   {
     --amp_lead_pos_debounce_timer;
     if ( !amp_lead_pos_debounce_timer )
     {
       amp_lead_pos_debounce_timer = 10;
-      amp_lead_in_ma_jack_only = v0 == 1;
-      v1 = 1;
+      amp_lead_in_ma_jack_only = lead_pos == 1;
+      lead_pos_valid = 1;
     }
   }
   else
   {
-    amp_lead_pos_last = v0;
+    amp_lead_pos_last = lead_pos;
     amp_lead_pos_debounce_timer = 10;
   }
   if ( curr_meas_mode == MM_ACA && amp_lead_in_ma_jack_only )
@@ -14749,9 +14557,9 @@ void read_amp_lead_pos_then_update()
     meter_mode_changed = 1;
     meter_process_range_mode_changed(1);
   }
-  if ( v1 )
+  if ( lead_pos_valid )
   {
-    if ( v0 != 1 && v0 != 2 )
+    if ( lead_pos != 1 && lead_pos != 2 )
     {
       meter_amp_leads_incorrect = 0;
     }
@@ -14772,7 +14580,7 @@ void read_amp_lead_pos_then_update()
         {
           meter_set_amp_leads_incorrect();
         }
-        else if ( v0 == 2 )
+        else if ( lead_pos == 2 )
         {
           meter_set_amp_leads_incorrect();
         }
@@ -14851,20 +14659,17 @@ void update_mode_based_on_range_switch()
     curr_sys_error = 0;
     need_to_display_logging_ended = 0;
     meter_mode_changed = 1;
-    auto_hold_is_enabled = 0;
     manual_hold_is_enabled = 0;
+    auto_hold_is_enabled = 0;
     lcd_update_from_auto_hold = 0;
     auto_hold_need_to_unhold = 0;
-    TIM2_auto_hold_unhold_timer = 0;
+    TIM2_auto_hold_unhold_timer_1s = 0;
     auto_hold_holding = 0;
   }
 }
-// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer;
-// 20003AC3: using guessed type char curr_sys_error;
+// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer_1s;
 // 20003AC5: using guessed type char need_to_display_logging_ended;
-// 20003AF1: using guessed type char auto_hold_need_to_unhold;
 // 20003AF2: using guessed type char auto_hold_holding;
-// 20003AF4: using guessed type char lcd_update_from_auto_hold;
 
 //----- (08015052) --------------------------------------------------------
 void __fastcall meter_incr_mode()
@@ -14886,90 +14691,90 @@ void __fastcall meter_incr_mode()
   //   (switch controlled by lead position)
 
   did_change = 0;
-  scr_turn_off_many_segments();
+  subscr_turn_off_units();
   if ( curr_meas_mode == MM_DCV )
   {
     curr_meas_mode = MM_ACV;
     did_change = 1;
   }
-  else if ( curr_meas_mode >= MM_DCV )
+  else if ( curr_meas_mode >= (unsigned int)MM_DCV )
   {
     if ( curr_meas_mode == MM_DCmV )
     {
       curr_meas_mode = MM_ACmV;
       did_change = 1;
     }
-    else if ( curr_meas_mode >= MM_DCmV )
+    else if ( curr_meas_mode >= (unsigned int)MM_DCmV )
     {
       if ( curr_meas_mode == MM_TEMP )
       {
         curr_meas_mode = MM_DCmV;
         did_change = 1;
       }
-      else if ( curr_meas_mode >= MM_TEMP )
+      else if ( curr_meas_mode >= (unsigned int)MM_TEMP )
       {
         if ( curr_meas_mode == MM_mSEC )
         {
           curr_meas_mode = MM_DUTY;
           did_change = 1;
         }
-        else if ( curr_meas_mode >= MM_mSEC )
+        else if ( curr_meas_mode >= (unsigned int)MM_mSEC )
         {
           if ( curr_meas_mode == MM_OHMS )
           {
             curr_meas_mode = MM_CONTINUITY;
             did_change = 1;
           }
-          else if ( curr_meas_mode >= MM_OHMS )
+          else if ( curr_meas_mode >= (unsigned int)MM_OHMS )
           {
             if ( curr_meas_mode == MM_DIODE )
             {
               curr_meas_mode = MM_CAP;
               did_change = 1;
             }
-            else if ( curr_meas_mode >= MM_DIODE )
+            else if ( curr_meas_mode >= (unsigned int)MM_DIODE )
             {
               if ( curr_meas_mode == MM_ACuVA )
               {
                 curr_meas_mode = MM_DCuA;
                 did_change = 1;
               }
-              else if ( curr_meas_mode >= MM_ACuVA )
+              else if ( curr_meas_mode >= (unsigned int)MM_ACuVA )
               {
                 if ( curr_meas_mode == MM_ACVA )
                 {
                   curr_meas_mode = MM_DCVA;
                   did_change = 1;
                 }
-                else if ( curr_meas_mode >= MM_ACVA )
+                else if ( curr_meas_mode >= (unsigned int)MM_ACVA )
                 {
                   if ( curr_meas_mode == MM_DCuA )
                   {
                     curr_meas_mode = MM_ACuA;
                     did_change = 1;
                   }
-                  else if ( curr_meas_mode >= MM_DCuA )
+                  else if ( curr_meas_mode >= (unsigned int)MM_DCuA )
                   {
                     if ( curr_meas_mode == MM_DCmA )
                     {
                       curr_meas_mode = MM_ACmA;
                       did_change = 1;
                     }
-                    else if ( curr_meas_mode >= MM_DCmA )
+                    else if ( curr_meas_mode >= (unsigned int)MM_DCmA )
                     {
                       if ( curr_meas_mode == MM_DCA )
                       {
                         curr_meas_mode = MM_ACA;
                         did_change = 1;
                       }
-                      else if ( curr_meas_mode >= MM_DCA )
+                      else if ( curr_meas_mode >= (unsigned int)MM_DCA )
                       {
                         if ( curr_meas_mode == MM_DCmVA )
                         {
                           curr_meas_mode = MM_ACmVA;
                           did_change = 1;
                         }
-                        else if ( curr_meas_mode >= MM_DCmVA )
+                        else if ( curr_meas_mode >= (unsigned int)MM_DCmVA )
                         {
                           if ( curr_meas_mode == MM_DCVA )
                           {
@@ -15092,32 +14897,31 @@ void meter_enable_acv_dcv_mode()
 // 20003B53: using guessed type char meas_acv_dcv_ac_value_updated;
 // 20003B54: using guessed type char meas_acv_dcv_dc_value_updated;
 // 20003B55: using guessed type char acv_dcv_measuring_dc;
-// 20003B56: using guessed type char meas_acv_dcv_mode_switch_timer;
 
 //----- (080152C8) --------------------------------------------------------
 void meter_incr_range(void)
 {
-  if ( __PAIR__(manual_hold_is_enabled, auto_hold_is_enabled) )
+  if ( __PAIR__(auto_hold_is_enabled, manual_hold_is_enabled) )
   {
     beep_angrily();
   }
-  else if ( meter_in_cal_mode | autoranging_disabled )
+  else if ( (unsigned __int8)meter_in_cal_mode | (unsigned __int8)autoranging_disabled )
   {
-    if ( ranges_in_mode[curr_meas_mode] < 2 )
+    if ( (signed int)ranges_in_mode[(unsigned __int8)curr_meas_mode] < 2 )
     {
       beep_angrily();
     }
     else
     {
       ++curr_meas_range;
-      if ( curr_meas_range >= ranges_in_mode[curr_meas_mode] )
+      if ( curr_meas_range >= (unsigned int)ranges_in_mode[(unsigned __int8)curr_meas_mode] )
         curr_meas_range = 0;
       meter_range_changed = 1;
       calc_power_ranges(curr_meas_mode, curr_meas_range);
       beep_contentedly();
     }
   }
-  else if ( ranges_in_mode[curr_meas_mode] < 2 )
+  else if ( (signed int)ranges_in_mode[(unsigned __int8)curr_meas_mode] < 2 )
   {
     beep_angrily();
   }
@@ -15131,7 +14935,6 @@ void meter_incr_range(void)
     beep_contentedly();
   }
 }
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AEC: using guessed type char meter_range_changed;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
@@ -15147,8 +14950,8 @@ void __fastcall calc_power_ranges(meter_meas_mode mode, unsigned int range)
     || curr_meas_mode == MM_DCmVA
     || curr_meas_mode == MM_DCVA )
   {
-    range = range;
-    if ( range )
+    range = (unsigned __int8)range;
+    if ( (_BYTE)range )
     {
       if ( range == 2 )
       {
@@ -15238,17 +15041,16 @@ void read_range_switch(void)
   if ( range_switch_inputs == last_range_switch_bits )
   {
     ++range_switch_bounce_timer;
-    if ( range_switch_bounce_timer >= 5 )
+    if ( (signed int)range_switch_bounce_timer >= 5 )
     {
       range_switch_bounce_timer = 0;
-      if ( exactly_one_range_is_active(range_switch_inputs) )
+      if ( exactly_one_range_is_active(range_switch_inputs)
+        && curr_range_switch_bits != range_switch_inputs
+        && !range_switch_unbounce_timer )
       {
-        if ( curr_range_switch_bits != range_switch_inputs && !range_switch_unbounce_timer )
-        {
-          curr_range_switch_bits = range_switch_inputs;
-          range_switch_unbounce_timer = 15;
-          range_switch_was_switched = 1;
-        }
+        curr_range_switch_bits = range_switch_inputs;
+        range_switch_unbounce_timer = 15;
+        range_switch_was_switched = 1;
       }
     }
   }
@@ -15285,39 +15087,39 @@ void update_range_switch_inputs(void)
 // 40021C00: using guessed type GPIO_REGS GPIOG;
 
 //----- (08015628) --------------------------------------------------------
-void __fastcall bt_process_rx_button()
+void __fastcall bt_process_rxed_button()
 {
   meter_buttons v0; // r5@1
 
   v0 = 0;
-  bt_new_rx_button = 0;
+  bt_new_rxed_button = 0;
   curr_sys_error = 0;
   need_to_display_logging_ended = 0;
-  if ( bt_keycode_pressed == 1 )
+  if ( bt_pressed_keycode == 1 )
   {
     v0 = BTN_RANGE;
   }
-  else if ( bt_keycode_pressed >= 1u )
+  else if ( bt_pressed_keycode >= 1u )
   {
-    if ( bt_keycode_pressed == 3 )
+    if ( bt_pressed_keycode == 3 )
     {
       v0 = BTN_REL;
     }
-    else if ( bt_keycode_pressed >= 3u )
+    else if ( bt_pressed_keycode >= 3u )
     {
-      if ( bt_keycode_pressed == 5 )
+      if ( bt_pressed_keycode == 5 )
       {
         v0 = BTN_MODE;
       }
-      else if ( bt_keycode_pressed >= 5u )
+      else if ( bt_pressed_keycode >= 5u )
       {
-        if ( bt_keycode_pressed == 7 )
+        if ( bt_pressed_keycode == 7 )
         {
           v0 = BTN_MEM;
         }
-        else if ( bt_keycode_pressed >= 7u )
+        else if ( bt_pressed_keycode >= 7u )
         {
-          if ( bt_keycode_pressed == 8 )
+          if ( bt_pressed_keycode == 8 )
             v0 = BTN_SETUP;
         }
         else
@@ -15341,31 +15143,31 @@ void __fastcall bt_process_rx_button()
   }
   else
   {
-    if ( bt_keycode_pressed == 129 )
+    if ( bt_pressed_keycode == 129 )
     {
       v0 = BTN_RANGE;
     }
-    else if ( bt_keycode_pressed >= 0x81u )
+    else if ( bt_pressed_keycode >= 0x81u )
     {
-      if ( bt_keycode_pressed == 131 )
+      if ( bt_pressed_keycode == 131 )
       {
         v0 = BTN_REL;
       }
-      else if ( bt_keycode_pressed >= 0x83u )
+      else if ( bt_pressed_keycode >= 0x83u )
       {
-        if ( bt_keycode_pressed == 133 )
+        if ( bt_pressed_keycode == 133 )
         {
           v0 = BTN_MODE;
         }
-        else if ( bt_keycode_pressed >= 0x85u )
+        else if ( bt_pressed_keycode >= 0x85u )
         {
-          if ( bt_keycode_pressed == 135 )
+          if ( bt_pressed_keycode == 135 )
           {
             v0 = BTN_MEM;
           }
-          else if ( bt_keycode_pressed >= 0x87u )
+          else if ( bt_pressed_keycode >= 0x87u )
           {
-            if ( bt_keycode_pressed == 136 )
+            if ( bt_pressed_keycode == 136 )
               v0 = BTN_SETUP;
           }
           else
@@ -15387,15 +15189,13 @@ void __fastcall bt_process_rx_button()
       update_based_on_held_buttons(v0);
   }
 }
-// 20003AC3: using guessed type char curr_sys_error;
 // 20003AC5: using guessed type char need_to_display_logging_ended;
-// 20003B05: using guessed type char bt_new_rx_button;
-// 20003B09: using guessed type char bt_keycode_pressed;
+// 20003B05: using guessed type char bt_new_rxed_button;
 
 //----- (08015748) --------------------------------------------------------
 void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
 {
-  *&mask = mask;
+  *(_DWORD *)&mask = mask;
   if ( mask == BTN_MODE )
   {
     if ( logging_active | log_playback_mode )
@@ -15403,21 +15203,21 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
       beep_angrily();
       return;
     }
-    if ( sys_boot_button_delay_timer )
+    if ( sys_boot_button_delay_timer_1ms_unit )
     {
       if ( cal_manual_state || cal_sd_state )
       {
         if ( !cal_manual_state && cal_sd_state == 2 )
         {
           cal_sd_state = 3;
-          sys_boot_button_delay_timer = 5000;
+          sys_boot_button_delay_timer_1ms_unit = 5000;
           return;
         }
       }
       else
       {
         ++cal_manual_state;
-        sys_boot_button_delay_timer = 2000;
+        sys_boot_button_delay_timer_1ms_unit = 2000;
       }
     }
     else
@@ -15456,12 +15256,12 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
         switch ( mask )
         {
           case BTN_RANGE:
-            if ( sys_boot_button_delay_timer )
+            if ( sys_boot_button_delay_timer_1ms_unit )
             {
               if ( !cal_manual_state && !cal_sd_state )
               {
-                sys_boot_button_delay_timer = 2000;
-                turn_on_all_segments();
+                sys_boot_button_delay_timer_1ms_unit = 2000;
+                lcd_turn_on_all_segments();
                 update_lcd_if_appropriate();
               }
             }
@@ -15486,32 +15286,32 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
             }
             else
             {
-              if ( __PAIR__(manual_hold_is_enabled, auto_hold_is_enabled) )
+              if ( __PAIR__(auto_hold_is_enabled, manual_hold_is_enabled) )
               {
-                if ( auto_hold_is_enabled )
+                if ( manual_hold_is_enabled )
                 {
                   if ( curr_meas_mode != MM_HZ
                     && curr_meas_mode != MM_mSEC
                     && curr_meas_mode != MM_DUTY
                     && curr_meas_mode != MM_CAP )
                   {
-                    meas_enable_manual_hold(1, 0);
+                    meas_enable_auto_hold(1, 0);
                   }
                   else
                   {
-                    auto_hold_is_enabled = 0;
                     manual_hold_is_enabled = 0;
+                    auto_hold_is_enabled = 0;
                   }
                 }
                 else
                 {
-                  auto_hold_is_enabled = 0;
                   manual_hold_is_enabled = 0;
+                  auto_hold_is_enabled = 0;
                 }
               }
               else
               {
-                auto_hold_is_enabled = 1;
+                manual_hold_is_enabled = 1;
               }
               scr_update_autorange_icon(0);
               meter_min_max_mode = 0;
@@ -15521,7 +15321,7 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
             }
             break;
           case BTN_REL:
-            if ( sys_boot_button_delay_timer )
+            if ( sys_boot_button_delay_timer_1ms_unit )
             {
               if ( cal_manual_state != 1 || cal_sd_state )
               {
@@ -15529,13 +15329,13 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
                 {
                   cal_sd_state = 2;
                   cal_mode_save_to_sd = 1;
-                  sys_boot_button_delay_timer = 5000;
+                  sys_boot_button_delay_timer_1ms_unit = 5000;
                 }
               }
               else
               {
                 ++cal_manual_state;
-                sys_boot_button_delay_timer = 500;
+                sys_boot_button_delay_timer_1ms_unit = 500;
               }
             }
             else if ( setup_currently_editing )
@@ -15545,14 +15345,14 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
             else if ( log_playback_mode )
             {
               ++log_playback_pos;
-              if ( log_playback_window_end < log_playback_pos )
+              if ( log_playback_window_end < (unsigned int)(unsigned __int16)log_playback_pos )
                 log_playback_pos = 1;
               log_playback_mode_timeout = 0;
-              log_playback_show_pos(log_playback_pos);
+              log_playback_show_sample(log_playback_pos);
             }
             else
             {
-              if ( !(scr_overload_displayed & (rel_meas_enabled ^ 1)) )
+              if ( !((unsigned __int8)scr_overload_displayed & (unsigned __int8)(rel_meas_enabled ^ 1)) )
               {
                 rel_meas_enabled = rel_meas_enabled != 1;
                 rel_meas_got_rel_val = 0;
@@ -15568,19 +15368,19 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
               }
               scr_update_autorange_icon(0);
               meter_min_max_mode = 0;
-              auto_hold_is_enabled = 0;
               manual_hold_is_enabled = 0;
+              auto_hold_is_enabled = 0;
               hold_last_value_for_auto = 0;
               scr_update_rel_meas_icon(1);
             }
             beep_contentedly();
             break;
           case BTN_PEAK:
-            if ( sys_boot_button_delay_timer && !cal_manual_state && cal_sd_state == 1 )
+            if ( sys_boot_button_delay_timer_1ms_unit && !cal_manual_state && cal_sd_state == 1 )
             {
               cal_sd_state = 2;
               cal_mode_load_from_sd = 1;
-              sys_boot_button_delay_timer = 5000;
+              sys_boot_button_delay_timer_1ms_unit = 5000;
             }
             if ( setup_currently_editing )
             {
@@ -15593,7 +15393,7 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
                 log_playback_pos = log_playback_window_end;
               else
                 --log_playback_pos;
-              log_playback_show_pos(log_playback_pos);
+              log_playback_show_sample(log_playback_pos);
               log_playback_mode_timeout = 0;
               beep_contentedly();
             }
@@ -15627,7 +15427,7 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
       goto LABEL_46;
     }
     // BTN_SETUP
-    if ( !sys_boot_button_delay_timer )
+    if ( !sys_boot_button_delay_timer_1ms_unit )
     {
       if ( logging_active | log_playback_mode )
       {
@@ -15653,18 +15453,18 @@ void __fastcall update_based_on_pressed_buttons(meter_buttons mask)
       }
 LABEL_46:
       // BTN_MEM
-      if ( sys_boot_button_delay_timer )
+      if ( sys_boot_button_delay_timer_1ms_unit )
       {
         if ( !cal_manual_state && !cal_sd_state )
         {
           cal_sd_state = 1;
-          sys_boot_button_delay_timer = 5000;
+          sys_boot_button_delay_timer_1ms_unit = 5000;
           beep_contentedly();
         }
       }
       else if ( meter_in_cal_mode )
       {
-        if ( calibrating_offset | calibrating_gain )
+        if ( (unsigned __int8)calibrating_offset | (unsigned __int8)calibrating_gain )
         {
           beep_angrily();
         }
@@ -15696,7 +15496,7 @@ LABEL_46:
           subscr_set_decimal_point(0);
           read_logged_meas_mode_range_from_eeprom();
           scr_update_for_playback();
-          log_playback_show_pos(log_playback_pos);
+          log_playback_show_sample(log_playback_pos);
           load_log_start_time_from_eeprom_badly();
           load_log_end_time_from_eeprom_badly();
         }
@@ -15716,27 +15516,23 @@ LABEL_46:
     if ( !cal_manual_state && !cal_sd_state )
     {
       cal_manual_state = 3;
-      sys_boot_button_delay_timer = 500;
+      sys_boot_button_delay_timer_1ms_unit = 500;
     }
   }
 }
-// 2000021A: using guessed type __int16 sys_boot_button_delay_timer;
+// 2000021A: using guessed type __int16 sys_boot_button_delay_timer_1ms_unit;
 // 20003888: using guessed type int hold_last_value_for_auto;
 // 2000396C: using guessed type int peakhold_max_value;
 // 20003970: using guessed type int peakhold_min_value;
 // 20003A54: using guessed type __int16 log_playback_pos;
-// 20003A56: using guessed type __int16 log_playback_window_end;
 // 20003A5A: using guessed type __int16 log_playback_window_len;
 // 20003A5C: using guessed type __int16 log_samples_in_eeprom;
 // 20003A62: using guessed type __int16 log_playback_mode_timeout;
 // 20003A8F: using guessed type char autoranging_was_disabled_before_rel_meas_was_enabled;
 // 20003A9C: using guessed type char came_from_standby;
-// 20003A9D: using guessed type char logging_active;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AEA: using guessed type char scr_overload_displayed;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF5: using guessed type char rel_meas_enabled;
 // 20003AF6: using guessed type char rel_meas_got_rel_val;
 // 20003AFE: using guessed type char need_to_update_subscr;
@@ -15765,8 +15561,6 @@ void log_playback_mode_stop()
   scr_need_to_update_units_in_certain_modes = 1;
   need_to_update_subscr = 1;
 }
-// 20003AA0: using guessed type char log_playback_mode;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFD: using guessed type char scr_need_to_update_units_in_certain_modes;
@@ -15783,7 +15577,7 @@ void meter_incr_subscr_mode(void)
       --setup_serial_selected_digit;
     else
       setup_serial_selected_digit = 4;
-    setup_edit_timeout = 0;
+    setup_edit_timeout_2min = 0;
   }
   else if ( curr_meas_mode != MM_ACV || meter_mode_acv_dcv )
   {
@@ -15801,26 +15595,26 @@ void meter_incr_subscr_mode(void)
           if ( curr_meas_mode != MM_DIODE && curr_meas_mode != MM_CONTINUITY && curr_meas_mode != MM_ACmV )
           {
             ++curr_sub_mode;
-            if ( curr_sub_mode >= SM_SPL1 )
+            if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL1 )
               curr_sub_mode = 0;
           }
           else
           {
             ++curr_sub_mode;
-            if ( curr_sub_mode >= SM_SPL2 )
+            if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL2 )
               curr_sub_mode = 0;
           }
         }
         else if ( burden_enabled_for_current_ranges )
         {
           ++curr_sub_mode;
-          if ( curr_sub_mode >= SM_SPL3 )
+          if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL3 )
             curr_sub_mode = 0;
         }
         else
         {
           ++curr_sub_mode;
-          if ( curr_sub_mode >= SM_SPL2 )
+          if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL2 )
             curr_sub_mode = 0;
         }
       }
@@ -15831,7 +15625,7 @@ void meter_incr_subscr_mode(void)
         {
           edit_burden_enabled_for_current_ranges = burden_enabled_for_current_ranges;
         }
-        else if ( curr_sub_mode >= SM_SPL3 )
+        else if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL3 )
         {
           curr_sub_mode = 0;
         }
@@ -15846,23 +15640,23 @@ void meter_incr_subscr_mode(void)
       }
       else if ( burden_enabled_for_power_ranges )
       {
-        if ( curr_sub_mode >= 12 )
+        if ( (signed int)(unsigned __int8)curr_sub_mode >= 12 )
           curr_sub_mode = 0;
       }
-      else if ( curr_sub_mode >= SM_SPL3 )
+      else if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL3 )
       {
         curr_sub_mode = 0;
       }
       if ( curr_sub_mode == SM_SPL1 )
         subscr_update_power_amps_or_volts_display();
       if ( curr_sub_mode == SM_SPL3 )
-        burden_active_msg_showing_timer = 100;
+        burden_active_msg_showing_timer_1s = 100;
     }
   }
   else
   {
     ++curr_sub_mode;
-    if ( curr_sub_mode >= SM_SPL3 )
+    if ( (unsigned __int8)curr_sub_mode >= (signed int)SM_SPL3 )
       curr_sub_mode = 0;
   }
   switch ( curr_sub_mode )
@@ -15893,25 +15687,19 @@ void meter_incr_subscr_mode(void)
       break;
   }
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 // 2000380C: using guessed type int curr_meter_serial;
 // 20003810: using guessed type int edit_meter_serial;
 // 20003A5E: using guessed type __int16 edit_logging_interval;
 // 20003B0A: using guessed type char setup_currently_editing;
-// 20003B0C: using guessed type char setup_edit_timeout;
+// 20003B0C: using guessed type char setup_edit_timeout_2min;
 // 20003B0D: using guessed type char setup_serial_selected_digit;
 // 20003B3D: using guessed type char burden_enabled_for_current_ranges;
 // 20003B3E: using guessed type char edit_burden_enabled_for_current_ranges;
 // 20003B40: using guessed type char burden_enabled_for_power_ranges;
 // 20003B41: using guessed type char edit_burden_enabled_for_power_ranges;
-// 20003B42: using guessed type char burden_active_msg_showing_timer;
+// 20003B42: using guessed type char burden_active_msg_showing_timer_1s;
 // 20003B52: using guessed type char meter_mode_acv_dcv;
 // 20003B68: using guessed type char editing_rightside_time_val;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
 // 20003B6F: using guessed type char edit_year;
 // 20003B70: using guessed type char edit_month;
 // 20003B71: using guessed type char edit_day;
@@ -15930,9 +15718,9 @@ bool __fastcall cal_can_be_done(char cal_gain)
     goto LABEL_6;
   if ( curr_meas_mode != MM_HZ )
   {
-    if ( curr_meas_mode - MM_mSEC > 1 )
+    if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_mSEC > 1 )
     {
-      if ( curr_meas_mode - MM_DIODE > 1 )
+      if ( (unsigned int)(unsigned __int8)curr_meas_mode - MM_DIODE > 1 )
         return result;
       goto LABEL_7;
     }
@@ -15941,7 +15729,7 @@ LABEL_6:
     return result;
   }
 LABEL_7:
-  if ( !v1 && curr_meas_range >= 2 )
+  if ( !v1 && (signed int)curr_meas_range >= 2 )
     LOBYTE(result) = 1;
   return result;
 }
@@ -15960,9 +15748,9 @@ int __fastcall cal_start(char cal_gain)
   calibrating_gain_finished = 0;
   LOBYTE(result) = cal_prepare_ac_factor_calibration(cal_gain);
   v3 = result;
-  if ( result )
+  if ( (_BYTE)result )
   {
-    result = result;
+    result = (unsigned __int8)result;
   }
   else
   {
@@ -15990,9 +15778,9 @@ int __fastcall cal_start(char cal_gain)
 // 20003B2F: using guessed type char cal_countdown_timer;
 
 //----- (080161B4) --------------------------------------------------------
-int cal_calc_countdown_timer()
+unsigned __int8 __fastcall cal_calc_countdown_timer()
 {
-  int result; // r0@7
+  unsigned __int8 result; // r0@7
 
   if ( curr_meas_mode != MM_ACuVA
     && curr_meas_mode != MM_ACmVA
@@ -16000,30 +15788,30 @@ int cal_calc_countdown_timer()
     && curr_meas_mode != MM_DCuVA
     && curr_meas_mode != MM_DCmVA
     && curr_meas_mode != MM_DCVA )
-    LOBYTE(result) = 16;
+    result = 16;
   else
-    LOBYTE(result) = 4;
+    result = 4;
   return result;
 }
 
 //----- (080161FC) --------------------------------------------------------
-void __fastcall meas_enable_manual_hold(char should_enable_holding, char was_called_when_logging_started)
+void __fastcall meas_enable_auto_hold(char should_enable_holding, char was_called_when_logging_started)
 {
-  auto_hold_is_enabled = 0;
+  manual_hold_is_enabled = 0;
   if ( should_enable_holding )
   {
-    manual_hold_is_enabled = 1;
+    auto_hold_is_enabled = 1;
     auto_hold_need_to_unhold = 1;
     lcd_update_from_auto_hold = 1;
   }
   else
   {
-    manual_hold_is_enabled = 0;
+    auto_hold_is_enabled = 0;
     auto_hold_need_to_unhold = 0;
     lcd_update_from_auto_hold = 0;
   }
   auto_hold_holding = 0;
-  TIM2_auto_hold_unhold_timer = 0;
+  TIM2_auto_hold_unhold_timer_1s = 0;
   if ( was_called_when_logging_started == 1 )
   {
     scr_update_autorange_icon(0);
@@ -16032,11 +15820,8 @@ void __fastcall meas_enable_manual_hold(char should_enable_holding, char was_cal
     scr_update_hold_icons(1);
   }
 }
-// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer;
-// 20003AEE: using guessed type char meter_min_max_mode;
-// 20003AF1: using guessed type char auto_hold_need_to_unhold;
+// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer_1s;
 // 20003AF2: using guessed type char auto_hold_holding;
-// 20003AF4: using guessed type char lcd_update_from_auto_hold;
 // 20003AF5: using guessed type char rel_meas_enabled;
 
 //----- (0801626E) --------------------------------------------------------
@@ -16045,16 +15830,15 @@ void meter_incr_min_max_mode(void)
   if ( meter_min_max_mode )
   {
     ++meter_min_max_mode;
-    if ( meter_min_max_mode >= 5 )
+    if ( (signed int)meter_min_max_mode >= 5 )
       meter_min_max_mode = 1;
   }
   else
   {
     meter_enable_min_max_mode();
   }
-  scr_update_min_max_segs(1);
+  scr_update_min_max_icons(1);
 }
-// 20003AEE: using guessed type char meter_min_max_mode;
 
 //----- (080162A4) --------------------------------------------------------
 void __fastcall meter_enable_min_max_mode()
@@ -16071,7 +15855,6 @@ void __fastcall meter_enable_min_max_mode()
 // 2000387C: using guessed type int meter_min_max_avg;
 // 20003880: using guessed type int meter_min_max_avg_diff;
 // 20003884: using guessed type int meter_min_max_avg_count;
-// 20003AEE: using guessed type char meter_min_max_mode;
 
 //----- (080162E4) --------------------------------------------------------
 void __fastcall change_diode_voltage()
@@ -16079,7 +15862,7 @@ void __fastcall change_diode_voltage()
   high_voltage_diode = high_voltage_diode != 1;
   save_diode_voltage(high_voltage_diode);
   curr_scr_decimal_place = calc_decimal_place_for_mode_range(curr_meas_mode, curr_meas_range);
-  set_gpio_based_on_hv_diode(curr_meas_mode);
+  meas_hw_set_hv_diode(curr_meas_mode);
   update_max_digits_in_range();
   curr_sub_mode = SM_SPL1;
   need_to_update_subscr = 1;
@@ -16102,7 +15885,6 @@ void __fastcall change_apo_status(char direction)
   }
   need_to_update_subscr = 1;
 }
-// 20003ADD: using guessed type char curr_apo_off;
 // 20003AFE: using guessed type char need_to_update_subscr;
 
 //----- (08016384) --------------------------------------------------------
@@ -16110,7 +15892,7 @@ void __fastcall change_logging_interval(char direction)
 {
   if ( direction == 1 )
   {
-    if ( edit_logging_interval < 999 )
+    if ( (signed int)(unsigned __int16)edit_logging_interval < 999 )
       ++edit_logging_interval;
     else
       edit_logging_interval = 0;
@@ -16129,7 +15911,6 @@ void __fastcall change_logging_interval(char direction)
   }
   need_to_update_subscr = 1;
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 // 20003A5E: using guessed type __int16 edit_logging_interval;
 // 20003AFE: using guessed type char need_to_update_subscr;
 
@@ -16154,7 +15935,7 @@ void __fastcall change_lcd_contrast(char direction)
   {
     save_lcd_contrast(curr_lcd_contrast);
   }
-  init_the_lcd(curr_lcd_contrast, 0);
+  lcd_init(curr_lcd_contrast, 0);
   need_to_update_subscr = 1;
 }
 // 20000222: using guessed type char curr_lcd_contrast;
@@ -16183,7 +15964,7 @@ void __fastcall change_continuity_threshold(char direction)
   if ( direction == 1 )
   {
     ++curr_continuity_threshold;
-    if ( curr_continuity_threshold >= 4 )
+    if ( (signed int)(unsigned __int8)curr_continuity_threshold >= 4 )
       curr_continuity_threshold = 0;
   }
   else if ( direction == 2 )
@@ -16208,7 +15989,7 @@ void __fastcall change_year(char direction)
   if ( direction == 1 )
   {
     ++edit_year;
-    if ( edit_year >= 100 )
+    if ( (signed int)(unsigned __int8)edit_year >= 100 )
       edit_year = 0;
   }
   else if ( direction == 2 )
@@ -16222,15 +16003,12 @@ void __fastcall change_year(char direction)
   {
     curr_year = edit_year;
     curr_day = get_days_in_month_without_going_over(edit_year, curr_month, curr_day);
-    probably_write_time_to_rtc();
+    rtc_write_time();
     update_last_cal_year_month_and_save();
   }
   need_to_update_subscr = 1;
 }
 // 20003AFE: using guessed type char need_to_update_subscr;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
 // 20003B6F: using guessed type char edit_year;
 
 //----- (080165EC) --------------------------------------------------------
@@ -16246,12 +16024,12 @@ void __fastcall change_month_day(char direction)
     if ( v1 == 1 )
     {
       ++edit_day;
-      if ( v2 < edit_day )
+      if ( v2 < (unsigned int)(unsigned __int8)edit_day )
         edit_day = 1;
     }
     else if ( v1 == 2 )
     {
-      if ( edit_day >= 2 )
+      if ( (signed int)(unsigned __int8)edit_day >= 2 )
         --edit_day;
       else
         edit_day = v2;
@@ -16260,19 +16038,19 @@ void __fastcall change_month_day(char direction)
     {
       curr_day = edit_day;
       curr_day = get_days_in_month_without_going_over(curr_year, curr_month, edit_day);
-      probably_write_time_to_rtc();
+      rtc_write_time();
       editing_rightside_time_val = 0;
     }
   }
   else if ( direction == 1 )
   {
     ++edit_month;
-    if ( edit_month >= 13 )
+    if ( (signed int)(unsigned __int8)edit_month >= 13 )
       edit_month = 1;
   }
   else if ( direction == 2 )
   {
-    if ( edit_month >= 2 )
+    if ( (signed int)(unsigned __int8)edit_month >= 2 )
       --edit_month;
     else
       edit_month = 12;
@@ -16281,7 +16059,7 @@ void __fastcall change_month_day(char direction)
   {
     curr_month = edit_month;
     curr_day = get_days_in_month_without_going_over(curr_year, edit_month, curr_day);
-    probably_write_time_to_rtc();
+    rtc_write_time();
     update_last_cal_year_month_and_save();
     editing_rightside_time_val = 1;
     setup_currently_editing = 1;
@@ -16291,9 +16069,6 @@ void __fastcall change_month_day(char direction)
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B0A: using guessed type char setup_currently_editing;
 // 20003B68: using guessed type char editing_rightside_time_val;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
-// 20003B6B: using guessed type char curr_day;
 // 20003B70: using guessed type char edit_month;
 // 20003B71: using guessed type char edit_day;
 
@@ -16305,7 +16080,7 @@ void __fastcall change_hour_minute(char a1)
     if ( a1 == 1 )
     {
       ++edit_minute;
-      if ( edit_minute >= 60 )
+      if ( (signed int)(unsigned __int8)edit_minute >= 60 )
         edit_minute = 0;
     }
     else if ( a1 == 2 )
@@ -16318,14 +16093,14 @@ void __fastcall change_hour_minute(char a1)
     else
     {
       curr_minute = edit_minute;
-      probably_write_time_to_rtc();
+      rtc_write_time();
       editing_rightside_time_val = 0;
     }
   }
   else if ( a1 == 1 )
   {
     ++edit_hour;
-    if ( edit_hour >= 24 )
+    if ( (signed int)(unsigned __int8)edit_hour >= 24 )
       edit_hour = 0;
   }
   else if ( a1 == 2 )
@@ -16338,7 +16113,7 @@ void __fastcall change_hour_minute(char a1)
   else
   {
     curr_hour = edit_hour;
-    probably_write_time_to_rtc();
+    rtc_write_time();
     editing_rightside_time_val = 1;
     setup_currently_editing = 1;
   }
@@ -16347,8 +16122,6 @@ void __fastcall change_hour_minute(char a1)
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B0A: using guessed type char setup_currently_editing;
 // 20003B68: using guessed type char editing_rightside_time_val;
-// 20003B6C: using guessed type char curr_hour;
-// 20003B6D: using guessed type char curr_minute;
 // 20003B72: using guessed type char edit_hour;
 // 20003B73: using guessed type char edit_minute;
 
@@ -16362,8 +16135,6 @@ void __fastcall update_last_cal_year_month_and_save()
   }
 }
 // 20003B25: using guessed type char setting_last_cal_year_month;
-// 20003B69: using guessed type char curr_year;
-// 20003B6A: using guessed type char curr_month;
 
 //----- (08016848) --------------------------------------------------------
 void __fastcall change_meter_serial(char button)
@@ -16389,18 +16160,18 @@ void __fastcall change_meter_serial(char button)
     v6 = edit_meter_serial / 10000u;
     if ( button == 1 )
     {
-      v1 = serial_digits[setup_serial_selected_digit] + 1;
-      serial_digits[setup_serial_selected_digit] = v1;
+      v1 = serial_digits[(unsigned __int8)setup_serial_selected_digit] + 1;
+      serial_digits[(unsigned __int8)setup_serial_selected_digit] = v1;
       if ( v1 >= 10 )
-        serial_digits[setup_serial_selected_digit] = 0;
+        serial_digits[(unsigned __int8)setup_serial_selected_digit] = 0;
     }
-    else if ( serial_digits[setup_serial_selected_digit] )
+    else if ( serial_digits[(unsigned __int8)setup_serial_selected_digit] )
     {
-      --serial_digits[setup_serial_selected_digit];
+      --serial_digits[(unsigned __int8)setup_serial_selected_digit];
     }
     else
     {
-      serial_digits[setup_serial_selected_digit] = 9;
+      serial_digits[(unsigned __int8)setup_serial_selected_digit] = 9;
     }
     edit_meter_serial = serial_digits[0] + 1000 * v5 + 10000 * v6 + 100 * v4 + 10 * v3;
   }
@@ -16457,7 +16228,7 @@ void __fastcall change_burden_enabled_for_power_ranges(char a1)
 //----- (08016ABC) --------------------------------------------------------
 void __fastcall update_based_on_held_buttons(meter_buttons mask)
 {
-  *&mask = mask;
+  *(_DWORD *)&mask = mask;
   switch ( mask )
   {
     case BTN_MODE:
@@ -16482,7 +16253,7 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
       else if ( setup_menu_button_pressed(0) )
       {
         setup_currently_editing = setup_currently_editing != 1;
-        setup_edit_timeout = 0;
+        setup_edit_timeout_2min = 0;
         setup_serial_selected_digit = 4;
         beep_excitedly();
         if ( !setup_currently_editing )
@@ -16501,7 +16272,7 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
       else if ( meter_min_max_mode )
       {
         meter_min_max_mode = 0;
-        scr_update_min_max_segs(0);
+        scr_update_min_max_icons(0);
         beep_excitedly();
       }
       else
@@ -16554,7 +16325,7 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
         change_logging_enabled(1);
       break;
     case BTN_REL:
-      if ( (logging_active | log_playback_mode) | setup_currently_editing )
+      if ( (unsigned __int8)(logging_active | log_playback_mode) | (unsigned __int8)setup_currently_editing )
       {
         beep_angrily();
       }
@@ -16573,7 +16344,7 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
         else
         {
           curr_amp_rel += curr_scr_digits;
-          save_amp_rel(curr_meas_mode, curr_meas_range, curr_scr_digits);
+          cal_save_amp_rel(curr_meas_mode, curr_meas_range, curr_scr_digits);
           beep_excitedly();
         }
       }
@@ -16597,10 +16368,10 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
       else
       {
         bt_enabled = bt_enabled != 1;
-        maybe_new_time_from_bt = 0;
-        bt_new_rx_button = 0;
-        bt_keycode_pressed = 0;
-        update_usart2_power();
+        bt_set_the_time = 0;
+        bt_new_rxed_button = 0;
+        bt_pressed_keycode = 0;
+        update_bt_power();
         beep_excitedly();
       }
       break;
@@ -16613,18 +16384,14 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
 // 200038EC: using guessed type int curr_amp_rel;
 // 20003A6C: using guessed type __int16 backlight_related_var_maybe_auto_timeout_unused;
 // 20003A9C: using guessed type char came_from_standby;
-// 20003A9D: using guessed type char logging_active;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003AD3: using guessed type char bt_enabled;
-// 20003AD9: using guessed type char maybe_new_time_from_bt;
+// 20003AD9: using guessed type char bt_set_the_time;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AEC: using guessed type char meter_range_changed;
-// 20003AEE: using guessed type char meter_min_max_mode;
-// 20003B05: using guessed type char bt_new_rx_button;
-// 20003B09: using guessed type char bt_keycode_pressed;
+// 20003B05: using guessed type char bt_new_rxed_button;
 // 20003B0A: using guessed type char setup_currently_editing;
-// 20003B0C: using guessed type char setup_edit_timeout;
+// 20003B0C: using guessed type char setup_edit_timeout_2min;
 // 20003B0D: using guessed type char setup_serial_selected_digit;
 // 20003B16: using guessed type char backlight_on;
 // 20003B24: using guessed type char meter_in_cal_mode;
@@ -16639,8 +16406,8 @@ void __fastcall update_based_on_held_buttons(meter_buttons mask)
 void __fastcall change_logging_enabled(char activated_with_hold_held)
 {
   logging_active = logging_active != 1;
-  if ( activated_with_hold_held || manual_hold_is_enabled )
-    meas_enable_manual_hold(logging_active, 1);
+  if ( activated_with_hold_held || auto_hold_is_enabled )
+    meas_enable_auto_hold(logging_active, 1);
   if ( logging_active )
     logging_begin();
   else
@@ -16649,7 +16416,6 @@ void __fastcall change_logging_enabled(char activated_with_hold_held)
   scr_update_mem_icon(1);
   beep_excitedly();
 }
-// 20003A9D: using guessed type char logging_active;
 
 //----- (08016E4C) --------------------------------------------------------
 int __fastcall setup_menu_button_pressed(char button)
@@ -16662,7 +16428,7 @@ int __fastcall setup_menu_button_pressed(char button)
   // 2 = down pressed
   // 100 = SETUP held (save value)
   is_editable = 0;
-  setup_edit_timeout = 0;
+  setup_edit_timeout_2min = 0;
   if ( (curr_meas_mode == MM_ACuVA
      || curr_meas_mode == MM_ACmVA
      || curr_meas_mode == MM_ACVA
@@ -16760,20 +16526,19 @@ int __fastcall setup_menu_button_pressed(char button)
   {
     is_editable = 1;
   }
-  return is_editable;
+  return (unsigned __int8)is_editable;
 }
-// 20003B0C: using guessed type char setup_edit_timeout;
+// 20003B0C: using guessed type char setup_edit_timeout_2min;
 
 //----- (08017044) --------------------------------------------------------
 void __fastcall read_buttons_then_update()
 {
   read_buttons();
   update_based_on_buttons();
-  if ( bt_new_rx_button )
-    bt_process_rx_button();
+  if ( bt_new_rxed_button )
+    bt_process_rxed_button();
 }
-// 20003B05: using guessed type char bt_new_rx_button;
-// 20003B09: using guessed type char bt_keycode_pressed;
+// 20003B05: using guessed type char bt_new_rxed_button;
 
 //----- (08017064) --------------------------------------------------------
 void __fastcall update_based_on_buttons()
@@ -16793,7 +16558,6 @@ void __fastcall update_based_on_buttons()
     update_based_on_held_buttons(buttons_held);
   }
 }
-// 20003AC3: using guessed type char curr_sys_error;
 // 20003AC5: using guessed type char need_to_display_logging_ended;
 // 20003B03: using guessed type char new_buttons_pressed;
 // 20003B04: using guessed type char new_buttons_held;
@@ -16804,14 +16568,15 @@ void read_buttons(void)
   if ( button_check_timer )
     --button_check_timer;
   read_button_inputs();
-  if ( curr_button_input == last_button_input )
+  if ( (unsigned __int8)curr_button_input == (unsigned __int8)last_button_input )
   {
     ++button_debounce_timer;
-    if ( button_debounce_timer >= 2 )
+    if ( (signed int)(unsigned __int8)button_debounce_timer >= 2 )
     {
       if ( curr_button_input )
       {
-        if ( exactly_one_range_is_active(curr_button_input) || hold_and_mem_are_both_being_pressed(curr_button_input) )
+        if ( exactly_one_range_is_active(curr_button_input)
+          || hold_and_mem_are_both_being_pressed((meter_buttons)curr_button_input) )
         {
           if ( button_hold_timer )
           {
@@ -16820,15 +16585,15 @@ void read_buttons(void)
             {
               button_hold_timer = 51;
               button_delay_flag = 0;
-              if ( button_hold_is_being_held_with_mem(curr_button_input) )
+              if ( button_hold_is_being_held_with_mem((meter_buttons)curr_button_input) )
               {
                 new_buttons_held = 1;
                 buttons_held = curr_button_input;
                 button_check_timer = 10;
               }
             }
-            else if ( log_playback_mode | setup_currently_editing
-                   && (curr_button_input == BTN_REL || curr_button_input == BTN_PEAK) )
+            else if ( log_playback_mode | (unsigned __int8)setup_currently_editing
+                   && (curr_button_input == BTN_REL || (unsigned __int8)curr_button_input == BTN_PEAK) )
             {
               button_hold_timer = 1;
               button_auto_press_up_down(1);
@@ -16839,9 +16604,9 @@ void read_buttons(void)
             button_debounce_timer = 2;
             button_hold_timer = 1;
             button_auto_press_up_down(0);
-            if ( !sys_boot_button_delay_timer || cal_sd_state )
+            if ( !sys_boot_button_delay_timer_1ms_unit || cal_sd_state )
             {
-              if ( !log_playback_mode || curr_button_input != BTN_REL && curr_button_input != BTN_PEAK )
+              if ( !log_playback_mode || curr_button_input != BTN_REL && (unsigned __int8)curr_button_input != BTN_PEAK )
               {
                 button_delay_flag = 1;
                 button_delay_buttons = curr_button_input;
@@ -16878,17 +16643,15 @@ void read_buttons(void)
   }
 }
 // 80173D6: using guessed type int read_button_inputs(void);
-// 2000021A: using guessed type __int16 sys_boot_button_delay_timer;
+// 2000021A: using guessed type __int16 sys_boot_button_delay_timer_1ms_unit;
 // 20003A90: using guessed type char button_delay_flag;
 // 20003A91: using guessed type char button_debounce_timer;
 // 20003A92: using guessed type char last_button_input;
 // 20003A93: using guessed type char button_delay_buttons;
 // 20003A9F: using guessed type char maybe_logging_was_active_at_some_point;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003B03: using guessed type char new_buttons_pressed;
 // 20003B04: using guessed type char new_buttons_held;
 // 20003B06: using guessed type char curr_button_input;
-// 20003B09: using guessed type char bt_keycode_pressed;
 // 20003B0A: using guessed type char setup_currently_editing;
 // 20003B0E: using guessed type char button_hold_timer;
 // 20003B0F: using guessed type char button_check_timer;
@@ -16900,15 +16663,15 @@ void __fastcall button_auto_press_up_down(int activate)
   int v1; // r2@4
   char v2; // r1@8
 
-  if ( activate )
+  if ( (_BYTE)activate )
   {
     if ( button_repress_fast_counter )
     {
-      v1 = button_repress_fast_counter - 1;
-      if ( v1 <= 4 )
+      v1 = (unsigned __int8)button_repress_fast_counter - 1;
+      if ( (unsigned int)v1 <= 4 )
       {
         ++button_repress_counter;
-        if ( button_repress_counter >= 31 )
+        if ( (signed int)(unsigned __int8)button_repress_counter >= 31 )
         {
           ++button_repress_fast_counter;
           button_repress_counter = 0;
@@ -16919,7 +16682,7 @@ void __fastcall button_auto_press_up_down(int activate)
       else if ( v1 == 5 )
       {
         ++button_repress_counter;
-        if ( button_repress_counter >= 11 )
+        if ( (signed int)(unsigned __int8)button_repress_counter >= 11 )
         {
           button_repress_fast_counter = 6;
           button_repress_counter = 0;
@@ -16935,7 +16698,7 @@ void __fastcall button_auto_press_up_down(int activate)
       else
         v2 = 50;
       ++button_repress_counter;
-      if ( v2 < button_repress_counter )
+      if ( (unsigned __int8)v2 < (unsigned int)(unsigned __int8)button_repress_counter )
       {
         button_repress_fast_counter = 1;
         button_repress_counter = 0;
@@ -16952,7 +16715,6 @@ void __fastcall button_auto_press_up_down(int activate)
 }
 // 20003A94: using guessed type char button_repress_fast_counter;
 // 20003A95: using guessed type char button_repress_counter;
-// 20003AA0: using guessed type char log_playback_mode;
 // 20003B03: using guessed type char new_buttons_pressed;
 // 20003B06: using guessed type char curr_button_input;
 
@@ -16971,20 +16733,25 @@ int __fastcall button_hold_is_being_held_with_mem(meter_buttons a1)
     || v1 == BTN_RANGE
     || v1 == (BTN_HOLD|BTN_MEM)
     || v1 == BTN_REL
-    || v1 == BTN_PEAK )
+    || (unsigned __int8)v1 == BTN_PEAK )
     LOBYTE(result) = 1;
-  return result;
+  return (unsigned __int8)result;
 }
 
 //----- (08017388) --------------------------------------------------------
-int __fastcall exactly_one_range_is_active(unsigned __int8 range_switch_bits)
+bool __fastcall exactly_one_range_is_active(unsigned __int8 range_switch_bits)
 {
-  unsigned __int8 v1; // r1@1
-  int result; // r0@1
+  bool result; // r0@1
 
-  v1 = range_switch_bits;
   LOBYTE(result) = 0;
-  if ( v1 == 1 || v1 == 2 || v1 == 4 || v1 == 8 || v1 == 16 || v1 == 32 || v1 == 64 || v1 == 128 )
+  if ( range_switch_bits == 1
+    || range_switch_bits == 2
+    || range_switch_bits == 4
+    || range_switch_bits == 8
+    || range_switch_bits == 16
+    || range_switch_bits == 32
+    || range_switch_bits == 64
+    || range_switch_bits == 128 )
     LOBYTE(result) = 1;
   return result;
 }
@@ -16999,7 +16766,7 @@ int __fastcall hold_and_mem_are_both_being_pressed(meter_buttons a1)
   LOBYTE(result) = 0;
   if ( v1 == (BTN_HOLD|BTN_MEM) )
     LOBYTE(result) = 1;
-  return result;
+  return (unsigned __int8)result;
 }
 
 //----- (080173D6) --------------------------------------------------------
@@ -17025,7 +16792,7 @@ int read_button_inputs()
   result = LOWORD(GPIOG.IDR) << 16;
   if ( !(GPIOG.IDR & 0x8000) )
   {
-    result = curr_button_input | 0x80;
+    result = (unsigned __int8)curr_button_input | 0x80;
     curr_button_input |= 0x80u;
   }
   return result;
@@ -17099,7 +16866,7 @@ _DWORD *__fastcall read_bss_table_and_zero(_DWORD *a1)
       v5 += v1 - 1;
     do
     {
-      *v5 = 0;
+      *(_DWORD *)v5 = 0;
       v5 += 4;
       v3 -= 4;
     }
@@ -17169,16 +16936,16 @@ LABEL_8:
     v10 = bsig >> 8;
     v11 = v9 / v10;
     v12 = (v9 - v10 * (v9 / v10)) << 8;
-    v13 = v12 / v10 & 0xFFFF00FF | (v11 << 8);
+    v13 = v12 / v10 & 0xFFFF00FF | ((unsigned __int8)v11 << 8);
     v14 = (v12 - v10 * (v12 / v10)) << 8;
     v15 = v14 / v10 | (v13 << 8);
     v16 = __OFADD__(endexp, 127);
     v17 = endexp + 127;
-    if ( !(((v17 < 0) ^ v16) | (v17 == 0)) )
+    if ( !((unsigned __int8)((v17 < 0) ^ v16) | (v17 == 0)) )
     {
       if ( v17 < 254 )
       {
-        LODWORD(result) = (v17 << 23) + __CFSHL__(v17, 23) + (v3 | (v15 >> 1));
+        LODWORD(result) = (v17 << 23) + __CFSHL__(v17, 23) + (v3 | ((unsigned int)v15 >> 1));
         return result;
       }
       goto LABEL_20;
@@ -17194,7 +16961,7 @@ LABEL_8:
                       + ((v15 | 0x1000000u) >> v19);
       return result;
     }
-    return *&v3;
+    return *(float *)&v3;
   }
   v21 = aexp == 255;
   if ( aexp != 255 )
@@ -17242,7 +17009,7 @@ LABEL_20:
 LABEL_22:
     if ( v24 )
       v3 = ~bexp;
-    return *&v3;
+    return *(float *)&v3;
   }
   if ( aexp == 255 )
   {
@@ -17273,13 +17040,13 @@ int __fastcall fp_to_int(float a1)
   unsigned int v5; // r0@7
   char v6; // nf@12
 
-  if ( ((((2 * LODWORD(a1)) >> 24) - 127) & 0x80000000) != 0 )// abs(number) < 1
+  if ( ((((unsigned int)(2 * LODWORD(a1)) >> 24) - 127) & 0x80000000) != 0 )// abs(number) < 1
   {
     result = 0;
   }
   else
   {
-    shift = 158 - ((2 * LODWORD(a1)) >> 24);
+    shift = 158 - ((unsigned int)(2 * LODWORD(a1)) >> 24);
     if ( (shift & 0x80000000) != 0 )            // float is too big
     {
       v6 = SLODWORD(a1) < 0;
@@ -17336,14 +17103,14 @@ int __fastcall try_write_byte_to_eeprom_without_first_erasing(int addr, char dat
 
   v2 = addr;
   v3 = data;
-  v4 = wait_for_flash_to_not_be_busy(0x8000);
+  v4 = (unsigned __int8)wait_for_flash_to_not_be_busy(0x8000);
   if ( v4 == 4 )                                // success
   {
     FLASH_PECR &= 0xFFFFFEFF;                   // don't erase byte before programming (???)
-    *v2 = v3;
+    *(_BYTE *)v2 = v3;
     LOBYTE(v4) = wait_for_flash_to_not_be_busy(0x8000);
   }
-  return v4;
+  return (unsigned __int8)v4;
 }
 
 //----- (08017744) --------------------------------------------------------
@@ -17371,8 +17138,8 @@ void __fastcall probably_reprogram_brownout_level_or_otherwise_init_options(int 
 {
   unsigned int v1; // r6@1
 
-  v1 = (~((FLASH_OBR >> 16) & 0xF0 | a1) << 16) | (FLASH_OBR >> 16) & 0xF0 | a1;
-  if ( wait_for_flash_to_not_be_busy(0x8000) == 4 )
+  v1 = (~(((unsigned int)FLASH_OBR >> 16) & 0xF0 | (unsigned __int8)a1) << 16) | ((unsigned int)FLASH_OBR >> 16) & 0xF0 | (unsigned __int8)a1;
+  if ( (unsigned __int8)wait_for_flash_to_not_be_busy(0x8000) == 4 )
     v1FF80004 = v1;
   wait_for_flash_to_not_be_busy(0x8000);
 }
@@ -17381,7 +17148,7 @@ void __fastcall probably_reprogram_brownout_level_or_otherwise_init_options(int 
 //----- (080177CA) --------------------------------------------------------
 unsigned int get_brownout_level_from_option_bytes()
 {
-  return (FLASH_OBR >> 16) & 0xF;
+  return ((unsigned int)FLASH_OBR >> 16) & 0xF;
 }
 // 40023C1C: using guessed type int FLASH_OBR;
 
@@ -17413,7 +17180,7 @@ int get_flash_status()
   {
     LOBYTE(result) = 4;                         // success
   }
-  return result;
+  return (unsigned __int8)result;
 }
 // 40023C18: using guessed type int FLASH_SR;
 
@@ -17432,7 +17199,7 @@ int __fastcall wait_for_flash_to_not_be_busy(int how_long)
   }
   if ( !v1 )
     v3 = 5;                                     // timeout
-  return v3;
+  return (unsigned __int8)v3;
 }
 
 //----- (08017878) --------------------------------------------------------
@@ -17453,19 +17220,19 @@ unsigned int __fastcall config_usart(USART_REGS *USART, int a2)
 
   v2 = USART;
   v3 = a2;
-  v4 = *(a2 + 12);
-  LOWORD(USART->CR2) = *(a2 + 6) | USART->CR2 & 0xCFFF;
-  LOWORD(USART->CR1) = *(a2 + 4) | *(a2 + 8) | *(a2 + 10) | USART->CR1 & 0xE9F3;
-  LOWORD(v2->CR3) = *(a2 + 12) | v2->CR3 & 0xFCFF;
+  v4 = *(_WORD *)(a2 + 12);
+  LOWORD(USART->CR2) = *(_WORD *)(a2 + 6) | USART->CR2 & 0xCFFF;
+  LOWORD(USART->CR1) = *(_WORD *)(a2 + 4) | *(_WORD *)(a2 + 8) | *(_WORD *)(a2 + 10) | USART->CR1 & 0xE9F3;
+  LOWORD(v2->CR3) = *(_WORD *)(a2 + 12) | v2->CR3 & 0xFCFF;
   get_sys_clock_info(&info);
-  if ( v2 == 0x40013800 )
+  if ( v2 == (USART_REGS *)0x40013800 )
     v5 = v13;
   else
     v5 = v12;
   if ( v2->CR1 & 0x8000 )
-    v6 = 25 * v5 / (2 * *v3);
+    v6 = 25 * v5 / (unsigned int)(2 * *(_DWORD *)v3);
   else
-    v6 = 25 * v5 / (4 * *v3);
+    v6 = 25 * v5 / (unsigned int)(4 * *(_DWORD *)v3);
   v7 = 16 * (v6 / 0x64);
   v8 = v6 - 100 * (v6 / 0x64 & 0xFFFFFFF);
   if ( v2->CR1 & 0x8000 )
@@ -17500,7 +17267,7 @@ void __fastcall usart_write_data_reg(USART_REGS *USART, __int16 data)
 //----- (0801798C) --------------------------------------------------------
 int __fastcall sub_801798C(int a1)
 {
-  return *(a1 + 4) & 0x1FF;
+  return *(_WORD *)(a1 + 4) & 0x1FF;
 }
 
 //----- (08017994) --------------------------------------------------------
@@ -17514,20 +17281,20 @@ void __fastcall set_usart_control_bit(USART_REGS *USART, unsigned __int8 a2, cha
   v4 = 1 << (a2 & 0x1F);
   if ( v3 == 1 )
   {
-    v5 = &USART->CR1;
+    v5 = (char *)&USART->CR1;
   }
   else if ( v3 == 2 )
   {
-    v5 = &USART->CR2;
+    v5 = (char *)&USART->CR2;
   }
   else
   {
-    v5 = &USART->CR3;
+    v5 = (char *)&USART->CR3;
   }
   if ( a3 )
-    *v5 |= v4;
+    *(_DWORD *)v5 |= v4;
   else
-    *v5 &= ~v4;
+    *(_DWORD *)v5 &= ~v4;
 }
 
 //----- (080179EA) --------------------------------------------------------
@@ -17544,38 +17311,38 @@ int __fastcall sub_8017A08(int a1, __int16 a2)
   int v4; // r5@2
   int result; // r0@8
 
-  v2 = a2 >> 5;
+  v2 = (unsigned __int8)a2 >> 5;
   v3 = 1 << (a2 & 0x1F);
   if ( v2 == 1 )
   {
-    v4 = (v3 & *(a1 + 12));
+    v4 = (unsigned __int16)(v3 & *(_WORD *)(a1 + 12));
   }
   else if ( v2 == 2 )
   {
-    v4 = (v3 & *(a1 + 16));
+    v4 = (unsigned __int16)(v3 & *(_WORD *)(a1 + 16));
   }
   else
   {
-    v4 = (v3 & *(a1 + 20));
+    v4 = (unsigned __int16)(v3 & *(_WORD *)(a1 + 20));
   }
-  LOBYTE(result) = v4 && (1 << SHIBYTE(a2)) & *a1;
-  return result;
+  LOBYTE(result) = v4 && (1 << SHIBYTE(a2)) & *(_WORD *)a1;
+  return (unsigned __int8)result;
 }
 
 //----- (08017A76) --------------------------------------------------------
 int __fastcall sub_8017A76(int result, __int16 a2)
 {
-  *result = ~(1 << SHIBYTE(a2));
+  *(_WORD *)result = ~(unsigned __int16)(1 << SHIBYTE(a2));
   return result;
 }
 
 //----- (08017A9C) --------------------------------------------------------
 void __fastcall hy_read_update_and_do_cap_stuff()
 {
-  if ( GPIOF.IDR & 8 )                          // maybe HY asserts this pin on interrupt
+  if ( GPIOF.IDR & 8 )                          // has the HY sent an IRQ
     hy_read_regs_and_process_ints();
-  if ( curr_meas_mode == MM_CAP && curr_meas_range < 5 )// less than 10mF range
-    hy_update_cap_special();
+  if ( curr_meas_mode == MM_CAP && (signed int)curr_meas_range < 5 )// less than 10mF range
+    meas_process_cap_autorange();
 }
 // 40021800: using guessed type GPIO_REGS GPIOF;
 
@@ -17702,7 +17469,7 @@ int hy_get_AD1()
   int result; // r0@2
 
   hy_curr_AD1_unsigned = hy_regs_buf[0] + (hy_regs_buf[1] << 8) + (hy_regs_buf[2] << 16);
-  if ( hy_regs_buf[0] + (hy_regs_buf[1] << 8) + (hy_regs_buf[2] << 16) <= 0x800000 )
+  if ( hy_regs_buf[0] + (hy_regs_buf[1] << 8) + ((unsigned int)hy_regs_buf[2] << 16) <= 0x800000 )
     result = hy_curr_AD1_unsigned;
   else
     result = -(0xFFFFFF - hy_curr_AD1_unsigned);
@@ -17737,14 +17504,14 @@ int __fastcall hy_add_to_AD1_avg(int ad1)
   else
     hy_ad1_avg_sum = v1;
   ++hy_ad1_avg_ctr;
-  if ( hy_ad1_avg_ctr >= avgs )
+  if ( (unsigned __int8)hy_ad1_avg_ctr >= avgs )
   {
-    hy_AD1_avg = hy_ad1_avg_sum / hy_ad1_avg_ctr;
+    hy_AD1_avg = hy_ad1_avg_sum / (unsigned __int8)hy_ad1_avg_ctr;
     hy_ad1_avg_ctr = 0;
     hy_ad1_avg_sum = 0;
     LOBYTE(ad1) = 1;
   }
-  return ad1;
+  return (unsigned __int8)ad1;
 }
 // 200038B0: using guessed type int hy_ad1_avg_sum;
 // 200038B4: using guessed type int hy_AD1_avg;
@@ -17851,7 +17618,6 @@ void meter_process_new_lowz_meas()
 // 20000224: using guessed type char lowz_acdc_switch_timer;
 // 20000225: using guessed type char lowz_active_lockout_timer;
 // 20003858: using guessed type int curr_scr_digits;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003B32: using guessed type char lowz_measuring_ac;
 // 20003B33: using guessed type char lowz_active_cause_of_enough_volts;
@@ -17867,7 +17633,7 @@ void set_lowz_acdc_switch_counter()
 //----- (08017F96) --------------------------------------------------------
 void __fastcall meas_process_ac_amps()
 {
-  if ( meter_in_cal_mode | (burden_enabled_for_current_ranges ^ 1) )
+  if ( (unsigned __int8)meter_in_cal_mode | (unsigned __int8)(burden_enabled_for_current_ranges ^ 1) )
   {
     meas_process_ac_amps_core();
   }
@@ -17886,7 +17652,7 @@ void __fastcall meas_process_ac_amps()
     if ( meas_was_updated )
     {
       ++meas_amp_burden_timer;
-      if ( meas_amp_burden_timer > 6u )
+      if ( (unsigned __int8)meas_amp_burden_timer > 6u )
       {
         if ( measuring_amps_of_va_or_volts_of_burden )
         {
@@ -17913,7 +17679,6 @@ void __fastcall meas_process_ac_amps()
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 2000394C: using guessed type int burden_last_volts;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
@@ -17929,20 +17694,19 @@ void __fastcall prepare_reading_ac_amps(char measuring_burden_voltage)
 {
   if ( measuring_burden_voltage )
   {
-    config_hy_based_on_mode(MM_ACV, 0);
+    config_hy_based_on_mode_range(MM_ACV, 0);
     cal_load_factors_for_mode_and_range(MM_ACV, 0);
-    disable_hv_diode_and_configure_various_gpios(MM_ACV, 0);
+    meas_setup_hw(MM_ACV, 0);
   }
   else
   {
-    config_hy_based_on_mode(curr_meas_mode, curr_meas_range);
+    config_hy_based_on_mode_range(curr_meas_mode, curr_meas_range);
     cal_load_factors_for_mode_and_range(curr_meas_mode, curr_meas_range);
-    disable_hv_diode_and_configure_various_gpios(curr_meas_mode, curr_meas_range);
+    meas_setup_hw(curr_meas_mode, curr_meas_range);
   }
   meter_set_mode_range_change_delay();
   hy_change_CTA_val_timer = 0;
 }
-// 20003A76: using guessed type __int16 hy_change_CTA_val_timer;
 
 //----- (08018110) --------------------------------------------------------
 void __fastcall meas_process_ac_amps_core()
@@ -17979,7 +17743,7 @@ void __fastcall meas_process_ac_amps_core()
     }
     else
     {
-      sub_80182D6();
+      meas_display_ac_amps();
     }
     curr_scr_digits = meas_add_rolling_average_buf1(curr_scr_digits, 20, 10u);
     cal_save_scr_to_ac_factor();
@@ -17997,7 +17761,7 @@ void __fastcall meas_process_ac_amps_core()
      || curr_meas_mode == MM_DCuA
      || curr_meas_mode == MM_DCmA
      || curr_meas_mode == MM_DCA)
-    && curr_sub_mode == 9 )
+    && curr_sub_mode == SM_SPL1 )
     need_to_update_subscr = 1;
 }
 // 20003858: using guessed type int curr_scr_digits;
@@ -18005,14 +17769,13 @@ void __fastcall meas_process_ac_amps_core()
 // 200038B4: using guessed type int hy_AD1_avg;
 // 200038E8: using guessed type int cal_ac_offset_temp_result;
 // 200038EC: using guessed type int curr_amp_rel;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B28: using guessed type char calibrating_gain;
 
 //----- (080182D6) --------------------------------------------------------
-void __fastcall sub_80182D6()
+void __fastcall meas_display_ac_amps()
 {
   meas_calc_final_scr_digits();
   if ( curr_scr_digits < 0 )
@@ -18058,7 +17821,6 @@ void __fastcall meas_process_acmv()
 // 20003860: using guessed type int hy_curr_AD1;
 // 200038B4: using guessed type int hy_AD1_avg;
 // 200038E8: using guessed type int cal_ac_offset_temp_result;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B28: using guessed type char calibrating_gain;
@@ -18261,7 +18023,6 @@ int __fastcall meas_calc_ac_freq_dependent_offset(unsigned __int8 range, signed 
 // 20003870: using guessed type int ac_input_freq;
 // 20003940: using guessed type int ac_input_freq_acv;
 // 20003944: using guessed type int ac_input_freq_lowz;
-// 20003AE2: using guessed type char ac_input_freq_range;
 // 20003B32: using guessed type char lowz_measuring_ac;
 // 20003B3A: using guessed type char ac_input_freq_range_acv;
 // 20003B3B: using guessed type char ac_input_freq_range_lowz;
@@ -18283,7 +18044,6 @@ void __fastcall meas_calc_acv_subscr_vals()
   if ( curr_meas_mode == MM_ACV && curr_sub_mode == SM_SPL2 )
     need_to_update_subscr = 1;
 }
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B52: using guessed type char meter_mode_acv_dcv;
 // 20003B55: using guessed type char acv_dcv_measuring_dc;
@@ -18312,7 +18072,6 @@ void __fastcall meas_process_dcv()
 }
 // 20000224: using guessed type char lowz_acdc_switch_timer;
 // 20003858: using guessed type int curr_scr_digits;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 // 20003B52: using guessed type char meter_mode_acv_dcv;
 // 20003B55: using guessed type char acv_dcv_measuring_dc;
@@ -18329,7 +18088,6 @@ void __fastcall meas_process_dcmv()
   meas_calc_bargraph_digits();
 }
 // 20003858: using guessed type int curr_scr_digits;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 
 //----- (08018964) --------------------------------------------------------
@@ -18361,7 +18119,6 @@ void __fastcall meas_process_temp()
 // 2000385C: using guessed type int curr_bargraph_digits;
 // 2000395C: using guessed type int temp_offset;
 // 20003960: using guessed type int temp_meas_val;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003B43: using guessed type char temp_in_c;
 
@@ -18390,7 +18147,7 @@ void __fastcall meas_do_continuity(unsigned int bargraph_digits)
     else
     {
       continuity_beeping = 1;
-      beep_amount_of_time(100);
+      beep_ms(0x64u);
     }
   }
   else if ( v2 < v1 )
@@ -18400,7 +18157,7 @@ void __fastcall meas_do_continuity(unsigned int bargraph_digits)
   else
   {
     continuity_beeping = 1;
-    beep_amount_of_time(100);
+    beep_ms(0x64u);
   }
 }
 // 20003B4D: using guessed type char continuity_beeping;
@@ -18422,7 +18179,7 @@ signed int meas_calc_beep_threshold()
       {
         result = 30500;
       }
-      else if ( curr_continuity_threshold >= 2u )
+      else if ( (unsigned __int8)curr_continuity_threshold >= 2u )
       {
         if ( curr_continuity_threshold == 3 )
           result = 29500;
@@ -18437,11 +18194,11 @@ signed int meas_calc_beep_threshold()
       result = 3500;
     }
   }
-  else if ( curr_continuity_threshold <= 1u )
+  else if ( (unsigned __int8)curr_continuity_threshold <= 1u )
   {
     result = 3000;
   }
-  else if ( curr_continuity_threshold - 2 <= 1 )
+  else if ( (unsigned int)(unsigned __int8)curr_continuity_threshold - 2 <= 1 )
   {
     result = 30000;
   }
@@ -18463,7 +18220,7 @@ void __fastcall meas_process_ohms()
     meas_calc_final_scr_digits();
     if ( curr_scr_digits < 0 )
       curr_scr_digits = 0;
-    if ( curr_meas_range >= 2 && curr_meas_range < 4 )
+    if ( (signed int)curr_meas_range >= 2 && (signed int)curr_meas_range < 4 )
     {
       if ( curr_meas_range == 2 )
       {
@@ -18506,7 +18263,6 @@ void __fastcall meas_process_ohms()
 // 20003858: using guessed type int curr_scr_digits;
 // 2000385C: using guessed type int curr_bargraph_digits;
 // 200038F4: using guessed type int cal_ohms_50M_offset_factor;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 // 20003B24: using guessed type char meter_in_cal_mode;
 
@@ -18754,7 +18510,7 @@ int __fastcall meas_ohms_calc_50M_offset(int digits, int factor)
   meas_ohms_50M_offset_val = 0;
   if ( digits < 56000 )
   {
-    for ( i = 0; i < 13; ++i )
+    for ( i = 0; (signed int)i < 13; ++i )
     {
       if ( 1000 * cal_ohms_50M_factor_tbl[i] >= digits )
       {
@@ -18799,16 +18555,16 @@ void __fastcall meas_process_diode()
     if ( curr_scr_digits >= 1000 || curr_scr_digits < -999 )
     {
       if ( (meas_diode_last_digits + 1000 < curr_scr_digits || curr_scr_digits < meas_diode_last_digits - 1000)
-        && !meas_diode_reprocess_timer )
+        && !meas_diode_reprocess_timer_1s )
       {
         meas_diode_last_digits = curr_scr_digits;
-        meas_diode_reprocess_timer = 100;
+        meas_diode_reprocess_timer_1s = 100;
         beep_angrily();
       }
     }
     else
     {
-      beep_amount_of_time(500);
+      beep_ms(0x1F4u);
       meas_diode_last_digits = curr_scr_digits;
     }
     meas_was_updated = 1;
@@ -18820,15 +18576,14 @@ void __fastcall meas_process_diode()
 // 200037D4: using guessed type int meas_diode_last_digits;
 // 20003858: using guessed type int curr_scr_digits;
 // 2000385C: using guessed type int curr_bargraph_digits;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 // 20003B4B: using guessed type char high_voltage_diode;
-// 20003B4C: using guessed type char meas_diode_reprocess_timer;
+// 20003B4C: using guessed type char meas_diode_reprocess_timer_1s;
 
 //----- (08019000) --------------------------------------------------------
 void __fastcall meas_process_dc_amps()
 {
-  if ( meter_in_cal_mode | (burden_enabled_for_current_ranges ^ 1) )
+  if ( (unsigned __int8)meter_in_cal_mode | (unsigned __int8)(burden_enabled_for_current_ranges ^ 1) )
   {
     meas_process_dc_amps_core();
   }
@@ -18847,7 +18602,7 @@ void __fastcall meas_process_dc_amps()
     if ( meas_was_updated )
     {
       ++meas_amp_burden_timer;
-      if ( meas_amp_burden_timer > 3u )
+      if ( (unsigned __int8)meas_amp_burden_timer > 3u )
       {
         if ( measuring_amps_of_va_or_volts_of_burden )
         {
@@ -18874,7 +18629,6 @@ void __fastcall meas_process_dc_amps()
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 2000394C: using guessed type int burden_last_volts;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
@@ -18890,15 +18644,15 @@ void __fastcall prepare_reading_dc_amps(char measuring_burden_voltage)
 {
   if ( measuring_burden_voltage )
   {
-    config_hy_based_on_mode(MM_DCV, 0);
+    config_hy_based_on_mode_range(MM_DCV, 0);
     cal_load_factors_for_mode_and_range(MM_DCV, 0);
-    disable_hv_diode_and_configure_various_gpios(MM_DCV, 0);
+    meas_setup_hw(MM_DCV, 0);
   }
   else
   {
-    config_hy_based_on_mode(curr_meas_mode, curr_meas_range);
+    config_hy_based_on_mode_range(curr_meas_mode, curr_meas_range);
     cal_load_factors_for_mode_and_range(curr_meas_mode, curr_meas_range);
-    disable_hv_diode_and_configure_various_gpios(curr_meas_mode, curr_meas_range);
+    meas_setup_hw(curr_meas_mode, curr_meas_range);
   }
   meter_set_mode_range_change_delay();
 }
@@ -18926,7 +18680,6 @@ void __fastcall meas_process_dc_amps_core()
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 200038EC: using guessed type int curr_amp_rel;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B1C: using guessed type char hy_AD1_new_avg;
 
@@ -18991,14 +18744,14 @@ int __fastcall hy_update_rms_avg(int result)
   else
     hy_rms_avg_accu = v1;
   ++hy_rms_avg_count;
-  if ( hy_rms_avg_count >= 4 )
+  if ( (signed int)(unsigned __int8)hy_rms_avg_count >= 4 )
   {
-    hy_rms_avg_val = hy_rms_avg_accu / hy_rms_avg_count;
+    hy_rms_avg_val = hy_rms_avg_accu / (unsigned int)(unsigned __int8)hy_rms_avg_count;
     hy_rms_avg_count = 0;
     hy_rms_avg_accu = 0;
     LOBYTE(result) = 1;
   }
-  return result;
+  return (unsigned __int8)result;
 }
 // 200038C4: using guessed type int hy_rms_avg_accu;
 // 200038C8: using guessed type int hy_rms_avg_val;
@@ -19024,19 +18777,19 @@ int __fastcall meas_add_rolling_average_buf1(int num, int max_delta, unsigned __
   if ( meas_ara1_count )
   {
     ++meas_ara1_count;
-    if ( averages < meas_ara1_count )
+    if ( averages < (unsigned int)(unsigned __int8)meas_ara1_count )
       meas_ara1_count = averages;
-    for ( i = 1; i < meas_ara1_count; ++i )
-      meas_ara1_buf[meas_ara1_count - i] = meas_ara1_buf[meas_ara1_count - 1 - i];
+    for ( i = 1; i < (unsigned __int8)meas_ara1_count; ++i )
+      meas_ara1_buf[(unsigned __int8)meas_ara1_count - i] = meas_ara1_buf[(unsigned __int8)meas_ara1_count - 1 - i];
     meas_ara1_buf[0] = num;
-    for ( j = 0; j < meas_ara1_count; ++j )
+    for ( j = 0; j < (unsigned __int8)meas_ara1_count; ++j )
       v3 += meas_ara1_buf[j];
-    num = int64_div(v3, meas_ara1_count);
+    num = int64_div(v3, (unsigned __int8)meas_ara1_count);
     meas_ara1_last = num;
   }
   else
   {
-    meas_ara1_buf[meas_ara1_count++] = num;
+    meas_ara1_buf[(unsigned __int8)meas_ara1_count++] = num;
     meas_ara1_last = num;
   }
   return num;
@@ -19084,12 +18837,14 @@ void __fastcall meas_process_dc_va()
     else
       v0 = 3;
     ++meas_amp_burden_timer;
-    if ( v0 < meas_amp_burden_timer )
+    if ( (unsigned __int8)v0 < (unsigned int)(unsigned __int8)meas_amp_burden_timer )
     {
       meas_amp_burden_timer = 0;
-      if ( meter_in_cal_mode && measuring_amps_of_va_or_volts_of_burden && calibrating_offset | calibrating_gain )
+      if ( meter_in_cal_mode
+        && measuring_amps_of_va_or_volts_of_burden
+        && (unsigned __int8)calibrating_offset | (unsigned __int8)calibrating_gain )
       {
-        if ( cal_countdown_timer-- < 3 )
+        if ( (signed int)(unsigned __int8)cal_countdown_timer-- < 3 )
         {
           cal_dcva_volts_accu += meas_va_last_volts;
           cal_dcva_amps_accu += meas_va_last_amps;
@@ -19134,7 +18889,7 @@ void __fastcall meas_process_dc_va()
       if ( !meas_va_never_processed )
       {
         measuring_amps_of_va_or_volts_of_burden ^= 1u;
-        config_hy_load_cal_factors_then_do_cap_something(0);
+        meas_prepare_for_new_mode_range(0);
         calc_va_subscr_digits(meas_va_last_volts, meas_va_last_amps);
       }
       meas_was_updated = 1;
@@ -19164,8 +18919,6 @@ void __fastcall meas_process_dc_va()
 // 2000386C: using guessed type int meas_va_last_amps;
 // 20003904: using guessed type int cal_curr_offset_va_volts;
 // 20003908: using guessed type int cal_curr_offset_va_amps;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFE: using guessed type char need_to_update_subscr;
@@ -19214,12 +18967,14 @@ void __fastcall meas_process_ac_va()
     else
       v0 = 3;
     ++meas_amp_burden_timer;
-    if ( v0 < meas_amp_burden_timer )
+    if ( (unsigned __int8)v0 < (unsigned int)(unsigned __int8)meas_amp_burden_timer )
     {
       meas_amp_burden_timer = 0;
-      if ( meter_in_cal_mode && measuring_amps_of_va_or_volts_of_burden && calibrating_offset | calibrating_gain )
+      if ( meter_in_cal_mode
+        && measuring_amps_of_va_or_volts_of_burden
+        && (unsigned __int8)calibrating_offset | (unsigned __int8)calibrating_gain )
       {
-        if ( cal_countdown_timer-- < 3 )
+        if ( (signed int)(unsigned __int8)cal_countdown_timer-- < 3 )
         {
           cal_acva_volts_accu += meas_va_last_volts;
           cal_acva_amps_accu += meas_va_last_amps;
@@ -19264,7 +19019,7 @@ void __fastcall meas_process_ac_va()
       if ( !meas_va_never_processed )
       {
         measuring_amps_of_va_or_volts_of_burden ^= 1u;
-        config_hy_load_cal_factors_then_do_cap_something(0);
+        meas_prepare_for_new_mode_range(0);
         calc_va_subscr_digits(meas_va_last_volts, meas_va_last_amps);
       }
       meas_was_updated = 1;
@@ -19294,8 +19049,6 @@ void __fastcall meas_process_ac_va()
 // 2000386C: using guessed type int meas_va_last_amps;
 // 20003904: using guessed type int cal_curr_offset_va_volts;
 // 20003908: using guessed type int cal_curr_offset_va_amps;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFE: using guessed type char need_to_update_subscr;
@@ -19323,7 +19076,10 @@ void __fastcall update_power_volts(signed int a1)
   curr_power_volts_overflow = 0;
   if ( a1 < 55001 )
   {
-    if ( a1 < 3200 && !(meter_in_cal_mode | autoranging_disabled) && !meter_min_max_mode && curr_power_volts_range )
+    if ( a1 < 3200
+      && !((unsigned __int8)meter_in_cal_mode | (unsigned __int8)autoranging_disabled)
+      && !meter_min_max_mode
+      && curr_power_volts_range )
     {
       curr_power_volts_range = 0;
       curr_meas_range = get_meas_range_from_power_ranges();
@@ -19333,7 +19089,9 @@ void __fastcall update_power_volts(signed int a1)
   else
   {
     curr_power_volts_overflow = 1;
-    if ( !(meter_in_cal_mode | autoranging_disabled) && !meter_min_max_mode && !curr_power_volts_range )
+    if ( !((unsigned __int8)meter_in_cal_mode | (unsigned __int8)autoranging_disabled)
+      && !meter_min_max_mode
+      && !curr_power_volts_range )
     {
       curr_power_volts_range = 1;
       curr_meas_range = get_meas_range_from_power_ranges();
@@ -19345,9 +19103,7 @@ void __fastcall update_power_volts(signed int a1)
     need_to_update_subscr = 1;
 }
 // 2000398C: using guessed type int meter_power_volts;
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AE6: using guessed type char autoranging_disabled;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
 // 20003B24: using guessed type char meter_in_cal_mode;
@@ -19375,7 +19131,10 @@ void __fastcall update_power_amps(signed int a1)
   curr_power_amps_overflow = 0;
   if ( v2 >= a1 )
   {
-    if ( a1 < v3 && !(meter_in_cal_mode | autoranging_disabled) && !meter_min_max_mode && curr_power_amps_range )
+    if ( a1 < v3
+      && !((unsigned __int8)meter_in_cal_mode | (unsigned __int8)autoranging_disabled)
+      && !meter_min_max_mode
+      && curr_power_amps_range )
     {
       curr_power_amps_range = 0;
       curr_meas_range = get_meas_range_from_power_ranges();
@@ -19385,7 +19144,9 @@ void __fastcall update_power_amps(signed int a1)
   else
   {
     curr_power_amps_overflow = 1;
-    if ( !(meter_in_cal_mode | autoranging_disabled) && !meter_min_max_mode && !curr_power_amps_range )
+    if ( !((unsigned __int8)meter_in_cal_mode | (unsigned __int8)autoranging_disabled)
+      && !meter_min_max_mode
+      && !curr_power_amps_range )
     {
       curr_power_amps_range = 1;
       curr_meas_range = get_meas_range_from_power_ranges();
@@ -19414,9 +19175,7 @@ void __fastcall update_power_amps(signed int a1)
 }
 // 20003990: using guessed type int meter_power_amps;
 // 20003994: using guessed type int meter_power_amps_uVA_precise;
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AE6: using guessed type char autoranging_disabled;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
 // 20003B24: using guessed type char meter_in_cal_mode;
@@ -19438,7 +19197,7 @@ int __fastcall calc_va_subscr_digits(signed int a1, signed int a2)
   {
     if ( curr_meas_mode != MM_ACuVA && curr_meas_mode != MM_DCuVA )
     {
-      if ( curr_meas_range < 2 )
+      if ( (signed int)curr_meas_range < 2 )
         v4 = 100000LL;
       else
         v4 = 10000LL;
@@ -19453,7 +19212,7 @@ int __fastcall calc_va_subscr_digits(signed int a1, signed int a2)
     v4 = 100000LL;
   }
   HIDWORD(v3) = a2 >> 31;
-  v5 = a1 * v3;
+  v5 = (unsigned int)a1 * v3;
   HIDWORD(v5) += v2 * v3;
   result = int64_div(v5, v4);
   curr_scr_digits = result;
@@ -19473,24 +19232,23 @@ void __fastcall meas_acv_dcv_calc_next_mode(char dc)
   if ( dc )
   {
     ++meas_acv_dcv_mode_switch_timer;
-    if ( meas_acv_dcv_mode_switch_timer >= 3 )
+    if ( (signed int)meas_acv_dcv_mode_switch_timer >= 3 )
       meas_acv_dcv_switch_mode(0);
   }
   else
   {
     ++meas_acv_dcv_mode_switch_timer;
-    if ( meas_acv_dcv_mode_switch_timer >= 20 )
+    if ( (signed int)meas_acv_dcv_mode_switch_timer >= 20 )
       meas_acv_dcv_switch_mode(1);
   }
 }
-// 20003B56: using guessed type char meas_acv_dcv_mode_switch_timer;
 
 //----- (08019D5C) --------------------------------------------------------
-void __fastcall meas_acv_dcv_switch_mode(char dc)
+void __fastcall meas_acv_dcv_switch_mode(char to_dc)
 {
   meas_acv_dcv_mode_switch_timer = 0;
-  acv_dcv_measuring_dc = dc;
-  if ( dc == 1 )
+  acv_dcv_measuring_dc = to_dc;
+  if ( to_dc == 1 )
   {
     meas_acv_dcv_dc_value = curr_scr_digits;
     meas_acv_dcv_dc_value_updated = 1;
@@ -19500,7 +19258,7 @@ void __fastcall meas_acv_dcv_switch_mode(char dc)
     meas_acv_dcv_ac_value = curr_scr_digits;
     meas_acv_dcv_ac_value_updated = 1;
   }
-  if ( dc == 1 && meas_acv_dcv_ac_value_updated || !dc && meas_acv_dcv_dc_value_updated )
+  if ( to_dc == 1 && meas_acv_dcv_ac_value_updated || !to_dc && meas_acv_dcv_dc_value_updated )
   {
     meas_acv_dcv_calc_distance_between_ac_and_dc_as_if_they_were_vectors_90_degrees_apart();
     curr_scr_digits = meas_add_rolling_average_buf2(curr_scr_digits, 20, 10u);
@@ -19508,26 +19266,23 @@ void __fastcall meas_acv_dcv_switch_mode(char dc)
     need_to_update_bargraph = 1;
     curr_bargraph_digits = curr_scr_digits;
   }
-  config_hy_based_on_mode(curr_meas_mode, curr_meas_range);
+  config_hy_based_on_mode_range(curr_meas_mode, curr_meas_range);
   cal_load_factors_for_mode_and_range(curr_meas_mode, curr_meas_range);
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 2000385C: using guessed type int curr_bargraph_digits;
 // 2000397C: using guessed type int meas_acv_dcv_dc_value;
 // 20003980: using guessed type int meas_acv_dcv_ac_value;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003B53: using guessed type char meas_acv_dcv_ac_value_updated;
 // 20003B54: using guessed type char meas_acv_dcv_dc_value_updated;
 // 20003B55: using guessed type char acv_dcv_measuring_dc;
-// 20003B56: using guessed type char meas_acv_dcv_mode_switch_timer;
 
 //----- (08019E20) --------------------------------------------------------
-int meas_acv_dcv_calc_distance_between_ac_and_dc_as_if_they_were_vectors_90_degrees_apart()
+void __fastcall meas_acv_dcv_calc_distance_between_ac_and_dc_as_if_they_were_vectors_90_degrees_apart()
 {
   double v0; // r0@8
   double v1; // r0@8
-  int v3; // [sp+0h] [bp-8h]@0
 
   if ( meas_acv_dcv_dc_value < 0 )
     meas_acv_dcv_dc_value = -meas_acv_dcv_dc_value;
@@ -19545,7 +19300,6 @@ int meas_acv_dcv_calc_distance_between_ac_and_dc_as_if_they_were_vectors_90_degr
   {
     curr_scr_digits = 100000;
   }
-  return v3;
 }
 // 20003858: using guessed type int curr_scr_digits;
 // 2000397C: using guessed type int meas_acv_dcv_dc_value;
@@ -19628,7 +19382,7 @@ void hy_process_peak_hold(void)
         curr_scr_digits = ~hy_PKHMIN & 0x3FFFF;
         if ( !meter_mode_range_change_delay )
         {
-          if ( peakhold_min_value >= curr_scr_digits )
+          if ( peakhold_min_value >= (unsigned int)curr_scr_digits )
           {
             curr_scr_digits = peakhold_min_value;
           }
@@ -19640,7 +19394,7 @@ void hy_process_peak_hold(void)
         }
         meter_overflow_was_negative = 1;
       }
-      else if ( hy_PKHMAX < 0x40000 )
+      else if ( (unsigned int)hy_PKHMAX < 0x40000 )
       {
         curr_scr_digits = hy_PKHMAX;
         if ( calibrating_offset )
@@ -19661,7 +19415,7 @@ void hy_process_peak_hold(void)
             curr_scr_digits = meas_perform_gain_adj(curr_scr_digits);
             if ( !meter_in_cal_mode )
             {
-              if ( peakhold_max_value >= curr_scr_digits )
+              if ( peakhold_max_value >= (unsigned int)curr_scr_digits )
                 curr_scr_digits = peakhold_max_value;
               else
                 peakhold_max_value = curr_scr_digits;
@@ -19686,7 +19440,6 @@ void hy_process_peak_hold(void)
 // 2000396C: using guessed type int peakhold_max_value;
 // 20003970: using guessed type int peakhold_min_value;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFA: using guessed type char need_to_update_bargraph;
 // 20003B19: using guessed type char curr_hy_R29;
 // 20003B24: using guessed type char meter_in_cal_mode;
@@ -19729,7 +19482,7 @@ void __cdecl hy_process_CT_int()
   }
   meas_process_hz(1, ac_input_freq_range);
 LABEL_21:
-  TIM2_ac_input_freq_timed_out = 0;
+  freq_input_timeout_timer_10ms_unit = 0;
   if ( curr_meas_mode == MM_HZ || curr_meas_mode == MM_mSEC || curr_meas_mode == MM_DUTY )
     scr_need_to_refresh_meas_units_and_icons = 1;
   if ( curr_meas_mode == MM_ACuA
@@ -19749,9 +19502,7 @@ LABEL_21:
     && !burden_enabled_for_current_ranges )
     need_to_update_subscr = 1;
 }
-// 20003A74: using guessed type __int16 TIM2_ac_input_freq_timed_out;
-// 20003A76: using guessed type __int16 hy_change_CTA_val_timer;
-// 20003AE2: using guessed type char ac_input_freq_range;
+// 20003A74: using guessed type __int16 freq_input_timeout_timer_10ms_unit;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B3D: using guessed type char burden_enabled_for_current_ranges;
@@ -19787,25 +19538,25 @@ void __fastcall meas_process_hz(char for_ac_input, char ac_hz_range)
   meas_calc_curr_freq();
   meter_overflow_was_negative = 0;
   curr_scr_overflow = 0;
-  if ( for_ac_input || meter_in_cal_mode | (autoranging_disabled ^ 1) )
+  if ( for_ac_input || (unsigned __int8)meter_in_cal_mode | (unsigned __int8)(autoranging_disabled ^ 1) )
   {
-    if ( curr_freq_in_millihz < 1000000000 )
+    if ( (unsigned __int64)curr_freq_in_millihz < 1000000000 )
     {
-      if ( curr_freq_in_millihz < 100000000 )
+      if ( (unsigned __int64)curr_freq_in_millihz < 100000000 )
       {
-        if ( v3 != 4 || curr_freq_in_millihz < 80000000 )
+        if ( (unsigned __int8)v3 != 4 || (unsigned __int64)curr_freq_in_millihz < 80000000 )
         {
-          if ( curr_freq_in_millihz < 10000000 )
+          if ( (unsigned __int64)curr_freq_in_millihz < 10000000 )
           {
-            if ( v3 != 3 || curr_freq_in_millihz < 8000000 )
+            if ( (unsigned __int8)v3 != 3 || (unsigned __int64)curr_freq_in_millihz < 8000000 )
             {
-              if ( curr_freq_in_millihz < 1000000 )
+              if ( (unsigned __int64)curr_freq_in_millihz < 1000000 )
               {
-                if ( v3 != 2 || curr_freq_in_millihz < 800000 )
+                if ( (unsigned __int8)v3 != 2 || (unsigned __int64)curr_freq_in_millihz < 800000 )
                 {
-                  if ( curr_freq_in_millihz < 100000 )
+                  if ( (unsigned __int64)curr_freq_in_millihz < 100000 )
                   {
-                    if ( v3 != 1 || curr_freq_in_millihz < 80000 )
+                    if ( (unsigned __int8)v3 != 1 || (unsigned __int64)curr_freq_in_millihz < 80000 )
                       meas_calc_hz_digits(for_ac_input, 0);
                     else
                       meas_calc_hz_digits(for_ac_input, 1);
@@ -19852,39 +19603,39 @@ void __fastcall meas_process_hz(char for_ac_input, char ac_hz_range)
   }
   else
   {
-    v3 = v3;
-    if ( v3 )
+    v3 = (unsigned __int8)v3;
+    if ( (_BYTE)v3 )
     {
       if ( v3 == 2 )
       {
-        if ( curr_freq_in_millihz < 10000000 )
+        if ( (unsigned __int64)curr_freq_in_millihz < 10000000 )
           meas_calc_hz_digits(0, 2);
         else
           curr_scr_overflow = 1;
       }
       else if ( v3 < 2 )
       {
-        if ( curr_freq_in_millihz < 1000000 )
+        if ( (unsigned __int64)curr_freq_in_millihz < 1000000 )
           meas_calc_hz_digits(0, 1);
         else
           curr_scr_overflow = 1;
       }
       else if ( v3 == 4 )
       {
-        if ( curr_freq_in_millihz < 1000000000 )
+        if ( (unsigned __int64)curr_freq_in_millihz < 1000000000 )
           meas_calc_hz_digits(0, 4);
         else
           curr_scr_overflow = 1;
       }
       else if ( v3 < 4 )
       {
-        if ( curr_freq_in_millihz < 100000000 )
+        if ( (unsigned __int64)curr_freq_in_millihz < 100000000 )
           meas_calc_hz_digits(0, 3);
         else
           curr_scr_overflow = 1;
       }
     }
-    else if ( curr_freq_in_millihz < 100000 )
+    else if ( (unsigned __int64)curr_freq_in_millihz < 100000 )
     {
       meas_calc_hz_digits(0, 0);
     }
@@ -19903,8 +19654,6 @@ void __fastcall meas_process_hz(char for_ac_input, char ac_hz_range)
 // 20003AE3: using guessed type char curr_scr_decimal_place;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
 // 20003B24: using guessed type char meter_in_cal_mode;
 
@@ -19939,7 +19688,7 @@ void __fastcall meas_calc_hz_digits(char for_ac_input, char range)
       case 4:
         v2 = 4;
         v5 = curr_freq_in_millihz + 5000;
-        HIDWORD(v5) = (curr_freq_in_millihz + 5000) >> 32;
+        HIDWORD(v5) = (unsigned __int64)(curr_freq_in_millihz + 5000) >> 32;
         curr_freq_in_millihz = v5;
         v3 = uint64_div(v5, 10000uLL);
         break;
@@ -19977,8 +19726,6 @@ void __fastcall meas_calc_hz_digits(char for_ac_input, char range)
 // 20003870: using guessed type int ac_input_freq;
 // 20003940: using guessed type int ac_input_freq_acv;
 // 20003944: using guessed type int ac_input_freq_lowz;
-// 20003AE2: using guessed type char ac_input_freq_range;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AE9: using guessed type char ac_input_hz_overflow;
 // 20003B3A: using guessed type char ac_input_freq_range_acv;
 // 20003B3B: using guessed type char ac_input_freq_range_lowz;
@@ -19990,17 +19737,17 @@ int meas_process_msec()
 
   meter_overflow_was_negative = 0;
   meas_calc_msec();
-  if ( meter_in_cal_mode | (autoranging_disabled ^ 1) )
+  if ( (unsigned __int8)meter_in_cal_mode | (unsigned __int8)(autoranging_disabled ^ 1) )
   {
-    if ( curr_msec_val < 10000000 )
+    if ( (unsigned __int64)curr_msec_val < 10000000 )
     {
-      if ( curr_msec_val < 1000000 )
+      if ( (unsigned __int64)curr_msec_val < 1000000 )
       {
-        if ( curr_meas_range != 2 || curr_msec_val < 800000 )
+        if ( curr_meas_range != 2 || (unsigned __int64)curr_msec_val < 800000 )
         {
-          if ( curr_msec_val < 100000 )
+          if ( (unsigned __int64)curr_msec_val < 100000 )
           {
-            if ( curr_meas_range != 1 || curr_msec_val < 80000 )
+            if ( curr_meas_range != 1 || (unsigned __int64)curr_msec_val < 80000 )
               meas_set_msec_range_and_digits(0);
             else
               meas_set_msec_range_and_digits(1);
@@ -20029,20 +19776,20 @@ int meas_process_msec()
   {
     if ( curr_meas_range == 2 )
     {
-      if ( curr_msec_val < 10000000 )
+      if ( (unsigned __int64)curr_msec_val < 10000000 )
         meas_set_msec_range_and_digits(2);
       else
         curr_scr_overflow = 1;
     }
     else if ( curr_meas_range < 2u )
     {
-      if ( curr_msec_val < 1000000 )
+      if ( (unsigned __int64)curr_msec_val < 1000000 )
         meas_set_msec_range_and_digits(1);
       else
         curr_scr_overflow = 1;
     }
   }
-  else if ( curr_msec_val < 100000 )
+  else if ( (unsigned __int64)curr_msec_val < 100000 )
   {
     meas_set_msec_range_and_digits(0);
   }
@@ -20058,16 +19805,14 @@ int meas_process_msec()
 // 20003AE3: using guessed type char curr_scr_decimal_place;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AE8: using guessed type char curr_scr_overflow;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
 // 20003B24: using guessed type char meter_in_cal_mode;
 
 //----- (0801A9C8) --------------------------------------------------------
 void __fastcall meas_set_msec_range_and_digits(int a1)
 {
-  a1 = a1;
-  if ( a1 )
+  a1 = (unsigned __int8)a1;
+  if ( (_BYTE)a1 )
   {
     switch ( a1 )
     {
@@ -20093,7 +19838,6 @@ void __fastcall meas_set_msec_range_and_digits(int a1)
 }
 // 200037B8: using guessed type __int64 curr_msec_val;
 // 20003858: using guessed type int curr_scr_digits;
-// 20003AE8: using guessed type char curr_scr_overflow;
 
 //----- (0801AA5C) --------------------------------------------------------
 void __fastcall meas_process_duty()
@@ -20106,7 +19850,6 @@ void __fastcall meas_process_duty()
 // 20003858: using guessed type int curr_scr_digits;
 // 20003914: using guessed type int curr_duty_val;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AF9: using guessed type char meas_was_updated;
 
 //----- (0801AAB8) --------------------------------------------------------
 void meas_process_cap()
@@ -20121,17 +19864,17 @@ void meas_process_cap()
   meter_overflow_was_negative = 0;
   if ( curr_meas_range == 5 )
   {
-    curr_cap_val = hy_curr_CTC_duty / hy_curr_CTB_freqdata;
+    curr_cap_val = hy_curr_CTC_duty / (unsigned int)hy_curr_CTB_freqdata;
   }
-  else if ( curr_meas_range >= 2 )
+  else if ( (signed int)curr_meas_range >= 2 )
   {
-    curr_cap_val = 100 * hy_curr_CTC_duty / hy_curr_CTB_freqdata;
+    curr_cap_val = 100 * hy_curr_CTC_duty / (unsigned int)hy_curr_CTB_freqdata;
   }
   else
   {
-    curr_cap_val = hy_curr_CTC_duty / hy_curr_CTB_freqdata;
+    curr_cap_val = hy_curr_CTC_duty / (unsigned int)hy_curr_CTB_freqdata;
   }
-  if ( curr_meas_range >= 2 )
+  if ( (signed int)curr_meas_range >= 2 )
   {
     if ( calibrating_gain )
     {
@@ -20154,7 +19897,7 @@ void meas_process_cap()
   }
   else
   {
-    if ( cal_curr_offset_val < curr_cap_val )
+    if ( cal_curr_offset_val < (unsigned int)curr_cap_val )
       curr_cap_val -= cal_curr_offset_val;
     else
       curr_cap_val = 0;
@@ -20166,17 +19909,17 @@ void meas_process_cap()
       curr_cap_val = fp_to_uint(v2);
     }
   }
-  if ( curr_meas_range < 5 )
+  if ( (signed int)curr_meas_range < 5 )
     curr_cap_val /= 10u;
   if ( curr_meas_range == 5 )
     v5 = curr_cap_val / 10u;
   else
     v5 = curr_cap_val / 50u;
-  if ( v5 < 20 )
+  if ( (signed int)(unsigned __int16)v5 < 20 )
     LOWORD(v5) = 20;
-  curr_scr_digits = meas_add_rolling_average_buf2(curr_cap_val, v5, 10u);
+  curr_scr_digits = meas_add_rolling_average_buf2(curr_cap_val, (unsigned __int16)v5, 10u);
   meas_was_updated = 1;
-  update_cap_something_based_on_range();
+  meas_cap_reset_no_reading_timeout_timer();
 }
 // 200037DC: using guessed type int cap_offset_temp;
 // 20003858: using guessed type int curr_scr_digits;
@@ -20185,26 +19928,28 @@ void meas_process_cap()
 // 20003924: using guessed type int hy_curr_CTC_duty;
 // 20003948: using guessed type int curr_cap_val;
 // 20003AE7: using guessed type char meter_overflow_was_negative;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B26: using guessed type char calibrating_offset;
 // 20003B28: using guessed type char calibrating_gain;
 
 //----- (0801AC74) --------------------------------------------------------
-void __cdecl hy_update_cap_special()
+void __cdecl meas_process_cap_autorange()
 {
-  if ( meas_cap_maybe_recheck_timer_elapsed )
+  // if we didn't get a reading on the cap range
+  // increase the range so that the cap will charge faster
+  // and we can detect it without waiting forever
+  if ( meas_cap_no_reading_timeout_elapsed )
   {
-    meas_cap_maybe_recheck_timer_elapsed = 0;
-    if ( autoranging_disabled | meter_in_cal_mode )
+    meas_cap_no_reading_timeout_elapsed = 0;
+    if ( (unsigned __int8)autoranging_disabled | (unsigned __int8)meter_in_cal_mode )
     {
       curr_scr_overflow = 1;
       meas_was_updated = 1;
     }
-    else                                        // bound range to microfards
+    else
     {
-      if ( curr_meas_range >= 2 )               // >= 1uF
+      if ( (signed int)curr_meas_range >= 2 )
       {
-        if ( curr_meas_range < 5 )              // < 10mF
+        if ( (signed int)curr_meas_range < 5 )
           curr_meas_range = 5;
       }
       else
@@ -20217,15 +19962,12 @@ void __cdecl hy_update_cap_special()
     }
   }
 }
-// 20003AE5: using guessed type char curr_bargraph_bars;
 // 20003AE6: using guessed type char autoranging_disabled;
-// 20003AE8: using guessed type char curr_scr_overflow;
 // 20003AEC: using guessed type char meter_range_changed;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003B17: using guessed type char hy_cap_related_always_set_to_zero;
 // 20003B23: using guessed type char cal_mode_load_from_sd;
 // 20003B24: using guessed type char meter_in_cal_mode;
-// 20003B3C: using guessed type char meas_cap_maybe_recheck_timer_elapsed;
+// 20003B3C: using guessed type char meas_cap_no_reading_timeout_elapsed;
 
 //----- (0801ACE8) --------------------------------------------------------
 void __fastcall meas_calc_curr_freq()
@@ -20236,10 +19978,10 @@ void __fastcall meas_calc_curr_freq()
 
   if ( calibrating_gain && curr_meas_mode == MM_HZ )
     cal_update_sysclk();
-  v0 = hy_curr_CTB_freqdata * hy_sysclk_in_decihz;
-  v1 = uint64_div(hy_ctr_cyc_elapsed, 10uLL);
+  v0 = (unsigned int)hy_curr_CTB_freqdata * (signed __int64)hy_sysclk_in_decihz;
+  v1 = uint64_div((unsigned int)hy_ctr_cyc_elapsed, 10uLL);
   v2 = 10 * v0;
-  HIDWORD(v2) = (10 * v0) >> 32;
+  HIDWORD(v2) = (unsigned __int64)(10 * v0) >> 32;
   curr_freq_in_millihz = uint64_div(v2, v1);
 }
 // 200037B0: using guessed type __int64 curr_freq_in_millihz;
@@ -20255,10 +19997,10 @@ void __fastcall meas_calc_msec()
   unsigned __int64 v2; // r0@1
   unsigned __int64 v3; // r2@1
 
-  v0 = 100000LL * hy_ctr_cyc_elapsed;
-  v1 = hy_curr_CTB_freqdata;
+  v0 = 100000LL * (unsigned int)hy_ctr_cyc_elapsed;
+  v1 = (unsigned int)hy_curr_CTB_freqdata;
   v2 = uint64_div(hy_sysclk_in_decihz, 1000uLL);
-  v3 = v2 * v1;
+  v3 = (unsigned int)v2 * v1;
   HIDWORD(v3) += HIDWORD(v2) * v1;
   curr_msec_val = uint64_div(v0, v3);
 }
@@ -20279,7 +20021,9 @@ void __cdecl meas_calc_duty()
 void __fastcall cal_update_sysclk()
 {
   calibrating_gain = 0;
-  hy_sysclk_in_decihz = uint64_div(150000000LL * hy_ctr_cyc_elapsed, (100 * hy_curr_CTB_freqdata));
+  hy_sysclk_in_decihz = uint64_div(
+                          150000000LL * (unsigned int)hy_ctr_cyc_elapsed,
+                          (unsigned int)(100 * hy_curr_CTB_freqdata));
   cal_write_factor(1, hy_sysclk_in_decihz);
 }
 // 20003920: using guessed type int hy_curr_CTB_freqdata;
@@ -20303,19 +20047,19 @@ int __fastcall meas_add_rolling_average_buf2(int num, int max_delta, unsigned __
     if ( meas_ara2_count )
     {
       ++meas_ara2_count;
-      if ( averages < meas_ara2_count )
+      if ( averages < (unsigned int)(unsigned __int8)meas_ara2_count )
         meas_ara2_count = averages;
-      for ( i = 1; i < meas_ara2_count; ++i )
-        meas_ara2_buf[meas_ara2_count - i] = meas_ara2_buf[meas_ara2_count - 1 - i];
+      for ( i = 1; i < (unsigned __int8)meas_ara2_count; ++i )
+        meas_ara2_buf[(unsigned __int8)meas_ara2_count - i] = meas_ara2_buf[(unsigned __int8)meas_ara2_count - 1 - i];
       meas_ara2_buf[0] = num;
-      for ( j = 0; j < meas_ara2_count; ++j )
+      for ( j = 0; j < (unsigned __int8)meas_ara2_count; ++j )
         v3 += meas_ara2_buf[j];
-      num = int64_div(v3, meas_ara2_count);
+      num = int64_div(v3, (unsigned __int8)meas_ara2_count);
       meas_ara2_last = num;
     }
     else
     {
-      meas_ara2_buf[meas_ara2_count++] = num;
+      meas_ara2_buf[(unsigned __int8)meas_ara2_count++] = num;
       meas_ara2_last = num;
     }
   }
@@ -20357,7 +20101,7 @@ int __fastcall meas_process_burden_volts(int result)
 // 20003958: using guessed type int dword_20003958;
 
 //----- (0801B050) --------------------------------------------------------
-void __fastcall config_hy_based_on_mode(meter_meas_mode mode, unsigned __int8 range)
+void __fastcall config_hy_based_on_mode_range(meter_meas_mode mode, unsigned __int8 range)
 {
   meter_meas_mode v2; // r4@1
 
@@ -20381,11 +20125,29 @@ void __fastcall hy_set_regs_from_table(meter_meas_mode mode, unsigned __int8 ran
     {
       if ( mode == MM_ACV )
       {
-        if...
+        if ( meter_mode_acv_dcv )
+        {
+          if ( acv_dcv_measuring_dc )
+            regs[i] = hy_regtbl_dcv[range][i];
+          else
+            regs[i] = hy_regtbl_acv[range][i];
+        }
+        else if ( input_lpf_enabled )
+        {
+          regs[i] = hy_regtbl_acv[range][i];
+        }
+        else if ( input_1ms_peak_enabled )
+        {
+          regs[i] = hy_regtbl_acv_1ms_peak[range][i];
+        }
+        else
+        {
+          regs[i] = hy_regtbl_acv[range][i];
+        }
       }
       else
       {
-        if ( mode < MM_ACV )
+        if ( mode < (unsigned int)MM_ACV )
         {
           regs[i] = hy_regtbl_dcv[range][i];    // DCV
           continue;
@@ -20407,19 +20169,19 @@ void __fastcall hy_set_regs_from_table(meter_meas_mode mode, unsigned __int8 ran
         }
         else
         {
-          if ( mode < MM_ACmV )
+          if ( mode < (unsigned int)MM_ACmV )
           {
             regs[i] = hy_regtbl_dcmv[range][i]; // DCmV
             continue;
           }
           if ( mode == MM_HZ )
             goto LABEL_91;
-          if ( mode < MM_HZ )
+          if ( mode < (unsigned int)MM_HZ )
           {
             regs[i] = hy_regtbl_dcmv[0][i];     // TEMP
             continue;
           }
-          if ( mode == MM_DUTY || mode < MM_DUTY )// DUTY or mS
+          if ( mode == MM_DUTY || mode < (unsigned int)MM_DUTY )// DUTY or mS
           {
 LABEL_91:
             regs[i] = hy_regtbl_freq[i];
@@ -20430,7 +20192,7 @@ LABEL_91:
             regs[i] = hy_regtbl_continuity[i];
             continue;
           }
-          if ( mode < MM_CONTINUITY )           // OHMS
+          if ( mode < (unsigned int)MM_CONTINUITY )// OHMS
           {
             regs[i] = hy_regtbl_ohms[range][i];
             continue;
@@ -20440,7 +20202,7 @@ LABEL_91:
             regs[i] = hy_regtbl_cap[range][i];
             continue;
           }
-          if ( mode < MM_CAP )                  // DIODE
+          if ( mode < (unsigned int)MM_CAP )    // DIODE
           {
             regs[i] = hy_regtbl_diode[range][i];
             continue;
@@ -20448,22 +20210,22 @@ LABEL_91:
           if ( mode == MM_ACmVA )
           {
             if ( measuring_amps_of_va_or_volts_of_burden )
-              regs[i] = hy_regtbl_ac_amps[curr_power_amps_range][i];
+              regs[i] = hy_regtbl_ac_amps[(unsigned __int8)curr_power_amps_range][i];
             else
-              regs[i] = hy_regtbl_acv[curr_power_volts_range][i];
+              regs[i] = hy_regtbl_acv[(unsigned __int8)curr_power_volts_range][i];
           }
-          else if ( mode < MM_ACmVA )
+          else if ( mode < (unsigned int)MM_ACmVA )
           {
             if ( measuring_amps_of_va_or_volts_of_burden )
-              regs[i] = hy_regtbl_ac_amps[curr_power_amps_range][i];
+              regs[i] = hy_regtbl_ac_amps[(unsigned __int8)curr_power_amps_range][i];
             else
-              regs[i] = hy_regtbl_acv[curr_power_volts_range][i];
+              regs[i] = hy_regtbl_acv[(unsigned __int8)curr_power_volts_range][i];
           }
           else
           {
             if ( mode == MM_ACuA )
               goto LABEL_85;
-            if ( mode < MM_ACuA )               // ACVA
+            if ( mode < (unsigned int)MM_ACuA ) // ACVA
             {
               if ( measuring_amps_of_va_or_volts_of_burden )
               {
@@ -20474,14 +20236,14 @@ LABEL_91:
               }
               else
               {
-                regs[i] = hy_regtbl_acv[curr_power_volts_range][i];
+                regs[i] = hy_regtbl_acv[(unsigned __int8)curr_power_volts_range][i];
               }
             }
             else
             {
               if ( mode == MM_ACmA )
                 goto LABEL_85;
-              if ( mode < MM_ACmA )             // DCuA
+              if ( mode < (unsigned int)MM_ACmA )// DCuA
                 goto LABEL_86;
               if ( mode == MM_ACA )
               {
@@ -20489,7 +20251,7 @@ LABEL_85:
                 regs[i] = hy_regtbl_ac_amps[range][i];
                 continue;
               }
-              if ( mode < MM_ACA )              // DCmA
+              if ( mode < (unsigned int)MM_ACA )// DCmA
               {
 LABEL_86:
                 regs[i] = hy_regtbl_dc_amps[range][i];
@@ -20498,13 +20260,13 @@ LABEL_86:
               if ( mode == MM_DCuVA )
               {
                 if ( measuring_amps_of_va_or_volts_of_burden )
-                  regs[i] = hy_regtbl_dc_amps[curr_power_amps_range][i];
+                  regs[i] = hy_regtbl_dc_amps[(unsigned __int8)curr_power_amps_range][i];
                 else
-                  regs[i] = hy_regtbl_dcv[curr_power_volts_range][i];
+                  regs[i] = hy_regtbl_dcv[(unsigned __int8)curr_power_volts_range][i];
               }
               else
               {
-                if ( mode < MM_DCuVA )          // DCA
+                if ( mode < (unsigned int)MM_DCuVA )// DCA
                   goto LABEL_86;
                 if ( mode == MM_DCVA )
                 {
@@ -20517,15 +20279,15 @@ LABEL_86:
                   }
                   else
                   {
-                    regs[i] = hy_regtbl_dcv[curr_power_volts_range][i];
+                    regs[i] = hy_regtbl_dcv[(unsigned __int8)curr_power_volts_range][i];
                   }
                 }
-                else if ( mode < MM_DCVA )
+                else if ( mode < (unsigned int)MM_DCVA )
                 {
                   if ( measuring_amps_of_va_or_volts_of_burden )
-                    regs[i] = hy_regtbl_dc_amps[curr_power_amps_range][i];
+                    regs[i] = hy_regtbl_dc_amps[(unsigned __int8)curr_power_amps_range][i];
                   else
-                    regs[i] = hy_regtbl_dcv[curr_power_volts_range][i];
+                    regs[i] = hy_regtbl_dcv[(unsigned __int8)curr_power_volts_range][i];
                 }
               }
             }
@@ -20584,34 +20346,38 @@ LABEL_35:
     }
     goto LABEL_37;
   }
-  if ( mode < MM_ACV )
+  if ( mode < (unsigned int)MM_ACV )
     goto LABEL_38;
   if ( mode == MM_ACmV )
     goto LABEL_35;
-  if ( mode < MM_ACmV )
+  if ( mode < (unsigned int)MM_ACmV )
     goto LABEL_38;
   if ( mode == MM_HZ )
     goto LABEL_44;
-  if ( mode < MM_HZ )
+  if ( mode < (unsigned int)MM_HZ )
     goto LABEL_38;
-  if ( mode == MM_DUTY || mode < MM_DUTY )
+  if ( mode == MM_DUTY || mode < (unsigned int)MM_DUTY )
   {
 LABEL_44:
     intregs[1] = 1;
     goto LABEL_41;
   }
-  if ( mode == MM_CONTINUITY || mode < MM_CONTINUITY )
+  if ( mode == MM_CONTINUITY || mode < (unsigned int)MM_CONTINUITY )
     goto LABEL_38;
   if ( mode == MM_CAP )
   {
     intregs[1] = 1;
     goto LABEL_41;
   }
-  if ( mode < MM_CAP )
+  if ( mode < (unsigned int)MM_CAP )
     goto LABEL_38;
-  if ( mode == MM_ACmVA || mode < MM_ACmVA || mode == MM_ACuA || mode < MM_ACuA || mode == MM_ACmA )
+  if ( mode == MM_ACmVA
+    || mode < (unsigned int)MM_ACmVA
+    || mode == MM_ACuA
+    || mode < (unsigned int)MM_ACuA
+    || mode == MM_ACmA )
     goto LABEL_37;
-  if ( mode < MM_ACmA )
+  if ( mode < (unsigned int)MM_ACmA )
     goto LABEL_38;
   if ( mode == MM_ACA )
   {
@@ -20619,14 +20385,14 @@ LABEL_37:
     intregs[1] = 5;
     goto LABEL_41;
   }
-  if ( mode < MM_ACA || mode == MM_DCuVA )
+  if ( mode < (unsigned int)MM_ACA || mode == MM_DCuVA )
     goto LABEL_38;
-  if ( mode < MM_DCuVA )
+  if ( mode < (unsigned int)MM_DCuVA )
   {
     intregs[1] = 4;
     goto LABEL_41;
   }
-  if ( mode == MM_DCVA || mode < MM_DCVA )
+  if ( mode == MM_DCVA || mode < (unsigned int)MM_DCVA )
 LABEL_38:
     intregs[1] = 4;
 LABEL_41:
@@ -20678,7 +20444,7 @@ void __fastcall send_data_to_hy3131(_BYTE *data, char address, unsigned __int16 
   spinloop(0xAu);
   send_byte_to_hy3131(2 * v4, 0);
   spinloop(0xAu);
-  for ( i = 0; i < v5; ++i )
+  for ( i = 0; (unsigned __int8)i < (unsigned int)v5; ++i )
   {
     send_byte_to_hy3131(v3[i], 0);
     spinloop(0xAu);
@@ -20700,7 +20466,7 @@ void __fastcall read_registers_from_hy3131(_BYTE *data, char a2, unsigned __int1
   spinloop(5u);
   send_byte_to_hy3131(2 * v3 | 1, 1);
   spinloop(5u);
-  for ( i = 0; i < v4; ++i )
+  for ( i = 0; (unsigned __int8)i < (unsigned int)v4; ++i )
   {
     hy_regs_buf[i] = recv_byte_from_hy3131();
     spinloop(2u);
@@ -20717,7 +20483,7 @@ unsigned __int8 recv_byte_from_hy3131()
 
   v0 = 0;
   HIWORD(GPIOF.BSRR) = 1;
-  for ( i = 0; i < 8; ++i )
+  for ( i = 0; (signed int)i < 8; ++i )
   {
     LOWORD(GPIOF.BSRR) = 1;
     if ( GPIOF.IDR & 8 )
@@ -20737,7 +20503,7 @@ void __fastcall send_byte_to_hy3131(unsigned __int8 data, char doing_read_of_reg
 
   v2 = data;
   v3 = doing_read_of_register;
-  for ( i = 0; i < 8; ++i )
+  for ( i = 0; (signed int)i < 8; ++i )
   {
     if ( v2 & (128 >> i) )
       LOWORD(GPIOF.BSRR) = 4;
@@ -20789,8 +20555,8 @@ __int64 __fastcall int64_div(__int64 a, __int64 b)
   bsign = HIDWORD(b) & 0x80000000;
   if ( (HIDWORD(b) & 0x80000000 & 0x80000000) != 0 )
   {
-    v9 = b <= 0;
-    LODWORD(b) = -b;
+    v9 = (unsigned int)b <= 0;
+    LODWORD(b) = -(signed int)b;
     HIDWORD(b) = -HIDWORD(b) - !v9;
   }
   v3 = bsign ^ (SHIDWORD(a) >> 32);
@@ -20799,22 +20565,22 @@ __int64 __fastcall int64_div(__int64 a, __int64 b)
     v4 = v3;
     if ( a < 0 )
     {
-      v9 = a <= 0;
-      LODWORD(a) = -a;
+      v9 = (unsigned int)a <= 0;
+      LODWORD(a) = -(signed int)a;
       HIDWORD(a) = -HIDWORD(a) - !v9;
     }
     a = uint64_div(a, b);
     if ( __CFSHL__(v4, 1) )
     {
-      v9 = a <= 0;
-      LODWORD(a) = -a;
+      v9 = (unsigned int)a <= 0;
+      LODWORD(a) = -(signed int)a;
       HIDWORD(a) = -HIDWORD(a) - !v9;
     }
     return a;
   }
   if ( HIDWORD(b) )
   {
-    if ( !__CFADD__(HIDWORD(a), ~HIDWORD(b) + (a >= b)) )
+    if ( !__CFADD__(HIDWORD(a), ~HIDWORD(b) + ((unsigned int)a >= (unsigned int)b)) )
       return 0LL;
     v5 = __clz(HIDWORD(b)) - __clz(HIDWORD(a));
     HIDWORD(b) <<= v5;
@@ -20823,60 +20589,60 @@ __int64 __fastcall int64_div(__int64 a, __int64 b)
   {
     if ( !HIDWORD(a) )
     {
-      if ( b )
-        LODWORD(a) = a / b;
+      if ( (_DWORD)b )
+        LODWORD(a) = (unsigned int)a / (unsigned int)b;
       return a;
     }
-    if ( b <= 1 )
+    if ( (unsigned int)b <= 1 )
     {
-      b < 1;
+      (unsigned int)b < 1;
       return a;
     }
-    if ( !(b >> 16) )
+    if ( !((unsigned int)b >> 16) )
     {
       v18 = HIDWORD(a);
-      HIDWORD(a) /= b;
-      v19 = ((v18 - b * HIDWORD(a)) << 16) | (a >> 16);
-      LODWORD(a) = (a | ((v19 - b * (v19 / b)) << 16)) / b | (v19 / b << 16);
+      HIDWORD(a) /= (unsigned int)b;
+      v19 = ((v18 - (_DWORD)b * HIDWORD(a)) << 16) | ((unsigned int)a >> 16);
+      LODWORD(a) = ((unsigned __int16)a | ((v19 - (_DWORD)b * (v19 / (unsigned int)b)) << 16)) / (unsigned int)b | (v19 / (unsigned int)b << 16);
       return a;
     }
     v5 = 32 - __clz(HIDWORD(a)) + __clz(b);
     v11 = v5 - 32;
     if ( v5 >= 0x20 )
     {
-      LODWORD(b) = b << v11;
+      LODWORD(b) = (_DWORD)b << v11;
       v12 = 0x80000000 >> v11;
       while ( 1 )
       {
-        v14 = __CFADD__(HIDWORD(a), ~b + (a >= HIDWORD(b)));
-        v15 = (a - __PAIR__(b, HIDWORD(b))) >> 32;
-        if ( __CFADD__(HIDWORD(a), ~b + (a >= HIDWORD(b))) )
+        v14 = __CFADD__(HIDWORD(a), ~(_DWORD)b + ((unsigned int)a >= HIDWORD(b)));
+        v15 = (a - __PAIR__((unsigned int)b, HIDWORD(b))) >> 32;
+        if ( __CFADD__(HIDWORD(a), ~(_DWORD)b + ((unsigned int)a >= HIDWORD(b))) )
         {
           LODWORD(a) = a - HIDWORD(b);
           HIDWORD(a) = v15;
         }
-        v16 = v14 + v12;
-        v9 = __CFADD__(v14, v12) | __CFADD__(v12, v16);
+        v16 = v14 + (_DWORD)v12;
+        v9 = __CFADD__(v14, (_DWORD)v12) | __CFADD__((_DWORD)v12, v16);
         LODWORD(v12) = v12 + v16;
         v17 = v9 + HIDWORD(v12);
         v9 = __CFADD__(v9, HIDWORD(v12)) | __CFADD__(HIDWORD(v12), v17);
         HIDWORD(v12) += v17;
         if ( v9 )
           break;
-        LODWORD(b) = b >> 1;
+        LODWORD(b) = (unsigned int)b >> 1;
         v13 = __RCR__(HIDWORD(b), 1);
         HIDWORD(b) = v13;
       }
       return v12;
     }
   }
-  HIDWORD(b) |= b >> (32 - v5);
-  LODWORD(v6) = b << v5;
+  HIDWORD(b) |= (unsigned int)b >> (32 - v5);
+  LODWORD(v6) = (_DWORD)b << v5;
   v7 = 0x80000000 >> v5;
   while ( 1 )
   {
-    v9 = __CFADD__(HIDWORD(a), ~HIDWORD(v6) + (a >= v6));
-    if ( __CFADD__(HIDWORD(a), ~HIDWORD(v6) + (a >= v6)) )
+    v9 = __CFADD__(HIDWORD(a), ~HIDWORD(v6) + ((unsigned int)a >= (unsigned int)v6));
+    if ( __CFADD__(HIDWORD(a), ~HIDWORD(v6) + ((unsigned int)a >= (unsigned int)v6)) )
       a -= v6;
     v10 = v9 + v7;
     v9 = __CFADD__(v9, v7) | __CFADD__(v7, v10);
@@ -20954,21 +20720,21 @@ int __fastcall meas_calc_ac_freq_dependent_offset_core(signed int digits, int de
   {
     if ( digits < 55000 )
     {
-      if ( range < 8 )
+      if ( (signed int)range < 8 )
       {
         mcafdoc_ac_input_hz = ac_input_freq_to_hz(ac_in_range, ac_in_freq);
         if ( mcafdoc_ac_input_hz >= 51 )
         {
           if ( range != 2 && range != 3 )
           {
-            if ( range >= 4 )
+            if ( (signed int)range >= 4 )
               infreq_table_len = 7;
             infreq_table_loc = infreq_table_len - 1;
             for ( i = 0; i < infreq_table_len; ++i )
             {
-              if ( range >= 2 )
+              if ( (signed int)range >= 2 )
               {
-                if ( range >= 4 && mcafdoc_infreq_tbl_10khz[i] >= mcafdoc_ac_input_hz )
+                if ( (signed int)range >= 4 && mcafdoc_infreq_tbl_10khz[i] >= mcafdoc_ac_input_hz )
                 {
                   infreq_table_loc = i;
                   break;
@@ -20982,9 +20748,9 @@ int __fastcall meas_calc_ac_freq_dependent_offset_core(signed int digits, int de
             }
             mcafdoc_decirange_factor = decirange_factor;
             mcafdoc_fullrange_factor = fullrange_factor;
-            if ( range >= 2 )
+            if ( (signed int)range >= 2 )
             {
-              if ( range >= 4 )
+              if ( (signed int)range >= 4 )
               {
                 mcafdoc_freq_range_hi = mcafdoc_infreq_tbl_10khz[infreq_table_loc];
                 mcafdoc_freq_range_lo = mcafdoc_infreq_tbl_10khz[infreq_table_loc - 1];
@@ -21317,8 +21083,8 @@ int __fastcall meas_calc_ac_freq_dependent_offset_core_for_ACV_5_50V(int digits,
 //----- (0801C34C) --------------------------------------------------------
 signed int __fastcall ac_input_freq_to_hz(unsigned int point, signed int num)
 {
-  point = point;
-  if ( point )
+  point = (unsigned __int8)point;
+  if ( (_BYTE)point )
   {
     if ( point == 2 )
     {
@@ -21385,7 +21151,7 @@ double __fastcall dp_from_fp(float num)
   }
   else
   {
-    *&result = SLODWORD(num) << 29;
+    *(_QWORD *)&result = (signed __int64)SLODWORD(num) << 29;
     HIDWORD(result) = (HIDWORD(result) & 0x8FFFFFFF) + 0x38000000;
   }
   return result;
@@ -21440,23 +21206,23 @@ double __fastcall dp_add(double a, double b)
   if ( (HIDWORD(a) ^ HIDWORD(b)) >= 0 )         // same sign
   {
     v2 = LODWORD(a) - LODWORD(b);
-    v3 = (*&a - *&b) >> 32;
+    v3 = (*(_QWORD *)&a - *(_QWORD *)&b) >> 32;
     if ( !__CFADD__(HIDWORD(a), ~HIDWORD(b) + (LODWORD(a) >= LODWORD(b))) )
     {
-      *&a -= __PAIR__(v3, v2);
-      *&b += __PAIR__(v3, v2);
+      *(_QWORD *)&a -= __PAIR__(v3, v2);
+      *(_QWORD *)&b += __PAIR__(v3, v2);
     }
     v4 = __CFADD__(2 * HIDWORD(a), 0x200000);
-    if ( (2 * HIDWORD(a)) < 0xFFE00000 )
+    if ( (unsigned int)(2 * HIDWORD(a)) < 0xFFE00000 )
       v4 = __CFADD__(~(2 * HIDWORD(b)) + __CFSHL__(HIDWORD(b), 1), 0x200000);
     if ( v4 )
     {
-      if ( (2 * HIDWORD(a)) >= 0xFFE00000 || !(LODWORD(b) | 2 * HIDWORD(b)) )
+      if ( (unsigned int)(2 * HIDWORD(a)) >= 0xFFE00000 || !(LODWORD(b) | 2 * HIDWORD(b)) )
         return a;
-      if ( (2 * HIDWORD(a)) < 0x200000 )
+      if ( (unsigned int)(2 * HIDWORD(a)) < 0x200000 )
       {
         HIDWORD(b) &= 0x7FFFFFFFu;
-        *&a += *&b;
+        *(_QWORD *)&a += *(_QWORD *)&b;
         return a;
       }
       v5 = HIDWORD(a) >> 20;
@@ -21473,7 +21239,7 @@ double __fastcall dp_add(double a, double b)
         return a;
       HIDWORD(b) = ((HIDWORD(b) << 11) | 0x80000000) >> 11;
     }
-    HIDWORD(a) = ((HIDWORD(a) << 11) | 0x80000000) >> 11;
+    HIDWORD(a) = (signed int)((HIDWORD(a) << 11) | 0x80000000) >> 11;
     v7 = v6 - 32;
     if ( v6 <= 32 )
     {
@@ -21485,15 +21251,15 @@ double __fastcall dp_add(double a, double b)
       HIDWORD(b) = HIDWORD(b) << v6 >> v6;
       LODWORD(b) ^= HIDWORD(b);
       v4 = __CFADD__(__CFADD__(LODWORD(a), LODWORD(b)), HIDWORD(a));
-      v11 = *&a + LODWORD(b);
+      v11 = *(_QWORD *)&a + LODWORD(b);
       v4 |= __CFADD__(HIDWORD(b), HIDWORD(v11));
       HIDWORD(v11) += HIDWORD(b);
       if ( !v4 )
       {
 LABEL_19:
         HIDWORD(v11) += 0x100000;
-        *&a = __PAIR__(v5 << 20, __CFADD__(v10, (v11 & 1) + 0x7FFFFFFF)) + v11;
-        if ( (2 * HIDWORD(a)) >= 0xFFE00000 )
+        *(_QWORD *)&a = __PAIR__(v5 << 20, __CFADD__(v10, (v11 & 1) + 0x7FFFFFFF)) + v11;
+        if ( (unsigned int)(2 * HIDWORD(a)) >= 0xFFE00000 )
         {
           LODWORD(a) = 0;
           HIDWORD(a) = HIDWORD(a) >> 20 << 20;
@@ -21509,7 +21275,7 @@ LABEL_19:
       if ( LODWORD(b) )
         v10 |= 1u;
       v4 = __CFADD__(__CFADD__(LODWORD(a), v9), HIDWORD(a));
-      v11 = *&a + v9;
+      v11 = *(_QWORD *)&a + v9;
       if ( !v4 )
         goto LABEL_19;
     }
@@ -21527,17 +21293,17 @@ LABEL_19:
   v15 = LODWORD(a) - LODWORD(b);
   if ( !__CFADD__(HIDWORD(a), ~HIDWORD(b) + (LODWORD(a) >= LODWORD(b))) )
   {
-    v16 = ((*&a - *&b) >> 32) ^ 0x80000000;
-    *&a -= __PAIR__(v16, v15);
-    *&b += __PAIR__(v16, v15);
+    v16 = ((*(_QWORD *)&a - *(_QWORD *)&b) >> 32) ^ 0x80000000;
+    *(_QWORD *)&a -= __PAIR__(v16, v15);
+    *(_QWORD *)&b += __PAIR__(v16, v15);
   }
   v17 = __CFADD__(2 * HIDWORD(a), 0x200000);
-  if ( (2 * HIDWORD(a)) < 0xFFE00000 )
+  if ( (unsigned int)(2 * HIDWORD(a)) < 0xFFE00000 )
     v17 = __CFADD__(~(2 * HIDWORD(b)) + __CFSHL__(HIDWORD(b), 1), 0x200000);
   if ( v17 )
   {
     v43 = __CFADD__(2 * HIDWORD(a), 0x200000);
-    if ( (2 * HIDWORD(a)) >= 0xFFE00000 )
+    if ( (unsigned int)(2 * HIDWORD(a)) >= 0xFFE00000 )
     {
       if ( 2 * HIDWORD(a) == -2097152 )
         v43 = __CFADD__(2 * HIDWORD(b), 0x200000);
@@ -21548,7 +21314,7 @@ LABEL_19:
     HIDWORD(b) &= 0x7FFFFFFFu;
     if ( LODWORD(b) | 2 * HIDWORD(b) )
     {
-      if ( (2 * HIDWORD(a)) >= 0x400000 )
+      if ( (unsigned int)(2 * HIDWORD(a)) >= 0x400000 )
       {
         v18 = HIDWORD(a) >> 20;
         v19 = (HIDWORD(a) >> 20) - 1;
@@ -21556,7 +21322,7 @@ LABEL_19:
           return a;
         goto LABEL_50;
       }
-      *&a -= *&b;
+      *(_QWORD *)&a -= *(_QWORD *)&b;
     }
     if ( !(LODWORD(a) | 2 * HIDWORD(a)) )
       HIDWORD(a) = 0;
@@ -21580,7 +21346,7 @@ LABEL_50:
       v40 = __ROR4__(HIDWORD(b), v19);
       HIDWORD(b) >>= v19;
       LODWORD(b) ^= v40 ^ HIDWORD(b);
-      v4 = v39 <= 0;
+      v4 = (unsigned int)v39 <= 0;
       v35 = -v39;
       v41 = v4;
       v4 = __CFADD__(LODWORD(a), ~LODWORD(b) + v4);
@@ -21589,7 +21355,7 @@ LABEL_50:
     }
     else
     {
-      LODWORD(b) = (LODWORD(b) | (LODWORD(b) << 16)) >> 16;
+      LODWORD(b) = (unsigned int)(LODWORD(b) | (LODWORD(b) << 16)) >> 16;
       v34 = HIDWORD(b) << (64 - v19);
       HIDWORD(b) >>= v33;
       v35 = -(LODWORD(b) | v34);
@@ -21610,7 +21376,7 @@ LABEL_50:
         v37 += v4 + v37;
       }
     }
-    *&a = __PAIR__(v37 & 0xFFEFFFFF, __CFADD__(v35, (v36 & 1) + 0x7FFFFFFF)) + __PAIR__(v18 << 20, v36);
+    *(_QWORD *)&a = __PAIR__(v37 & 0xFFEFFFFF, __CFADD__(v35, (v36 & 1) + 0x7FFFFFFF)) + __PAIR__(v18 << 20, v36);
     return a;
   }
   HIDWORD(b) = (HIDWORD(b) << 11) | 0x80000000 | (LODWORD(b) >> 21);
@@ -21624,7 +21390,7 @@ LABEL_50:
     LODWORD(b) <<= 11;
   }
   v20 = v18 << 20;
-  *&a = __PAIR__((HIDWORD(a) << 11) | 0x80000000 | (LODWORD(a) >> 21), LODWORD(a) << 11) - *&b;
+  *(_QWORD *)&a = __PAIR__((HIDWORD(a) << 11) | 0x80000000 | (LODWORD(a) >> 21), LODWORD(a) << 11) - *(_QWORD *)&b;
   if ( SHIDWORD(a) >= 0 )
   {
     if ( HIDWORD(a) )
@@ -21659,11 +21425,11 @@ LABEL_50:
     }
   }
   v30 = __CFSHR__(LODWORD(a), 11);
-  LODWORD(a) = *&a >> 11;
+  LODWORD(a) = *(_QWORD *)&a >> 11;
   v32 = HIDWORD(a) & 0x7FFFFFFF;
   if ( v30 )
     v30 = v31 & 1;
-  *&a = __PAIR__(v32 >> 11, v30) + __PAIR__(v20, v31);
+  *(_QWORD *)&a = __PAIR__((unsigned int)v32 >> 11, v30) + __PAIR__(v20, v31);
   return a;
 }
 
@@ -21679,13 +21445,13 @@ int __fastcall dp_to_int(double num)
   int (__fastcall *v7)(_DWORD); // r12@5
   int v8; // r0@6
 
-  LODWORD(num) = *&num >> 21;
+  LODWORD(num) = *(_QWORD *)&num >> 21;
   v1 = __CFSHL__(HIDWORD(num), 1);
   HIDWORD(v2) = 2 * HIDWORD(num);
   if ( v1 )
   {
     v6 = dp_to_int_core(v2);
-    if ( v6 <= 0x80000000 )
+    if ( (unsigned int)v6 <= 0x80000000 )
       v8 = -v6;
     else
       v8 = 0x80000000;
@@ -21719,7 +21485,7 @@ int __fastcall dp_to_int_core(double a1)
   {
     v3 = 31 - exp;
     if ( v3 < 0 )
-      result = v1 >> 31;
+      result = (signed int)v1 >> 31;
     else
       result = v1 >> v3;
   }
@@ -21802,11 +21568,11 @@ double __fastcall dp_div(double a, double b)
   }
   if ( !v5 )
   {
-    v4 = aexp >= 0x7FF;
+    v4 = (unsigned int)aexp >= 0x7FF;
     v5 = aexp == 2047;
     if ( aexp != 2047 )
     {
-      v4 = bexp >= 0x7FF;
+      v4 = (unsigned int)bexp >= 0x7FF;
       v5 = bexp == 2047;
     }
   }
@@ -21823,7 +21589,7 @@ double __fastcall dp_div(double a, double b)
       LODWORD(a) = 0;
       v60 = __CFADD__(2 * HIDWORD(a), 0x200000);
       v61 = 2 * HIDWORD(a) == -2097152;
-      if ( (2 * HIDWORD(a)) <= 0xFFE00000 )
+      if ( (unsigned int)(2 * HIDWORD(a)) <= 0xFFE00000 )
       {
         v60 = __CFADD__(2 * HIDWORD(b), 0x200000);
         v61 = 2 * HIDWORD(b) == -2097152;
@@ -21854,7 +21620,7 @@ double __fastcall dp_div(double a, double b)
     if ( v58 )
     {
       v5 = (LODWORD(a) | 2 * HIDWORD(a)) == 0;
-      *&a = __PAIR__(HIDWORD(a) ^ HIDWORD(b), v59) & 0x80000000FFFFFFFFLL;
+      *(_QWORD *)&a = __PAIR__(HIDWORD(a) ^ HIDWORD(b), v59) & 0x80000000FFFFFFFFLL;
       if ( v5 )
       {
         if ( !(LODWORD(b) | 2 * HIDWORD(b)) )
@@ -21872,17 +21638,17 @@ double __fastcall dp_div(double a, double b)
     }
     else
     {
-      v51 = 2LL * *&b;
-      v52 = HIDWORD(b) + (*&b >> 31);
+      v51 = 2LL * *(_QWORD *)&b;
+      v52 = HIDWORD(b) + (*(_QWORD *)&b >> 31);
       v53 = __clz(v52);
       if ( !v52 )
         v53 += __clz(v51);
       v54 = v53 - 11;
-      if ( v54 < 0x20 )
-        HIDWORD(b) = (HIDWORD(b) << v54) | (v51 >> (32 - v54));
+      if ( (unsigned int)v54 < 0x20 )
+        HIDWORD(b) = (HIDWORD(b) << v54) | ((unsigned int)v51 >> (32 - v54));
       else
-        HIDWORD(b) = v51 << (v54 - 32);
-      LODWORD(b) = v51 << v54;
+        HIDWORD(b) = (_DWORD)v51 << (v54 - 32);
+      LODWORD(b) = (_DWORD)v51 << v54;
       if ( aexp )
       {
         v7 = aexp + v54 - 1;
@@ -21894,7 +21660,7 @@ double __fastcall dp_div(double a, double b)
     if ( !HIDWORD(a) )
       v55 += __clz(LODWORD(a));
     v56 = v55 - 11;
-    if ( v56 < 0x20 )
+    if ( (unsigned int)v56 < 0x20 )
       HIDWORD(a) = (HIDWORD(a) << v56) | (LODWORD(a) >> (32 - v56));
     else
       HIDWORD(a) = LODWORD(a) << (v56 - 32);
@@ -21918,72 +21684,72 @@ LABEL_8:
     v4 = __CFSHL__(v8, 1);
     LODWORD(v8) = 2 * v8;
     HIDWORD(v8) += v4 + HIDWORD(v8);
-    v8 += *&b;
+    v8 += *(_QWORD *)&b;
   }
   HIDWORD(v8) = v8 >> 21;
   v10 = HIDWORD(v8) / HIDWORD(b);
   HIDWORD(v8) -= HIDWORD(b) * (HIDWORD(v8) / HIDWORD(b));
-  v11 = LODWORD(b) * v10;
-  v4 = v8 << 11 >= v11;
-  LODWORD(v8) = (v8 << 11) - v11;
+  v11 = LODWORD(b) * (unsigned __int64)(unsigned int)v10;
+  v4 = (_DWORD)v8 << 11 >= (unsigned int)v11;
+  LODWORD(v8) = ((_DWORD)v8 << 11) - v11;
   v13 = v4;
   v4 = __CFADD__(HIDWORD(v8), ~HIDWORD(v11) + v4);
   HIDWORD(v12) = HIDWORD(v8) - (!v13 + HIDWORD(v11));
   if ( !v4 )
   {
     --v10;
-    v12 += *&b;
+    v12 += *(_QWORD *)&b;
   }
   HIDWORD(v12) = v12 >> 21;
   v14 = HIDWORD(v12) / HIDWORD(b);
   HIDWORD(v12) -= HIDWORD(b) * (HIDWORD(v12) / HIDWORD(b));
-  v15 = LODWORD(b) * v14;
-  v4 = v12 << 11 >= v15;
-  LODWORD(v12) = (v12 << 11) - v15;
+  v15 = LODWORD(b) * (unsigned __int64)(unsigned int)v14;
+  v4 = (_DWORD)v12 << 11 >= (unsigned int)v15;
+  LODWORD(v12) = ((_DWORD)v12 << 11) - v15;
   v17 = v4;
   v4 = __CFADD__(HIDWORD(v12), ~HIDWORD(v15) + v4);
   HIDWORD(v16) = HIDWORD(v12) - (!v17 + HIDWORD(v15));
   if ( !v4 )
   {
     --v14;
-    v16 += *&b;
+    v16 += *(_QWORD *)&b;
   }
   HIDWORD(v16) = v16 >> 22;
   v18 = (v10 << 21) | (v14 << 10);
   v19 = HIDWORD(v16) / HIDWORD(b);
   HIDWORD(v16) -= HIDWORD(b) * (HIDWORD(v16) / HIDWORD(b));
-  v20 = LODWORD(b) * v19;
-  v4 = v16 << 10 >= v20;
-  LODWORD(v16) = (v16 << 10) - v20;
+  v20 = LODWORD(b) * (unsigned __int64)(unsigned int)v19;
+  v4 = (_DWORD)v16 << 10 >= (unsigned int)v20;
+  LODWORD(v16) = ((_DWORD)v16 << 10) - v20;
   v22 = v4;
   v4 = __CFADD__(HIDWORD(v16), ~HIDWORD(v20) + v4);
   HIDWORD(v21) = HIDWORD(v16) - (!v22 + HIDWORD(v20));
   if ( !v4 )
   {
     --v19;
-    v21 += *&b;
+    v21 += *(_QWORD *)&b;
   }
   HIDWORD(v21) = v21 >> 21;
   v23 = v18 | v19;
   v24 = HIDWORD(v21) / HIDWORD(b);
   HIDWORD(v21) -= HIDWORD(b) * (HIDWORD(v21) / HIDWORD(b));
-  v25 = LODWORD(b) * v24;
-  v4 = v21 << 11 >= v25;
-  LODWORD(v21) = (v21 << 11) - v25;
+  v25 = LODWORD(b) * (unsigned __int64)(unsigned int)v24;
+  v4 = (_DWORD)v21 << 11 >= (unsigned int)v25;
+  LODWORD(v21) = ((_DWORD)v21 << 11) - v25;
   v27 = v4;
   v4 = __CFADD__(HIDWORD(v21), ~HIDWORD(v25) + v4);
   HIDWORD(v26) = HIDWORD(v21) - (!v27 + HIDWORD(v25));
   if ( !v4 )
   {
     LOWORD(v24) = v24 - 1;
-    v26 += *&b;
+    v26 += *(_QWORD *)&b;
   }
   HIDWORD(v26) = v26 >> 21;
   v28 = HIDWORD(v26) / HIDWORD(b);
   HIDWORD(v26) -= HIDWORD(b) * (HIDWORD(v26) / HIDWORD(b));
-  v29 = LODWORD(b) * v28;
-  v4 = v26 << 11 >= v29;
-  LODWORD(v26) = (v26 << 11) - v29;
+  v29 = LODWORD(b) * (unsigned __int64)(unsigned int)v28;
+  v4 = (_DWORD)v26 << 11 >= (unsigned int)v29;
+  LODWORD(v26) = ((_DWORD)v26 << 11) - v29;
   v33 = v4;
   v4 = __CFADD__(HIDWORD(v26), ~HIDWORD(v29) + v4);
   v32 = HIDWORD(v26) - (!v33 + HIDWORD(v29));
@@ -21994,11 +21760,11 @@ LABEL_8:
   if ( !v31 )
     v34 |= 1u;
   v35 = v34 & 0xFFC007FF | ((v24 & 0x7FF) << 11);
-  v36 = v23 >> 12;
+  v36 = (unsigned int)v23 >> 12;
   v37 = v35 >> 2;
   v38 = __OFADD__(v7, 1024);
   v39 = v7 + 1024;
-  if ( ((v39 < 0) ^ v38) | (v39 == 0) )
+  if ( (unsigned __int8)((v39 < 0) ^ v38) | (v39 == 0) )
   {
     v40 = v35 << 30 >> 1;
     v41 = v37 | (v23 << 20);
@@ -22013,8 +21779,8 @@ LABEL_8:
         HIDWORD(a) = v3;
         return a;
       }
-      v50 = ((v40 | 2 * v41) >> 1) | (v41 >> v44);
-      LODWORD(v47) = v42 >> v44;
+      v50 = ((v40 | 2 * v41) >> 1) | ((unsigned int)v41 >> v44);
+      LODWORD(v47) = (unsigned int)v42 >> v44;
       v48 = __CFSHL__(v42, 64 - v43);
       v49 = v50 | (v42 << (64 - v43));
       HIDWORD(v47) = 0;
@@ -22023,12 +21789,12 @@ LABEL_8:
     {
       v45 = v41;
       v46 = v42 << (32 - v43);
-      HIDWORD(v47) = v42 >> v43;
-      LODWORD(v47) = (v41 >> v43) | v46;
+      HIDWORD(v47) = (unsigned int)v42 >> v43;
+      LODWORD(v47) = ((unsigned int)v41 >> v43) | v46;
       v48 = __CFSHL__(v45, 32 - v43);
       v49 = v40 | (v45 << (32 - v43));
     }
-    *&a = __PAIR__(v3, __CFADD__(v49, v48 + 0x7FFFFFFF)) + v47;
+    *(_QWORD *)&a = __PAIR__(v3, __CFADD__(v49, v48 + 0x7FFFFFFF)) + v47;
     return a;
   }
   LODWORD(a) = (v23 << 20) + __CFSHL__(v23, 20) + v37;
@@ -22063,7 +21829,7 @@ float __fastcall fp_from_dp(double num)
   v2 = v1 >= 0x70000000;
   v3 = v1 - 0x70000000;
   if ( v1 >= 0x70000000 )
-    v2 = v3 >= 0x200000;
+    v2 = (unsigned int)v3 >= 0x200000;
   if ( v2 )
   {
     v4 = __CFSHL__(v3, 1);
@@ -22073,7 +21839,7 @@ float __fastcall fp_from_dp(double num)
     if ( v4 )
     {
       v10 = 2 * HIDWORD(num);
-      if ( v10 > 0xFFE00000 )
+      if ( (unsigned int)v10 > 0xFFE00000 )
         LODWORD(result) = v10 >> 31;
       else
         LODWORD(result) = ((v5 << 7) + 255) << 23;
@@ -22086,11 +21852,11 @@ float __fastcall fp_from_dp(double num)
   }
   else
   {
-    HIDWORD(num) = *&num >> 21;
+    HIDWORD(num) = *(_QWORD *)&num >> 21;
     if ( LODWORD(num) << 11 )
       v8 |= 1u;
     v9 = v8 | 0x80000000;
-    if ( (9 - (v3 >> 21)) >= 33 )
+    if ( (unsigned int)(9 - (v3 >> 21)) >= 33 )
       LODWORD(result) = v3 << 31;
     else
       LODWORD(result) = (((9 - (v3 >> 21)) | (v3 << 31)) & 0x80000000)
@@ -22114,9 +21880,9 @@ void __fastcall reset_adc(ADC_REGS *adc)
 //----- (0801C81C) --------------------------------------------------------
 void __fastcall do_lots_of_adc_config(ADC_REGS *adc, _BYTE *chan)
 {
-  adc->ADC_CR1 = adc->ADC_CR1 & 0xFCFFFEFF | *chan | (chan[4] << 8);
-  adc->ADC_CR2 = adc->ADC_CR2 & 0xC0FFF7FD | *(chan + 4) | *(chan + 3) | *(chan + 2) | 2 * chan[5];
-  adc->ADC_SQR1 = adc->ADC_SQR1 & 0xFE0FFFFF | ((chan[20] - 1) << 20);
+  adc->ADC_CR1 = adc->ADC_CR1 & 0xFCFFFEFF | *(_DWORD *)chan | (chan[4] << 8);
+  adc->ADC_CR2 = adc->ADC_CR2 & 0xC0FFF7FD | *((_DWORD *)chan + 4) | *((_DWORD *)chan + 3) | *((_DWORD *)chan + 2) | 2 * chan[5];
+  adc->ADC_SQR1 = adc->ADC_SQR1 & 0xFE0FFFFF | ((unsigned __int8)(chan[20] - 1) << 20);
 }
 
 //----- (0801C86C) --------------------------------------------------------
@@ -22125,54 +21891,54 @@ void __fastcall enable_adc(ADC_REGS *adc, char enable)
   if ( enable )
     adc->ADC_CR2 |= 1u;
   else
-    adc->ADC_CR2 = 2 * (adc->ADC_CR2 >> 1);
+    adc->ADC_CR2 = 2 * ((unsigned int)adc->ADC_CR2 >> 1);
 }
 
 //----- (0801C894) --------------------------------------------------------
 int __fastcall sub_801C894(int result, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4)
 {
-  if ( a2 < 30 )
+  if ( (signed int)a2 < 30 )
   {
-    if ( a2 < 20 )
+    if ( (signed int)a2 < 20 )
     {
-      if ( a2 < 10 )
-        *(result + 20) = *(result + 20) & ~(7 << 3 * a2) | (a4 << 3 * a2);
+      if ( (signed int)a2 < 10 )
+        *(_DWORD *)(result + 20) = *(_DWORD *)(result + 20) & ~(7 << 3 * a2) | (a4 << 3 * a2);
       else
-        *(result + 16) = *(result + 16) & ~(7 << 3 * (a2 - 10)) | (a4 << 3 * (a2 - 10));
+        *(_DWORD *)(result + 16) = *(_DWORD *)(result + 16) & ~(7 << 3 * (a2 - 10)) | (a4 << 3 * (a2 - 10));
     }
     else
     {
-      *(result + 12) = *(result + 12) & ~(7 << 3 * (a2 - 20)) | (a4 << 3 * (a2 - 20));
+      *(_DWORD *)(result + 12) = *(_DWORD *)(result + 12) & ~(7 << 3 * (a2 - 20)) | (a4 << 3 * (a2 - 20));
     }
   }
   else
   {
-    *(result + 92) = *(result + 92) & ~(7 << 3 * (a2 - 30)) | (a4 << 3 * (a2 - 30));
+    *(_DWORD *)(result + 92) = *(_DWORD *)(result + 92) & ~(7 << 3 * (a2 - 30)) | (a4 << 3 * (a2 - 30));
   }
-  if ( a3 >= 7 )
+  if ( (signed int)a3 >= 7 )
   {
-    if ( a3 >= 13 )
+    if ( (signed int)a3 >= 13 )
     {
-      if ( a3 >= 19 )
+      if ( (signed int)a3 >= 19 )
       {
-        if ( a3 >= 25 )
-          *(result + 48) = *(result + 48) & ~(31 << 5 * (a3 - 25)) | (a2 << 5 * (a3 - 25));
+        if ( (signed int)a3 >= 25 )
+          *(_DWORD *)(result + 48) = *(_DWORD *)(result + 48) & ~(31 << 5 * (a3 - 25)) | (a2 << 5 * (a3 - 25));
         else
-          *(result + 52) = *(result + 52) & ~(31 << 5 * (a3 - 19)) | (a2 << 5 * (a3 - 19));
+          *(_DWORD *)(result + 52) = *(_DWORD *)(result + 52) & ~(31 << 5 * (a3 - 19)) | (a2 << 5 * (a3 - 19));
       }
       else
       {
-        *(result + 56) = *(result + 56) & ~(31 << 5 * (a3 - 13)) | (a2 << 5 * (a3 - 13));
+        *(_DWORD *)(result + 56) = *(_DWORD *)(result + 56) & ~(31 << 5 * (a3 - 13)) | (a2 << 5 * (a3 - 13));
       }
     }
     else
     {
-      *(result + 60) = *(result + 60) & ~(31 << 5 * (a3 - 7)) | (a2 << 5 * (a3 - 7));
+      *(_DWORD *)(result + 60) = *(_DWORD *)(result + 60) & ~(31 << 5 * (a3 - 7)) | (a2 << 5 * (a3 - 7));
     }
   }
   else
   {
-    *(result + 64) = *(result + 64) & ~(31 << 5 * (a3 - 1)) | (a2 << 5 * (a3 - 1));
+    *(_DWORD *)(result + 64) = *(_DWORD *)(result + 64) & ~(31 << 5 * (a3 - 1)) | (a2 << 5 * (a3 - 1));
   }
   return result;
 }
@@ -22180,19 +21946,19 @@ int __fastcall sub_801C894(int result, unsigned __int8 a2, unsigned __int8 a3, u
 //----- (0801CA52) --------------------------------------------------------
 void __fastcall sub_801CA52(int result)
 {
-  *(result + 8) |= 0x40000000u;
+  *(_DWORD *)(result + 8) |= 0x40000000u;
 }
 
 //----- (0801CA5C) --------------------------------------------------------
 int __fastcall sub_801CA5C(int a1)
 {
-  return *(a1 + 88);
+  return (unsigned __int16)*(_DWORD *)(a1 + 88);
 }
 
 //----- (0801CA62) --------------------------------------------------------
 bool __fastcall and_bool_low16(int a1, unsigned __int16 a2)
 {
-  return (*a1 & a2) != 0;
+  return (*(_DWORD *)a1 & a2) != 0;
 }
 
 //----- (0801CA7C) --------------------------------------------------------
@@ -22200,14 +21966,14 @@ int __fastcall sub_801CA7C(int a1, unsigned __int16 a2)
 {
   int result; // r0@3
 
-  LOBYTE(result) = *a1 & (a2 >> 8) && *(a1 + 4) & (1 << a2);
-  return result;
+  LOBYTE(result) = *(_DWORD *)a1 & ((unsigned int)a2 >> 8) && *(_DWORD *)(a1 + 4) & (1 << a2);
+  return (unsigned __int8)result;
 }
 
 //----- (0801CAB0) --------------------------------------------------------
 int __fastcall sub_801CAB0(int result, __int16 a2)
 {
-  *result = ~HIBYTE(a2);
+  *(_DWORD *)result = ~HIBYTE(a2);
   return result;
 }
 
@@ -22311,20 +22077,21 @@ double __fastcall dp_mul(double a, double b)
       HIDWORD(b) = HIDWORD(b) & 0x1FFFFF | 0x100000;
 LABEL_9:
       v9 = v8 * LODWORD(b);
-      v10 = (v7 * LODWORD(b) + (v8 * LODWORD(b) >> 32)) >> 32;
-      v11 = (HIDWORD(b) * v8 + (v7 * LODWORD(b) + (v8 * LODWORD(b) >> 32))) >> 32;
-      v12 = HIDWORD(b) * v8 + v7 * LODWORD(b) + (v8 * LODWORD(b) >> 32);
+      v10 = (v7 * (unsigned __int64)LODWORD(b) + (unsigned int)(v8 * (unsigned __int64)LODWORD(b) >> 32)) >> 32;
+      v11 = (HIDWORD(b) * (unsigned __int64)v8
+           + (unsigned int)(v7 * LODWORD(b) + (v8 * (unsigned __int64)LODWORD(b) >> 32))) >> 32;
+      v12 = HIDWORD(b) * v8 + v7 * LODWORD(b) + (v8 * (unsigned __int64)LODWORD(b) >> 32);
       if ( v9 )
         v12 |= 1u;
-      v13 = HIDWORD(b) * v7 + v10 + v11;
+      v13 = HIDWORD(b) * (unsigned __int64)v7 + v10 + (unsigned __int64)v11;
       v14 = v6 - 1024;
       v15 = __CFSHL__(HIDWORD(v13), 12);
       if ( !__CFSHL__(HIDWORD(v13), 12) )
       {
         v15 = __CFSHL__(v12, 1);
         v12 *= 2;
-        v16 = v15 + v13;
-        v15 = __CFADD__(v15, v13) | __CFADD__(v13, v16);
+        v16 = v15 + (_DWORD)v13;
+        v15 = __CFADD__(v15, (_DWORD)v13) | __CFADD__((_DWORD)v13, v16);
         LODWORD(v13) = v13 + v16;
         v17 = v15 + HIDWORD(v13);
         v15 = __CFADD__(v15, HIDWORD(v13)) | __CFADD__(HIDWORD(v13), v17);
@@ -22333,9 +22100,9 @@ LABEL_9:
       v18 = __OFADD__(v15, v14);
       v19 = v15 + v14;
       v18 |= __OFADD__(1, v19++);
-      if ( !(((v19 < 0) ^ v18) | (v19 == 0)) )
+      if ( !((unsigned __int8)((v19 < 0) ^ v18) | (v19 == 0)) )
       {
-        LODWORD(a) = __CFADD__(v12, (v13 & 1) + 0x7FFFFFFF) + v13;
+        LODWORD(a) = __CFADD__(v12, (v13 & 1) + 0x7FFFFFFF) + (_DWORD)v13;
         HIDWORD(a) += (v19 << 20) + __CFSHL__(v19, 20);
         v20 = SHIDWORD(a) < 0;
         HIDWORD(a) -= 0x100000;
@@ -22360,18 +22127,18 @@ LABEL_9:
         if ( v15 )
           v37 |= 1u;
         v38 = __CFSHL__(v13, v36);
-        v39 = v37 | (v13 << v36);
-        LODWORD(v13) = (v13 >> v34) | (HIDWORD(v13) << v36);
+        v39 = v37 | ((_DWORD)v13 << v36);
+        LODWORD(v13) = ((unsigned int)v13 >> v34) | (HIDWORD(v13) << v36);
         HIDWORD(v40) = HIDWORD(v13) >> v34;
 LABEL_55:
-        *&a = __PAIR__(output_negative, __CFADD__(v39, v38 + 0x7FFFFFFF)) + v40;
+        *(_QWORD *)&a = __PAIR__(output_negative, __CFADD__(v39, v38 + 0x7FFFFFFF)) + v40;
         return a;
       }
       if ( v34 <= 53 )
       {
         v41 = 64 - v34;
-        v4 = (v12 | 2 * v13) == 0;
-        v42 = v13 >> v35;
+        v4 = (v12 | 2 * (_DWORD)v13) == 0;
+        v42 = (unsigned int)v13 >> v35;
         if ( !v4 )
           v42 |= 1u;
         LODWORD(v13) = HIDWORD(v13) >> v35;
@@ -22391,7 +22158,7 @@ LABEL_24:
       v28 += __clz(LODWORD(b));
     v29 = v28 - 11;
     v30 = v24 - v29;
-    if ( v29 < 0x20 )
+    if ( (unsigned int)v29 < 0x20 )
       HIDWORD(b) = (HIDWORD(b) << v29) | (LODWORD(b) >> (32 - v29));
     else
       HIDWORD(b) = LODWORD(b) << (v29 - 32);
@@ -22409,7 +22176,7 @@ LABEL_8:
     HIDWORD(a) = -1;
   v32 = __CFADD__(2 * HIDWORD(b), 0x200000);
   v33 = 2 * HIDWORD(b) == -2097152;
-  if ( (2 * HIDWORD(b)) <= 0xFFE00000 )
+  if ( (unsigned int)(2 * HIDWORD(b)) <= 0xFFE00000 )
   {
     v32 = __CFADD__(2 * HIDWORD(a), 0x200000);
     v33 = 2 * HIDWORD(a) == -2097152;
@@ -22484,7 +22251,7 @@ float __fastcall fp_add(float a, float b)
     else
       v11 = v10 & 0x7FFFFFFF;
     LODWORD(a) = (v11 >> 8) + __CFSHR__(v11, 8) + (endexp << 23);
-    if ( (2 * LODWORD(a)) >= 0xFF000000 )
+    if ( (unsigned int)(2 * LODWORD(a)) >= 0xFF000000 )
       LODWORD(a) = LODWORD(a) >> 23 << 23;
   }
   return a;
@@ -22521,13 +22288,13 @@ float __fastcall fp_sub(float a, float b)
   }
   aexp = LODWORD(a) >> 23;
   v4 = __CFADD__(2 * LODWORD(a), 0x1000000);
-  if ( (2 * LODWORD(a)) < 0xFF000000 )
-    v4 = (2 * LODWORD(b)) <= 0x1000000;
+  if ( (unsigned int)(2 * LODWORD(a)) < 0xFF000000 )
+    v4 = (unsigned int)(2 * LODWORD(b)) <= 0x1000000;
   if ( v4 )
   {
-    if ( (2 * LODWORD(a)) >= 0xFF000000 )
+    if ( (unsigned int)(2 * LODWORD(a)) >= 0xFF000000 )
     {
-      if ( (2 * LODWORD(b)) >= 0xFF000000 )
+      if ( (unsigned int)(2 * LODWORD(b)) >= 0xFF000000 )
         a = -6.8056e38/*NaN*/;
       return a;
     }
@@ -22583,7 +22350,7 @@ LABEL_23:
   {
 LABEL_18:
     v12 = __clz(v9) + 1;
-    v13 = (v9 << v12) >> 9;
+    v13 = (unsigned int)(v9 << v12) >> 9;
     v14 = __ROR4__(aexp, 8);
     v15 = v14 - (v12 << 24);
     if ( v14 <= v12 << 24 )
@@ -22598,7 +22365,7 @@ LABEL_18:
     return a;
   }
   v10 = __CFSHR__(v9, 9);
-  v11 = v9 >> 9;
+  v11 = (unsigned int)v9 >> 9;
   if ( v10 )
     v10 = v11 & 1;
   LODWORD(a) = (aexp << 23) + v10 + v11;
@@ -22606,25 +22373,21 @@ LABEL_18:
 }
 
 //----- (0801CDD0) --------------------------------------------------------
-int __fastcall sub_801CDD0(int result)
+void __fastcall set_rtc_rcc_csr_access(unsigned __int8 enabled)
 {
-  result = result;
-  v420E0020 = result;
-  return result;
+  v420E0020 = enabled;
 }
 
 //----- (0801CDD8) --------------------------------------------------------
-void __fastcall sub_801CDD8(int result)
+void __fastcall set_PWR_voltage_detector_enable(int result)
 {
-  v420E0010 = result;
+  v420E0010 = (unsigned __int8)result;
 }
 
 //----- (0801CDE0) --------------------------------------------------------
-int __fastcall sub_801CDE0(int result)
+void __fastcall set_PWR_Vrefint_off_in_low_power_mode(int result)
 {
-  result = result;
-  v420E0024 = result;
-  return result;
+  v420E0024 = (unsigned __int8)result;
 }
 
 //----- (0801CDE8) --------------------------------------------------------
@@ -22637,7 +22400,7 @@ void __fastcall set_most_pwr_cr_bits(int result)
 //----- (0801CE00) --------------------------------------------------------
 void __fastcall WFI_or_WFE(int result, char a2)
 {
-  PWR_CR = 4 * (PWR_CR >> 2) | result;
+  PWR_CR = 4 * ((unsigned int)PWR_CR >> 2) | result;
   dword_E000ED10 |= 4u;
   if ( a2 == 1 )
     __wfi();
@@ -22663,13 +22426,12 @@ void __fastcall set_pwr_cr_bits_offset(int mask)
 // 40007000: using guessed type int PWR_CR;
 
 //----- (0801CE7C) --------------------------------------------------------
-int __fastcall sub_801CE7C(int result, char a2)
+void __fastcall sub_801CE7C(int result, char a2)
 {
   if ( a2 )
     vE0042004 |= result;
   else
     vE0042004 &= ~result;
-  return result;
 }
 
 //----- (0801CEA0) --------------------------------------------------------
@@ -22681,15 +22443,17 @@ void __fastcall set_SCB_AIRCR(int result)
 //----- (0801CEAA) --------------------------------------------------------
 int __fastcall sub_801CEAA(int result)
 {
-  if ( *(result + 3) )
+  if ( *(_BYTE *)(result + 3) )
   {
-    *(*result - 536812544) = 16
-                           * ((*(result + 1) << (4 - ((1792 - (dword_E000ED0C & 0x700)) >> 8))) | *(result + 2) & (15 >> ((1792 - (dword_E000ED0C & 0x700)) >> 8)));
-    *(4 * (*result >> 5) - 536813312) = 1 << (*result & 0x1F);
+    *(_BYTE *)(*(_BYTE *)result - 536812544) = 16
+                                             * ((*(_BYTE *)(result + 1) << (4
+                                                                          - ((unsigned __int16)(1792
+                                                                                              - (dword_E000ED0C & 0x700)) >> 8))) | *(_BYTE *)(result + 2) & (15 >> ((unsigned __int16)(1792 - (dword_E000ED0C & 0x700)) >> 8)));
+    *(_DWORD *)(4 * ((signed int)*(_BYTE *)result >> 5) - 536813312) = 1 << (*(_BYTE *)result & 0x1F);
   }
   else
   {
-    *(4 * (*result >> 5) - 536813184) = 1 << (*result & 0x1F);
+    *(_DWORD *)(4 * ((signed int)*(_BYTE *)result >> 5) - 536813184) = 1 << (*(_BYTE *)result & 0x1F);
   }
   return result;
 }
@@ -22702,82 +22466,82 @@ void __fastcall set_vtor_offset(int base, int offset)
 // E000ED08: using guessed type int SCB_VTOR;
 
 //----- (0801CF3C) --------------------------------------------------------
-void __fastcall TIM_configure(void *TIM, int *a2)
+void __fastcall TIM_Base_SetConfig(void *TIM, int *a2)
 {
   int v2; // r2@1
 
-  LOWORD(v2) = *TIM;
-  if ( TIM == &TIM2_0 || TIM == &TIM3 || TIM == 0x40000800 || TIM == 0x40000C00 )
-    v2 = (v2 & 0xFF8F) | *(a2 + 1);
-  if ( TIM != 0x40001000 && TIM != 0x40001400 )
-    v2 = (v2 & 0xFCFF) | *(a2 + 4);
-  *TIM = v2;
-  *(TIM + 11) = a2[1];
-  *(TIM + 20) = *a2;
-  *(TIM + 10) = 1;
+  LOWORD(v2) = *(_WORD *)TIM;
+  if ( TIM == &TIM2_0 || TIM == &TIM3 || TIM == (void *)0x40000800 || TIM == (void *)0x40000C00 )
+    v2 = (unsigned __int16)(v2 & 0xFF8F) | *((_WORD *)a2 + 1);
+  if ( TIM != (void *)0x40001000 && TIM != (void *)0x40001400 )
+    v2 = (unsigned __int16)(v2 & 0xFCFF) | *((_WORD *)a2 + 4);
+  *(_WORD *)TIM = v2;
+  *((_DWORD *)TIM + 11) = a2[1];
+  *((_WORD *)TIM + 20) = *(_WORD *)a2;
+  *((_WORD *)TIM + 10) = 1;
 }
 
 //----- (0801CFA0) --------------------------------------------------------
 void __fastcall set_timer_enable(void *TIM, char enable)
 {
   if ( enable )
-    *TIM |= 1u;
+    *(_WORD *)TIM |= 1u;
   else
-    *TIM &= 0xFFFEu;
+    *(_WORD *)TIM &= 0xFFFEu;
 }
 
 //----- (0801CFBC) --------------------------------------------------------
 int __fastcall sub_801CFBC(int result, __int16 a2, char a3)
 {
   if ( a3 )
-    *(result + 12) |= a2;
+    *(_WORD *)(result + 12) |= a2;
   else
-    *(result + 12) &= ~a2;
+    *(_WORD *)(result + 12) &= ~a2;
   return result;
 }
 
 //----- (0801CFD2) --------------------------------------------------------
 void __fastcall TIM_clear_status_bits(void *TIM, __int16 mask)
 {
-  *(TIM + 8) = ~mask;
+  *((_WORD *)TIM + 8) = ~mask;
 }
 
 //----- (0801CFDC) --------------------------------------------------------
-void __fastcall sub_801CFDC(int result, char a2)
+void __fastcall apo_something_with_rtc(int result, char a2)
 {
-  dword_40002824 = 83;
+  rtc_dword_40002824_unused = 83;
   if ( a2 )
   {
-    dword_40002808 |= result & 0xFFFFFFFB;
-    dword_40002840 |= result & 4;
+    rtc_dword_40002808 |= result & 0xFFFFFFFB;
+    rtc_dword_40002840 |= result & 4;
   }
   else
   {
-    dword_40002808 &= ~(result & 0xFFFFFFFB);
-    dword_40002840 &= ~(result & 4);
+    rtc_dword_40002808 &= ~(result & 0xFFFFFFFB);
+    rtc_dword_40002840 &= ~(result & 4);
   }
-  dword_40002824 = 255;
+  rtc_dword_40002824_unused = 255;
 }
-// 40002808: using guessed type int dword_40002808;
-// 40002824: using guessed type int dword_40002824;
-// 40002840: using guessed type int dword_40002840;
+// 40002808: using guessed type int rtc_dword_40002808;
+// 40002824: using guessed type int rtc_dword_40002824_unused;
+// 40002840: using guessed type int rtc_dword_40002840;
 
 //----- (0801D030) --------------------------------------------------------
 int __fastcall sub_801D030(unsigned int a1)
 {
   int result; // r0@3
 
-  LOBYTE(result) = dword_40002808 & a1 | dword_40002840 & 4 & (a1 >> (a1 >> 18) >> 15)
+  LOBYTE(result) = rtc_dword_40002808 & a1 | rtc_dword_40002840 & 4 & (a1 >> (a1 >> 18) >> 15)
                 && (dword_4000280C[0] & (a1 >> 4)) << 16;
-  return result;
+  return (unsigned __int8)result;
 }
-// 40002808: using guessed type int dword_40002808;
-// 40002840: using guessed type int dword_40002840;
+// 40002808: using guessed type int rtc_dword_40002808;
+// 40002840: using guessed type int rtc_dword_40002840;
 
 //----- (0801D07A) --------------------------------------------------------
 unsigned int __fastcall sub_801D07A(unsigned int result)
 {
-  _R2 = (result >> 4) | 0x80;
+  _R2 = (unsigned __int16)(result >> 4) | 0x80;
   _R3 = dword_4000280C[0] & 0x80;
   __asm { ORNS.W  R2, R3, R2 }
   dword_4000280C[0] = _R2;
@@ -22787,35 +22551,35 @@ unsigned int __fastcall sub_801D07A(unsigned int result)
 //----- (0801D0A8) --------------------------------------------------------
 int __fastcall sub_801D0A8(int result, unsigned __int8 a2)
 {
-  *(4 * (a2 >> 2) + 0x40010008) &= ~(15 << 4 * (a2 & 3));
-  result = result;
-  *(4 * (a2 >> 2) + 0x40010008) |= result << 4 * (a2 & 3);
+  *(_DWORD *)(4 * ((signed int)a2 >> 2) + 0x40010008) &= ~(15 << 4 * (a2 & 3));
+  result = (unsigned __int8)result;
+  *(_DWORD *)(4 * ((signed int)a2 >> 2) + 0x40010008) |= (unsigned __int8)result << 4 * (a2 & 3);
   return result;
 }
 
 //----- (0801D0FC) --------------------------------------------------------
 int __fastcall sub_801D0FC(int result)
 {
-  if ( *(result + 6) )
+  if ( *(_BYTE *)(result + 6) )
   {
-    EXTI_IMR &= ~*result;
-    EXTI_EMR &= ~*result;
-    *(&EXTI_IMR + *(result + 4)) |= *result;
-    EXTI_RTSR &= ~*result;
-    EXTI_FTSR &= ~*result;
-    if ( *(result + 5) == 16 )
+    EXTI_IMR &= ~*(_DWORD *)result;
+    EXTI_EMR &= ~*(_DWORD *)result;
+    *(int *)((char *)&EXTI_IMR + *(_BYTE *)(result + 4)) |= *(_DWORD *)result;
+    EXTI_RTSR &= ~*(_DWORD *)result;
+    EXTI_FTSR &= ~*(_DWORD *)result;
+    if ( *(_BYTE *)(result + 5) == 16 )
     {
-      EXTI_RTSR |= *result;
-      EXTI_FTSR |= *result;
+      EXTI_RTSR |= *(_DWORD *)result;
+      EXTI_FTSR |= *(_DWORD *)result;
     }
     else
     {
-      *(&EXTI_IMR + *(result + 5)) |= *result;
+      *(int *)((char *)&EXTI_IMR + *(_BYTE *)(result + 5)) |= *(_DWORD *)result;
     }
   }
   else
   {
-    *(&EXTI_IMR + *(result + 4)) &= ~*result;
+    *(int *)((char *)&EXTI_IMR + *(_BYTE *)(result + 4)) &= ~*(_DWORD *)result;
   }
   return result;
 }
@@ -22852,9 +22616,9 @@ void __fastcall memcpy(void *dest, void *src, int len)
     v5 = len--;
     if ( !v5 )
       break;
-    *v3 = *v4;
-    v4 = v4 + 1;
-    v3 = v3 + 1;
+    *(_BYTE *)v3 = *(_BYTE *)v4;
+    v4 = (char *)v4 + 1;
+    v3 = (char *)v3 + 1;
   }
 }
 
@@ -22864,12 +22628,12 @@ void __fastcall memset(void *mem, char val, int len)
   void *i; // r3@1
   int v4; // r4@2
 
-  for ( i = mem; ; i = i + 1 )
+  for ( i = mem; ; i = (char *)i + 1 )
   {
     v4 = len--;
     if ( !v4 )
       break;
-    *i = val;
+    *(_BYTE *)i = val;
   }
 }
 
@@ -22889,7 +22653,7 @@ int __fastcall memcmp(char *dst, char *src, int len)
     v6 = len--;
     if ( !v6 )
       break;
-    result = *v3++ - *v4++;
+    result = (unsigned __int8)*v3++ - (unsigned __int8)*v4++;
   }
   while ( !result );
   return result;
@@ -22898,7 +22662,7 @@ int __fastcall memcmp(char *dst, char *src, int len)
 //----- (0801D20E) --------------------------------------------------------
 char __fastcall chr_in_str(char *str, char chr)
 {
-  while ( *str && *str != chr )
+  while ( *str && (unsigned __int8)*str != chr )
     ++str;
   return *str;
 }
@@ -22913,28 +22677,28 @@ signed int __fastcall sub_801D222(int a1, int a2)
 
   v2 = a1;
   v3 = a2;
-  v4 = *(a1 + 44);
+  v4 = *(_DWORD *)(a1 + 44);
   if ( v4 != a2 )
   {
-    if ( *(a1 + 4) )
+    if ( *(_BYTE *)(a1 + 4) )
     {
-      if ( prob_write_sd_blocks(*(a1 + 1), a1 + 48, v4, 1u) )
+      if ( prob_write_sd_blocks(*(_BYTE *)(a1 + 1), a1 + 48, v4, 1u) )
         return 1;
-      *(v2 + 4) = 0;
-      if ( v4 < (*(v2 + 28) + *(v2 + 32)) )
+      *(_BYTE *)(v2 + 4) = 0;
+      if ( v4 < (unsigned int)(*(_DWORD *)(v2 + 28) + *(_DWORD *)(v2 + 32)) )
       {
-        for ( i = *(v2 + 3); i >= 2; --i )
+        for ( i = *(_BYTE *)(v2 + 3); (signed int)i >= 2; --i )
         {
-          v4 += *(v2 + 28);
-          prob_write_sd_blocks(*(v2 + 1), v2 + 48, v4, 1u);
+          v4 += *(_DWORD *)(v2 + 28);
+          prob_write_sd_blocks(*(_BYTE *)(v2 + 1), v2 + 48, v4, 1u);
         }
       }
     }
     if ( v3 )
     {
-      if ( sub_80207E6(*(v2 + 1), v2 + 48, v3) )
+      if ( sub_80207E6(*(_BYTE *)(v2 + 1), v2 + 48, v3) )
         return 1;
-      *(v2 + 44) = v3;
+      *(_DWORD *)(v2 + 44) = v3;
     }
   }
   return 0;
@@ -22950,35 +22714,35 @@ int __fastcall prob_sd_init_partition_table(int a1)
   v2 = sub_801D222(a1, 0);
   if ( !v2 )
   {
-    if ( *v1 == 3 && *(v1 + 5) )
+    if ( *(_BYTE *)v1 == 3 && *(_BYTE *)(v1 + 5) )
     {
-      *(v1 + 44) = 0;
-      memset((v1 + 48), 0, 512);
-      *(v1 + 558) = 0x55;
-      *(v1 + 559) = 0xAAu;
-      *(v1 + 48) = 82;
-      *(v1 + 49) = 82;
-      *(v1 + 50) = 97;
-      *(v1 + 51) = 65;
-      *(v1 + 532) = 114;
-      *(v1 + 533) = 114;
-      *(v1 + 534) = 65;
-      *(v1 + 535) = 97;
-      *(v1 + 536) = *(v1 + 16);
-      *(v1 + 537) = *(v1 + 16) >> 8;
-      *(v1 + 538) = *(v1 + 16) >> 16;
-      *(v1 + 539) = *(v1 + 16) >> 24;
-      *(v1 + 540) = *(v1 + 12);
-      *(v1 + 541) = *(v1 + 12) >> 8;
-      *(v1 + 542) = *(v1 + 12) >> 16;
-      *(v1 + 543) = *(v1 + 12) >> 24;
-      prob_write_sd_blocks(*(v1 + 1), v1 + 48, *(v1 + 20), 1u);
-      *(v1 + 5) = 0;
+      *(_DWORD *)(v1 + 44) = 0;
+      memset((void *)(v1 + 48), 0, 512);
+      *(_BYTE *)(v1 + 558) = 0x55;
+      *(_BYTE *)(v1 + 559) = 0xAAu;
+      *(_BYTE *)(v1 + 48) = 82;
+      *(_BYTE *)(v1 + 49) = 82;
+      *(_BYTE *)(v1 + 50) = 97;
+      *(_BYTE *)(v1 + 51) = 65;
+      *(_BYTE *)(v1 + 532) = 114;
+      *(_BYTE *)(v1 + 533) = 114;
+      *(_BYTE *)(v1 + 534) = 65;
+      *(_BYTE *)(v1 + 535) = 97;
+      *(_BYTE *)(v1 + 536) = *(_DWORD *)(v1 + 16);
+      *(_BYTE *)(v1 + 537) = (unsigned __int16)*(_DWORD *)(v1 + 16) >> 8;
+      *(_BYTE *)(v1 + 538) = *(_DWORD *)(v1 + 16) >> 16;
+      *(_BYTE *)(v1 + 539) = *(_DWORD *)(v1 + 16) >> 24;
+      *(_BYTE *)(v1 + 540) = *(_DWORD *)(v1 + 12);
+      *(_BYTE *)(v1 + 541) = (unsigned __int16)*(_DWORD *)(v1 + 12) >> 8;
+      *(_BYTE *)(v1 + 542) = *(_DWORD *)(v1 + 12) >> 16;
+      *(_BYTE *)(v1 + 543) = *(_DWORD *)(v1 + 12) >> 24;
+      prob_write_sd_blocks(*(_BYTE *)(v1 + 1), v1 + 48, *(_DWORD *)(v1 + 20), 1u);
+      *(_BYTE *)(v1 + 5) = 0;
     }
-    if ( sub_802089C(*(v1 + 1), 0, 0) )
+    if ( sub_802089C(*(_BYTE *)(v1 + 1), 0, 0) )
       v2 = 1;
   }
-  return v2;
+  return (unsigned __int8)v2;
 }
 
 //----- (0801D372) --------------------------------------------------------
@@ -22988,8 +22752,8 @@ int __fastcall sub_801D372(int a1, int a2)
   int result; // r0@2
 
   v2 = a2 - 2;
-  if ( v2 < (*(a1 + 24) - 2) )
-    result = *(a1 + 40) + *(a1 + 2) * v2;
+  if ( v2 < (unsigned int)(*(_DWORD *)(a1 + 24) - 2) )
+    result = *(_DWORD *)(a1 + 40) + *(_BYTE *)(a1 + 2) * v2;
   else
     result = 0;
   return result;
@@ -23009,35 +22773,35 @@ signed int __fastcall sub_801D38C(int a1, unsigned int a2)
 
   v2 = a1;
   v3 = a2;
-  if ( a2 < 2 || a2 >= *(a1 + 24) )
+  if ( a2 < 2 || a2 >= *(_DWORD *)(a1 + 24) )
     return 1;
-  v5 = *a1;
+  v5 = *(_BYTE *)a1;
   if ( v5 != 1 )
   {
     if ( v5 >= 1 )
     {
       if ( v5 == 3 )
       {
-        if ( !sub_801D222(v2, *(v2 + 32) + (a2 >> 7)) )
-          return ((*(4 * v3 % 0x200 + v2 + 50) << 16) | (*(4 * v3 % 0x200 + v2 + 51) << 24) | (*(4 * v3 % 0x200 + v2 + 49) << 8) | *(4 * v3 % 0x200 + v2 + 48)) & 0xFFFFFFF;
+        if ( !sub_801D222(v2, *(_DWORD *)(v2 + 32) + (a2 >> 7)) )
+          return ((*(_BYTE *)(4 * v3 % 0x200 + v2 + 50) << 16) | (*(_BYTE *)(4 * v3 % 0x200 + v2 + 51) << 24) | (*(_BYTE *)(4 * v3 % 0x200 + v2 + 49) << 8) | *(_BYTE *)(4 * v3 % 0x200 + v2 + 48)) & 0xFFFFFFF;
       }
-      else if ( v5 < 3 && !sub_801D222(v2, *(v2 + 32) + (a2 >> 8)) )
+      else if ( v5 < 3 && !sub_801D222(v2, *(_DWORD *)(v2 + 32) + (a2 >> 8)) )
       {
-        return *(2 * v3 % 0x200 + v2 + 48) | (*(2 * v3 % 0x200 + v2 + 49) << 8);
+        return *(_BYTE *)(2 * v3 % 0x200 + v2 + 48) | (unsigned __int16)(*(_BYTE *)(2 * v3 % 0x200 + v2 + 49) << 8);
       }
     }
     return -1;
   }
   v6 = a2 + (a2 >> 1);
-  if ( sub_801D222(v2, *(v2 + 32) + (v6 >> 9)) )
+  if ( sub_801D222(v2, *(_DWORD *)(v2 + 32) + (v6 >> 9)) )
     return -1;
-  v7 = *(v6 % 0x200 + v2 + 48);
+  v7 = *(_BYTE *)(v6 % 0x200 + v2 + 48);
   v8 = v6 + 1;
-  if ( sub_801D222(v2, *(v2 + 32) + (v8 >> 9)) )
+  if ( sub_801D222(v2, *(_DWORD *)(v2 + 32) + (v8 >> 9)) )
     return -1;
-  v9 = v7 | (*(v8 % 0x200 + v2 + 48) << 8);
+  v9 = v7 | (*(_BYTE *)(v8 % 0x200 + v2 + 48) << 8);
   if ( v3 & 1 )
-    result = v9 >> 4;
+    result = (unsigned int)v9 >> 4;
   else
     result = v9 & 0xFFF;
   return result;
@@ -23069,25 +22833,25 @@ int __fastcall sub_801D48A(int a1, unsigned int a2, unsigned int a3)
   v3 = a1;
   v4 = a2;
   v5 = a3;
-  if ( a2 >= 2 && a2 < *(a1 + 24) )
+  if ( a2 >= 2 && a2 < *(_DWORD *)(a1 + 24) )
   {
-    v7 = *a1;
+    v7 = *(_BYTE *)a1;
     if ( v7 == 1 )
     {
       v8 = a2 + (a2 >> 1);
-      v9 = sub_801D222(v3, *(v3 + 32) + (v8 >> 9));
+      v9 = sub_801D222(v3, *(_DWORD *)(v3 + 32) + (v8 >> 9));
       v6 = v9;
       if ( !v9 )
       {
         v10 = v8 % 0x200 + v3 + 48;
         if ( v4 & 1 )
-          v11 = *v10 & 0xF | 16 * v5;
+          v11 = *(_BYTE *)v10 & 0xF | 16 * v5;
         else
           LOBYTE(v11) = v5;
-        *v10 = v11;
+        *(_BYTE *)v10 = v11;
         v12 = v8 + 1;
-        *(v3 + 4) = 1;
-        v13 = sub_801D222(v3, *(v3 + 32) + (v12 >> 9));
+        *(_BYTE *)(v3 + 4) = 1;
+        v13 = sub_801D222(v3, *(_DWORD *)(v3 + 32) + (v12 >> 9));
         v6 = v13;
         if ( !v13 )
         {
@@ -23095,8 +22859,8 @@ int __fastcall sub_801D48A(int a1, unsigned int a2, unsigned int a3)
           if ( v4 & 1 )
             v15 = v5 >> 4;
           else
-            v15 = (*v14 & 0xF0) | (v5 >> 8) & 0xF;
-          *v14 = v15;
+            v15 = (unsigned __int8)(*(_BYTE *)v14 & 0xF0) | (v5 >> 8) & 0xF;
+          *(_BYTE *)v14 = v15;
         }
       }
       goto LABEL_24;
@@ -23105,17 +22869,17 @@ int __fastcall sub_801D48A(int a1, unsigned int a2, unsigned int a3)
       goto LABEL_28;
     if ( v7 == 3 )
     {
-      v18 = sub_801D222(v3, *(v3 + 32) + (a2 >> 7));
+      v18 = sub_801D222(v3, *(_DWORD *)(v3 + 32) + (a2 >> 7));
       v6 = v18;
       if ( !v18 )
       {
         v19 = 4 * v4 % 0x200;
         v20 = v19 + v3 + 48;
-        v21 = v5 | (*(v19 + v3 + 51) << 24) & 0xF0000000;
-        *v20 = v21;
-        *(v20 + 1) = BYTE1(v21);
-        *(v20 + 2) = v21 >> 16;
-        *(v20 + 3) = BYTE3(v21);
+        v21 = v5 | (*(_BYTE *)(v19 + v3 + 51) << 24) & 0xF0000000;
+        *(_BYTE *)v20 = v21;
+        *(_BYTE *)(v20 + 1) = BYTE1(v21);
+        *(_BYTE *)(v20 + 2) = v21 >> 16;
+        *(_BYTE *)(v20 + 3) = BYTE3(v21);
       }
       goto LABEL_24;
     }
@@ -23126,21 +22890,21 @@ LABEL_28:
     }
     else
     {
-      v16 = sub_801D222(v3, *(v3 + 32) + (a2 >> 8));
+      v16 = sub_801D222(v3, *(_DWORD *)(v3 + 32) + (a2 >> 8));
       v6 = v16;
       if ( !v16 )
       {
         v17 = 2 * v4 % 0x200 + v3 + 48;
-        *v17 = v5;
-        *(v17 + 1) = BYTE1(v5);
+        *(_BYTE *)v17 = v5;
+        *(_BYTE *)(v17 + 1) = BYTE1(v5);
       }
     }
 LABEL_24:
-    *(v3 + 4) = 1;
-    return v6;
+    *(_BYTE *)(v3 + 4) = 1;
+    return (unsigned __int8)v6;
   }
   v6 = 2;
-  return v6;
+  return (unsigned __int8)v6;
 }
 
 //----- (0801D5EE) --------------------------------------------------------
@@ -23154,10 +22918,10 @@ int __fastcall sub_801D5EE(int a1, unsigned int a2)
 
   v2 = a1;
   v3 = a2;
-  if ( a2 >= 2 && a2 < *(a1 + 24) )
+  if ( a2 >= 2 && a2 < *(_DWORD *)(a1 + 24) )
   {
     v4 = 0;
-    while ( v3 < *(v2 + 24) )
+    while ( v3 < *(_DWORD *)(v2 + 24) )
     {
       v5 = sub_801D38C(v2, v3);
       v6 = v5;
@@ -23166,20 +22930,20 @@ int __fastcall sub_801D5EE(int a1, unsigned int a2)
       if ( v5 == 1 )
       {
         v4 = 2;
-        return v4;
+        return (unsigned __int8)v4;
       }
       if ( v5 == -1 )
       {
         v4 = 1;
-        return v4;
+        return (unsigned __int8)v4;
       }
       v4 = sub_801D48A(v2, v3, 0);
       if ( v4 )
-        return v4;
-      if ( *(v2 + 16) != -1 )
+        return (unsigned __int8)v4;
+      if ( *(_DWORD *)(v2 + 16) != -1 )
       {
-        ++*(v2 + 16);
-        *(v2 + 5) = 1;
+        ++*(_DWORD *)(v2 + 16);
+        *(_BYTE *)(v2 + 5) = 1;
       }
       v3 = v6;
     }
@@ -23188,17 +22952,17 @@ int __fastcall sub_801D5EE(int a1, unsigned int a2)
   {
     v4 = 2;
   }
-  return v4;
+  return (unsigned __int8)v4;
 }
 
 //----- (0801D660) --------------------------------------------------------
-signed int __fastcall sub_801D660(int a1, unsigned int a2)
+unsigned int __fastcall sub_801D660(int a1, unsigned int a2)
 {
   int v2; // r4@1
   unsigned int v3; // r5@1
   signed int v4; // r8@2
   signed int v5; // r6@5
-  signed int result; // r0@6
+  unsigned int result; // r0@6
   unsigned int v7; // r7@10
   int v8; // r9@15
 
@@ -23207,26 +22971,26 @@ signed int __fastcall sub_801D660(int a1, unsigned int a2)
   if ( a2 )
   {
     v5 = sub_801D38C(a1, a2);
-    if ( v5 < 2 )
+    if ( (unsigned int)v5 < 2 )
       return 1;
-    if ( v5 < *(v2 + 24) )
+    if ( (unsigned int)v5 < *(_DWORD *)(v2 + 24) )
       return v5;
     v4 = v3;
   }
   else
   {
-    v4 = *(a1 + 12);
-    if ( !v4 || v4 >= *(a1 + 24) )
+    v4 = *(_DWORD *)(a1 + 12);
+    if ( !v4 || (unsigned int)v4 >= *(_DWORD *)(a1 + 24) )
       v4 = 1;
   }
   v7 = v4;
   while ( 1 )
   {
     ++v7;
-    if ( v7 >= *(v2 + 24) )
+    if ( v7 >= *(_DWORD *)(v2 + 24) )
     {
       v7 = 2;
-      if ( v4 < 2 )
+      if ( (unsigned int)v4 < 2 )
         return 0;
     }
     result = sub_801D38C(v2, v7);
@@ -23249,11 +23013,11 @@ signed int __fastcall sub_801D660(int a1, unsigned int a2)
   }
   else
   {
-    *(v2 + 12) = v7;
-    if ( *(v2 + 16) != -1 )
+    *(_DWORD *)(v2 + 12) = v7;
+    if ( *(_DWORD *)(v2 + 16) != -1 )
     {
-      --*(v2 + 16);
-      *(v2 + 5) = 1;
+      --*(_DWORD *)(v2 + 16);
+      *(_BYTE *)(v2 + 5) = 1;
     }
   }
   return v7;
@@ -23270,35 +23034,35 @@ signed int __fastcall sub_801D73C(int a1, unsigned __int16 a2)
 
   v2 = a1;
   v3 = a2;
-  *(a1 + 6) = a2;
-  v4 = *(a1 + 8);
-  if ( v4 == 1 || v4 >= *(*a1 + 24) )
+  *(_WORD *)(a1 + 6) = a2;
+  v4 = *(_DWORD *)(a1 + 8);
+  if ( v4 == 1 || v4 >= *(_DWORD *)(*(_DWORD *)a1 + 24) )
     return 2;
-  if ( !v4 && **a1 == 3 )
-    v4 = *(*a1 + 36);
+  if ( !v4 && **(_BYTE **)a1 == 3 )
+    v4 = *(_DWORD *)(*(_DWORD *)a1 + 36);
   if ( v4 )
   {
-    for ( i = 16 * *(*a1 + 2); v3 >= i; v3 -= i )
+    for ( i = 16 * *(_BYTE *)(*(_DWORD *)a1 + 2); v3 >= (unsigned int)i; v3 -= i )
     {
-      v7 = sub_801D38C(*v2, v4);
+      v7 = sub_801D38C(*(_DWORD *)v2, v4);
       v4 = v7;
       if ( v7 == -1 )
         return 1;
-      if ( v7 < 2 || v7 >= *(*v2 + 24) )
+      if ( (unsigned int)v7 < 2 || (unsigned int)v7 >= *(_DWORD *)(*(_DWORD *)v2 + 24) )
         return 2;
     }
-    *(v2 + 12) = v4;
-    *(v2 + 16) = sub_801D372(*v2, v4) + (v3 >> 4);
+    *(_DWORD *)(v2 + 12) = v4;
+    *(_DWORD *)(v2 + 16) = sub_801D372(*(_DWORD *)v2, v4) + ((unsigned int)v3 >> 4);
   }
   else
   {
-    *(a1 + 12) = 0;
-    if ( a2 >= *(*a1 + 8) )
+    *(_DWORD *)(a1 + 12) = 0;
+    if ( a2 >= (unsigned int)*(_WORD *)(*(_DWORD *)a1 + 8) )
       return 2;
     v3 = a2;
-    *(a1 + 16) = *(*a1 + 36) + (a2 >> 4);
+    *(_DWORD *)(a1 + 16) = *(_DWORD *)(*(_DWORD *)a1 + 36) + ((unsigned int)a2 >> 4);
   }
-  *(v2 + 20) = *v2 + 32 * (v3 % 0x10u) + 48;
+  *(_DWORD *)(v2 + 20) = *(_DWORD *)v2 + 32 * (v3 % 0x10u) + 48;
   return 0;
 }
 
@@ -23310,32 +23074,32 @@ signed int __fastcall sub_801D7F2(int a1, int a2)
   unsigned __int16 v4; // r7@1
   signed int v6; // r0@9
   int v7; // r6@9
-  signed int v8; // r0@16
+  unsigned int v8; // r0@16
   unsigned int i; // r8@24
 
   v2 = a1;
   v3 = a2;
-  v4 = *(a1 + 6) + 1;
-  if ( *(a1 + 6) == -1 || !*(a1 + 16) )
+  v4 = *(_WORD *)(a1 + 6) + 1;
+  if ( *(_WORD *)(a1 + 6) == -1 || !*(_DWORD *)(a1 + 16) )
     return 4;
   if ( !(v4 % 0x10u) )
   {
-    ++*(a1 + 16);
-    if ( *(a1 + 12) )
+    ++*(_DWORD *)(a1 + 16);
+    if ( *(_DWORD *)(a1 + 12) )
     {
-      if ( !((*(*a1 + 2) - 1) & (v4 >> 4)) )
+      if ( !((*(_BYTE *)(*(_DWORD *)a1 + 2) - 1) & ((unsigned int)v4 >> 4)) )
       {
-        v6 = sub_801D38C(*a1, *(a1 + 12));
+        v6 = sub_801D38C(*(_DWORD *)a1, *(_DWORD *)(a1 + 12));
         v7 = v6;
-        if ( v6 < 2 )
+        if ( (unsigned int)v6 < 2 )
           return 2;
         if ( v6 == -1 )
           return 1;
-        if ( v6 >= *(*v2 + 24) )
+        if ( (unsigned int)v6 >= *(_DWORD *)(*(_DWORD *)v2 + 24) )
         {
           if ( !v3 )
             return 4;
-          v8 = sub_801D660(*v2, *(v2 + 12));
+          v8 = sub_801D660(*(_DWORD *)v2, *(_DWORD *)(v2 + 12));
           v7 = v8;
           if ( !v8 )
             return 7;
@@ -23343,30 +23107,30 @@ signed int __fastcall sub_801D7F2(int a1, int a2)
             return 2;
           if ( v8 == -1 )
             return 1;
-          if ( sub_801D222(*v2, 0) )
+          if ( sub_801D222(*(_DWORD *)v2, 0) )
             return 1;
-          memset((*v2 + 48), 0, 512);
-          *(*v2 + 44) = sub_801D372(*v2, v7);
-          for ( i = 0; i < *(*v2 + 2); ++i )
+          memset((void *)(*(_DWORD *)v2 + 48), 0, 512);
+          *(_DWORD *)(*(_DWORD *)v2 + 44) = sub_801D372(*(_DWORD *)v2, v7);
+          for ( i = 0; i < *(_BYTE *)(*(_DWORD *)v2 + 2); ++i )
           {
-            *(*v2 + 4) = 1;
-            if ( sub_801D222(*v2, 0) )
+            *(_BYTE *)(*(_DWORD *)v2 + 4) = 1;
+            if ( sub_801D222(*(_DWORD *)v2, 0) )
               return 1;
-            ++*(*v2 + 44);
+            ++*(_DWORD *)(*(_DWORD *)v2 + 44);
           }
-          *(*v2 + 44) -= i;
+          *(_DWORD *)(*(_DWORD *)v2 + 44) -= i;
         }
-        *(v2 + 12) = v7;
-        *(v2 + 16) = sub_801D372(*v2, v7);
+        *(_DWORD *)(v2 + 12) = v7;
+        *(_DWORD *)(v2 + 16) = sub_801D372(*(_DWORD *)v2, v7);
       }
     }
-    else if ( v4 >= *(*a1 + 8) )
+    else if ( v4 >= (unsigned int)*(_WORD *)(*(_DWORD *)a1 + 8) )
     {
       return 4;
     }
   }
-  *(v2 + 6) = v4;
-  *(v2 + 20) = *v2 + 32 * (v4 % 0x10u) + 48;
+  *(_WORD *)(v2 + 6) = v4;
+  *(_DWORD *)(v2 + 20) = *(_DWORD *)v2 + 32 * (v4 % 0x10u) + 48;
   return 0;
 }
 
@@ -23380,24 +23144,24 @@ int __fastcall sub_801D932(int a1)
 
   v1 = a1;
   LOBYTE(result) = sub_801D73C(a1, 0);
-  if ( result )
+  if ( (_BYTE)result )
   {
-    result = result;
+    result = (unsigned __int8)result;
   }
   else
   {
     while ( 1 )
     {
-      v3 = sub_801D222(*v1, *(v1 + 16));
+      v3 = sub_801D222(*(_DWORD *)v1, *(_DWORD *)(v1 + 16));
       if ( v3 )
         break;
-      v4 = *(v1 + 20);
-      if ( !*v4 )
+      v4 = *(_DWORD *)(v1 + 20);
+      if ( !*(_BYTE *)v4 )
       {
         v3 = 4;
         break;
       }
-      if ( *(v4 + 11) & 8 || memcmp(*(v1 + 20), *(v1 + 24), 11) )
+      if ( *(_BYTE *)(v4 + 11) & 8 || memcmp(*(char **)(v1 + 20), *(char **)(v1 + 24), 11) )
       {
         v3 = sub_801D7F2(v1, 0);
         if ( !v3 )
@@ -23405,7 +23169,7 @@ int __fastcall sub_801D932(int a1)
       }
       break;
     }
-    result = v3;
+    result = (unsigned __int8)v3;
   }
   return result;
 }
@@ -23420,19 +23184,19 @@ int __fastcall sub_801D99A(int a1)
 
   v1 = a1;
   v2 = 4;
-  while ( *(v1 + 16) )
+  while ( *(_DWORD *)(v1 + 16) )
   {
-    v2 = sub_801D222(*v1, *(v1 + 16));
+    v2 = sub_801D222(*(_DWORD *)v1, *(_DWORD *)(v1 + 16));
     if ( v2 )
       break;
-    v3 = *(v1 + 20);
-    v4 = *v3;
-    if ( !*v3 )
+    v3 = *(_DWORD *)(v1 + 20);
+    v4 = *(_BYTE *)v3;
+    if ( !*(_BYTE *)v3 )
     {
       v2 = 4;
       break;
     }
-    if ( v4 == 229 || v4 == 46 || *(v3 + 11) & 8 )
+    if ( v4 == 229 || v4 == 46 || *(_BYTE *)(v3 + 11) & 8 )
     {
       v2 = sub_801D7F2(v1, 0);
       if ( !v2 )
@@ -23441,8 +23205,8 @@ int __fastcall sub_801D99A(int a1)
     break;
   }
   if ( v2 )
-    *(v1 + 16) = 0;
-  return v2;
+    *(_DWORD *)(v1 + 16) = 0;
+  return (unsigned __int8)v2;
 }
 
 //----- (0801D9FE) --------------------------------------------------------
@@ -23456,24 +23220,24 @@ int __fastcall sub_801D9FE(int a1)
   v1 = a1;
   for ( i = sub_801D73C(a1, 0); !i; i = sub_801D7F2(v1, 1) )
   {
-    i = sub_801D222(*v1, *(v1 + 16));
+    i = sub_801D222(*(_DWORD *)v1, *(_DWORD *)(v1 + 16));
     if ( i )
       break;
-    v3 = **(v1 + 20);
+    v3 = **(_BYTE **)(v1 + 20);
     if ( v3 == 229 )
       break;
-    if ( !v3 )
+    if ( !(_BYTE)v3 )
       break;
   }
   if ( !i )
   {
-    i = sub_801D222(*v1, *(v1 + 16));
+    i = sub_801D222(*(_DWORD *)v1, *(_DWORD *)(v1 + 16));
     if ( !i )
     {
-      v4 = *(v1 + 20);
-      memset(*(v1 + 20), 0, 32);
-      memcpy(v4, *(v1 + 24), 11);
-      *(*v1 + 4) = 1;
+      v4 = *(void **)(v1 + 20);
+      memset(*(void **)(v1 + 20), 0, 32);
+      memcpy(v4, *(void **)(v1 + 24), 11);
+      *(_BYTE *)(*(_DWORD *)v1 + 4) = 1;
     }
   }
   return i;
@@ -23497,30 +23261,31 @@ signed int __fastcall sub_801DA80(int a1, int a2)
   int v14; // [sp+8h] [bp-28h]@1
 
   v14 = a2;
-  v2 = *(a1 + 24);
-  memset(*(a1 + 24), 32, 11);
+  v2 = *(_DWORD *)(a1 + 24);
+  memset(*(void **)(a1 + 24), 32, 11);
   v3 = 0;
   v4 = 0;
   v5 = 0;
   v6 = 8;
-  v7 = *v14;
+  v7 = *(_DWORD *)v14;
   while ( 1 )
   {
-    v8 = *(v5++ + v7);
-    if ( v8 < 33 || v8 == 47 || v8 == 92 )
+    v8 = *(_BYTE *)(v5++ + v7);
+    if ( (signed int)(unsigned __int8)v8 < 33 || v8 == 47 || v8 == 92 )
       break;
-    if ( v8 != 46 && v4 < v6 )
+    if ( v8 != 46 && v4 < (unsigned int)v6 )
     {
-      if ( v8 >= 128 )
+      if ( (signed int)(unsigned __int8)v8 >= 128 )
         v3 |= 3u;
-      if ( (v8 < 129 || v8 >= 160) && (v8 < 224 || v8 >= 253) )
+      if ( ((signed int)(unsigned __int8)v8 < 129 || (signed int)(unsigned __int8)v8 >= 160)
+        && ((signed int)(unsigned __int8)v8 < 224 || (signed int)(unsigned __int8)v8 >= 253) )
       {
         LOBYTE(v12) = chr_in_str("\"*+,:;<=>?[]|", v8);
         if ( v12 )
           return 6;
-        if ( v8 < 65 || v8 >= 91 )
+        if ( (signed int)(unsigned __int8)v8 < 65 || (signed int)(unsigned __int8)v8 >= 91 )
         {
-          if ( v8 >= 97 && v8 < 123 )
+          if ( (signed int)(unsigned __int8)v8 >= 97 && (signed int)(unsigned __int8)v8 < 123 )
           {
             v3 |= 1u;
             v8 -= 32;
@@ -23530,16 +23295,17 @@ signed int __fastcall sub_801DA80(int a1, int a2)
         {
           v3 |= 2u;
         }
-        *(v4++ + v2) = v8;
+        *(_BYTE *)(v4++ + v2) = v8;
       }
       else
       {
-        v10 = *(v5++ + v7);
-        if ( (v10 < 64 || v10 >= 127) && (v10 < 128 || v10 >= 253) || v4 >= (v6 - 1) )
+        v10 = *(_BYTE *)(v5++ + v7);
+        if ( ((signed int)v10 < 64 || (signed int)v10 >= 127) && ((signed int)v10 < 128 || (signed int)v10 >= 253)
+          || v4 >= (unsigned int)(v6 - 1) )
           return 6;
-        *(v4 + v2) = v8;
+        *(_BYTE *)(v4 + v2) = v8;
         v11 = v4 + 1;
-        *(v11 + v2) = v10;
+        *(_BYTE *)(v11 + v2) = v10;
         v4 = v11 + 1;
       }
     }
@@ -23552,22 +23318,22 @@ signed int __fastcall sub_801DA80(int a1, int a2)
       v3 *= 4;
     }
   }
-  *v14 = v5 + v7;
-  if ( v8 >= 33 )
+  *(_DWORD *)v14 = v5 + v7;
+  if ( (signed int)(unsigned __int8)v8 >= 33 )
     v13 = 0;
   else
     v13 = 4;
   if ( v4 )
   {
-    if ( *v2 == 229 )
-      *v2 = 5;
+    if ( *(_BYTE *)v2 == 229 )
+      *(_BYTE *)v2 = 5;
     if ( v6 == 8 )
       LOBYTE(v3) = 4 * v3;
     if ( (v3 & 3) == 1 )
       v13 |= 0x10u;
     if ( (v3 & 0xC) == 4 )
       v13 |= 8u;
-    *(v2 + 11) = v13;
+    *(_BYTE *)(v2 + 11) = v13;
     result = 0;
   }
   else
@@ -23589,36 +23355,36 @@ int __fastcall sub_801DBE6(int result, int a2)
   int v8; // r4@11
 
   v2 = a2 + 9;
-  if ( *(result + 16) )
+  if ( *(_DWORD *)(result + 16) )
   {
-    v3 = *(result + 20);
-    v4 = *(v3 + 12);
+    v3 = *(_DWORD *)(result + 20);
+    v4 = *(_BYTE *)(v3 + 12);
     for ( i = 0; i < 8; ++i )
     {
-      v6 = *(i + v3);
+      v6 = *(_BYTE *)(i + v3);
       if ( v6 == 32 )
         break;
-      if ( v6 == 5 )
+      if ( (unsigned __int8)v6 == 5 )
         LOBYTE(v6) = -27;
-      *v2++ = v6;
+      *(_BYTE *)v2++ = v6;
     }
-    if ( *(v3 + 8) != 32 )
+    if ( *(_BYTE *)(v3 + 8) != 32 )
     {
-      *v2++ = 46;
-      for ( j = 8; j < 0xB; ++j )
+      *(_BYTE *)v2++ = 46;
+      for ( j = 8; (unsigned int)j < 0xB; ++j )
       {
-        v8 = *(j + v3);
+        v8 = *(_BYTE *)(j + v3);
         if ( v8 == 32 )
           break;
-        *v2++ = v8;
+        *(_BYTE *)v2++ = v8;
       }
     }
-    *(a2 + 8) = *(v3 + 11);
-    *a2 = *(v3 + 28) | (*(v3 + 30) << 16) | (*(v3 + 31) << 24) | (*(v3 + 29) << 8);
-    *(a2 + 4) = *(v3 + 24) | (*(v3 + 25) << 8);
-    *(a2 + 6) = *(v3 + 22) | (*(v3 + 23) << 8);
+    *(_BYTE *)(a2 + 8) = *(_BYTE *)(v3 + 11);
+    *(_DWORD *)a2 = *(_BYTE *)(v3 + 28) | (*(_BYTE *)(v3 + 30) << 16) | (*(_BYTE *)(v3 + 31) << 24) | (*(_BYTE *)(v3 + 29) << 8);
+    *(_WORD *)(a2 + 4) = *(_BYTE *)(v3 + 24) | (unsigned __int16)(*(_BYTE *)(v3 + 25) << 8);
+    *(_WORD *)(a2 + 6) = *(_BYTE *)(v3 + 22) | (unsigned __int16)(*(_BYTE *)(v3 + 23) << 8);
   }
-  *v2 = 0;
+  *(_BYTE *)v2 = 0;
   return result;
 }
 
@@ -23633,41 +23399,41 @@ int __fastcall sub_801DC8A(int a1, int a2)
 
   v7 = a2;
   v2 = a1;
-  if ( *a2 == 47 || *v7 == 92 )
+  if ( *(_BYTE *)a2 == 47 || *(_BYTE *)v7 == 92 )
     ++v7;
-  *(a1 + 8) = 0;
-  if ( *v7 >= 0x20 )
+  *(_DWORD *)(a1 + 8) = 0;
+  if ( (unsigned int)*(_BYTE *)v7 >= 0x20 )
   {
     while ( 1 )
     {
-      v3 = sub_801DA80(v2, &v7);
+      v3 = sub_801DA80(v2, (int)&v7);
       if ( v3 )
         break;
       v4 = sub_801D932(v2);
       v3 = v4;
       if ( v4 )
       {
-        if ( v4 == 4 && !(*(*(v2 + 24) + 11) & 4) )
+        if ( v4 == 4 && !(*(_BYTE *)(*(_DWORD *)(v2 + 24) + 11) & 4) )
           v3 = 5;
-        return v3;
+        return (unsigned __int8)v3;
       }
-      if ( *(*(v2 + 24) + 11) & 4 )
-        return v3;
-      v5 = *(v2 + 20);
-      if ( !(*(v5 + 11) & 0x10) )
+      if ( *(_BYTE *)(*(_DWORD *)(v2 + 24) + 11) & 4 )
+        return (unsigned __int8)v3;
+      v5 = *(_DWORD *)(v2 + 20);
+      if ( !(*(_BYTE *)(v5 + 11) & 0x10) )
       {
         v3 = 5;
-        return v3;
+        return (unsigned __int8)v3;
       }
-      *(v2 + 8) = (*(v5 + 26) | (*(v5 + 27) << 8)) | ((*(v5 + 20) | (*(v5 + 21) << 8)) << 16);
+      *(_DWORD *)(v2 + 8) = (unsigned __int16)(*(_BYTE *)(v5 + 26) | (unsigned __int16)(*(_BYTE *)(v5 + 27) << 8)) | ((unsigned __int16)(*(_BYTE *)(v5 + 20) | (unsigned __int16)(*(_BYTE *)(v5 + 21) << 8)) << 16);
     }
   }
   else
   {
     v3 = sub_801D73C(a1, 0);
-    *(v2 + 20) = 0;
+    *(_DWORD *)(v2 + 20) = 0;
   }
-  return v3;
+  return (unsigned __int8)v3;
 }
 
 //----- (0801DD2A) --------------------------------------------------------
@@ -23677,16 +23443,16 @@ signed int __fastcall sub_801DD2A(int a1, int a2)
   signed int result; // r0@2
 
   v2 = a1;
-  if ( sub_80207E6(*(a1 + 1), a1 + 48, a2) )
+  if ( sub_80207E6(*(_BYTE *)(a1 + 1), a1 + 48, a2) )
   {
     result = 3;
   }
-  else if ( (*(v2 + 558) | (*(v2 + 559) << 8)) == 43605 )
+  else if ( (unsigned __int16)(*(_BYTE *)(v2 + 558) | (unsigned __int16)(*(_BYTE *)(v2 + 559) << 8)) == 43605 )
   {
-    if ( ((*(v2 + 103) << 8) | (*(v2 + 104) << 16) | *(v2 + 102)) == 5521734 )
+    if ( ((*(_BYTE *)(v2 + 103) << 8) | (*(_BYTE *)(v2 + 104) << 16) | *(_BYTE *)(v2 + 102)) == 5521734 )
       result = 0;
     else
-      result = ((*(v2 + 131) << 8) | (*(v2 + 132) << 16) | *(v2 + 130)) != 5521734;
+      result = ((*(_BYTE *)(v2 + 131) << 8) | (*(_BYTE *)(v2 + 132) << 16) | *(_BYTE *)(v2 + 130)) != 5521734;
   }
   else
   {
@@ -23721,67 +23487,67 @@ signed int __fastcall sub_801DDA4(int a1, int a2, char a3)
   char v23; // [sp+20h] [bp-28h]@1
 
   v23 = a3;
-  v3 = *a1;
-  v18 = **a1 - 48;
-  if ( v18 >= 0xA || *(v3 + 1) != 58 )
+  v3 = *(_DWORD *)a1;
+  v18 = **(_BYTE **)a1 - 48;
+  if ( (unsigned int)v18 >= 0xA || *(_BYTE *)(v3 + 1) != 58 )
     v18 = 0;
   else
-    *a1 = v3 + 2;
+    *(_DWORD *)a1 = v3 + 2;
   if ( v18 )
     return 11;
   v5 = dword_20003800;
-  *a2 = dword_20003800;
+  *(_DWORD *)a2 = dword_20003800;
   if ( !v5 )
     return 12;
-  if ( !*v5 || (v6 = isnt_zero(*(v5 + 1)), v6 & 1) )
+  if ( !*(_BYTE *)v5 || (v6 = isnt_zero(*(_BYTE *)(v5 + 1)), v6 & 1) )
   {
-    *v5 = 0;
-    *(v5 + 1) = 0;
-    v7 = sub_80207C4(*(v5 + 1));
+    *(_BYTE *)v5 = 0;
+    *(_BYTE *)(v5 + 1) = 0;
+    v7 = sub_80207C4(*(_BYTE *)(v5 + 1));
     if ( v7 & 1 )
       return 3;
     if ( v23 && v7 & 4 )
       return 10;
     v8 = 0;
     v9 = sub_801DD2A(v5, 0);
-    if ( v9 == 1 && *(v5 + 498) )
+    if ( v9 == 1 && *(_BYTE *)(v5 + 498) )
     {
-      v8 = (*(v5 + 504) << 16) | (*(v5 + 505) << 24) | (*(v5 + 503) << 8) | *(v5 + 502);
+      v8 = (*(_BYTE *)(v5 + 504) << 16) | (*(_BYTE *)(v5 + 505) << 24) | (*(_BYTE *)(v5 + 503) << 8) | *(_BYTE *)(v5 + 502);
       v9 = sub_801DD2A(v5, v8);
     }
     if ( v9 == 3 )
       return 1;
     if ( v9 )
       return 13;
-    if ( (*(v5 + 59) | (*(v5 + 60) << 8)) != 512 )
+    if ( (unsigned __int16)(*(_BYTE *)(v5 + 59) | (unsigned __int16)(*(_BYTE *)(v5 + 60) << 8)) != 512 )
       return 13;
-    v10 = *(v5 + 70);
-    v11 = (v10 | (*(v5 + 71) << 8));
-    if ( !(v10 | (*(v5 + 71) << 8)) )
-      v11 = (*(v5 + 86) << 16) | (*(v5 + 87) << 24) | (*(v5 + 85) << 8) | *(v5 + 84);
-    *(v5 + 28) = v11;
-    v12 = *(v5 + 64);
-    *(v5 + 3) = v12;
+    v10 = *(_BYTE *)(v5 + 70);
+    v11 = (unsigned __int16)(v10 | (*(_BYTE *)(v5 + 71) << 8));
+    if ( !(v10 | (unsigned __int16)(*(_BYTE *)(v5 + 71) << 8)) )
+      v11 = (*(_BYTE *)(v5 + 86) << 16) | (*(_BYTE *)(v5 + 87) << 24) | (*(_BYTE *)(v5 + 85) << 8) | *(_BYTE *)(v5 + 84);
+    *(_DWORD *)(v5 + 28) = v11;
+    v12 = *(_BYTE *)(v5 + 64);
+    *(_BYTE *)(v5 + 3) = v12;
     if ( v12 != 1 && v12 != 2 )
       return 13;
     v13 = v11 * v12;
-    v14 = *(v5 + 61);
-    *(v5 + 2) = v14;
+    v14 = *(_BYTE *)(v5 + 61);
+    *(_BYTE *)(v5 + 2) = v14;
     if ( !v14 || v14 & (v14 - 1) )
       return 13;
-    *(v5 + 8) = *(v5 + 65) | (*(v5 + 66) << 8);
-    if ( *(v5 + 8) % 0x10u )
+    *(_WORD *)(v5 + 8) = *(_BYTE *)(v5 + 65) | (unsigned __int16)(*(_BYTE *)(v5 + 66) << 8);
+    if ( *(_WORD *)(v5 + 8) % 0x10u )
       return 13;
-    v20 = (*(v5 + 67) | (*(v5 + 68) << 8));
-    if ( !(*(v5 + 67) | (*(v5 + 68) << 8)) )
-      v20 = (*(v5 + 82) << 16) | (*(v5 + 83) << 24) | (*(v5 + 81) << 8) | *(v5 + 80);
-    v21 = *(v5 + 62) | (*(v5 + 63) << 8);
+    v20 = (unsigned __int16)(*(_BYTE *)(v5 + 67) | (unsigned __int16)(*(_BYTE *)(v5 + 68) << 8));
+    if ( !(*(_BYTE *)(v5 + 67) | (unsigned __int16)(*(_BYTE *)(v5 + 68) << 8)) )
+      v20 = (*(_BYTE *)(v5 + 82) << 16) | (*(_BYTE *)(v5 + 83) << 24) | (*(_BYTE *)(v5 + 81) << 8) | *(_BYTE *)(v5 + 80);
+    v21 = *(_BYTE *)(v5 + 62) | (unsigned __int16)(*(_BYTE *)(v5 + 63) << 8);
     if ( !v21 )
       return 13;
-    v22 = v13 + v21 + (*(v5 + 8) >> 4);
+    v22 = v13 + v21 + ((unsigned int)*(_WORD *)(v5 + 8) >> 4);
     if ( v20 < v22 )
       return 13;
-    v19 = (v20 - v22) / *(v5 + 2);
+    v19 = (v20 - v22) / *(_BYTE *)(v5 + 2);
     if ( !v19 )
       return 13;
     v15 = 1;
@@ -23789,49 +23555,50 @@ signed int __fastcall sub_801DDA4(int a1, int a2, char a3)
       v15 = 2;
     if ( v19 >= 0xFFF6 )
       v15 = 3;
-    *(v5 + 24) = v19 + 2;
-    *(v5 + 40) = v22 + v8;
-    *(v5 + 32) = v21 + v8;
+    *(_DWORD *)(v5 + 24) = v19 + 2;
+    *(_DWORD *)(v5 + 40) = v22 + v8;
+    *(_DWORD *)(v5 + 32) = v21 + v8;
     if ( v15 == 3 )
     {
-      if ( *(v5 + 8) )
+      if ( *(_WORD *)(v5 + 8) )
         return 13;
-      *(v5 + 36) = (*(v5 + 94) << 16) | (*(v5 + 95) << 24) | (*(v5 + 93) << 8) | *(v5 + 92);
-      v16 = 4 * *(v5 + 24);
+      *(_DWORD *)(v5 + 36) = (*(_BYTE *)(v5 + 94) << 16) | (*(_BYTE *)(v5 + 95) << 24) | (*(_BYTE *)(v5 + 93) << 8) | *(_BYTE *)(v5 + 92);
+      v16 = 4 * *(_DWORD *)(v5 + 24);
     }
     else
     {
-      if ( !*(v5 + 8) )
+      if ( !*(_WORD *)(v5 + 8) )
         return 13;
-      *(v5 + 36) = v13 + *(v5 + 32);
+      *(_DWORD *)(v5 + 36) = v13 + *(_DWORD *)(v5 + 32);
       if ( v15 == 2 )
-        v16 = 2 * *(v5 + 24);
+        v16 = 2 * *(_DWORD *)(v5 + 24);
       else
-        v16 = (*(v5 + 24) & 1) + ((3 * *(v5 + 24)) >> 1);
+        v16 = (*(_BYTE *)(v5 + 24) & 1) + ((unsigned int)(3 * *(_DWORD *)(v5 + 24)) >> 1);
     }
-    if ( *(v5 + 28) >= (v16 + 511) >> 9 )
+    if ( *(_DWORD *)(v5 + 28) >= (v16 + 511) >> 9 )
     {
-      *(v5 + 16) = -1;
-      *(v5 + 12) = 0;
+      *(_DWORD *)(v5 + 16) = -1;
+      *(_DWORD *)(v5 + 12) = 0;
       if ( v15 == 3 )
       {
-        *(v5 + 5) = 0;
-        *(v5 + 20) = (*(v5 + 96) | (*(v5 + 97) << 8)) + v8;
-        if ( !sub_80207E6(*(v5 + 1), v5 + 48, *(v5 + 20))
-          && (*(v5 + 558) | (*(v5 + 559) << 8)) == 43605
-          && ((*(v5 + 50) << 16) | (*(v5 + 51) << 24) | (*(v5 + 49) << 8) | *(v5 + 48)) == 1096897106
-          && ((*(v5 + 534) << 16) | (*(v5 + 535) << 24) | (*(v5 + 533) << 8) | *(v5 + 532)) == 1631679090 )
+        *(_BYTE *)(v5 + 5) = 0;
+        *(_DWORD *)(v5 + 20) = (unsigned __int16)(*(_BYTE *)(v5 + 96) | (unsigned __int16)(*(_BYTE *)(v5 + 97) << 8))
+                             + v8;
+        if ( !sub_80207E6(*(_BYTE *)(v5 + 1), v5 + 48, *(_DWORD *)(v5 + 20))
+          && (unsigned __int16)(*(_BYTE *)(v5 + 558) | (unsigned __int16)(*(_BYTE *)(v5 + 559) << 8)) == 43605
+          && ((*(_BYTE *)(v5 + 50) << 16) | (*(_BYTE *)(v5 + 51) << 24) | (*(_BYTE *)(v5 + 49) << 8) | *(_BYTE *)(v5 + 48)) == 1096897106
+          && ((*(_BYTE *)(v5 + 534) << 16) | (*(_BYTE *)(v5 + 535) << 24) | (*(_BYTE *)(v5 + 533) << 8) | *(_BYTE *)(v5 + 532)) == 1631679090 )
         {
-          *(v5 + 12) = (*(v5 + 542) << 16) | (*(v5 + 543) << 24) | (*(v5 + 541) << 8) | *(v5 + 540);
-          *(v5 + 16) = (*(v5 + 538) << 16) | (*(v5 + 539) << 24) | (*(v5 + 537) << 8) | *(v5 + 536);
+          *(_DWORD *)(v5 + 12) = (*(_BYTE *)(v5 + 542) << 16) | (*(_BYTE *)(v5 + 543) << 24) | (*(_BYTE *)(v5 + 541) << 8) | *(_BYTE *)(v5 + 540);
+          *(_DWORD *)(v5 + 16) = (*(_BYTE *)(v5 + 538) << 16) | (*(_BYTE *)(v5 + 539) << 24) | (*(_BYTE *)(v5 + 537) << 8) | *(_BYTE *)(v5 + 536);
         }
       }
-      *v5 = v15;
+      *(_BYTE *)v5 = v15;
       v17 = word_20003A50 + 1;
       word_20003A50 = v17;
-      *(v5 + 6) = v17;
-      *(v5 + 44) = 0;
-      *(v5 + 4) = 0;
+      *(_WORD *)(v5 + 6) = v17;
+      *(_DWORD *)(v5 + 44) = 0;
+      *(_BYTE *)(v5 + 4) = 0;
       result = 0;
     }
     else
@@ -23856,9 +23623,9 @@ signed int __fastcall sub_801E1B2(int a1, unsigned __int16 a2)
 {
   signed int result; // r0@4
 
-  if ( a1 && *a1 && *(a1 + 6) == a2 )
+  if ( a1 && *(_BYTE *)a1 && *(_WORD *)(a1 + 6) == a2 )
   {
-    if ( isnt_zero(*(a1 + 1)) )
+    if ( isnt_zero(*(_BYTE *)(a1 + 1)) )
       result = 3;
     else
       result = 0;
@@ -23884,9 +23651,9 @@ signed int __fastcall sub_801E1E0(unsigned __int8 a1, int a2)
   {
     v3 = *(&dword_20003800 + a1);
     if ( v3 )
-      *v3 = 0;
+      *(_BYTE *)v3 = 0;
     if ( a2 )
-      *a2 = 0;
+      *(_BYTE *)a2 = 0;
     *(&dword_20003800 + a1) = a2;
     result = 0;
   }
@@ -23909,14 +23676,14 @@ int __fastcall f_open(void *fp, char *path, FA_MODE mode)
   char v14; // [sp+1Ch] [bp-2Ch]@1
   int v15; // [sp+28h] [bp-20h]@1
 
-  v15 = path;
+  v15 = (int)path;
   v3 = fp;
-  *fp = 0;
+  *(_DWORD *)fp = 0;
   v4 = mode & 0x1F;
-  v5 = sub_801DDA4(&v15, &v11, mode & 0x1E);
+  v5 = sub_801DDA4((int)&v15, (int)&v11, mode & 0x1E);
   v13 = &v14;
   if ( !v5 )
-    v5 = sub_801DC8A(&v11, v15);
+    v5 = sub_801DC8A((int)&v11, v15);
   v6 = v12;
   if ( !v5 && !v12 )
     v5 = 6;
@@ -23925,7 +23692,7 @@ int __fastcall f_open(void *fp, char *path, FA_MODE mode)
     if ( v5 )
     {
       if ( v5 == 4 )
-        v5 = sub_801D9FE(&v11);
+        v5 = sub_801D9FE((int)&v11);
       v4 |= 8u;
       v6 = v12;
     }
@@ -23933,7 +23700,7 @@ int __fastcall f_open(void *fp, char *path, FA_MODE mode)
     {
       v5 = 8;
     }
-    else if ( *(v12 + 11) & 0x11 )
+    else if ( *(_BYTE *)(v12 + 11) & 0x11 )
     {
       v5 = 7;
     }
@@ -23942,28 +23709,28 @@ int __fastcall f_open(void *fp, char *path, FA_MODE mode)
       if ( v4 & 8 )
       {
         v7 = sub_8020894();
-        *(v6 + 14) = v7;
-        *(v6 + 15) = BYTE1(v7);
-        *(v6 + 16) = v7 >> 16;
-        *(v6 + 17) = BYTE3(v7);
-        *(v6 + 11) = 0;
-        *(v6 + 28) = 0;
-        *(v6 + 29) = 0;
-        *(v6 + 30) = 0;
-        *(v6 + 31) = 0;
-        v8 = (*(v6 + 26) | (*(v6 + 27) << 8)) | ((*(v6 + 20) | (*(v6 + 21) << 8)) << 16);
-        *(v6 + 26) = 0;
-        *(v6 + 27) = 0;
-        *(v6 + 20) = 0;
-        *(v6 + 21) = 0;
-        *(v11 + 4) = 1;
+        *(_BYTE *)(v6 + 14) = v7;
+        *(_BYTE *)(v6 + 15) = BYTE1(v7);
+        *(_BYTE *)(v6 + 16) = (unsigned int)v7 >> 16;
+        *(_BYTE *)(v6 + 17) = BYTE3(v7);
+        *(_BYTE *)(v6 + 11) = 0;
+        *(_BYTE *)(v6 + 28) = 0;
+        *(_BYTE *)(v6 + 29) = 0;
+        *(_BYTE *)(v6 + 30) = 0;
+        *(_BYTE *)(v6 + 31) = 0;
+        v8 = (unsigned __int16)(*(_BYTE *)(v6 + 26) | (unsigned __int16)(*(_BYTE *)(v6 + 27) << 8)) | ((unsigned __int16)(*(_BYTE *)(v6 + 20) | (unsigned __int16)(*(_BYTE *)(v6 + 21) << 8)) << 16);
+        *(_BYTE *)(v6 + 26) = 0;
+        *(_BYTE *)(v6 + 27) = 0;
+        *(_BYTE *)(v6 + 20) = 0;
+        *(_BYTE *)(v6 + 21) = 0;
+        *(_BYTE *)(v11 + 4) = 1;
         if ( v8 )
         {
-          v9 = *(v11 + 44);
+          v9 = *(_DWORD *)(v11 + 44);
           v5 = sub_801D5EE(v11, v8);
           if ( !v5 )
           {
-            *(v11 + 12) = v8 - 1;
+            *(_DWORD *)(v11 + 12) = v8 - 1;
             v5 = sub_801D222(v11, v9);
           }
         }
@@ -23972,11 +23739,11 @@ int __fastcall f_open(void *fp, char *path, FA_MODE mode)
   }
   else if ( !v5 )
   {
-    if ( *(v12 + 11) & 0x10 )
+    if ( *(_BYTE *)(v12 + 11) & 0x10 )
     {
       v5 = 4;
     }
-    else if ( v4 & 2 && *(v12 + 11) & 1 )
+    else if ( v4 & 2 && *(_BYTE *)(v12 + 11) & 1 )
     {
       v5 = 7;
     }
@@ -23985,20 +23752,20 @@ int __fastcall f_open(void *fp, char *path, FA_MODE mode)
   {
     if ( v4 & 8 )
       v4 |= 0x20u;
-    *(v3 + 7) = *(v11 + 44);
-    *(v3 + 8) = v6;
+    *((_DWORD *)v3 + 7) = *(_DWORD *)(v11 + 44);
+    *((_DWORD *)v3 + 8) = v6;
   }
   if ( !v5 )
   {
-    *(v3 + 6) = v4;
-    *(v3 + 4) = (*(v6 + 26) | (*(v6 + 27) << 8)) | ((*(v6 + 20) | (*(v6 + 21) << 8)) << 16);
-    *(v3 + 3) = (*(v6 + 30) << 16) | (*(v6 + 31) << 24) | (*(v6 + 29) << 8) | *(v6 + 28);
-    *(v3 + 2) = 0;
-    *(v3 + 6) = 0;
-    *v3 = v11;
-    *(v3 + 2) = *(v11 + 6);
+    *((_BYTE *)v3 + 6) = v4;
+    *((_DWORD *)v3 + 4) = (unsigned __int16)(*(_BYTE *)(v6 + 26) | (unsigned __int16)(*(_BYTE *)(v6 + 27) << 8)) | ((unsigned __int16)(*(_BYTE *)(v6 + 20) | (unsigned __int16)(*(_BYTE *)(v6 + 21) << 8)) << 16);
+    *((_DWORD *)v3 + 3) = (*(_BYTE *)(v6 + 30) << 16) | (*(_BYTE *)(v6 + 31) << 24) | (*(_BYTE *)(v6 + 29) << 8) | *(_BYTE *)(v6 + 28);
+    *((_DWORD *)v3 + 2) = 0;
+    *((_DWORD *)v3 + 6) = 0;
+    *(_DWORD *)v3 = v11;
+    *((_WORD *)v3 + 2) = *(_WORD *)(v11 + 6);
   }
-  return v5;
+  return (unsigned __int8)v5;
 }
 
 //----- (0801E3D2) --------------------------------------------------------
@@ -24021,86 +23788,86 @@ signed int __fastcall f_read(void *fp, void *data, unsigned int count, int *byte
   v5 = count;
   v6 = data;
   *bytes_read = 0;
-  v14 = sub_801E1B2(*fp, *(fp + 2));
+  v14 = sub_801E1B2(*(_DWORD *)fp, *((_WORD *)fp + 2));
   if ( v14 )
     return v14;
-  if ( *(v4 + 6) & 0x80 )
+  if ( *((_BYTE *)v4 + 6) & 0x80 )
     return 2;
-  if ( !(*(v4 + 6) & 1) )
+  if ( !(*((_BYTE *)v4 + 6) & 1) )
     return 7;
-  if ( *(v4 + 3) - *(v4 + 2) < v5 )
-    v5 = *(v4 + 3) - *(v4 + 2);
+  if ( *((_DWORD *)v4 + 3) - *((_DWORD *)v4 + 2) < v5 )
+    v5 = *((_DWORD *)v4 + 3) - *((_DWORD *)v4 + 2);
   while ( v5 )
   {
-    if ( *(v4 + 2) % 0x200u )
+    if ( *((_DWORD *)v4 + 2) % 0x200u )
       goto LABEL_39;
-    v8 = (*(v4 + 2) >> 9) & (*(*v4 + 2) - 1);
+    v8 = (*((_DWORD *)v4 + 2) >> 9) & (*(_BYTE *)(*(_DWORD *)v4 + 2) - 1);
     if ( !v8 )
     {
-      if ( *(v4 + 2) )
-        v9 = sub_801D38C(*v4, *(v4 + 5));
+      if ( *((_DWORD *)v4 + 2) )
+        v9 = sub_801D38C(*(_DWORD *)v4, *((_DWORD *)v4 + 5));
       else
-        v9 = *(v4 + 4);
-      if ( v9 < 2 )
+        v9 = *((_DWORD *)v4 + 4);
+      if ( (unsigned int)v9 < 2 )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 2;
       }
       if ( v9 == -1 )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 1;
       }
-      *(v4 + 5) = v9;
+      *((_DWORD *)v4 + 5) = v9;
     }
-    v10 = sub_801D372(*v4, *(v4 + 5));
+    v10 = sub_801D372(*(_DWORD *)v4, *((_DWORD *)v4 + 5));
     if ( !v10 )
     {
-      *(v4 + 6) |= 0x80u;
+      *((_BYTE *)v4 + 6) |= 0x80u;
       return 2;
     }
     v11 = v8 + v10;
     v12 = v5 >> 9;
     if ( !(v5 >> 9) )
     {
-      if ( *(v4 + 6) & 0x40 )
+      if ( *((_BYTE *)v4 + 6) & 0x40 )
       {
-        if ( prob_write_sd_blocks(*(*v4 + 1), (v4 + 36), *(v4 + 6), 1u) )
+        if ( prob_write_sd_blocks(*(_BYTE *)(*(_DWORD *)v4 + 1), (int)((char *)v4 + 36), *((_DWORD *)v4 + 6), 1u) )
         {
-          *(v4 + 6) |= 0x80u;
+          *((_BYTE *)v4 + 6) |= 0x80u;
           return 1;
         }
-        *(v4 + 6) &= 0xBFu;
+        *((_BYTE *)v4 + 6) &= 0xBFu;
       }
-      if ( *(v4 + 6) != v11 && sub_80207E6(*(*v4 + 1), (v4 + 36), v11) )
+      if ( *((_DWORD *)v4 + 6) != v11 && sub_80207E6(*(_BYTE *)(*(_DWORD *)v4 + 1), (int)((char *)v4 + 36), v11) )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 1;
       }
-      *(v4 + 6) = v11;
+      *((_DWORD *)v4 + 6) = v11;
 LABEL_39:
-      v13 = 512 - *(v4 + 2) % 0x200u;
+      v13 = 512 - *((_DWORD *)v4 + 2) % 0x200u;
       if ( v5 < v13 )
         v13 = v5;
-      memcpy(v6, v4 + *(v4 + 2) % 0x200u + 36, v13);
+      memcpy(v6, (char *)v4 + *((_DWORD *)v4 + 2) % 0x200u + 36, v13);
       goto LABEL_42;
     }
-    if ( *(*v4 + 2) < (v12 + v8) )
-      v12 = *(*v4 + 2) - v8;
-    if ( sub_80207E6(*(*v4 + 1), v6, v11) )
+    if ( *(_BYTE *)(*(_DWORD *)v4 + 2) < (unsigned int)(v12 + v8) )
+      v12 = *(_BYTE *)(*(_DWORD *)v4 + 2) - v8;
+    if ( sub_80207E6(*(_BYTE *)(*(_DWORD *)v4 + 1), (int)v6, v11) )
     {
-      *(v4 + 6) |= 0x80u;
+      *((_BYTE *)v4 + 6) |= 0x80u;
       return 1;
     }
-    if ( *(v4 + 6) & 0x40 )
+    if ( *((_BYTE *)v4 + 6) & 0x40 )
     {
-      if ( *(v4 + 6) - v11 < v12 )
-        memcpy(v6 + 512 * (*(v4 + 6) - v11), v4 + 36, 512);
+      if ( *((_DWORD *)v4 + 6) - v11 < (unsigned int)v12 )
+        memcpy((char *)v6 + 512 * (*((_DWORD *)v4 + 6) - v11), (char *)v4 + 36, 512);
     }
     v13 = v12 << 9;
 LABEL_42:
-    v6 = v6 + v13;
-    *(v4 + 2) += v13;
+    v6 = (char *)v6 + v13;
+    *((_DWORD *)v4 + 2) += v13;
     *v15 += v13;
     v5 -= v13;
   }
@@ -24114,7 +23881,7 @@ signed int __fastcall f_write(void *fp, void *data, unsigned int count, int *byt
   unsigned int v5; // r5@1
   void *v6; // r10@1
   int v8; // r11@11
-  signed int v9; // r6@13
+  unsigned int v9; // r6@13
   int v10; // r0@26
   int v11; // r7@28
   int v12; // r9@28
@@ -24127,104 +23894,106 @@ signed int __fastcall f_write(void *fp, void *data, unsigned int count, int *byt
   v5 = count;
   v6 = data;
   *bytes_written = 0;
-  v14 = sub_801E1B2(*fp, *(fp + 2));
+  v14 = sub_801E1B2(*(_DWORD *)fp, *((_WORD *)fp + 2));
   if ( v14 )
     return v14;
-  if ( *(v4 + 6) & 0x80 )
+  if ( *((_BYTE *)v4 + 6) & 0x80 )
     return 2;
-  if ( !(*(v4 + 6) & 2) )
+  if ( !(*((_BYTE *)v4 + 6) & 2) )
     return 7;
-  if ( v5 + *(v4 + 3) < *(v4 + 3) )
+  if ( v5 + *((_DWORD *)v4 + 3) < *((_DWORD *)v4 + 3) )
     v5 = 0;
   while ( v5 )
   {
-    if ( *(v4 + 2) % 0x200u )
+    if ( *((_DWORD *)v4 + 2) % 0x200u )
       goto LABEL_41;
-    v8 = (*(v4 + 2) >> 9) & (*(*v4 + 2) - 1);
+    v8 = (*((_DWORD *)v4 + 2) >> 9) & (*(_BYTE *)(*(_DWORD *)v4 + 2) - 1);
     if ( !v8 )
     {
-      if ( *(v4 + 2) )
+      if ( *((_DWORD *)v4 + 2) )
       {
-        v9 = sub_801D660(*v4, *(v4 + 5));
+        v9 = sub_801D660(*(_DWORD *)v4, *((_DWORD *)v4 + 5));
       }
       else
       {
-        v9 = *(v4 + 4);
+        v9 = *((_DWORD *)v4 + 4);
         if ( !v9 )
         {
-          v9 = sub_801D660(*v4, 0);
-          *(v4 + 4) = v9;
+          v9 = sub_801D660(*(_DWORD *)v4, 0);
+          *((_DWORD *)v4 + 4) = v9;
         }
       }
       if ( !v9 )
         break;
       if ( v9 == 1 )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 2;
       }
       if ( v9 == -1 )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 1;
       }
-      *(v4 + 5) = v9;
+      *((_DWORD *)v4 + 5) = v9;
     }
-    if ( *(v4 + 6) & 0x40 )
+    if ( *((_BYTE *)v4 + 6) & 0x40 )
     {
-      if ( prob_write_sd_blocks(*(*v4 + 1), (v4 + 36), *(v4 + 6), 1u) )
+      if ( prob_write_sd_blocks(*(_BYTE *)(*(_DWORD *)v4 + 1), (int)((char *)v4 + 36), *((_DWORD *)v4 + 6), 1u) )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 1;
       }
-      *(v4 + 6) &= 0xBFu;
+      *((_BYTE *)v4 + 6) &= 0xBFu;
     }
-    v10 = sub_801D372(*v4, *(v4 + 5));
+    v10 = sub_801D372(*(_DWORD *)v4, *((_DWORD *)v4 + 5));
     if ( !v10 )
     {
-      *(v4 + 6) |= 0x80u;
+      *((_BYTE *)v4 + 6) |= 0x80u;
       return 2;
     }
     v11 = v8 + v10;
     v12 = v5 >> 9;
     if ( !(v5 >> 9) )
     {
-      if ( *(v4 + 6) != v11 && *(v4 + 2) < *(v4 + 3) && sub_80207E6(*(*v4 + 1), (v4 + 36), v11) )
+      if ( *((_DWORD *)v4 + 6) != v11
+        && *((_DWORD *)v4 + 2) < *((_DWORD *)v4 + 3)
+        && sub_80207E6(*(_BYTE *)(*(_DWORD *)v4 + 1), (int)((char *)v4 + 36), v11) )
       {
-        *(v4 + 6) |= 0x80u;
+        *((_BYTE *)v4 + 6) |= 0x80u;
         return 1;
       }
-      *(v4 + 6) = v11;
+      *((_DWORD *)v4 + 6) = v11;
 LABEL_41:
-      v13 = 512 - *(v4 + 2) % 0x200u;
+      v13 = 512 - *((_DWORD *)v4 + 2) % 0x200u;
       if ( v5 < v13 )
         v13 = v5;
-      memcpy(v4 + *(v4 + 2) % 0x200u + 36, v6, v13);
-      *(v4 + 6) |= 0x40u;
+      memcpy((char *)v4 + *((_DWORD *)v4 + 2) % 0x200u + 36, v6, v13);
+      *((_BYTE *)v4 + 6) |= 0x40u;
       goto LABEL_44;
     }
-    if ( *(*v4 + 2) < (v12 + v8) )
-      v12 = *(*v4 + 2) - v8;
-    if ( prob_write_sd_blocks(*(*v4 + 1), v6, v11, v12) )
+    if ( *(_BYTE *)(*(_DWORD *)v4 + 2) < (unsigned int)(v12 + v8) )
+      v12 = *(_BYTE *)(*(_DWORD *)v4 + 2) - v8;
+    if ( prob_write_sd_blocks(*(_BYTE *)(*(_DWORD *)v4 + 1), (int)v6, v11, v12) )
     {
-      *(v4 + 6) |= 0x80u;
+      *((_BYTE *)v4 + 6) |= 0x80u;
       return 1;
     }
-    if ( *(v4 + 6) - v11 < v12 )
+    if ( *((_DWORD *)v4 + 6) - v11 < (unsigned int)v12 )
     {
-      memcpy(v4 + 36, v6 + 512 * (*(v4 + 6) - v11), 512);
-      *(v4 + 6) &= 0xBFu;
+      memcpy((char *)v4 + 36, (char *)v6 + 512 * (*((_DWORD *)v4 + 6) - v11), 512);
+      *((_BYTE *)v4 + 6) &= 0xBFu;
     }
     v13 = v12 << 9;
 LABEL_44:
-    v6 = v6 + v13;
-    *(v4 + 2) += v13;
+    v6 = (char *)v6 + v13;
+    *((_DWORD *)v4 + 2) += v13;
     *v15 += v13;
     v5 -= v13;
   }
-  if ( *(v4 + 3) < *(v4 + 2) )
-    *(v4 + 3) = *(v4 + 2);
-  *(v4 + 6) |= 0x20u;
+  if ( *((_DWORD *)v4 + 3) < *((_DWORD *)v4 + 2) )
+    *((_DWORD *)v4 + 3) = *((_DWORD *)v4 + 2);
+  *((_BYTE *)v4 + 6) |= 0x20u;
   return 0;
 }
 
@@ -24237,36 +24006,36 @@ signed int __fastcall f_sync_prob(int a1)
   signed int v5; // r0@8
 
   v1 = a1;
-  v2 = sub_801E1B2(*a1, *(a1 + 4));
-  if ( !v2 && *(v1 + 6) & 0x20 )
+  v2 = sub_801E1B2(*(_DWORD *)a1, *(_WORD *)(a1 + 4));
+  if ( !v2 && *(_BYTE *)(v1 + 6) & 0x20 )
   {
-    if ( *(v1 + 6) & 0x40 )
+    if ( *(_BYTE *)(v1 + 6) & 0x40 )
     {
-      if ( prob_write_sd_blocks(*(*v1 + 1), v1 + 36, *(v1 + 24), 1u) )
+      if ( prob_write_sd_blocks(*(_BYTE *)(*(_DWORD *)v1 + 1), v1 + 36, *(_DWORD *)(v1 + 24), 1u) )
         return 1;
-      *(v1 + 6) &= 0xBFu;
+      *(_BYTE *)(v1 + 6) &= 0xBFu;
     }
-    v2 = sub_801D222(*v1, *(v1 + 28));
+    v2 = sub_801D222(*(_DWORD *)v1, *(_DWORD *)(v1 + 28));
     if ( !v2 )
     {
-      v4 = *(v1 + 32);
-      *(v4 + 11) |= 0x20u;
-      *(v4 + 28) = *(v1 + 12);
-      *(v4 + 29) = *(v1 + 12) >> 8;
-      *(v4 + 30) = *(v1 + 12) >> 16;
-      *(v4 + 31) = *(v1 + 12) >> 24;
-      *(v4 + 26) = *(v1 + 16);
-      *(v4 + 27) = *(v1 + 16) >> 8;
-      *(v4 + 20) = *(v1 + 16) >> 16;
-      *(v4 + 21) = *(v1 + 16) >> 24;
+      v4 = *(_DWORD *)(v1 + 32);
+      *(_BYTE *)(v4 + 11) |= 0x20u;
+      *(_BYTE *)(v4 + 28) = *(_DWORD *)(v1 + 12);
+      *(_BYTE *)(v4 + 29) = (unsigned __int16)*(_DWORD *)(v1 + 12) >> 8;
+      *(_BYTE *)(v4 + 30) = *(_DWORD *)(v1 + 12) >> 16;
+      *(_BYTE *)(v4 + 31) = *(_DWORD *)(v1 + 12) >> 24;
+      *(_BYTE *)(v4 + 26) = *(_DWORD *)(v1 + 16);
+      *(_BYTE *)(v4 + 27) = (unsigned __int16)*(_DWORD *)(v1 + 16) >> 8;
+      *(_BYTE *)(v4 + 20) = *(_DWORD *)(v1 + 16) >> 16;
+      *(_BYTE *)(v4 + 21) = *(_DWORD *)(v1 + 16) >> 24;
       v5 = sub_8020894();
-      *(v4 + 22) = v5;
-      *(v4 + 23) = BYTE1(v5);
-      *(v4 + 24) = v5 >> 16;
-      *(v4 + 25) = BYTE3(v5);
-      *(v1 + 6) &= 0xDFu;
-      *(*v1 + 4) = 1;
-      v2 = prob_sd_init_partition_table(*v1);
+      *(_BYTE *)(v4 + 22) = v5;
+      *(_BYTE *)(v4 + 23) = BYTE1(v5);
+      *(_BYTE *)(v4 + 24) = (unsigned int)v5 >> 16;
+      *(_BYTE *)(v4 + 25) = BYTE3(v5);
+      *(_BYTE *)(v1 + 6) &= 0xDFu;
+      *(_BYTE *)(*(_DWORD *)v1 + 4) = 1;
+      v2 = prob_sd_init_partition_table(*(_DWORD *)v1);
     }
   }
   return v2;
@@ -24281,7 +24050,7 @@ int __fastcall f_close(int a1)
   v1 = a1;
   v2 = f_sync_prob(a1);
   if ( !v2 )
-    *v1 = 0;
+    *(_DWORD *)v1 = 0;
   return v2;
 }
 
@@ -24295,60 +24064,60 @@ signed int __fastcall f_seek(int a1, unsigned int a2)
   int v6; // r10@8
   int v7; // r9@8
   unsigned int v8; // r8@9
-  signed int v9; // r7@11
-  signed int v10; // r0@13
+  unsigned int v9; // r7@11
+  unsigned int v10; // r0@13
   int v11; // r0@32
 
   v2 = a1;
   v3 = a2;
-  LOBYTE(result) = sub_801E1B2(*a1, *(a1 + 4));
+  LOBYTE(result) = sub_801E1B2(*(_DWORD *)a1, *(_WORD *)(a1 + 4));
   v5 = result;
-  if ( result )
-    return result;
-  if ( *(v2 + 6) & 0x80 )
+  if ( (_BYTE)result )
+    return (unsigned __int8)result;
+  if ( *(_BYTE *)(v2 + 6) & 0x80 )
     return 2;
-  if ( *(v2 + 12) < v3 && !(*(v2 + 6) & 2) )
-    v3 = *(v2 + 12);
-  v6 = *(v2 + 8);
+  if ( *(_DWORD *)(v2 + 12) < v3 && !(*(_BYTE *)(v2 + 6) & 2) )
+    v3 = *(_DWORD *)(v2 + 12);
+  v6 = *(_DWORD *)(v2 + 8);
   v7 = 0;
-  *(v2 + 8) = 0;
+  *(_DWORD *)(v2 + 8) = 0;
   if ( v3 )
   {
-    v8 = *(*v2 + 2) << 9;
+    v8 = *(_BYTE *)(*(_DWORD *)v2 + 2) << 9;
     if ( v6 && (v3 - 1) / v8 >= (v6 - 1) / v8 )
     {
-      *(v2 + 8) = (v6 - 1) & ~(v8 - 1);
-      v3 -= *(v2 + 8);
-      v9 = *(v2 + 20);
+      *(_DWORD *)(v2 + 8) = (v6 - 1) & ~(v8 - 1);
+      v3 -= *(_DWORD *)(v2 + 8);
+      v9 = *(_DWORD *)(v2 + 20);
     }
     else
     {
-      v9 = *(v2 + 16);
+      v9 = *(_DWORD *)(v2 + 16);
       if ( !v9 )
       {
-        v10 = sub_801D660(*v2, 0);
+        v10 = sub_801D660(*(_DWORD *)v2, 0);
         v9 = v10;
         if ( v10 == 1 )
         {
-          *(v2 + 6) |= 0x80u;
+          *(_BYTE *)(v2 + 6) |= 0x80u;
           return 2;
         }
         if ( v10 == -1 )
         {
-          *(v2 + 6) |= 0x80u;
+          *(_BYTE *)(v2 + 6) |= 0x80u;
           return 1;
         }
-        *(v2 + 16) = v10;
+        *(_DWORD *)(v2 + 16) = v10;
       }
-      *(v2 + 20) = v9;
+      *(_DWORD *)(v2 + 20) = v9;
     }
     if ( v9 )
     {
       while ( v8 < v3 )
       {
-        if ( *(v2 + 6) & 2 )
+        if ( *(_BYTE *)(v2 + 6) & 2 )
         {
-          v9 = sub_801D660(*v2, v9);
+          v9 = sub_801D660(*(_DWORD *)v2, v9);
           if ( !v9 )
           {
             v3 = v8;
@@ -24357,57 +24126,57 @@ signed int __fastcall f_seek(int a1, unsigned int a2)
         }
         else
         {
-          v9 = sub_801D38C(*v2, v9);
+          v9 = sub_801D38C(*(_DWORD *)v2, v9);
         }
         if ( v9 == -1 )
         {
-          *(v2 + 6) |= 0x80u;
+          *(_BYTE *)(v2 + 6) |= 0x80u;
           return 1;
         }
-        if ( v9 < 2 || v9 >= *(*v2 + 24) )
+        if ( v9 < 2 || v9 >= *(_DWORD *)(*(_DWORD *)v2 + 24) )
         {
-          *(v2 + 6) |= 0x80u;
+          *(_BYTE *)(v2 + 6) |= 0x80u;
           return 2;
         }
-        *(v2 + 20) = v9;
-        *(v2 + 8) += v8;
+        *(_DWORD *)(v2 + 20) = v9;
+        *(_DWORD *)(v2 + 8) += v8;
         v3 -= v8;
       }
-      *(v2 + 8) += v3;
+      *(_DWORD *)(v2 + 8) += v3;
       if ( v3 % 0x200 )
       {
-        v11 = sub_801D372(*v2, v9);
+        v11 = sub_801D372(*(_DWORD *)v2, v9);
         if ( !v11 )
         {
-          *(v2 + 6) |= 0x80u;
+          *(_BYTE *)(v2 + 6) |= 0x80u;
           return 2;
         }
         v7 = v11 + (v3 >> 9);
       }
     }
   }
-  if ( *(v2 + 8) % 0x200u && v7 != *(v2 + 24) )
+  if ( *(_DWORD *)(v2 + 8) % 0x200u && v7 != *(_DWORD *)(v2 + 24) )
   {
-    if ( *(v2 + 6) & 0x40 )
+    if ( *(_BYTE *)(v2 + 6) & 0x40 )
     {
-      if ( prob_write_sd_blocks(*(*v2 + 1), v2 + 36, *(v2 + 24), 1u) )
+      if ( prob_write_sd_blocks(*(_BYTE *)(*(_DWORD *)v2 + 1), v2 + 36, *(_DWORD *)(v2 + 24), 1u) )
       {
-        *(v2 + 6) |= 0x80u;
+        *(_BYTE *)(v2 + 6) |= 0x80u;
         return 1;
       }
-      *(v2 + 6) &= 0xBFu;
+      *(_BYTE *)(v2 + 6) &= 0xBFu;
     }
-    if ( sub_80207E6(*(*v2 + 1), v2 + 36, v7) )
+    if ( sub_80207E6(*(_BYTE *)(*(_DWORD *)v2 + 1), v2 + 36, v7) )
     {
-      *(v2 + 6) |= 0x80u;
+      *(_BYTE *)(v2 + 6) |= 0x80u;
       return 1;
     }
-    *(v2 + 24) = v7;
+    *(_DWORD *)(v2 + 24) = v7;
   }
-  if ( *(v2 + 12) < *(v2 + 8) )
+  if ( *(_DWORD *)(v2 + 12) < *(_DWORD *)(v2 + 8) )
   {
-    *(v2 + 12) = *(v2 + 8);
-    *(v2 + 6) |= 0x20u;
+    *(_DWORD *)(v2 + 12) = *(_DWORD *)(v2 + 8);
+    *(_BYTE *)(v2 + 6) |= 0x20u;
   }
   return v5;
 }
@@ -24422,30 +24191,30 @@ int __fastcall sub_801EADA(int a1, int a2)
 
   v6 = a2;
   v2 = a1;
-  v3 = sub_801DDA4(&v6, a1, 0);
+  v3 = sub_801DDA4((int)&v6, a1, 0);
   if ( !v3 )
   {
-    *(v2 + 24) = &v5;
+    *(_DWORD *)(v2 + 24) = &v5;
     v3 = sub_801DC8A(v2, v6);
     if ( !v3 )
     {
-      if ( *(v2 + 20) )
+      if ( *(_DWORD *)(v2 + 20) )
       {
-        if ( *(*(v2 + 20) + 11) & 0x10 )
-          *(v2 + 8) = (*(*(v2 + 20) + 26) | (*(*(v2 + 20) + 27) << 8)) | ((*(*(v2 + 20) + 20) | (*(*(v2 + 20) + 21) << 8)) << 16);
+        if ( *(_BYTE *)(*(_DWORD *)(v2 + 20) + 11) & 0x10 )
+          *(_DWORD *)(v2 + 8) = (unsigned __int16)(*(_BYTE *)(*(_DWORD *)(v2 + 20) + 26) | (unsigned __int16)(*(_BYTE *)(*(_DWORD *)(v2 + 20) + 27) << 8)) | ((unsigned __int16)(*(_BYTE *)(*(_DWORD *)(v2 + 20) + 20) | (unsigned __int16)(*(_BYTE *)(*(_DWORD *)(v2 + 20) + 21) << 8)) << 16);
         else
           v3 = 5;
       }
       if ( !v3 )
       {
-        *(v2 + 4) = *(*v2 + 6);
+        *(_WORD *)(v2 + 4) = *(_WORD *)(*(_DWORD *)v2 + 6);
         v3 = sub_801D73C(v2, 0);
       }
     }
     if ( v3 == 4 )
       v3 = 5;
   }
-  return v3;
+  return (unsigned __int8)v3;
 }
 
 //----- (0801EB64) --------------------------------------------------------
@@ -24458,25 +24227,25 @@ int __fastcall sub_801EB64(int a1, int a2)
 
   v2 = a1;
   v3 = a2;
-  LOBYTE(v4) = sub_801E1B2(*a1, *(a1 + 4));
-  if ( !v4 )
+  LOBYTE(v4) = sub_801E1B2(*(_DWORD *)a1, *(_WORD *)(a1 + 4));
+  if ( !(_BYTE)v4 )
   {
     if ( v3 )
     {
-      *(v2 + 24) = &v6;
+      *(_DWORD *)(v2 + 24) = &v6;
       LOBYTE(v4) = sub_801D99A(v2);
-      if ( v4 == 4 )
+      if ( (unsigned __int8)v4 == 4 )
       {
-        *(v2 + 16) = 0;
+        *(_DWORD *)(v2 + 16) = 0;
         LOBYTE(v4) = 0;
       }
-      if ( !v4 )
+      if ( !(_BYTE)v4 )
       {
         sub_801DBE6(v2, v3);
-        v4 = sub_801D7F2(v2, 0);
+        v4 = (unsigned __int8)sub_801D7F2(v2, 0);
         if ( v4 == 4 )
         {
-          *(v2 + 16) = 0;
+          *(_DWORD *)(v2 + 16) = 0;
           LOBYTE(v4) = 0;
         }
       }
@@ -24486,27 +24255,27 @@ int __fastcall sub_801EB64(int a1, int a2)
       LOBYTE(v4) = sub_801D73C(v2, 0);
     }
   }
-  return v4;
+  return (unsigned __int8)v4;
 }
 
 //----- (0801EBD4) --------------------------------------------------------
-int sub_801EBD4()
+int HAL_SD_Init()
 {
   int result; // r0@2
   unsigned __int8 v1; // [sp+0h] [bp-8h]@1
   unsigned __int8 v2; // [sp+0h] [bp-8h]@3
   unsigned __int8 v3; // [sp+0h] [bp-8h]@5
 
-  enable_sd_card_hw();
+  HAL_SD_MspInit();
   reset_sdio_periph();
-  v1 = sd_card_send_init_cmds();
+  v1 = SD_PowerON();
   if ( v1 )
   {
     result = v1;
   }
   else
   {
-    v2 = sd_card_read_info();
+    v2 = SD_Initialize_Cards();
     if ( v2 )
     {
       result = v2;
@@ -24519,10 +24288,10 @@ int sub_801EBD4()
       dword_200036C0 = 0;
       dword_200036C4 = 0;
       dword_200036C8 = 0;
-      something_gnarly_with_sdio_clk(&dword_200036B8);
-      v3 = sub_801F0E0(&unk_200034D0);
+      something_gnarly_with_sdio_clk((int)&dword_200036B8);
+      v3 = HAL_SD_GetCardInfo((int)&unk_200034D0);
       if ( !v3 )
-        v3 = maybe_select_or_deselect_card(word_20003524 << 16);
+        v3 = SD_Select_Deselect((unsigned __int16)word_20003524 << 16);
       if ( !v3 )
         v3 = sub_801F4B0(0);
       result = v3;
@@ -24569,7 +24338,7 @@ unsigned int sub_801ECA8()
   v1 = 0;
   if ( sub_801ECD2() == 1 )
   {
-    if ( sd_get_status(&v1) )
+    if ( sd_get_status((int)&v1) )
       result = 255;
     else
       result = (v1 >> 9) & 0xF;
@@ -24588,7 +24357,7 @@ signed int sub_801ECD2()
 }
 
 //----- (0801ECE2) --------------------------------------------------------
-signed int sd_card_send_init_cmds()
+signed int SD_PowerON()
 {
   unsigned int v0; // r4@1
   unsigned int v1; // r5@1
@@ -24609,15 +24378,15 @@ signed int sd_card_send_init_cmds()
   dword_200036C0 = 0;
   dword_200036C4 = 0;
   dword_200036C8 = 0;
-  something_gnarly_with_sdio_clk(&dword_200036B8);
+  something_gnarly_with_sdio_clk((int)&dword_200036B8);
   set_sdio_power_reg(3);
-  set_sdio_clken(1u);
+  HAL_set_sdio_clken(1u);
   sd_cmd_temp.CMDARG = 0;
   sd_cmd_temp.CMDINDEX = 0;
   sd_cmd_temp.WAITRESP = 0;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
+  SDIO_SendCommand(&sd_cmd_temp);
   v6 = sub_801FB3C();
   if ( v6 )
     return v6;
@@ -24626,20 +24395,20 @@ signed int sd_card_send_init_cmds()
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  if ( sub_801FB88() )
+  SDIO_SendCommand(&sd_cmd_temp);
+  if ( (unsigned __int8)sub_801FB88() )
   {
     sd_cmd_temp.CMDARG = 0;
     sd_cmd_temp.CMDINDEX = 55;
     sd_cmd_temp.WAITRESP = 64;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
-    v5 = sub_801FC00(0x37u);
+    SDIO_SendCommand(&sd_cmd_temp);
+    v5 = SD_CmdResp1Error(0x37u);
   }
   else
   {
-    dword_20003998 = 1;
+    sdio_dword_20003998 = 1;
     v3 = 0x40000000;
   }
   sd_cmd_temp.CMDARG = 0;
@@ -24647,8 +24416,8 @@ signed int sd_card_send_init_cmds()
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  v7 = sub_801FC00(0x37u);
+  SDIO_SendCommand(&sd_cmd_temp);
+  v7 = SD_CmdResp1Error(0x37u);
   if ( !v7 )
   {
     while ( !v2 && v1 < 0xFFFF )
@@ -24658,8 +24427,8 @@ signed int sd_card_send_init_cmds()
       sd_cmd_temp.WAITRESP = 64;
       sd_cmd_temp.field_C = 0;
       sd_cmd_temp.CPSMEN = 1024;
-      send_sd_cmd(&sd_cmd_temp);
-      v8 = sub_801FC00(0x37u);
+      SDIO_SendCommand(&sd_cmd_temp);
+      v8 = SD_CmdResp1Error(0x37u);
       if ( v8 )
         return v8;
       sd_cmd_temp.CMDARG = v3 | 0x80100000;
@@ -24667,7 +24436,7 @@ signed int sd_card_send_init_cmds()
       sd_cmd_temp.WAITRESP = 64;
       sd_cmd_temp.field_C = 0;
       sd_cmd_temp.CPSMEN = 1024;
-      send_sd_cmd(&sd_cmd_temp);
+      SDIO_SendCommand(&sd_cmd_temp);
       v7 = sub_801FD34();
       if ( v7 )
         return v7;
@@ -24678,7 +24447,7 @@ signed int sd_card_send_init_cmds()
     if ( v1 >= 0xFFFF )
       return 27;
     if ( v0 & 0x40000000 )
-      dword_20003998 = 2;
+      sdio_dword_20003998 = 2;
   }
   return v7;
 }
@@ -24689,7 +24458,7 @@ signed int sd_card_send_init_cmds()
 // 200036C8: using guessed type int dword_200036C8;
 // 200036CC: using guessed type char byte_200036CC;
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
-// 20003998: using guessed type int dword_20003998;
+// 20003998: using guessed type int sdio_dword_20003998;
 
 //----- (0801EF2E) --------------------------------------------------------
 void turn_off_sd_card()
@@ -24698,7 +24467,7 @@ void turn_off_sd_card()
 }
 
 //----- (0801EF3E) --------------------------------------------------------
-signed int sd_card_read_info()
+signed int SD_Initialize_Cards()
 {
   signed int result; // r0@2
   unsigned __int16 v1; // [sp+0h] [bp-10h]@1
@@ -24706,35 +24475,35 @@ signed int sd_card_read_info()
   v1 = 1;
   if ( !sdio_power_enabled() )
     return 37;
-  if ( dword_20003998 != 4 )
+  if ( sdio_dword_20003998 != 4 )
   {
     sd_cmd_temp.CMDARG = 0;
     sd_cmd_temp.CMDINDEX = 2;                   // ALL_SEND_CID
     sd_cmd_temp.WAITRESP = 192;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
+    SDIO_SendCommand(&sd_cmd_temp);
     LOBYTE(result) = wait_for_sd_cmd_resp();
-    if ( result )
-      return result;
+    if ( (_BYTE)result )
+      return (unsigned __int8)result;
     sd_resp_cid[0] = read_resp_word(0);
     sd_resp_cid[1] = read_resp_word(4);
     sd_resp_cid[2] = read_resp_word(8);
     sd_resp_cid[3] = read_resp_word(12);
   }
-  if ( !dword_20003998 || dword_20003998 == 1 || dword_20003998 == 6 || dword_20003998 == 2 )
+  if ( !sdio_dword_20003998 || sdio_dword_20003998 == 1 || sdio_dword_20003998 == 6 || sdio_dword_20003998 == 2 )
   {
     sd_cmd_temp.CMDARG = 0;
     sd_cmd_temp.CMDINDEX = 3;
     sd_cmd_temp.WAITRESP = 64;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
-    LOBYTE(result) = sub_801FDFC(3u, &v1);
-    if ( result )
-      return result;
+    SDIO_SendCommand(&sd_cmd_temp);
+    LOBYTE(result) = sub_801FDFC(3u, (int)&v1);
+    if ( (_BYTE)result )
+      return (unsigned __int8)result;
   }
-  if ( dword_20003998 != 4 )
+  if ( sdio_dword_20003998 != 4 )
   {
     dword_2000399C = v1;
     sd_cmd_temp.CMDARG = v1 << 16;
@@ -24742,10 +24511,10 @@ signed int sd_card_read_info()
     sd_cmd_temp.WAITRESP = 192;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
+    SDIO_SendCommand(&sd_cmd_temp);
     LOBYTE(result) = wait_for_sd_cmd_resp();
-    if ( result )
-      return result;
+    if ( (_BYTE)result )
+      return (unsigned __int8)result;
     sd_resp_csd[0] = read_resp_word(0);
     sd_resp_csd[1] = read_resp_word(4);
     sd_resp_csd[2] = read_resp_word(8);
@@ -24757,11 +24526,11 @@ signed int sd_card_read_info()
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
 // 20003758: using guessed type int sd_resp_csd[4];
 // 20003768: using guessed type int sd_resp_cid[4];
-// 20003998: using guessed type int dword_20003998;
+// 20003998: using guessed type int sdio_dword_20003998;
 // 2000399C: using guessed type int dword_2000399C;
 
 //----- (0801F0E0) --------------------------------------------------------
-int __fastcall sub_801F0E0(int a1)
+int __fastcall HAL_SD_GetCardInfo(int a1)
 {
   unsigned int v1; // r4@1
   unsigned int v2; // r4@1
@@ -24775,108 +24544,108 @@ int __fastcall sub_801F0E0(int a1)
   unsigned int v10; // r4@6
   unsigned int v11; // r4@6
 
-  *(a1 + 86) = dword_20003998;
-  *(a1 + 84) = dword_2000399C;
+  *(_BYTE *)(a1 + 86) = sdio_dword_20003998;
+  *(_WORD *)(a1 + 84) = dword_2000399C;
   v1 = BYTE3(sd_resp_csd[0]);
-  *a1 = BYTE3(sd_resp_csd[0]) >> 6;
-  *(a1 + 1) = (v1 >> 2) & 0xF;
-  *(a1 + 2) = v1 & 3;
-  *(a1 + 3) = sd_resp_csd[0] >> 16;
-  *(a1 + 4) = BYTE1(sd_resp_csd[0]);
-  *(a1 + 5) = LOBYTE(sd_resp_csd[0]);
-  *(a1 + 6) = 16 * BYTE3(sd_resp_csd[1]);
-  LOBYTE(v1) = sd_resp_csd[1] >> 16;
-  *(a1 + 6) |= v1 >> 4;
-  *(a1 + 8) = v1 & 0xF;
+  *(_BYTE *)a1 = BYTE3(sd_resp_csd[0]) >> 6;
+  *(_BYTE *)(a1 + 1) = (v1 >> 2) & 0xF;
+  *(_BYTE *)(a1 + 2) = v1 & 3;
+  *(_BYTE *)(a1 + 3) = (unsigned int)sd_resp_csd[0] >> 16;
+  *(_BYTE *)(a1 + 4) = BYTE1(sd_resp_csd[0]);
+  *(_BYTE *)(a1 + 5) = LOBYTE(sd_resp_csd[0]);
+  *(_WORD *)(a1 + 6) = 16 * BYTE3(sd_resp_csd[1]);
+  LOBYTE(v1) = (unsigned int)sd_resp_csd[1] >> 16;
+  *(_WORD *)(a1 + 6) |= (unsigned __int8)v1 >> 4;
+  *(_BYTE *)(a1 + 8) = v1 & 0xF;
   v2 = BYTE1(sd_resp_csd[1]);
-  *(a1 + 9) = BYTE1(sd_resp_csd[1]) >> 7;
-  *(a1 + 10) = (v2 >> 6) & 1;
-  *(a1 + 11) = (v2 >> 5) & 1;
-  *(a1 + 12) = (v2 >> 4) & 1;
-  *(a1 + 13) = 0;
-  if ( dword_20003998 && dword_20003998 != 1 )
+  *(_BYTE *)(a1 + 9) = BYTE1(sd_resp_csd[1]) >> 7;
+  *(_BYTE *)(a1 + 10) = (v2 >> 6) & 1;
+  *(_BYTE *)(a1 + 11) = (v2 >> 5) & 1;
+  *(_BYTE *)(a1 + 12) = (v2 >> 4) & 1;
+  *(_BYTE *)(a1 + 13) = 0;
+  if ( sdio_dword_20003998 && sdio_dword_20003998 != 1 )
   {
-    if ( dword_20003998 == 2 )
+    if ( sdio_dword_20003998 == 2 )
     {
-      *(a1 + 16) = (sd_resp_csd[1] & 0x3F) << 16;
-      *(a1 + 16) |= BYTE3(sd_resp_csd[2]) << 8;
-      *(a1 + 16) |= (sd_resp_csd[2] >> 16);
-      v2 = sd_resp_csd[2] >> 8;
-      *(a1 + 72) = ((*(a1 + 16) + 1) << 19);
-      *(a1 + 80) = 512;
+      *(_DWORD *)(a1 + 16) = (sd_resp_csd[1] & 0x3F) << 16;
+      *(_DWORD *)(a1 + 16) |= BYTE3(sd_resp_csd[2]) << 8;
+      *(_DWORD *)(a1 + 16) |= (unsigned __int8)((unsigned int)sd_resp_csd[2] >> 16);
+      v2 = (unsigned int)sd_resp_csd[2] >> 8;
+      *(_QWORD *)(a1 + 72) = (unsigned int)((*(_DWORD *)(a1 + 16) + 1) << 19);
+      *(_DWORD *)(a1 + 80) = 512;
     }
   }
   else
   {
-    *(a1 + 16) = (v2 & 3) << 10;
-    *(a1 + 16) |= 4 * LOBYTE(sd_resp_csd[1]);
+    *(_DWORD *)(a1 + 16) = (v2 & 3) << 10;
+    *(_DWORD *)(a1 + 16) |= 4 * LOBYTE(sd_resp_csd[1]);
     v3 = BYTE3(sd_resp_csd[2]);
-    *(a1 + 16) |= (BYTE3(sd_resp_csd[2]) >> 6);
-    *(a1 + 20) = (v3 >> 3) & 7;
-    *(a1 + 21) = v3 & 7;
-    v4 = (sd_resp_csd[2] >> 16);
-    *(a1 + 22) = (sd_resp_csd[2] >> 16) >> 5;
-    *(a1 + 23) = (v4 >> 2) & 7;
-    *(a1 + 24) = 2 * (v4 & 3);
+    *(_DWORD *)(a1 + 16) |= (unsigned __int8)(BYTE3(sd_resp_csd[2]) >> 6);
+    *(_BYTE *)(a1 + 20) = (v3 >> 3) & 7;
+    *(_BYTE *)(a1 + 21) = v3 & 7;
+    v4 = (unsigned __int8)((unsigned int)sd_resp_csd[2] >> 16);
+    *(_BYTE *)(a1 + 22) = (unsigned __int8)((unsigned int)sd_resp_csd[2] >> 16) >> 5;
+    *(_BYTE *)(a1 + 23) = (v4 >> 2) & 7;
+    *(_BYTE *)(a1 + 24) = 2 * (v4 & 3);
     v2 = BYTE1(sd_resp_csd[2]);
-    *(a1 + 24) |= BYTE1(sd_resp_csd[2]) >> 7;
-    *(a1 + 72) = (*(a1 + 16) + 1);
-    v5 = *(a1 + 72);
-    v6 = 1 << (*(a1 + 24) + 2);
-    v7 = v6 * v5;
-    HIDWORD(v7) += (v6 >> 32) * v5;
-    *(a1 + 72) = v7;
-    *(a1 + 80) = 1 << *(a1 + 8);
-    *(a1 + 72) *= *(a1 + 80);
+    *(_BYTE *)(a1 + 24) |= BYTE1(sd_resp_csd[2]) >> 7;
+    *(_QWORD *)(a1 + 72) = (unsigned int)(*(_DWORD *)(a1 + 16) + 1);
+    v5 = *(_QWORD *)(a1 + 72);
+    v6 = 1 << (*(_BYTE *)(a1 + 24) + 2);
+    v7 = (unsigned int)v6 * v5;
+    HIDWORD(v7) += ((unsigned __int64)v6 >> 32) * v5;
+    *(_QWORD *)(a1 + 72) = v7;
+    *(_DWORD *)(a1 + 80) = 1 << *(_BYTE *)(a1 + 8);
+    *(_QWORD *)(a1 + 72) *= *(_DWORD *)(a1 + 80);
   }
-  *(a1 + 25) = (v2 >> 6) & 1;
-  *(a1 + 26) = 2 * (v2 & 0x3F);
+  *(_BYTE *)(a1 + 25) = (v2 >> 6) & 1;
+  *(_BYTE *)(a1 + 26) = 2 * (v2 & 0x3F);
   v8 = LOBYTE(sd_resp_csd[2]);
-  *(a1 + 26) |= LOBYTE(sd_resp_csd[2]) >> 7;
-  *(a1 + 27) = v8 & 0x7F;
+  *(_BYTE *)(a1 + 26) |= LOBYTE(sd_resp_csd[2]) >> 7;
+  *(_BYTE *)(a1 + 27) = v8 & 0x7F;
   v9 = BYTE3(sd_resp_csd[3]);
-  *(a1 + 28) = BYTE3(sd_resp_csd[3]) >> 7;
-  *(a1 + 29) = (v9 >> 5) & 3;
-  *(a1 + 30) = (v9 >> 2) & 7;
-  *(a1 + 31) = 4 * (v9 & 3);
-  v10 = (sd_resp_csd[3] >> 16);
-  *(a1 + 31) |= (sd_resp_csd[3] >> 16) >> 6;
-  *(a1 + 32) = (v10 >> 5) & 1;
-  *(a1 + 33) = 0;
-  *(a1 + 34) = v10 & 1;
+  *(_BYTE *)(a1 + 28) = BYTE3(sd_resp_csd[3]) >> 7;
+  *(_BYTE *)(a1 + 29) = (v9 >> 5) & 3;
+  *(_BYTE *)(a1 + 30) = (v9 >> 2) & 7;
+  *(_BYTE *)(a1 + 31) = 4 * (v9 & 3);
+  v10 = (unsigned __int8)((unsigned int)sd_resp_csd[3] >> 16);
+  *(_BYTE *)(a1 + 31) |= (unsigned __int8)((unsigned int)sd_resp_csd[3] >> 16) >> 6;
+  *(_BYTE *)(a1 + 32) = (v10 >> 5) & 1;
+  *(_BYTE *)(a1 + 33) = 0;
+  *(_BYTE *)(a1 + 34) = v10 & 1;
   v11 = BYTE1(sd_resp_csd[3]);
-  *(a1 + 35) = BYTE1(sd_resp_csd[3]) >> 7;
-  *(a1 + 36) = (v11 >> 6) & 1;
-  *(a1 + 37) = (v11 >> 5) & 1;
-  *(a1 + 38) = (v11 >> 4) & 1;
-  *(a1 + 39) = (v11 >> 2) & 3;
-  *(a1 + 40) = v11 & 3;
-  *(a1 + 41) = LOBYTE(sd_resp_csd[3]) >> 1;
-  *(a1 + 42) = 1;
-  *(a1 + 44) = BYTE3(sd_resp_cid[0]);
-  *(a1 + 46) = (sd_resp_cid[0] >> 16) << 8;
-  *(a1 + 46) |= BYTE1(sd_resp_cid[0]);
-  *(a1 + 48) = LOBYTE(sd_resp_cid[0]) << 24;
-  *(a1 + 48) |= BYTE3(sd_resp_cid[1]) << 16;
-  *(a1 + 48) |= (sd_resp_cid[1] >> 16) << 8;
-  *(a1 + 48) |= BYTE1(sd_resp_cid[1]);
-  *(a1 + 52) = LOBYTE(sd_resp_cid[1]);
-  *(a1 + 53) = BYTE3(sd_resp_cid[2]);
-  *(a1 + 56) = (sd_resp_cid[2] >> 16) << 24;
-  *(a1 + 56) |= BYTE1(sd_resp_cid[2]) << 16;
-  *(a1 + 56) |= LOBYTE(sd_resp_cid[2]) << 8;
-  *(a1 + 56) |= BYTE3(sd_resp_cid[3]);
-  LOBYTE(v11) = sd_resp_cid[3] >> 16;
-  *(a1 + 60) |= v11 >> 4;
-  *(a1 + 62) = (v11 & 0xF) << 8;
-  *(a1 + 62) |= BYTE1(sd_resp_cid[3]);
-  *(a1 + 64) = LOBYTE(sd_resp_cid[3]) >> 1;
-  *(a1 + 65) = 1;
+  *(_BYTE *)(a1 + 35) = BYTE1(sd_resp_csd[3]) >> 7;
+  *(_BYTE *)(a1 + 36) = (v11 >> 6) & 1;
+  *(_BYTE *)(a1 + 37) = (v11 >> 5) & 1;
+  *(_BYTE *)(a1 + 38) = (v11 >> 4) & 1;
+  *(_BYTE *)(a1 + 39) = (v11 >> 2) & 3;
+  *(_BYTE *)(a1 + 40) = v11 & 3;
+  *(_BYTE *)(a1 + 41) = LOBYTE(sd_resp_csd[3]) >> 1;
+  *(_BYTE *)(a1 + 42) = 1;
+  *(_BYTE *)(a1 + 44) = BYTE3(sd_resp_cid[0]);
+  *(_WORD *)(a1 + 46) = (unsigned __int8)((unsigned int)sd_resp_cid[0] >> 16) << 8;
+  *(_WORD *)(a1 + 46) |= BYTE1(sd_resp_cid[0]);
+  *(_DWORD *)(a1 + 48) = LOBYTE(sd_resp_cid[0]) << 24;
+  *(_DWORD *)(a1 + 48) |= BYTE3(sd_resp_cid[1]) << 16;
+  *(_DWORD *)(a1 + 48) |= (unsigned __int8)((unsigned int)sd_resp_cid[1] >> 16) << 8;
+  *(_DWORD *)(a1 + 48) |= BYTE1(sd_resp_cid[1]);
+  *(_BYTE *)(a1 + 52) = LOBYTE(sd_resp_cid[1]);
+  *(_BYTE *)(a1 + 53) = BYTE3(sd_resp_cid[2]);
+  *(_DWORD *)(a1 + 56) = (unsigned __int8)((unsigned int)sd_resp_cid[2] >> 16) << 24;
+  *(_DWORD *)(a1 + 56) |= BYTE1(sd_resp_cid[2]) << 16;
+  *(_DWORD *)(a1 + 56) |= LOBYTE(sd_resp_cid[2]) << 8;
+  *(_DWORD *)(a1 + 56) |= BYTE3(sd_resp_cid[3]);
+  LOBYTE(v11) = (unsigned int)sd_resp_cid[3] >> 16;
+  *(_BYTE *)(a1 + 60) |= (unsigned __int8)v11 >> 4;
+  *(_WORD *)(a1 + 62) = (v11 & 0xF) << 8;
+  *(_WORD *)(a1 + 62) |= BYTE1(sd_resp_cid[3]);
+  *(_BYTE *)(a1 + 64) = LOBYTE(sd_resp_cid[3]) >> 1;
+  *(_BYTE *)(a1 + 65) = 1;
   return 0;
 }
 // 20003758: using guessed type int sd_resp_csd[4];
 // 20003768: using guessed type int sd_resp_cid[4];
-// 20003998: using guessed type int dword_20003998;
+// 20003998: using guessed type int sdio_dword_20003998;
 // 2000399C: using guessed type int dword_2000399C;
 
 //----- (0801F4B0) --------------------------------------------------------
@@ -24885,9 +24654,9 @@ signed int __fastcall sub_801F4B0(int a1)
   unsigned __int8 v1; // r5@1
 
   v1 = 0;
-  if ( dword_20003998 == 3 )
+  if ( sdio_dword_20003998 == 3 )
     return 39;
-  if ( !dword_20003998 || dword_20003998 == 1 || dword_20003998 == 2 )
+  if ( !sdio_dword_20003998 || sdio_dword_20003998 == 1 || sdio_dword_20003998 == 2 )
   {
     if ( a1 == 4096 )
       return 39;
@@ -24902,7 +24671,7 @@ signed int __fastcall sub_801F4B0(int a1)
         dword_200036C0 = 0;
         dword_200036C4 = 2048;
         dword_200036C8 = 0;
-        something_gnarly_with_sdio_clk(&dword_200036B8);
+        something_gnarly_with_sdio_clk((int)&dword_200036B8);
       }
     }
     else
@@ -24916,7 +24685,7 @@ signed int __fastcall sub_801F4B0(int a1)
         dword_200036C0 = 0;
         dword_200036C4 = 0;
         dword_200036C8 = 0;
-        something_gnarly_with_sdio_clk(&dword_200036B8);
+        something_gnarly_with_sdio_clk((int)&dword_200036B8);
       }
     }
   }
@@ -24928,23 +24697,23 @@ signed int __fastcall sub_801F4B0(int a1)
 // 200036C4: using guessed type int dword_200036C4;
 // 200036C8: using guessed type int dword_200036C8;
 // 200036CC: using guessed type char byte_200036CC;
-// 20003998: using guessed type int dword_20003998;
+// 20003998: using guessed type int sdio_dword_20003998;
 
 //----- (0801F578) --------------------------------------------------------
-int __fastcall maybe_select_or_deselect_card(int a1)
+int __fastcall SD_Select_Deselect(int a1)
 {
   sd_cmd_temp.CMDARG = a1;
   sd_cmd_temp.CMDINDEX = 7;
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  return sub_801FC00(7u);
+  SDIO_SendCommand(&sd_cmd_temp);
+  return (unsigned __int8)SD_CmdResp1Error(7u);
 }
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
 
 //----- (0801F5B0) --------------------------------------------------------
-signed int __fastcall prob_read_sd_blocks(int a1, int a2, unsigned __int64 a3, signed __int16 a4)
+signed int __fastcall HAL_SD_ReadBlocks(int a1, int a2, unsigned __int64 a3, signed __int16 a4)
 {
   int v4; // r7@1
   unsigned __int64 v5; // r4@1
@@ -24955,68 +24724,68 @@ signed int __fastcall prob_read_sd_blocks(int a1, int a2, unsigned __int64 a3, s
   v4 = a1;
   LODWORD(v5) = a3;
   v6 = a4;
-  sdio_maybe_interrupt_reason = 0;
-  dword_200039A4 = 0;
-  dword_200039A0 = 0;
+  sdio_err_state = 0;
+  sdio_dword_200039A4 = 0;
+  sdio_dword_200039A0 = 0;
   SDIO_DCTRL = 0;
-  if ( dword_20003998 == 2 )
+  if ( sdio_dword_20003998 == 2 )
   {
     v6 = 512;
     v5 = a3 >> 9;
   }
-  sd_cmd_temp.CMDARG = v6;
-  sd_cmd_temp.CMDINDEX = 16;
+  sd_cmd_temp.CMDARG = (unsigned __int16)v6;
+  sd_cmd_temp.CMDINDEX = 0x10;
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  result = sub_801FC00(0x10u);
+  SDIO_SendCommand(&sd_cmd_temp);
+  result = SD_CmdResp1Error(0x10u);
   if ( result )
   {
-    result = result;
+    result = (unsigned __int8)result;
   }
   else
   {
-    dword_200036D0 = -1;
-    dword_200036D4 = v6;
-    dword_200036D8 = 144;
-    dword_200036DC = 2;
-    dword_200036E0 = 0;
-    dword_200036E4 = 1;
-    sub_8020980(&dword_200036D0);
+    sdio_dword_200036D0 = -1;
+    sdio_dword_200036D4 = (unsigned __int16)v6;
+    sdio_dword_200036D8 = 144;
+    sdio_dword_200036DC = 2;
+    sdio_dword_200036E0 = 0;
+    sdio_dword_200036E4 = 1;
+    SDIO_DataConfig((int)&sdio_dword_200036D0);
     sd_cmd_temp.CMDARG = v5;
     sd_cmd_temp.CMDINDEX = 17;
     sd_cmd_temp.WAITRESP = 64;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
-    result = sub_801FC00(0x11u);
+    SDIO_SendCommand(&sd_cmd_temp);
+    result = SD_CmdResp1Error(0x11u);
     v8 = result;
     if ( result )
     {
-      result = result;
+      result = (unsigned __int8)result;
     }
     else
     {
       set_sdio_mask(810, 1);
-      sub_8020932(1);
-      adc_something(v4, v6);
+      sdio_sub_8020932(1);
+      sdio_something(v4, (unsigned __int16)v6);
       result = v8;
     }
   }
   return result;
 }
-// 200036D0: using guessed type int dword_200036D0;
-// 200036D4: using guessed type int dword_200036D4;
-// 200036D8: using guessed type int dword_200036D8;
-// 200036DC: using guessed type int dword_200036DC;
-// 200036E0: using guessed type int dword_200036E0;
-// 200036E4: using guessed type int dword_200036E4;
+// 200036D0: using guessed type int sdio_dword_200036D0;
+// 200036D4: using guessed type int sdio_dword_200036D4;
+// 200036D8: using guessed type int sdio_dword_200036D8;
+// 200036DC: using guessed type int sdio_dword_200036DC;
+// 200036E0: using guessed type int sdio_dword_200036E0;
+// 200036E4: using guessed type int sdio_dword_200036E4;
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
-// 20003998: using guessed type int dword_20003998;
-// 200039A0: using guessed type int dword_200039A0;
-// 200039A4: using guessed type int dword_200039A4;
-// 20003B77: using guessed type char sdio_maybe_interrupt_reason;
+// 20003998: using guessed type int sdio_dword_20003998;
+// 200039A0: using guessed type int sdio_dword_200039A0;
+// 200039A4: using guessed type int sdio_dword_200039A4;
+// 20003B77: using guessed type char sdio_err_state;
 // 40012C2C: using guessed type int SDIO_DCTRL;
 
 //----- (0801F6E4) --------------------------------------------------------
@@ -25031,25 +24800,25 @@ signed int __fastcall prob_write_sd_block(int a1, int a2, unsigned __int64 a3, s
   v5 = a1;
   LODWORD(v6) = a3;
   v7 = a4;
-  sdio_maybe_interrupt_reason = 0;
-  dword_200039A4 = 0;
-  dword_200039A0 = 1;
+  sdio_err_state = 0;
+  sdio_dword_200039A4 = 0;
+  sdio_dword_200039A0 = 1;
   SDIO_DCTRL = 0;
-  if ( dword_20003998 == 2 )
+  if ( sdio_dword_20003998 == 2 )
   {
     v7 = 512;
     v6 = a3 >> 9;
   }
-  sd_cmd_temp.CMDARG = v7;
+  sd_cmd_temp.CMDARG = (unsigned __int16)v7;
   sd_cmd_temp.CMDINDEX = 16;
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  result = sub_801FC00(0x10u);
+  SDIO_SendCommand(&sd_cmd_temp);
+  result = SD_CmdResp1Error(0x10u);
   if ( result )
   {
-    result = result;
+    result = (unsigned __int8)result;
   }
   else
   {
@@ -25058,11 +24827,11 @@ signed int __fastcall prob_write_sd_block(int a1, int a2, unsigned __int64 a3, s
     sd_cmd_temp.WAITRESP = 64;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
-    result = sub_801FC00(0x37u);
+    SDIO_SendCommand(&sd_cmd_temp);
+    result = SD_CmdResp1Error(0x37u);
     if ( result )
     {
-      result = result;
+      result = (unsigned __int8)result;
     }
     else
     {
@@ -25071,11 +24840,11 @@ signed int __fastcall prob_write_sd_block(int a1, int a2, unsigned __int64 a3, s
       sd_cmd_temp.WAITRESP = 64;
       sd_cmd_temp.field_C = 0;
       sd_cmd_temp.CPSMEN = 1024;
-      send_sd_cmd(&sd_cmd_temp);
-      result = sub_801FC00(0x17u);
+      SDIO_SendCommand(&sd_cmd_temp);
+      result = SD_CmdResp1Error(0x17u);
       if ( result )
       {
-        result = result;
+        result = (unsigned __int8)result;
       }
       else
       {
@@ -25084,25 +24853,25 @@ signed int __fastcall prob_write_sd_block(int a1, int a2, unsigned __int64 a3, s
         sd_cmd_temp.WAITRESP = 64;
         sd_cmd_temp.field_C = 0;
         sd_cmd_temp.CPSMEN = 1024;
-        send_sd_cmd(&sd_cmd_temp);
-        result = sub_801FC00(0x19u);
+        SDIO_SendCommand(&sd_cmd_temp);
+        result = SD_CmdResp1Error(0x19u);
         v9 = result;
         if ( result )
         {
-          result = result;
+          result = (unsigned __int8)result;
         }
         else
         {
-          dword_200036D0 = -1;
-          dword_200036D4 = v7 * a5;
-          dword_200036D8 = 144;
-          dword_200036DC = 0;
-          dword_200036E0 = 0;
-          dword_200036E4 = 1;
-          sub_8020980(&dword_200036D0);
+          sdio_dword_200036D0 = -1;
+          sdio_dword_200036D4 = (unsigned __int16)v7 * a5;
+          sdio_dword_200036D8 = 144;
+          sdio_dword_200036DC = 0;
+          sdio_dword_200036E0 = 0;
+          sdio_dword_200036E4 = 1;
+          SDIO_DataConfig((int)&sdio_dword_200036D0);
           set_sdio_mask(810, 1);
-          sub_8020932(1);
-          sub_80203C4(v5, v7 * a5);
+          sdio_sub_8020932(1);
+          sub_80203C4(v5, (unsigned __int16)v7 * a5);
           result = v9;
         }
       }
@@ -25110,18 +24879,18 @@ signed int __fastcall prob_write_sd_block(int a1, int a2, unsigned __int64 a3, s
   }
   return result;
 }
-// 200036D0: using guessed type int dword_200036D0;
-// 200036D4: using guessed type int dword_200036D4;
-// 200036D8: using guessed type int dword_200036D8;
-// 200036DC: using guessed type int dword_200036DC;
-// 200036E0: using guessed type int dword_200036E0;
-// 200036E4: using guessed type int dword_200036E4;
+// 200036D0: using guessed type int sdio_dword_200036D0;
+// 200036D4: using guessed type int sdio_dword_200036D4;
+// 200036D8: using guessed type int sdio_dword_200036D8;
+// 200036DC: using guessed type int sdio_dword_200036DC;
+// 200036E0: using guessed type int sdio_dword_200036E0;
+// 200036E4: using guessed type int sdio_dword_200036E4;
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
-// 20003998: using guessed type int dword_20003998;
+// 20003998: using guessed type int sdio_dword_20003998;
 // 2000399C: using guessed type int dword_2000399C;
-// 200039A0: using guessed type int dword_200039A0;
-// 200039A4: using guessed type int dword_200039A4;
-// 20003B77: using guessed type char sdio_maybe_interrupt_reason;
+// 200039A0: using guessed type int sdio_dword_200039A0;
+// 200039A4: using guessed type int sdio_dword_200039A4;
+// 20003B77: using guessed type char sdio_err_state;
 // 40012C2C: using guessed type int SDIO_DCTRL;
 
 //----- (0801F8C4) --------------------------------------------------------
@@ -25132,7 +24901,7 @@ signed int sub_801F8C4()
 
   v0 = 0;
   dword_200039AC = 1000;
-  while ( !dword_200039A8 && !dword_200039A4 && !sdio_maybe_interrupt_reason && dword_200039AC )
+  while ( !dword_200039A8 && !sdio_dword_200039A4 && !sdio_err_state && dword_200039AC )
   {
     --dword_200039AC;
     if ( !dword_200039AC )
@@ -25146,20 +24915,20 @@ signed int sub_801F8C4()
     if ( !dword_200039AC )
       return 4;
   }
-  if ( dword_200039A0 == 1 )
+  if ( sdio_dword_200039A0 == 1 )
     v0 = sd_stop_transmission();
   set_sdio_icr(1535);
-  if ( sdio_maybe_interrupt_reason )
-    result = sdio_maybe_interrupt_reason;
+  if ( sdio_err_state )
+    result = (unsigned __int8)sdio_err_state;
   else
     result = v0;
   return result;
 }
-// 200039A0: using guessed type int dword_200039A0;
-// 200039A4: using guessed type int dword_200039A4;
+// 200039A0: using guessed type int sdio_dword_200039A0;
+// 200039A4: using guessed type int sdio_dword_200039A4;
 // 200039A8: using guessed type int dword_200039A8;
 // 200039AC: using guessed type int dword_200039AC;
-// 20003B77: using guessed type char sdio_maybe_interrupt_reason;
+// 20003B77: using guessed type char sdio_err_state;
 // 40012C34: using guessed type int SDIO_STA;
 
 //----- (0801F9A2) --------------------------------------------------------
@@ -25170,8 +24939,8 @@ int sd_stop_transmission()
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  return sub_801FC00(0xCu);
+  SDIO_SendCommand(&sd_cmd_temp);
+  return (unsigned __int8)SD_CmdResp1Error(0xCu);
 }
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
 
@@ -25190,16 +24959,16 @@ signed int __fastcall sd_get_status(int a1)
     sd_cmd_temp.WAITRESP = 64;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
-    LOBYTE(result) = sub_801FC00(0xDu);
+    SDIO_SendCommand(&sd_cmd_temp);
+    LOBYTE(result) = SD_CmdResp1Error(0xDu);
     v3 = result;
-    if ( result )
+    if ( (_BYTE)result )
     {
-      result = result;
+      result = (unsigned __int8)result;
     }
     else
     {
-      *v1 = read_resp_word(0);
+      *(_DWORD *)v1 = read_resp_word(0);
       result = v3;
     }
   }
@@ -25217,39 +24986,39 @@ void __fastcall SDIO_interrupt_real()
 {
   if ( get_sdio_sta_0(256) )
   {
-    sdio_maybe_interrupt_reason = 0;
+    sdio_err_state = 0;
     set_sdio_icr_0(256);
-    dword_200039A4 = 1;
+    sdio_dword_200039A4 = 1;
   }
   else if ( get_sdio_sta_0(2) )
   {
     set_sdio_icr_0(2);
-    sdio_maybe_interrupt_reason = 2;
+    sdio_err_state = 2;
   }
   else if ( get_sdio_sta_0(8) )
   {
     set_sdio_icr_0(8);
-    sdio_maybe_interrupt_reason = 4;
+    sdio_err_state = 4;
   }
   else if ( get_sdio_sta_0(32) )
   {
     set_sdio_icr_0(32);
-    sdio_maybe_interrupt_reason = 6;
+    sdio_err_state = 6;
   }
   else if ( get_sdio_sta_0(16) )
   {
     set_sdio_icr_0(16);
-    sdio_maybe_interrupt_reason = 5;
+    sdio_err_state = 5;
   }
   else if ( get_sdio_sta_0(512) )
   {
     set_sdio_icr_0(512);
-    sdio_maybe_interrupt_reason = 7;
+    sdio_err_state = 7;
   }
   set_sdio_mask(49978, 0);
 }
-// 200039A4: using guessed type int dword_200039A4;
-// 20003B77: using guessed type char sdio_maybe_interrupt_reason;
+// 200039A4: using guessed type int sdio_dword_200039A4;
+// 20003B77: using guessed type char sdio_err_state;
 
 //----- (0801FB08) --------------------------------------------------------
 void __fastcall DMA2_CH4_interrupt_real()
@@ -25334,7 +25103,7 @@ signed int sub_801FB88()
 // 40012C34: using guessed type int SDIO_STA;
 
 //----- (0801FC00) --------------------------------------------------------
-signed int __fastcall sub_801FC00(unsigned __int8 a1)
+signed int __fastcall SD_CmdResp1Error(unsigned __int8 a1)
 {
   unsigned __int8 v1; // r4@1
   char v2; // r6@1
@@ -25607,7 +25376,7 @@ signed int __fastcall sub_801FDFC(unsigned __int8 a1, int a2)
       }
       else
       {
-        *v3 = HIWORD(v8);
+        *(_WORD *)v3 = HIWORD(v8);
         result = 0;
       }
     }
@@ -25637,10 +25406,10 @@ signed int __fastcall sd_switch_some_kind_of_func(char a1)
   }
   else
   {
-    LOBYTE(result) = sub_8020068(dword_2000399C, &v3);
-    if ( result )
+    LOBYTE(result) = sub_8020068((unsigned __int16)dword_2000399C, (int)&v3);
+    if ( (_BYTE)result )
     {
-      result = result;
+      result = (unsigned __int8)result;
     }
     else if ( v1 == 1 )
     {
@@ -25651,11 +25420,11 @@ signed int __fastcall sd_switch_some_kind_of_func(char a1)
         sd_cmd_temp.WAITRESP = 64;
         sd_cmd_temp.field_C = 0;
         sd_cmd_temp.CPSMEN = 1024;
-        send_sd_cmd(&sd_cmd_temp);
-        LOBYTE(result) = sub_801FC00(0x37u);
-        if ( result )
+        SDIO_SendCommand(&sd_cmd_temp);
+        LOBYTE(result) = SD_CmdResp1Error(0x37u);
+        if ( (_BYTE)result )
         {
-          result = result;
+          result = (unsigned __int8)result;
         }
         else
         {
@@ -25664,10 +25433,10 @@ signed int __fastcall sd_switch_some_kind_of_func(char a1)
           sd_cmd_temp.WAITRESP = 64;
           sd_cmd_temp.field_C = 0;
           sd_cmd_temp.CPSMEN = 1024;
-          send_sd_cmd(&sd_cmd_temp);
-          LOBYTE(result) = sub_801FC00(6u);
-          if ( result )
-            result = result;
+          SDIO_SendCommand(&sd_cmd_temp);
+          LOBYTE(result) = SD_CmdResp1Error(6u);
+          if ( (_BYTE)result )
+            result = (unsigned __int8)result;
           else
             result = 0;
         }
@@ -25684,11 +25453,11 @@ signed int __fastcall sd_switch_some_kind_of_func(char a1)
       sd_cmd_temp.WAITRESP = 64;
       sd_cmd_temp.field_C = 0;
       sd_cmd_temp.CPSMEN = 1024;
-      send_sd_cmd(&sd_cmd_temp);
-      LOBYTE(result) = sub_801FC00(0x37u);
-      if ( result )
+      SDIO_SendCommand(&sd_cmd_temp);
+      LOBYTE(result) = SD_CmdResp1Error(0x37u);
+      if ( (_BYTE)result )
       {
-        result = result;
+        result = (unsigned __int8)result;
       }
       else
       {
@@ -25697,10 +25466,10 @@ signed int __fastcall sd_switch_some_kind_of_func(char a1)
         sd_cmd_temp.WAITRESP = 64;
         sd_cmd_temp.field_C = 0;
         sd_cmd_temp.CPSMEN = 1024;
-        send_sd_cmd(&sd_cmd_temp);
-        LOBYTE(result) = sub_801FC00(6u);
-        if ( result )
-          result = result;
+        SDIO_SendCommand(&sd_cmd_temp);
+        LOBYTE(result) = SD_CmdResp1Error(6u);
+        if ( (_BYTE)result )
+          result = (unsigned __int8)result;
         else
           result = 0;
       }
@@ -25735,11 +25504,11 @@ signed int __fastcall sub_8020068(int a1, int a2)
   sd_cmd_temp.WAITRESP = 64;
   sd_cmd_temp.field_C = 0;
   sd_cmd_temp.CPSMEN = 1024;
-  send_sd_cmd(&sd_cmd_temp);
-  LOBYTE(result) = sub_801FC00(0x10u);
-  if ( result )
+  SDIO_SendCommand(&sd_cmd_temp);
+  LOBYTE(result) = SD_CmdResp1Error(0x10u);
+  if ( (_BYTE)result )
   {
-    result = result;
+    result = (unsigned __int8)result;
   }
   else
   {
@@ -25748,32 +25517,32 @@ signed int __fastcall sub_8020068(int a1, int a2)
     sd_cmd_temp.WAITRESP = 64;
     sd_cmd_temp.field_C = 0;
     sd_cmd_temp.CPSMEN = 1024;
-    send_sd_cmd(&sd_cmd_temp);
-    LOBYTE(result) = sub_801FC00(0x37u);
-    if ( result )
+    SDIO_SendCommand(&sd_cmd_temp);
+    LOBYTE(result) = SD_CmdResp1Error(0x37u);
+    if ( (_BYTE)result )
     {
-      result = result;
+      result = (unsigned __int8)result;
     }
     else
     {
-      dword_200036D0 = -1;
-      dword_200036D4 = 8;
-      dword_200036D8 = 48;
-      dword_200036DC = 2;
-      dword_200036E0 = 0;
-      dword_200036E4 = 1;
-      sub_8020980(&dword_200036D0);
+      sdio_dword_200036D0 = -1;
+      sdio_dword_200036D4 = 8;
+      sdio_dword_200036D8 = 48;
+      sdio_dword_200036DC = 2;
+      sdio_dword_200036E0 = 0;
+      sdio_dword_200036E4 = 1;
+      SDIO_DataConfig((int)&sdio_dword_200036D0);
       sd_cmd_temp.CMDARG = 0;
       sd_cmd_temp.CMDINDEX = 51;
       sd_cmd_temp.WAITRESP = 64;
       sd_cmd_temp.field_C = 0;
       sd_cmd_temp.CPSMEN = 1024;
-      send_sd_cmd(&sd_cmd_temp);
-      LOBYTE(result) = sub_801FC00(0x33u);
+      SDIO_SendCommand(&sd_cmd_temp);
+      LOBYTE(result) = SD_CmdResp1Error(0x33u);
       v5 = result;
-      if ( result )
+      if ( (_BYTE)result )
       {
-        result = result;
+        result = (unsigned __int8)result;
       }
       else
       {
@@ -25812,8 +25581,8 @@ signed int __fastcall sub_8020068(int a1, int a2)
         else
         {
           set_sdio_icr(1535);
-          *(v2 + 4) = ((v7 & 0xFF00) << 8) | (v7 << 24) | (v7 >> 8) & 0xFF00 | (v7 >> 24);
-          *v2 = ((v8 & 0xFF00) << 8) | (v8 << 24) | (v8 >> 8) & 0xFF00 | (v8 >> 24);
+          *(_DWORD *)(v2 + 4) = ((unsigned __int16)(v7 & 0xFF00) << 8) | (v7 << 24) | (v7 >> 8) & 0xFF00 | (v7 >> 24);
+          *(_DWORD *)v2 = ((unsigned __int16)(v8 & 0xFF00) << 8) | (v8 << 24) | (v8 >> 8) & 0xFF00 | (v8 >> 24);
           result = v5;
         }
       }
@@ -25821,12 +25590,12 @@ signed int __fastcall sub_8020068(int a1, int a2)
   }
   return result;
 }
-// 200036D0: using guessed type int dword_200036D0;
-// 200036D4: using guessed type int dword_200036D4;
-// 200036D8: using guessed type int dword_200036D8;
-// 200036DC: using guessed type int dword_200036DC;
-// 200036E0: using guessed type int dword_200036E0;
-// 200036E4: using guessed type int dword_200036E4;
+// 200036D0: using guessed type int sdio_dword_200036D0;
+// 200036D4: using guessed type int sdio_dword_200036D4;
+// 200036D8: using guessed type int sdio_dword_200036D8;
+// 200036DC: using guessed type int sdio_dword_200036DC;
+// 200036E0: using guessed type int sdio_dword_200036E0;
+// 200036E4: using guessed type int sdio_dword_200036E4;
 // 20003724: using guessed type SDIO_CMD_ST sd_cmd_temp;
 // 2000399C: using guessed type int dword_2000399C;
 // 40012C34: using guessed type int SDIO_STA;
@@ -25847,7 +25616,7 @@ int __fastcall strlen(int a1)
   {
     while ( 1 )
     {
-      v2 = *a1++;
+      v2 = *(_BYTE *)a1++;
       if ( !v2 )
         break;
       if ( !(a1 << 30) )
@@ -25857,14 +25626,14 @@ int __fastcall strlen(int a1)
   else
   {
 LABEL_4:
-    for ( i = *a1; !((i - 0x1010101) & ~i & 0x80808080); i = v4 )
+    for ( i = *(_DWORD *)a1; !((i - 0x1010101) & ~i & 0x80808080); i = v4 )
     {
-      v4 = *(a1 + 4);
+      v4 = *(_DWORD *)(a1 + 4);
       a1 += 4;
     }
-    v6 = *a1++;
+    v6 = *(_BYTE *)a1++;
     for ( j = v6; j; j = v7 )
-      v7 = *a1++;
+      v7 = *(_BYTE *)a1++;
   }
   return a1 - v1;
 }
@@ -25874,43 +25643,43 @@ void disable_sd_card_hw()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
-  set_sdio_clken(0);
+  HAL_set_sdio_clken(0);
   set_sdio_power_reg(0);
   reset_sdio_periph();
-  en_apb2_periph(0x800, 0);
+  set_APB2_periph_clock(0x800, 0);
   set_gpio_pin_func(&GPIOC, 8u, 0);
   set_gpio_pin_func(&GPIOC, 0xCu, 0);
   set_gpio_pin_func(&GPIOD, 2u, 0);
   cfg.pins = 256;
   cfg.mode = 0;
   cfg.pull = 0;
-  config_pins(&GPIOC, &cfg);
+  gpio_config_pin(&GPIOC, &cfg);
   cfg.pins = 4;
-  config_pins(&GPIOD, &cfg);
+  gpio_config_pin(&GPIOD, &cfg);
   cfg.pins = 4096;
-  config_pins(&GPIOC, &cfg);
+  gpio_config_pin(&GPIOC, &cfg);
 }
 // 40020800: using guessed type GPIO_REGS GPIOC;
 // 40020C00: using guessed type GPIO_REGS GPIOD;
 
 //----- (08020332) --------------------------------------------------------
-void enable_sd_card_hw()
+void HAL_SD_MspInit()
 {
   GPIO_CONFIG cfg; // [sp+0h] [bp-10h]@1
 
-  en_ahb_periph(0xC, 1);
+  set_AHB_periph_clk(0xC, 1);
   set_gpio_pin_func(&GPIOC, 8u, 0xCu);
   set_gpio_pin_func(&GPIOC, 0xCu, 0xCu);
   set_gpio_pin_func(&GPIOD, 2u, 0xCu);
-  cfg = 0x100030200000100LL;
-  config_pins(&GPIOC, &cfg);
+  cfg = (GPIO_CONFIG)0x100030200000100LL;
+  gpio_config_pin(&GPIOC, &cfg);
   cfg.pins = 4;
-  config_pins(&GPIOD, &cfg);
+  gpio_config_pin(&GPIOD, &cfg);
   cfg.pins = 4096;
   cfg.pull = 0;
-  config_pins(&GPIOC, &cfg);
-  en_apb2_periph(2048, 1);
-  en_ahb_periph(0x2000000, 1);
+  gpio_config_pin(&GPIOC, &cfg);
+  set_APB2_periph_clock(2048, 1);
+  set_AHB_periph_clk(0x2000000, 1);
 }
 // 40020800: using guessed type GPIO_REGS GPIOC;
 // 40020C00: using guessed type GPIO_REGS GPIOD;
@@ -25947,14 +25716,14 @@ int __fastcall sub_80203C4(int a1, unsigned int a2)
   v13 = 0;
   v14 = 0x2000;
   v15 = 0;
-  sub_8020A54(0x40026444, &v5);
+  sub_8020A54(0x40026444, (int)&v5);
   sub_8020AAE(0x40026444, 2, 1);
   return sub_8020A92(0x40026444, 1);
 }
 // 40012C80: using guessed type int SDIO_FIFO;
 
 //----- (08020434) --------------------------------------------------------
-void __fastcall adc_something(int a1, unsigned int a2)
+void __fastcall sdio_something(int a1, unsigned int a2)
 {
   int v2; // r4@1
   unsigned int v3; // r5@1
@@ -25985,7 +25754,7 @@ void __fastcall adc_something(int a1, unsigned int a2)
   v12 = 0;
   v13 = 0x2000;
   v14 = 0;
-  sub_8020A54(0x40026444, &v4);
+  sub_8020A54(0x40026444, (int)&v4);
   sub_8020AAE(0x40026444, 2, 1);
   sub_8020A92(0x40026444, 1);
 }
@@ -26032,7 +25801,7 @@ double __fastcall dp_from_uint_core(int num)
     v4 = ((1053 - v2) << 20) + (v3 >> 11);
     num = v3 << 21;
   }
-  return *&num;
+  return *(double *)&num;
 }
 // 80204D0: variables would overlap: r0.4 and r0.8
 // 80204D0: bad return variable
@@ -26065,7 +25834,7 @@ double __fastcall dp_sqrt(double num)
   nexp = HIDWORD(num) >> 20;
   if ( HIDWORD(num) >> 20 )
   {
-    if ( nexp >= 0x7FF )
+    if ( (unsigned int)nexp >= 0x7FF )
     {
       if ( nexp != 2047 && HIDWORD(num) <= 0xFFF00000 )
       {
@@ -26085,21 +25854,21 @@ double __fastcall dp_sqrt(double num)
     if ( !HIDWORD(num) )
       v20 += __clz(LODWORD(num));
     v21 = v20 - 11;
-    if ( v21 < 0x20 )
+    if ( (unsigned int)v21 < 0x20 )
       HIDWORD(num) = (HIDWORD(num) << v21) | (LODWORD(num) >> (32 - v21));
     else
       HIDWORD(num) = LODWORD(num) << (v21 - 32);
     LODWORD(num) <<= v21;
     nexp = 1 - v21;
   }
-  outexp = (nexp + 1021) >> 1;
-  if ( (nexp - 3) & 1 )
+  outexp = (unsigned int)(nexp + 1021) >> 1;
+  if ( ((_BYTE)nexp - 3) & 1 )
   {
-    v3 = *&num >> 31;
+    v3 = *(_QWORD *)&num >> 31;
     LODWORD(num) *= 2;
     HIDWORD(num) += v3;
   }
-  HIDWORD(num) = *&num >> 30;
+  HIDWORD(num) = *(_QWORD *)&num >> 30;
   LODWORD(num) *= 4;
   v4 = 0x300000;
   v5 = 0;
@@ -26200,28 +25969,28 @@ float __fastcall fp_from_int64(__int64 num)
   if ( num >= 0 )
   {
     if ( !num )
-      return *&num;
+      return *(float *)&num;
     v2 = HIDWORD(num) == 0;
   }
   else
   {
-    v1 = num <= 0;
-    LODWORD(num) = -num;
+    v1 = (unsigned int)num <= 0;
+    LODWORD(num) = -(signed int)num;
     HIDWORD(num) = -HIDWORD(num) - !v1;
     v2 = HIDWORD(num) == 0;
   }
   if ( v2 )
   {
     HIDWORD(num) = __clz(num);
-    LODWORD(num) = num << SBYTE4(num);
+    LODWORD(num) = (_DWORD)num << SBYTE4(num);
     HIDWORD(num) = 157 - HIDWORD(num);
   }
   else
   {
     v3 = __clz(HIDWORD(num));
     HIDWORD(num) ^= num;
-    LODWORD(num) = num << v3;
-    v2 = num == 0;
+    LODWORD(num) = (_DWORD)num << v3;
+    v2 = (_DWORD)num == 0;
     v4 = 32 - v3;
     HIDWORD(num) = __ROR4__(HIDWORD(num), v4);
     LODWORD(num) = HIDWORD(num) ^ num;
@@ -26229,8 +25998,10 @@ float __fastcall fp_from_int64(__int64 num)
       LODWORD(num) = num | 1;
     HIDWORD(num) = v4 + 157;
   }
-  LODWORD(num) = (num >> 8) + __CFADD__(num << 24, __CFSHL__(num, 24) + 0x7FFFFFFF) + (HIDWORD(num) << 23);
-  return *&num;
+  LODWORD(num) = ((unsigned int)num >> 8)
+               + __CFADD__((_DWORD)num << 24, __CFSHL__(num, 24) + 0x7FFFFFFF)
+               + (HIDWORD(num) << 23);
+  return *(float *)&num;
 }
 
 //----- (0802063A) --------------------------------------------------------
@@ -26250,7 +26021,7 @@ double __fastcall dp_sub(double a, double b)
 //----- (080207C4) --------------------------------------------------------
 int __fastcall sub_80207C4(int a1)
 {
-  return sub_801EBD4();
+  return (unsigned __int8)HAL_SD_Init();
 }
 
 //----- (080207D6) --------------------------------------------------------
@@ -26265,7 +26036,7 @@ signed int __fastcall sub_80207E6(int a1, int a2, int a3)
   signed int v3; // r4@1
 
   v3 = 20000;
-  prob_read_sd_blocks(a2, a2, (a3 << 9), 512);
+  HAL_SD_ReadBlocks(a2, a2, (unsigned int)(a3 << 9), 512);
   while ( sub_801EC86() )
   {
     --v3;
@@ -26311,20 +26082,20 @@ signed int sub_8020894()
 //----- (0802089C) --------------------------------------------------------
 int __fastcall sub_802089C(int a1, unsigned int a2, int a3)
 {
-  a2 = a2;
-  if ( a2 == 1 )
+  a2 = (unsigned __int8)a2;
+  if ( (unsigned __int8)a2 == 1 )
   {
-    *a3 = 0x20000;
+    *(_DWORD *)a3 = 0x20000;
   }
-  else if ( a2 >= 1u )
+  else if ( (unsigned __int8)a2 >= 1u )
   {
     if ( a2 == 3 )
     {
-      *a3 = 32;
+      *(_DWORD *)a3 = 32;
     }
     else if ( a2 < 3 )
     {
-      *a3 = 512;
+      *(_WORD *)a3 = 512;
     }
   }
   return 0;
@@ -26340,14 +26111,14 @@ void reset_sdio_periph()
 //----- (080208F0) --------------------------------------------------------
 void __fastcall something_gnarly_with_sdio_clk(int result)
 {
-  SDIO_CLKCR = SDIO_CLKCR & 0xFFFF8100 | *(result + 20) | *(result + 8) | *(result + 4) | *(result + 12) | *result | *(result + 16);
+  SDIO_CLKCR = SDIO_CLKCR & 0xFFFF8100 | *(_BYTE *)(result + 20) | *(_DWORD *)(result + 8) | *(_DWORD *)(result + 4) | *(_DWORD *)(result + 12) | *(_DWORD *)result | *(_DWORD *)(result + 16);
 }
 // 40012C04: using guessed type int SDIO_CLKCR;
 
 //----- (0802091A) --------------------------------------------------------
-void __fastcall set_sdio_clken(unsigned __int8 bypass)
+void __fastcall HAL_set_sdio_clken(unsigned __int8 clken)
 {
-  v422580A0 = bypass;
+  v422580A0 = clken;
 }
 
 //----- (08020922) --------------------------------------------------------
@@ -26366,18 +26137,16 @@ int sdio_power_enabled()
 // 40012C00: using guessed type int SDIO_POWER;
 
 //----- (08020932) --------------------------------------------------------
-int __fastcall sub_8020932(int result)
+void __fastcall sdio_sub_8020932(int result)
 {
-  result = result;
-  v4225858C = result;
-  return result;
+  v4225858C = (unsigned __int8)result;
 }
 
 //----- (0802093A) --------------------------------------------------------
-void __fastcall send_sd_cmd(SDIO_CMD_ST *cmd)
+void __fastcall SDIO_SendCommand(SDIO_CMD_ST *cmd)
 {
   SDIO_ARG = cmd->CMDARG;
-  SDIO_CMD = (SDIO_CMD >> 11 << 11) | cmd->CMDINDEX | cmd->WAITRESP | cmd->field_C | cmd->CPSMEN;
+  SDIO_CMD = ((unsigned int)SDIO_CMD >> 11 << 11) | cmd->CMDINDEX | cmd->WAITRESP | cmd->field_C | cmd->CPSMEN;
 }
 // 40012C08: using guessed type int SDIO_ARG;
 // 40012C0C: using guessed type int SDIO_CMD;
@@ -26392,16 +26161,16 @@ unsigned __int8 get_sdio_respcmd()
 //----- (0802096A) --------------------------------------------------------
 _DWORD __fastcall read_resp_word(int which)
 {
-  return *(SDIO_RESP + which);
+  return *(int *)((char *)SDIO_RESP + which);
 }
 // 40012C14: using guessed type int SDIO_RESP[4];
 
 //----- (08020980) --------------------------------------------------------
-void __fastcall sub_8020980(int result)
+void __fastcall SDIO_DataConfig(int result)
 {
-  SDIO_DTIMER = *result;
-  SDIO_DLEN = *(result + 4);
-  SDIO_DCTRL = SDIO_DCTRL & 0xFFFFFF08 | *(result + 8) | *(result + 12) | *(result + 16) | *(result + 20);
+  SDIO_DTIMER = *(_DWORD *)result;
+  SDIO_DLEN = *(_DWORD *)(result + 4);
+  SDIO_DCTRL = SDIO_DCTRL & 0xFFFFFF08 | *(_DWORD *)(result + 8) | *(_DWORD *)(result + 12) | *(_DWORD *)(result + 16) | *(_DWORD *)(result + 20);
 }
 // 40012C24: using guessed type int SDIO_DTIMER;
 // 40012C28: using guessed type int SDIO_DLEN;
@@ -26456,10 +26225,10 @@ void __fastcall set_sdio_icr_0(int result)
 //----- (08020A54) --------------------------------------------------------
 int __fastcall sub_8020A54(int result, int a2)
 {
-  *result = *result & 0xFFFF800F | *(a2 + 8) | *(a2 + 32) | *(a2 + 16) | *(a2 + 20) | *(a2 + 24) | *(a2 + 28) | *(a2 + 36) | *(a2 + 40);
-  *(result + 4) = *(a2 + 12);
-  *(result + 8) = *a2;
-  *(result + 12) = *(a2 + 4);
+  *(_DWORD *)result = *(_DWORD *)result & 0xFFFF800F | *(_DWORD *)(a2 + 8) | *(_DWORD *)(a2 + 32) | *(_DWORD *)(a2 + 16) | *(_DWORD *)(a2 + 20) | *(_DWORD *)(a2 + 24) | *(_DWORD *)(a2 + 28) | *(_DWORD *)(a2 + 36) | *(_DWORD *)(a2 + 40);
+  *(_DWORD *)(result + 4) = *(_DWORD *)(a2 + 12);
+  *(_DWORD *)(result + 8) = *(_DWORD *)a2;
+  *(_DWORD *)(result + 12) = *(_DWORD *)(a2 + 4);
   return result;
 }
 
@@ -26467,9 +26236,9 @@ int __fastcall sub_8020A54(int result, int a2)
 int __fastcall sub_8020A92(int result, char a2)
 {
   if ( a2 )
-    *result |= 1u;
+    *(_DWORD *)result |= 1u;
   else
-    *result &= 0xFFFEu;
+    *(_DWORD *)result &= 0xFFFEu;
   return result;
 }
 
@@ -26477,9 +26246,9 @@ int __fastcall sub_8020A92(int result, char a2)
 int __fastcall sub_8020AAE(int result, int a2, char a3)
 {
   if ( a3 )
-    *result |= a2;
+    *(_DWORD *)result |= a2;
   else
-    *result &= ~a2;
+    *(_DWORD *)result &= ~a2;
   return result;
 }
 
@@ -26577,7 +26346,7 @@ double __fastcall dp_log_core(double num, int base_sel)
     HIDWORD(a) = HIDWORD(a) & 0x800FFFFF | 0x3FE00000;// convert input to fraction (between 0 and 1)
     exponent = inexp - 1022;                    // save exponent where 0 = 2^-1
   }
-  if ( *&a >= 0LL )
+  if ( *(_QWORD *)&a >= 0LL )
   {
     dp_something_0_0(a, 0.707106781);
     if ( !v6 )
@@ -26666,29 +26435,29 @@ int __fastcall dp_normalize(double *num)
   int v5; // r3@6
   int v6; // r4@7
 
-  v1 = *(num + 1);
+  v1 = *((_DWORD *)num + 1);
   v2 = v1 & 0x80000000;
   exponent = 1;
   v1 &= 0xFFFFFu;
   v4 = v1 == 0;
-  *(num + 1) = v1;
+  *((_DWORD *)num + 1) = v1;
   if ( !v1 )
-    v4 = *num == 0;
+    v4 = *(_DWORD *)num == 0;
   if ( !v4 )
   {
     while ( 1 )
     {
-      v6 = *(num + 1);
+      v6 = *((_DWORD *)num + 1);
       if ( v6 & 0x100000 )
         break;
-      v5 = *num;
-      *(num + 1) = *num >> 31;
-      *num = 2 * v5;
+      v5 = *(_DWORD *)num;
+      *((_DWORD *)num + 1) = *(_QWORD *)num >> 31;
+      *(_DWORD *)num = 2 * v5;
       --exponent;
     }
-    *(num + 1) = v6 & 0xFFFFF;
+    *((_DWORD *)num + 1) = v6 & 0xFFFFF;
   }
-  *(num + 1) |= v2;
+  *((_DWORD *)num + 1) |= v2;
   return exponent;
 }
 
@@ -26701,18 +26470,20 @@ void __fastcall dp_something_0_0(double a, double b)
 //----- (08020E50) --------------------------------------------------------
 void __fastcall TIM2_interrupt()
 {
+  // the TIM2 interrupt fires every 10ms and is largely
+  // responsible for program operation
   TIM_clear_status_bits(&TIM2_0, 1);            // ack tim2 update interrupt
-  TIM2_interrupt_did_fire = 1;
+  TIM2_10ms_interrupt = 1;
   if ( logging_active )
   {
-    if ( !curr_logging_interval && !manual_hold_is_enabled )
+    if ( !curr_logging_interval && !auto_hold_is_enabled )
     {
-      ++logging_interval_timer;
-      if ( logging_interval_timer >= 20 )
+      ++logging_interval_timer_1s;
+      if ( (signed int)logging_interval_timer_1s >= 20 )
       {
-        logging_interval_timer = 0;
-        ++logging_interval_maybe_subtimer;
-        if ( logging_interval_maybe_subtimer < 5 )
+        logging_interval_timer_1s = 0;
+        ++logging_interval_maxspeed_timer_200ms;
+        if ( (signed int)(unsigned __int8)logging_interval_maxspeed_timer_200ms < 5 )
           logging_interval_elapsed = 1;
       }
     }
@@ -26720,11 +26491,11 @@ void __fastcall TIM2_interrupt()
   if ( log_playback_mode )
   {
     ++log_playback_mode_timeout;
-    if ( log_playback_mode_timeout > 1000 )
+    if ( (signed int)(unsigned __int16)log_playback_mode_timeout > 1000 )// 10 seconds
       log_playback_mode_stop();
   }
-  if ( meas_diode_reprocess_timer )
-    --meas_diode_reprocess_timer;
+  if ( meas_diode_reprocess_timer_1s )
+    --meas_diode_reprocess_timer_1s;
   if ( (curr_meas_mode == MM_ACuA
      || curr_meas_mode == MM_ACmA
      || curr_meas_mode == MM_ACA
@@ -26734,37 +26505,37 @@ void __fastcall TIM2_interrupt()
     && curr_sub_mode == SM_SPL1
     || curr_sub_mode == SM_SPL3 )
   {
-    if ( burden_active_msg_showing_timer )
+    if ( burden_active_msg_showing_timer_1s )
     {
-      --burden_active_msg_showing_timer;
-      if ( !burden_active_msg_showing_timer )
+      --burden_active_msg_showing_timer_1s;
+      if ( !burden_active_msg_showing_timer_1s )
         need_to_update_subscr = 1;
     }
   }
   if ( curr_meas_mode == MM_CAP )
   {
-    if ( meas_cap_maybe_recheck_timer )
+    if ( mes_cap_no_reading_timeout_timer_10ms_unit )
     {
-      --meas_cap_maybe_recheck_timer;
-      if ( !meas_cap_maybe_recheck_timer )
-        meas_cap_maybe_recheck_timer_elapsed = 1;
+      --mes_cap_no_reading_timeout_timer_10ms_unit;
+      if ( !mes_cap_no_reading_timeout_timer_10ms_unit )
+        meas_cap_no_reading_timeout_elapsed = 1;
     }
   }
-  ++meas_cap_some_other_timer_seems_unused;
+  ++meas_cap_some_other_timer_unused;
   if ( curr_meas_mode == MM_HZ || curr_meas_mode == MM_mSEC || curr_meas_mode == MM_DUTY )
   {
-    ++TIM2_ac_input_freq_timed_out;
-    if ( TIM2_ac_input_freq_timed_out > 300 )
+    ++freq_input_timeout_timer_10ms_unit;
+    if ( (signed int)(unsigned __int16)freq_input_timeout_timer_10ms_unit > 300 )
     {
-      TIM2_ac_input_freq_timed_out = 0;
+      freq_input_timeout_timer_10ms_unit = 0;
       curr_scr_digits = 0;
       if ( !autoranging_disabled )
         curr_meas_range = 0;
-      if ( manual_hold_is_enabled )
+      if ( auto_hold_is_enabled )
       {
         auto_hold_holding = 1;
         auto_hold_need_to_unhold = 0;
-        TIM2_auto_hold_unhold_timer = 0;
+        TIM2_auto_hold_unhold_timer_1s = 0;
       }
       else
       {
@@ -26780,46 +26551,46 @@ void __fastcall TIM2_interrupt()
     || curr_meas_mode == MM_ACmV
     || curr_meas_mode == MM_LOW_Z && lowz_measuring_ac )
   {
-    ++TIM2_ac_input_freq_timed_out;
-    if ( TIM2_ac_input_freq_timed_out > 500 )
+    ++freq_input_timeout_timer_10ms_unit;
+    if ( (signed int)(unsigned __int16)freq_input_timeout_timer_10ms_unit > 500 )
     {
-      TIM2_ac_input_freq_timed_out = 0;
+      freq_input_timeout_timer_10ms_unit = 0;
       ac_input_freq_range = 0;
       need_to_update_subscr = 1;
       ac_input_freq = 0;
     }
   }
-  if ( manual_hold_is_enabled & (auto_hold_holding ^ 1) )
+  if ( auto_hold_is_enabled & (unsigned __int8)(auto_hold_holding ^ 1) )
   {
-    ++TIM2_auto_hold_unhold_timer;
-    if ( TIM2_auto_hold_unhold_timer == 100 )
+    ++TIM2_auto_hold_unhold_timer_1s;
+    if ( TIM2_auto_hold_unhold_timer_1s == 100 )
     {
-      TIM2_auto_hold_unhold_timer = 0;
+      TIM2_auto_hold_unhold_timer_1s = 0;
       auto_hold_need_to_unhold = 1;
     }
   }
-  if ( TIM2_auto_hold_unhold_timer >= 101 )
-    TIM2_auto_hold_unhold_timer = 100;
-  ++TIM2_prepare_sample_timer;
-  if ( TIM2_prepare_sample_timer >= 10 )
+  if ( (signed int)(unsigned __int16)TIM2_auto_hold_unhold_timer_1s >= 101 )
+    TIM2_auto_hold_unhold_timer_1s = 100;
+  ++TIM2_prepare_sample_timer_100ms;
+  if ( (unsigned int)TIM2_prepare_sample_timer_100ms >= 10 )
   {
-    TIM2_prepare_sample_timer = 0;
+    TIM2_prepare_sample_timer_100ms = 0;
     TIM2_need_to_prepare_sample = 1;
   }
-  ++bt_packet_write_timer;
-  if ( bt_packet_write_timer >= 25 )
+  ++bt_packet_write_timer_250ms;
+  if ( (unsigned int)bt_packet_write_timer_250ms >= 25 )
   {
-    bt_packet_write_timer = 0;
+    bt_packet_write_timer_250ms = 0;
     need_to_write_bt_packet = 1;
   }
-  ++tim2_timer_3;
-  if ( tim2_timer_3 >= 50 )
+  ++TIM2_500ms_timer;
+  if ( (unsigned int)TIM2_500ms_timer >= 50 )
   {
-    tim2_timer_3 = 0;
-    decrement_setup_edit_timeout = 1;
-    maybe_beep_error_rate_limited = maybe_beep_error_rate_limited != 1;
-    if ( meter_amp_leads_incorrect | meter_overload && maybe_beep_error_rate_limited )
-      beep_amount_of_time(500);
+    TIM2_500ms_timer = 0;
+    setup_edit_timeout_subcounter_500ms = 1;
+    beep_every_half_second = beep_every_half_second != 1;
+    if ( (unsigned __int8)meter_amp_leads_incorrect | (unsigned __int8)meter_overload && beep_every_half_second )
+      beep_ms(0x1F4u);
     if ( setup_currently_editing )
     {
       blink_value_being_edited = blink_value_being_edited != 1;
@@ -26831,79 +26602,71 @@ void __fastcall TIM2_interrupt()
       show_hour_min_on_subscr(1);
     }
   }
-  ++apo_timeout_counter;
-  if ( apo_timeout_counter >= 100 )
+  ++apo_timeout_subtimer_10ms;
+  if ( (unsigned int)apo_timeout_subtimer_10ms >= 100 )
   {
-    apo_timeout_counter = 0;
+    apo_timeout_subtimer_10ms = 0;
     if ( !curr_apo_off && !logging_active )
     {
-      --apo_timeout;
-      if ( !apo_timeout )
+      --apo_timeout_sec;
+      if ( !apo_timeout_sec )
         apo_trigger_poweroff = 1;
     }
   }
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
-// 2000021C: using guessed type __int16 apo_timeout;
+// 2000021C: using guessed type __int16 apo_timeout_sec;
 // 20003858: using guessed type int curr_scr_digits;
 // 20003870: using guessed type int ac_input_freq;
-// 200039B0: using guessed type int TIM2_prepare_sample_timer;
-// 200039B4: using guessed type int tim2_timer_3;
-// 200039B8: using guessed type int apo_timeout_counter;
-// 200039BC: using guessed type int bt_packet_write_timer;
-// 20003A60: using guessed type __int16 logging_interval_timer;
+// 200039B0: using guessed type int TIM2_prepare_sample_timer_100ms;
+// 200039B4: using guessed type int TIM2_500ms_timer;
+// 200039B8: using guessed type int apo_timeout_subtimer_10ms;
+// 200039BC: using guessed type int bt_packet_write_timer_250ms;
 // 20003A62: using guessed type __int16 log_playback_mode_timeout;
-// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer;
-// 20003A74: using guessed type __int16 TIM2_ac_input_freq_timed_out;
-// 20003A78: using guessed type __int16 meas_cap_maybe_recheck_timer;
-// 20003A7A: using guessed type __int16 meas_cap_some_other_timer_seems_unused;
-// 20003A9D: using guessed type char logging_active;
-// 20003A9E: using guessed type char logging_interval_elapsed;
-// 20003AA0: using guessed type char log_playback_mode;
-// 20003AB6: using guessed type char logging_interval_maybe_subtimer;
-// 20003ADD: using guessed type char curr_apo_off;
+// 20003A66: using guessed type __int16 TIM2_auto_hold_unhold_timer_1s;
+// 20003A74: using guessed type __int16 freq_input_timeout_timer_10ms_unit;
+// 20003A78: using guessed type __int16 mes_cap_no_reading_timeout_timer_10ms_unit;
+// 20003A7A: using guessed type __int16 meas_cap_some_other_timer_unused;
+// 20003AB6: using guessed type char logging_interval_maxspeed_timer_200ms;
 // 20003ADE: using guessed type char apo_trigger_poweroff;
-// 20003AE2: using guessed type char ac_input_freq_range;
 // 20003AE6: using guessed type char autoranging_disabled;
 // 20003AEC: using guessed type char meter_range_changed;
-// 20003AF1: using guessed type char auto_hold_need_to_unhold;
 // 20003AF2: using guessed type char auto_hold_holding;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B0A: using guessed type char setup_currently_editing;
 // 20003B0B: using guessed type char blink_value_being_edited;
 // 20003B11: using guessed type char amp_lead_in_ma_jack_only;
 // 20003B12: using guessed type char meter_amp_leads_incorrect;
-// 20003B13: using guessed type char maybe_beep_error_rate_limited;
+// 20003B13: using guessed type char beep_every_half_second;
 // 20003B32: using guessed type char lowz_measuring_ac;
-// 20003B3C: using guessed type char meas_cap_maybe_recheck_timer_elapsed;
-// 20003B42: using guessed type char burden_active_msg_showing_timer;
-// 20003B49: using guessed type char meter_overflow_icon;
+// 20003B3C: using guessed type char meas_cap_no_reading_timeout_elapsed;
+// 20003B42: using guessed type char burden_active_msg_showing_timer_1s;
+// 20003B49: using guessed type char meter_danger_icon;
 // 20003B4A: using guessed type char meter_overload;
-// 20003B4C: using guessed type char meas_diode_reprocess_timer;
-// 20003B62: using guessed type char TIM2_interrupt_did_fire;
+// 20003B4C: using guessed type char meas_diode_reprocess_timer_1s;
+// 20003B62: using guessed type char TIM2_10ms_interrupt;
 // 20003B63: using guessed type char TIM2_need_to_prepare_sample;
 // 20003B64: using guessed type char need_to_write_bt_packet;
-// 20003B65: using guessed type char decrement_setup_edit_timeout;
+// 20003B65: using guessed type char setup_edit_timeout_subcounter_500ms;
 // 20003B67: using guessed type char blink_dash_for_hour_minute;
 
 //----- (0802123A) --------------------------------------------------------
 void __fastcall TIM3_interrupt()
 {
+  // fires every 1ms
   TIM_clear_status_bits(&TIM3, 1);              // ack timer 3 update interrupt
-  TIM3_interrupt_did_fire_unused = 1;
-  if ( sys_boot_button_delay_timer )
-    --sys_boot_button_delay_timer;
-  if ( beep_timer )
+  TIM3_1ms_interrupt_unused = 1;
+  if ( sys_boot_button_delay_timer_1ms_unit )
+    --sys_boot_button_delay_timer_1ms_unit;
+  if ( beep_timer_1ms )
   {
-    --beep_timer;
-    if ( !beep_timer )
+    --beep_timer_1ms;
+    if ( !beep_timer_1ms )
     {
       beep_currently_beeping = 0;
       HIWORD(GPIOE.BSRR) = 128;
       if ( beep_num_beeps )
       {
-        beep_timer = beep_time;
+        beep_timer_1ms = beep_time;
         --beep_num_beeps;
         if ( beep_num_beeps % 2 == 1 )
         {
@@ -26914,12 +26677,11 @@ void __fastcall TIM3_interrupt()
     }
   }
 }
-// 2000021A: using guessed type __int16 sys_boot_button_delay_timer;
-// 20003A68: using guessed type __int16 beep_timer;
+// 2000021A: using guessed type __int16 sys_boot_button_delay_timer_1ms_unit;
+// 20003A68: using guessed type __int16 beep_timer_1ms;
 // 20003A6A: using guessed type __int16 beep_time;
 // 20003B14: using guessed type char beep_currently_beeping;
-// 20003B15: using guessed type char beep_num_beeps;
-// 20003B61: using guessed type char TIM3_interrupt_did_fire_unused;
+// 20003B61: using guessed type char TIM3_1ms_interrupt_unused;
 // 40021000: using guessed type GPIO_REGS GPIOE;
 
 //----- (080212C4) --------------------------------------------------------
@@ -26927,23 +26689,23 @@ void __fastcall USART2_interrupt()
 {
   char v0; // r0@4
 
-  if ( sub_8017A08(&USART2_1, 1831) )
-    sub_8017A76(&USART2_1, 1831);
-  if ( sub_8017A08(&USART2_1, 1317) )
+  if ( sub_8017A08((int)&USART2_1, 1831) )
+    sub_8017A76((int)&USART2_1, 1831);
+  if ( sub_8017A08((int)&USART2_1, 1317) )
   {
-    v0 = sub_801798C(&USART2_1);
-    bt_rx_buf[bt_rx_buf_curr_pos] = v0;
-    sub_8017A76(&USART2_1, 1317);
+    v0 = sub_801798C((int)&USART2_1);
+    bt_rx_buf[(unsigned __int8)bt_rx_buf_curr_pos] = v0;
+    sub_8017A76((int)&USART2_1, 1317);
     ++bt_rx_buf_curr_pos;
-    if ( bt_rx_buf_curr_pos >= 20 )
+    if ( (signed int)(unsigned __int8)bt_rx_buf_curr_pos >= 20 )
       bt_rx_buf_curr_pos = 0;
     if ( bt_rx_buf_curr_pos == 1 )
     {
-      if ( bt_rx_buf[0] == 244 )
+      if ( (unsigned __int8)bt_rx_buf[0] == 244 )
       {
         bt_rx_buf_max_pos = 5;
       }
-      else if ( bt_rx_buf[0] == 248 )
+      else if ( (unsigned __int8)bt_rx_buf[0] == 248 )
       {
         bt_rx_buf_max_pos = 15;
       }
@@ -26952,7 +26714,7 @@ void __fastcall USART2_interrupt()
         bt_rx_buf_curr_pos = 0;
       }
     }
-    else if ( bt_rx_buf_curr_pos >= bt_rx_buf_max_pos )
+    else if ( (unsigned __int8)bt_rx_buf_curr_pos >= (unsigned int)(unsigned __int8)bt_rx_buf_max_pos )
     {
       bt_new_received_msg = 1;
       bt_rx_msg_len = bt_rx_buf_max_pos;
@@ -27063,8 +26825,8 @@ void __fastcall EXTI_15_10_interrupt()
 //----- (080214E0) --------------------------------------------------------
 void __fastcall ADC1_interrupt()
 {
-  if ( sub_801CA7C(&ADC1_BASE, 0x106u) )
-    sub_801CAB0(&ADC1_BASE, 262);
+  if ( sub_801CA7C((int)&ADC1_BASE, 0x106u) )
+    sub_801CAB0((int)&ADC1_BASE, 262);
 }
 // 40012400: using guessed type ADC_REGS ADC1_BASE;
 
@@ -27074,7 +26836,7 @@ void __noreturn main_loop()
   set_vtor_offset(0x8000000, 0x6000);
   config_clock_interrupts_and_gpio();
   load_stuff_from_eeprom_and_init();
-  init_the_lcd(curr_lcd_contrast, 1);
+  lcd_init(curr_lcd_contrast, 1);
   finish_sys_init_and_handle_boot_buttons();
   while ( 1 )
   {
@@ -27087,9 +26849,9 @@ void __noreturn main_loop()
       scr_need_to_update_units_in_certain_modes = 1;
     }
     update_display();
-    if ( TIM2_interrupt_did_fire )
+    if ( TIM2_10ms_interrupt )
     {
-      TIM2_interrupt_did_fire = 0;
+      TIM2_10ms_interrupt = 0;
       read_range_switch_then_update();
       read_buttons_then_update();
       read_amp_lead_pos_then_update();
@@ -27099,7 +26861,7 @@ void __noreturn main_loop()
     if ( TIM2_need_to_prepare_sample )
     {
       TIM2_need_to_prepare_sample = 0;
-      read_time_from_rtc();
+      rtc_read_time();
       check_on_batt_and_internal_temp();
       log_prepare_sample();
     }
@@ -27109,27 +26871,27 @@ void __noreturn main_loop()
       if ( bt_enabled )
         build_and_write_bt_packet_also();
     }
-    if ( decrement_setup_edit_timeout )
+    if ( setup_edit_timeout_subcounter_500ms )
     {
-      decrement_setup_edit_timeout = 0;
+      setup_edit_timeout_subcounter_500ms = 0;
       if ( setup_currently_editing )
-        end_setup_without_saving_after_timeout();
+        end_setup_without_saving_after_2min_timeout();
     }
-    if ( need_to_read_rtc )
+    if ( rtc_last_read_was_new_second )
     {
-      need_to_read_rtc = 0;
-      read_time_from_rtc();
-      logging_interval_maybe_subtimer = 0;
+      rtc_last_read_was_new_second = 0;
+      rtc_read_time();
+      logging_interval_maxspeed_timer_200ms = 0;
       if ( logging_active )
       {
         if ( curr_logging_interval )
         {
-          if ( !manual_hold_is_enabled )
+          if ( !auto_hold_is_enabled )
           {
-            ++logging_interval_timer;
-            if ( logging_interval_timer >= curr_logging_interval )
+            ++logging_interval_timer_1s;
+            if ( logging_interval_timer_1s >= (unsigned int)curr_logging_interval )
             {
-              logging_interval_timer = 0;
+              logging_interval_timer_1s = 0;
               logging_interval_elapsed = 1;
             }
           }
@@ -27157,7 +26919,7 @@ void __noreturn main_loop()
         && curr_meas_mode != MM_mSEC
         && curr_meas_mode != MM_DUTY
         && curr_meas_mode != MM_CAP
-        && manual_hold_is_enabled )
+        && auto_hold_is_enabled )
       {
         meas_was_updated = 0;
         scr_need_to_refresh_meas_units_and_icons = 0;
@@ -27169,34 +26931,28 @@ void __noreturn main_loop()
       apo_do_poweroff_then_poweron();
   }
 }
-// 20000218: using guessed type __int16 curr_logging_interval;
 // 20000222: using guessed type char curr_lcd_contrast;
-// 20003A60: using guessed type __int16 logging_interval_timer;
-// 20003A9D: using guessed type char logging_active;
-// 20003A9E: using guessed type char logging_interval_elapsed;
-// 20003AB6: using guessed type char logging_interval_maybe_subtimer;
+// 20003AB6: using guessed type char logging_interval_maxspeed_timer_200ms;
 // 20003AC4: using guessed type char log_need_to_flush_samples_from_eeprom;
 // 20003AD3: using guessed type char bt_enabled;
 // 20003AD7: using guessed type char bt_new_received_msg;
 // 20003ADE: using guessed type char apo_trigger_poweroff;
 // 20003AEC: using guessed type char meter_range_changed;
-// 20003AF3: using guessed type char mode_range_just_got_changed_for_hold_purposes;
-// 20003AF9: using guessed type char meas_was_updated;
 // 20003AFC: using guessed type char scr_need_to_refresh_meas_units_and_icons;
 // 20003AFD: using guessed type char scr_need_to_update_units_in_certain_modes;
 // 20003AFE: using guessed type char need_to_update_subscr;
 // 20003B0A: using guessed type char setup_currently_editing;
-// 20003B62: using guessed type char TIM2_interrupt_did_fire;
+// 20003B62: using guessed type char TIM2_10ms_interrupt;
 // 20003B63: using guessed type char TIM2_need_to_prepare_sample;
 // 20003B64: using guessed type char need_to_write_bt_packet;
-// 20003B65: using guessed type char decrement_setup_edit_timeout;
-// 20003B66: using guessed type char need_to_read_rtc;
+// 20003B65: using guessed type char setup_edit_timeout_subcounter_500ms;
+// 20003B66: using guessed type char rtc_last_read_was_new_second;
 
 //----- (0802179C) --------------------------------------------------------
 void load_stuff_from_eeprom_and_init()
 {
-  read_time_from_rtc();
-  cal_load_factors_for_mode_and_range(200u, 0);
+  rtc_read_time();
+  cal_load_factors_for_mode_and_range(MM_INTERNAL_THERMISTOR, 0);
   load_logging_interval();
   load_lcd_contrast();
   load_curr_apo_status();
@@ -27215,13 +26971,13 @@ void load_stuff_from_eeprom_and_init()
   setting_last_cal_year_month = 0;
   meter_set_default_subscr_mode();
   meter_min_max_mode = 0;
-  auto_hold_is_enabled = 0;
   manual_hold_is_enabled = 0;
+  auto_hold_is_enabled = 0;
   rel_meas_enabled = 0;
   input_1ms_peak_enabled = 0;
   input_lpf_enabled = 0;
   high_voltage_diode = 0;
-  meter_overflow_icon = 0;
+  meter_danger_icon = 0;
   meter_overload = 0;
   meter_mode_acv_dcv = 0;
   measuring_amps_of_va_or_volts_of_burden = 0;
@@ -27233,21 +26989,19 @@ void load_stuff_from_eeprom_and_init()
     button_hold_timer = 51;
     button_check_timer = 10;
   }
-  bt_new_rx_button = 0;
-  bt_keycode_pressed = 0;
+  bt_new_rxed_button = 0;
+  bt_pressed_keycode = 0;
   maybe_refresh_lcd_contrast_register();
 }
 // 20003ADC: using guessed type char apo_woke_up;
 // 20003ADF: using guessed type char batt_is_low_icon;
-// 20003AEE: using guessed type char meter_min_max_mode;
 // 20003AF5: using guessed type char rel_meas_enabled;
-// 20003B05: using guessed type char bt_new_rx_button;
-// 20003B09: using guessed type char bt_keycode_pressed;
+// 20003B05: using guessed type char bt_new_rxed_button;
 // 20003B0E: using guessed type char button_hold_timer;
 // 20003B0F: using guessed type char button_check_timer;
 // 20003B24: using guessed type char meter_in_cal_mode;
 // 20003B25: using guessed type char setting_last_cal_year_month;
-// 20003B49: using guessed type char meter_overflow_icon;
+// 20003B49: using guessed type char meter_danger_icon;
 // 20003B4A: using guessed type char meter_overload;
 // 20003B4B: using guessed type char high_voltage_diode;
 // 20003B4F: using guessed type char input_1ms_peak_enabled;
@@ -27261,12 +27015,12 @@ void apo_do_poweroff_then_poweron(void)
 {
   apo_trigger_poweroff = 0;
   bt_enabled = 0;
-  prepare_to_apo();
+  apo_prepare_to_turn_off();
   WFI_or_WFE(1, 2);
   apo_woke_up = 1;
   config_clock_interrupts_and_gpio();
   load_stuff_from_eeprom_and_init();
-  init_the_lcd(curr_lcd_contrast, 1);
+  lcd_init(curr_lcd_contrast, 1);
   finish_sys_init_and_handle_boot_buttons();
 }
 // 20000222: using guessed type char curr_lcd_contrast;
@@ -27275,52 +27029,63 @@ void apo_do_poweroff_then_poweron(void)
 // 20003ADE: using guessed type char apo_trigger_poweroff;
 
 //----- (08021E9C) --------------------------------------------------------
-int setup_system()
+void __fastcall SystemInit()
 {
-  int v1; // [sp+0h] [bp-8h]@0
-
-  RCC_CR |= 0x100u;
-  RCC_CFGR &= 0x88FFC00C;
-  RCC_CR &= 0xEEFEFFFE;
-  RCC_CR &= 0xFFFBFFFF;
-  RCC_CFGR &= 0xFF02FFFF;
-  RCC_CIR = 0;
-  setup_rcc_and_pwr_and_flash();
-  SCB_VTOR = 0x8000000;
-  return v1;
+  RCC_CR |= 0x100u;                             // switch MSI on
+  RCC_CFGR &= 0x88FFC00C;                       // * set MSI as system clock
+                                                // * set AHB prescaler to SYSCLK/1
+                                                // * set APB1 prescaler to HCLK/1
+                                                // * set APB2 prescaler to HCLK/1
+                                                // * disable output clock
+                                                // * set output clock prescaler to /1
+  RCC_CR &= 0xEEFEFFFE;                         // * turn off HSI
+                                                // * turn off HSE
+                                                // * turn off PLL
+                                                // * turn off clock security system
+  RCC_CR &= 0xFFFBFFFF;                         // * turn off HSE oscillator bypass
+  RCC_CFGR &= 0xFF02FFFF;                       // * set PLLSRC to HSI
+                                                // * set PLLMUL to x3
+                                                // * set PLLDIV to 0, not allowed
+  RCC_CIR = 0;                                  // disable all clock interrupts
+  setup_system_from_reset_continued();
+  SCB_VTOR = 0x8000000;                         // set interrupt table address to start of FLASH
 }
-// 8021E9C: using guessed type int setup_system();
 // 40023808: using guessed type int RCC_CFGR;
 // 4002380C: using guessed type int RCC_CIR;
 // E000ED08: using guessed type int SCB_VTOR;
 
 //----- (08021EEE) --------------------------------------------------------
-void setup_rcc_and_pwr_and_flash()
+void setup_system_from_reset_continued()
 {
-  int v0; // [sp+4h] [bp-4h]@1
+  int hse_timeout; // [sp+4h] [bp-4h]@1
 
-  v0 = 0;
-  RCC_CR |= 0x10000u;
-  do
-    ++v0;
-  while ( !(RCC_CR & 0x20000) && v0 != 20480 );
-  if ( ((RCC_CR & 0x20000) != 0) == 1 )
+  hse_timeout = 0;
+  RCC_CR |= 0x10000u;                           // switch on HSE
+  do                                            // wait for HSE to become ready
+    ++hse_timeout;
+  while ( !(RCC_CR & 0x20000) && hse_timeout != 20480 );
+  if ( ((RCC_CR & 0x20000) != 0) == 1 )         // if it became ready
   {
-    FLASH_ACR |= 4u;
-    FLASH_ACR |= 2u;
-    FLASH_ACR |= 1u;
-    RCC_APB1ENR |= 0x10000000u;
-    PWR_CR = 2048;
-    while ( PWR_CSR & 0x10 )
+    FLASH_ACR |= 4u;                            // enable 64 bit flash access
+    FLASH_ACR |= 2u;                            // enable flash prefetch
+    FLASH_ACR |= 1u;                            // set flash latency to one wait state
+    RCC_APB1ENR |= 0x10000000u;                 // enable clock to PWR interface
+    PWR_CR = 0x800;                             // set voltage scaling range to 1 (1.8V)
+    while ( PWR_CSR & 0x10 )                    // wait for voltage scaling change to take effect
       ;
-    RCC_CFGR &= 0xFF02FFFF;
-    RCC_CFGR |= 0x910000u;
-    RCC_CR |= 0x1000000u;
-    while ( !(RCC_CR & 0x2000000) )
+    RCC_CFGR &= 0xFF02FFFF;                     // * set PLLSRC to HSI
+                                                // * set PLLMUL to x3
+                                                // * set PLLDIV to 0, not allowed
+    RCC_CFGR |= 0x910000u;                      // * set PLLSRC to HSE
+                                                // * set PLLMUL to x12
+                                                // * set PLLDIV to /3
+                                                // resulting output 4 * 12 / 3 MHz = 16MHz
+    RCC_CR |= 0x1000000u;                       // switch on PLL
+    while ( !(RCC_CR & 0x2000000) )             // wait for PLL to become ready
       ;
-    RCC_CFGR = 4 * (RCC_CFGR >> 2);
+    RCC_CFGR = 4 * ((unsigned int)RCC_CFGR >> 2);// set SYSCLK to PLL output
     RCC_CFGR |= 3u;
-    while ( (RCC_CFGR & 0xC) != 12 )
+    while ( (RCC_CFGR & 0xC) != 12 )            // wait for switch to be active
       ;
   }
 }
@@ -27338,8 +27103,8 @@ int call_funcs_in_init_func_table()
   int (**i)(); // r1@1
   int result; // r0@2
 
-  for ( i = &init_func_table; i != ascii_to_segs_tbl_uppercase; i = result )
-    result = ((i + *i))(i + 1);
+  for ( i = &init_func_table; (_BYTE *)i != ascii_to_segs_tbl_uppercase; i = (int (**)())result )
+    result = ((int (__fastcall *)(_DWORD))((char *)i + (_DWORD)*i))(i + 1);
   return result;
 }
 // 8022710: using guessed type int call_funcs_in_init_func_table(void);
@@ -27353,13 +27118,13 @@ signed int should_call_funcs_in_init_func_table()
 }
 
 //----- (08022836) --------------------------------------------------------
-void __noreturn sub_8022836()
+void __noreturn unused_sub_8022836()
 {
-  sub_8022848();
+  unused_sub_8022848();
 }
 
 //----- (08022848) --------------------------------------------------------
-void __noreturn sub_8022848()
+void __noreturn unused_sub_8022848()
 {
   while ( 1 )
     __breakpoint(171);
@@ -27368,12 +27133,11 @@ void __noreturn sub_8022848()
 //----- (08022880) --------------------------------------------------------
 void reset_vector()
 {
-  setup_system();
+  SystemInit();
   if ( should_call_funcs_in_init_func_table() )
     call_funcs_in_init_func_table();
   main_loop();
 }
-// 8021E9C: using guessed type int setup_system();
 // 8022710: using guessed type int call_funcs_in_init_func_table(void);
 
 // ALL OK, 705 function(s) have been successfully decompiled
